@@ -28,6 +28,7 @@
 		4B2E223A24549357006067FD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* Errors.swift */; };
 		4B2E223B24549357006067FD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* Errors.swift */; };
 		4B2E223C24549357006067FD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* Errors.swift */; };
+		4C86B94A2455387C000154D1 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C86B9492455387C000154D1 /* ContentViewModel.swift */; };
 		4BC93D58245572390093BDA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D57245572390093BDA7 /* Assets.xcassets */; };
 		4BC93D5A245572400093BDA7 /* appstore.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D59245572400093BDA7 /* appstore.png */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,7 @@
 		4B2E222F24549277006067FD /* CoffeeBeansWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeBeansWeight.swift; sourceTree = "<group>"; };
 		4B2E22342454930A006067FD /* Either.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		4B2E223924549357006067FD /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		4C86B9492455387C000154D1 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		4BC93D57245572390093BDA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4BC93D59245572400093BDA7 /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appstore.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,6 +130,8 @@
 				4B2E21F124548308006067FD /* AppDelegate.swift */,
 				4B2E21F324548308006067FD /* SceneDelegate.swift */,
 				4B2E21F524548308006067FD /* ContentView.swift */,
+				4C86B9492455387C000154D1 /* ContentViewModel.swift */,
+				4B2E21F72454830A006067FD /* Assets.xcassets */,
 				4B2E21FC2454830A006067FD /* LaunchScreen.storyboard */,
 				4BC93D57245572390093BDA7 /* Assets.xcassets */,
 				4BC93D59245572400093BDA7 /* appstore.png */,
@@ -335,6 +339,7 @@
 				4B2E222324548D6C006067FD /* BoiledWaterAmount.swift in Sources */,
 				4B2E21F224548308006067FD /* AppDelegate.swift in Sources */,
 				4B2E223A24549357006067FD /* Errors.swift in Sources */,
+				4C86B94A2455387C000154D1 /* ContentViewModel.swift in Sources */,
 				4B2E21F424548308006067FD /* SceneDelegate.swift in Sources */,
 				4B2E21F624548308006067FD /* ContentView.swift in Sources */,
 				4B2E223024549277006067FD /* CoffeeBeansWeight.swift in Sources */,
