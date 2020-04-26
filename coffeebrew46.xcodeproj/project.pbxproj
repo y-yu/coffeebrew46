@@ -10,7 +10,6 @@
 		4B2E21F224548308006067FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E21F124548308006067FD /* AppDelegate.swift */; };
 		4B2E21F424548308006067FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E21F324548308006067FD /* SceneDelegate.swift */; };
 		4B2E21F624548308006067FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E21F524548308006067FD /* ContentView.swift */; };
-		4B2E21F82454830A006067FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B2E21F72454830A006067FD /* Assets.xcassets */; };
 		4B2E21FB2454830A006067FD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B2E21FA2454830A006067FD /* Preview Assets.xcassets */; };
 		4B2E21FE2454830A006067FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B2E21FC2454830A006067FD /* LaunchScreen.storyboard */; };
 		4B2E22092454830A006067FD /* coffeebrew46Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E22082454830A006067FD /* coffeebrew46Tests.swift */; };
@@ -30,6 +29,8 @@
 		4B2E223B24549357006067FD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* Errors.swift */; };
 		4B2E223C24549357006067FD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* Errors.swift */; };
 		4C86B94A2455387C000154D1 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C86B9492455387C000154D1 /* ContentViewModel.swift */; };
+		4BC93D58245572390093BDA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D57245572390093BDA7 /* Assets.xcassets */; };
+		4BC93D5A245572400093BDA7 /* appstore.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D59245572400093BDA7 /* appstore.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +55,6 @@
 		4B2E21F124548308006067FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B2E21F324548308006067FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4B2E21F524548308006067FD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		4B2E21F72454830A006067FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B2E21FA2454830A006067FD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4B2E21FD2454830A006067FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B2E21FF2454830A006067FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -71,6 +71,8 @@
 		4B2E22342454930A006067FD /* Either.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		4B2E223924549357006067FD /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		4C86B9492455387C000154D1 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		4BC93D57245572390093BDA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4BC93D59245572400093BDA7 /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appstore.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,8 @@
 				4C86B9492455387C000154D1 /* ContentViewModel.swift */,
 				4B2E21F72454830A006067FD /* Assets.xcassets */,
 				4B2E21FC2454830A006067FD /* LaunchScreen.storyboard */,
+				4BC93D57245572390093BDA7 /* Assets.xcassets */,
+				4BC93D59245572400093BDA7 /* appstore.png */,
 				4B2E21FF2454830A006067FD /* Info.plist */,
 				4B2E21F92454830A006067FD /* Preview Content */,
 			);
@@ -301,10 +305,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BC93D5A245572400093BDA7 /* appstore.png in Resources */,
 				4B2E21FE2454830A006067FD /* LaunchScreen.storyboard in Resources */,
 				4B2E21FB2454830A006067FD /* Preview Assets.xcassets in Resources */,
+				4BC93D58245572390093BDA7 /* Assets.xcassets in Resources */,
 				4B2E222E24549165006067FD /* Default-568h@2x.png in Resources */,
-				4B2E21F82454830A006067FD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,7 +447,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -496,7 +501,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -510,16 +515,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"coffeebrew46/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = coffeebrew46/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.y-yu.coffeebrew46";
 				PRODUCT_NAME = coffeebrew46;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -529,16 +537,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"coffeebrew46/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = coffeebrew46/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.y-yu.coffeebrew46";
 				PRODUCT_NAME = coffeebrew46;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -549,9 +560,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = coffeebrew64Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = coffeebrew46Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -559,6 +572,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.y-yu.coffeebrew64Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coffeebrew46.app/coffeebrew46";
@@ -570,9 +585,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = coffeebrew64Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = coffeebrew46Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -580,6 +597,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.y-yu.coffeebrew64Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coffeebrew46.app/coffeebrew46";
@@ -590,18 +609,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = coffeebrew64UITests/Info.plist;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = coffeebrew46UITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.github.y-yu.coffeebrew64UITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.y-yu.coffeebrew46UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = coffeebrew64;
+				TEST_TARGET_NAME = coffeebrew46;
 			};
 			name = Debug;
 		};
@@ -609,18 +632,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = coffeebrew64UITests/Info.plist;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = coffeebrew46UITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.github.y-yu.coffeebrew64UITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.y-yu.coffeebrew46UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = coffeebrew64;
+				TEST_TARGET_NAME = coffeebrew46;
 			};
 			name = Release;
 		};
