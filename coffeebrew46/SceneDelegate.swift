@@ -14,7 +14,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         // TODO: Fix wiring!!!!!!!
         let contentView = ContentView(
-            curriculateBoiledWaterAmountService: CurriculateBoiledWaterAmountServiceImpl()
+            viewModel: ContentViewModel(
+                curriculateBoiledWaterAmountService: CurriculateBoiledWaterAmountServiceImpl())
         )
 
         // Use a UIHostingController as window root view controller.
