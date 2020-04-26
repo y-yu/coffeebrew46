@@ -1,11 +1,3 @@
-//
-//  coffeebrew64UITests.swift
-//  coffeebrew64UITests
-//
-//  Created by 吉村優 on 2020/04/25.
-//  Copyright © 2020 吉村優. All rights reserved.
-//
-
 import XCTest
 
 class coffeebrew64UITests: XCTestCase {
