@@ -1,10 +1,10 @@
 extension Optional {
-    internal func toEither<E>(_ error: E) -> Either<E, Wrapped> {
+    internal func toResult<E: Error>(_ error: E) -> Result<Wrapped, E> {
         switch self {
         case .none:
-            return .Left(error)
+            return .failure(error)
         case .some(let value):
-            return .Right(value)
+            return .success(value)
         }
     }
 }

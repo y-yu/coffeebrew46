@@ -12,7 +12,7 @@ protocol BoiledWaterAmountPresenter {
     // ViewModel requires an initial view. This field is representing it.
     static var unit: ResultView { get }
     
-    func show(result: Either<CoffeeError, BoiledWaterAmount>) -> ResultView
+    func show(result: Result<BoiledWaterAmount, CoffeeError>) -> ResultView
 }
 
 // An implementation.
@@ -21,14 +21,14 @@ class BoiledWaterAmountPresenterImpl: BoiledWaterAmountPresenter {
     
     static let unit: ResultView = Text("")
     
-    func show(result: Either<CoffeeError, BoiledWaterAmount>) -> Text {
+    func show(result: Result<BoiledWaterAmount, CoffeeError>) -> Text {
         switch result {
-        case .Right(let boiledWaterAmount):
+        case .success(let boiledWaterAmount):
             // Don't use string interporation!
             // See also: https://twitter.com/_yyu_/status/1255404728638410754?s=20
             return Text("Boiled water amounts are " + boiledWaterAmount.toString())
-        case .Left(let coffeeError):
-            return Text(coffeeError.message)
+        case .failure(let coffeeError):
+            return Text(coffeeError.getMessage())
         }
     }
 }

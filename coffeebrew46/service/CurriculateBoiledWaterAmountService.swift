@@ -10,7 +10,7 @@ protocol CalculateBoiledWaterAmountService {
         coffeeBeansWeight: Double,
         firstBoiledWaterAmount: Double,
         numberOf6: Int
-    ) -> Either<CoffeeError, BoiledWaterAmount>
+    ) -> Result<BoiledWaterAmount, CoffeeError>
 }
 
 // Implementation
@@ -19,10 +19,10 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
         coffeeBeansWeight: Double,
         firstBoiledWaterAmount: Double,
         numberOf6: Int
-    ) -> Either<CoffeeError, BoiledWaterAmount> {
+    ) -> Result<BoiledWaterAmount, CoffeeError> {
         // This is a sloppy impletementation!!!!!!!!!!!!!!
         // TODO: Fix it
-        return (coffeeBeansWeight <= 0 ? Either.Left(CoffeeBeansWeightUnderZeroError()) : Either.Right(
+        return (coffeeBeansWeight <= 0 ? .failure(CoffeeError.CoffeeBeansWeightUnderZeroError(.none)) : .success(
             BoiledWaterAmount(
                 totalAmount: coffeeBeansWeight * 15,
                 f: { (ta) -> (Double, Double, Double, Double, Double) in

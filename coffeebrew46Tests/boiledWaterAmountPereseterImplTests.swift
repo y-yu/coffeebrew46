@@ -17,7 +17,7 @@ class boiledWaterAmountPereseterImplTests: XCTestCase {
     func testItReturnsATextViewIfResultIsRight() throws {
         let ta = 100.0
         let dummyBoiledWaterAmount = BoiledWaterAmount(totalAmount: ta, f: { (ta: Double) in return (ta / 5, ta / 5, ta / 5, ta / 5, ta / 5) })
-        let dummyResult: Either<CoffeeError, BoiledWaterAmount> = Either.Right(dummyBoiledWaterAmount)
+        let dummyResult: Result<BoiledWaterAmount, CoffeeError> = .success(dummyBoiledWaterAmount)
         
         print("test: \(dummyBoiledWaterAmount.toString())")
         let actual: Text = sut.show(result: dummyResult)
