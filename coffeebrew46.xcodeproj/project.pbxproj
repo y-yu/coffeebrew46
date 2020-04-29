@@ -15,15 +15,28 @@
 		4B2E22142454830A006067FD /* coffeebrew46UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E22132454830A006067FD /* coffeebrew46UITests.swift */; };
 		4B2E222324548D6C006067FD /* BoiledWaterAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222224548D6C006067FD /* BoiledWaterAmount.swift */; };
 		4B2E222424548D6C006067FD /* BoiledWaterAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222224548D6C006067FD /* BoiledWaterAmount.swift */; };
-		4B2E222724548F83006067FD /* CurriculateBoiledWaterAmountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222624548F83006067FD /* CurriculateBoiledWaterAmountService.swift */; };
-		4B2E222824548F83006067FD /* CurriculateBoiledWaterAmountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222624548F83006067FD /* CurriculateBoiledWaterAmountService.swift */; };
+		4B2E222724548F83006067FD /* CalculateBoiledWaterAmountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222624548F83006067FD /* CalculateBoiledWaterAmountService.swift */; };
 		4B2E222E24549165006067FD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B2E222D24549165006067FD /* Default-568h@2x.png */; };
-		4B2E223024549277006067FD /* CoffeeBeansWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222F24549277006067FD /* CoffeeBeansWeight.swift */; };
-		4B2E223124549277006067FD /* CoffeeBeansWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222F24549277006067FD /* CoffeeBeansWeight.swift */; };
-		4B2E223224549277006067FD /* CoffeeBeansWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222F24549277006067FD /* CoffeeBeansWeight.swift */; };
+		4B2E223024549277006067FD /* ValidatedInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222F24549277006067FD /* ValidatedInput.swift */; };
+		4B2E223124549277006067FD /* ValidatedInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222F24549277006067FD /* ValidatedInput.swift */; };
+		4B2E223224549277006067FD /* ValidatedInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222F24549277006067FD /* ValidatedInput.swift */; };
 		4B2E223A24549357006067FD /* CoffeeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* CoffeeError.swift */; };
 		4B2E223B24549357006067FD /* CoffeeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* CoffeeError.swift */; };
 		4B2E223C24549357006067FD /* CoffeeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* CoffeeError.swift */; };
+		4B4550272459B23500A791F1 /* CoproductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4550262459B23500A791F1 /* CoproductView.swift */; };
+		4B4550282459B23500A791F1 /* CoproductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4550262459B23500A791F1 /* CoproductView.swift */; };
+		4B4550292459B23500A791F1 /* CoproductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4550262459B23500A791F1 /* CoproductView.swift */; };
+		4B45502B2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45502A2459F38400A791F1 /* CoproductViewTraverse.swift */; };
+		4B45502C2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45502A2459F38400A791F1 /* CoproductViewTraverse.swift */; };
+		4B45502D2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45502A2459F38400A791F1 /* CoproductViewTraverse.swift */; };
+		4B45502E2459F6DD00A791F1 /* ResultNel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E32459A3DB00596B44 /* ResultNel.swift */; };
+		4B45502F2459F6DD00A791F1 /* ResultNel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E32459A3DB00596B44 /* ResultNel.swift */; };
+		4B4550302459F6E100A791F1 /* NonEmptyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7DF2459962600596B44 /* NonEmptyList.swift */; };
+		4B4550312459F6E200A791F1 /* NonEmptyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7DF2459962600596B44 /* NonEmptyList.swift */; };
+		4B4550342459F70400A791F1 /* ValidateInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E12459A37E00596B44 /* ValidateInputService.swift */; };
+		4B4550352459F70400A791F1 /* ValidateInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E12459A37E00596B44 /* ValidateInputService.swift */; };
+		4B4550362459F71000A791F1 /* CalculateBoiledWaterAmountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222624548F83006067FD /* CalculateBoiledWaterAmountService.swift */; };
+		4B4550372459F71100A791F1 /* CalculateBoiledWaterAmountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222624548F83006067FD /* CalculateBoiledWaterAmountService.swift */; };
 		4BC93D58245572390093BDA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D57245572390093BDA7 /* Assets.xcassets */; };
 		4BC93D5A245572400093BDA7 /* appstore.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D59245572400093BDA7 /* appstore.png */; };
 		4BC93D5F2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */; };
@@ -36,11 +49,16 @@
 		4BC93D682455D2470093BDA7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E21F524548308006067FD /* ContentView.swift */; };
 		4BC93D692455D24A0093BDA7 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C86B9492455387C000154D1 /* ContentViewModel.swift */; };
 		4BC93D6A2455D24B0093BDA7 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C86B9492455387C000154D1 /* ContentViewModel.swift */; };
-		4BC93D6B2455D2530093BDA7 /* CurriculateBoiledWaterAmountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222624548F83006067FD /* CurriculateBoiledWaterAmountService.swift */; };
 		4BC93D6D2455DA5D0093BDA7 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D6C2455DA5D0093BDA7 /* Optional.swift */; };
 		4BC93D6E2455DA5D0093BDA7 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D6C2455DA5D0093BDA7 /* Optional.swift */; };
 		4BC93D6F2455DA5D0093BDA7 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D6C2455DA5D0093BDA7 /* Optional.swift */; };
 		4BC93D722455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D702455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift */; };
+		4BFFB7E02459962600596B44 /* NonEmptyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7DF2459962600596B44 /* NonEmptyList.swift */; };
+		4BFFB7E22459A37E00596B44 /* ValidateInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E12459A37E00596B44 /* ValidateInputService.swift */; };
+		4BFFB7E42459A3DB00596B44 /* ResultNel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E32459A3DB00596B44 /* ResultNel.swift */; };
+		4BFFB7E82459A6C600596B44 /* AssociativityRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E72459A6C600596B44 /* AssociativityRight.swift */; };
+		4BFFB7E92459A6C600596B44 /* AssociativityRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E72459A6C600596B44 /* AssociativityRight.swift */; };
+		4BFFB7EA2459A6C600596B44 /* AssociativityRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E72459A6C600596B44 /* AssociativityRight.swift */; };
 		4C86B94A2455387C000154D1 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C86B9492455387C000154D1 /* ContentViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,15 +93,21 @@
 		4B2E22132454830A006067FD /* coffeebrew46UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coffeebrew46UITests.swift; sourceTree = "<group>"; };
 		4B2E22152454830A006067FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B2E222224548D6C006067FD /* BoiledWaterAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoiledWaterAmount.swift; sourceTree = "<group>"; };
-		4B2E222624548F83006067FD /* CurriculateBoiledWaterAmountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurriculateBoiledWaterAmountService.swift; sourceTree = "<group>"; };
+		4B2E222624548F83006067FD /* CalculateBoiledWaterAmountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateBoiledWaterAmountService.swift; sourceTree = "<group>"; };
 		4B2E222D24549165006067FD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		4B2E222F24549277006067FD /* CoffeeBeansWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeBeansWeight.swift; sourceTree = "<group>"; };
+		4B2E222F24549277006067FD /* ValidatedInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedInput.swift; sourceTree = "<group>"; };
 		4B2E223924549357006067FD /* CoffeeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeError.swift; sourceTree = "<group>"; };
+		4B4550262459B23500A791F1 /* CoproductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoproductView.swift; sourceTree = "<group>"; };
+		4B45502A2459F38400A791F1 /* CoproductViewTraverse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoproductViewTraverse.swift; sourceTree = "<group>"; };
 		4BC93D57245572390093BDA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4BC93D59245572400093BDA7 /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appstore.png; sourceTree = "<group>"; };
 		4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoiledWaterAmountPresenter.swift; sourceTree = "<group>"; };
 		4BC93D6C2455DA5D0093BDA7 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
 		4BC93D702455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boiledWaterAmountPereseterImplTests.swift; sourceTree = "<group>"; };
+		4BFFB7DF2459962600596B44 /* NonEmptyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonEmptyList.swift; sourceTree = "<group>"; };
+		4BFFB7E12459A37E00596B44 /* ValidateInputService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateInputService.swift; sourceTree = "<group>"; };
+		4BFFB7E32459A3DB00596B44 /* ResultNel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultNel.swift; sourceTree = "<group>"; };
+		4BFFB7E72459A6C600596B44 /* AssociativityRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociativityRight.swift; sourceTree = "<group>"; };
 		4C86B9492455387C000154D1 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,7 +207,7 @@
 			children = (
 				4B2E22382454933A006067FD /* error */,
 				4B2E222224548D6C006067FD /* BoiledWaterAmount.swift */,
-				4B2E222F24549277006067FD /* CoffeeBeansWeight.swift */,
+				4B2E222F24549277006067FD /* ValidatedInput.swift */,
 			);
 			path = value;
 			sourceTree = "<group>";
@@ -191,7 +215,8 @@
 		4B2E222524548F5C006067FD /* service */ = {
 			isa = PBXGroup;
 			children = (
-				4B2E222624548F83006067FD /* CurriculateBoiledWaterAmountService.swift */,
+				4B2E222624548F83006067FD /* CalculateBoiledWaterAmountService.swift */,
+				4BFFB7E12459A37E00596B44 /* ValidateInputService.swift */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -200,6 +225,11 @@
 			isa = PBXGroup;
 			children = (
 				4BC93D6C2455DA5D0093BDA7 /* Optional.swift */,
+				4BFFB7E32459A3DB00596B44 /* ResultNel.swift */,
+				4BFFB7DF2459962600596B44 /* NonEmptyList.swift */,
+				4BFFB7E72459A6C600596B44 /* AssociativityRight.swift */,
+				4B4550262459B23500A791F1 /* CoproductView.swift */,
+				4B45502A2459F38400A791F1 /* CoproductViewTraverse.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -370,16 +400,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B45502B2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */,
+				4BFFB7E42459A3DB00596B44 /* ResultNel.swift in Sources */,
 				4BC93D5F2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
 				4BC93D6D2455DA5D0093BDA7 /* Optional.swift in Sources */,
-				4B2E222724548F83006067FD /* CurriculateBoiledWaterAmountService.swift in Sources */,
+				4B2E222724548F83006067FD /* CalculateBoiledWaterAmountService.swift in Sources */,
 				4B2E222324548D6C006067FD /* BoiledWaterAmount.swift in Sources */,
 				4B2E21F224548308006067FD /* AppDelegate.swift in Sources */,
 				4B2E223A24549357006067FD /* CoffeeError.swift in Sources */,
 				4C86B94A2455387C000154D1 /* ContentViewModel.swift in Sources */,
 				4B2E21F424548308006067FD /* SceneDelegate.swift in Sources */,
 				4B2E21F624548308006067FD /* ContentView.swift in Sources */,
-				4B2E223024549277006067FD /* CoffeeBeansWeight.swift in Sources */,
+				4B2E223024549277006067FD /* ValidatedInput.swift in Sources */,
+				4BFFB7E82459A6C600596B44 /* AssociativityRight.swift in Sources */,
+				4B4550272459B23500A791F1 /* CoproductView.swift in Sources */,
+				4BFFB7E02459962600596B44 /* NonEmptyList.swift in Sources */,
+				4BFFB7E22459A37E00596B44 /* ValidateInputService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,15 +423,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B2E222824548F83006067FD /* CurriculateBoiledWaterAmountService.swift in Sources */,
+				4B4550342459F70400A791F1 /* ValidateInputService.swift in Sources */,
+				4B45502C2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */,
+				4B45502E2459F6DD00A791F1 /* ResultNel.swift in Sources */,
+				4BFFB7E92459A6C600596B44 /* AssociativityRight.swift in Sources */,
 				4BC93D6E2455DA5D0093BDA7 /* Optional.swift in Sources */,
+				4B4550282459B23500A791F1 /* CoproductView.swift in Sources */,
 				4B2E222424548D6C006067FD /* BoiledWaterAmount.swift in Sources */,
 				4BC93D602455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
 				4BC93D692455D24A0093BDA7 /* ContentViewModel.swift in Sources */,
-				4B2E223124549277006067FD /* CoffeeBeansWeight.swift in Sources */,
+				4B2E223124549277006067FD /* ValidatedInput.swift in Sources */,
+				4B4550302459F6E100A791F1 /* NonEmptyList.swift in Sources */,
 				4BC93D672455D2460093BDA7 /* ContentView.swift in Sources */,
 				4B2E223B24549357006067FD /* CoffeeError.swift in Sources */,
 				4BC93D722455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift in Sources */,
+				4B4550362459F71000A791F1 /* CalculateBoiledWaterAmountService.swift in Sources */,
 				4BC93D642455D1F80093BDA7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,15 +446,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B4550352459F70400A791F1 /* ValidateInputService.swift in Sources */,
+				4B45502D2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */,
+				4B45502F2459F6DD00A791F1 /* ResultNel.swift in Sources */,
+				4BFFB7EA2459A6C600596B44 /* AssociativityRight.swift in Sources */,
 				4BC93D612455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
+				4B4550292459B23500A791F1 /* CoproductView.swift in Sources */,
 				4BC93D6F2455DA5D0093BDA7 /* Optional.swift in Sources */,
 				4B2E223C24549357006067FD /* CoffeeError.swift in Sources */,
 				4BC93D682455D2470093BDA7 /* ContentView.swift in Sources */,
 				4BC93D662455D2340093BDA7 /* BoiledWaterAmount.swift in Sources */,
+				4B4550312459F6E200A791F1 /* NonEmptyList.swift in Sources */,
 				4B2E22142454830A006067FD /* coffeebrew46UITests.swift in Sources */,
 				4BC93D6A2455D24B0093BDA7 /* ContentViewModel.swift in Sources */,
-				4B2E223224549277006067FD /* CoffeeBeansWeight.swift in Sources */,
-				4BC93D6B2455D2530093BDA7 /* CurriculateBoiledWaterAmountService.swift in Sources */,
+				4B2E223224549277006067FD /* ValidatedInput.swift in Sources */,
+				4B4550372459F71100A791F1 /* CalculateBoiledWaterAmountService.swift in Sources */,
 				4BC93D652455D1FB0093BDA7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

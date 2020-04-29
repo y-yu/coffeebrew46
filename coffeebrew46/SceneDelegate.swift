@@ -16,7 +16,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // TODO: Fix wiring!!!!!!!
         let contentView = ContentView(
             viewModel: ContentViewModel(
-                calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl(),
+                calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl(
+                        validateInputService: ValidateInputServiceImpl()
+                    ),
                 boiledWaterAmountPresenter: BoiledWaterAmountPresenterImpl()
             )
         )
