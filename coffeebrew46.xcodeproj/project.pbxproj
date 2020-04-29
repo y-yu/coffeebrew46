@@ -12,7 +12,6 @@
 		4B2E21F624548308006067FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E21F524548308006067FD /* ContentView.swift */; };
 		4B2E21FB2454830A006067FD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B2E21FA2454830A006067FD /* Preview Assets.xcassets */; };
 		4B2E21FE2454830A006067FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B2E21FC2454830A006067FD /* LaunchScreen.storyboard */; };
-		4B2E22092454830A006067FD /* coffeebrew46Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E22082454830A006067FD /* coffeebrew46Tests.swift */; };
 		4B2E22142454830A006067FD /* coffeebrew46UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E22132454830A006067FD /* coffeebrew46UITests.swift */; };
 		4B2E222324548D6C006067FD /* BoiledWaterAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222224548D6C006067FD /* BoiledWaterAmount.swift */; };
 		4B2E222424548D6C006067FD /* BoiledWaterAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222224548D6C006067FD /* BoiledWaterAmount.swift */; };
@@ -28,9 +27,24 @@
 		4B2E223A24549357006067FD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* Errors.swift */; };
 		4B2E223B24549357006067FD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* Errors.swift */; };
 		4B2E223C24549357006067FD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* Errors.swift */; };
-		4C86B94A2455387C000154D1 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C86B9492455387C000154D1 /* ContentViewModel.swift */; };
 		4BC93D58245572390093BDA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D57245572390093BDA7 /* Assets.xcassets */; };
 		4BC93D5A245572400093BDA7 /* appstore.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D59245572400093BDA7 /* appstore.png */; };
+		4BC93D5F2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */; };
+		4BC93D602455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */; };
+		4BC93D612455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */; };
+		4BC93D642455D1F80093BDA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E21F324548308006067FD /* SceneDelegate.swift */; };
+		4BC93D652455D1FB0093BDA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E21F324548308006067FD /* SceneDelegate.swift */; };
+		4BC93D662455D2340093BDA7 /* BoiledWaterAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222224548D6C006067FD /* BoiledWaterAmount.swift */; };
+		4BC93D672455D2460093BDA7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E21F524548308006067FD /* ContentView.swift */; };
+		4BC93D682455D2470093BDA7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E21F524548308006067FD /* ContentView.swift */; };
+		4BC93D692455D24A0093BDA7 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C86B9492455387C000154D1 /* ContentViewModel.swift */; };
+		4BC93D6A2455D24B0093BDA7 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C86B9492455387C000154D1 /* ContentViewModel.swift */; };
+		4BC93D6B2455D2530093BDA7 /* CurriculateBoiledWaterAmountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E222624548F83006067FD /* CurriculateBoiledWaterAmountService.swift */; };
+		4BC93D6D2455DA5D0093BDA7 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D6C2455DA5D0093BDA7 /* Optional.swift */; };
+		4BC93D6E2455DA5D0093BDA7 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D6C2455DA5D0093BDA7 /* Optional.swift */; };
+		4BC93D6F2455DA5D0093BDA7 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D6C2455DA5D0093BDA7 /* Optional.swift */; };
+		4BC93D722455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D702455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift */; };
+		4C86B94A2455387C000154D1 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C86B9492455387C000154D1 /* ContentViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,7 +73,6 @@
 		4B2E21FD2454830A006067FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B2E21FF2454830A006067FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B2E22042454830A006067FD /* coffeebrew46Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = coffeebrew46Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B2E22082454830A006067FD /* coffeebrew46Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coffeebrew46Tests.swift; sourceTree = "<group>"; };
 		4B2E220A2454830A006067FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B2E220F2454830A006067FD /* coffeebrew46UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = coffeebrew46UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2E22132454830A006067FD /* coffeebrew46UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coffeebrew46UITests.swift; sourceTree = "<group>"; };
@@ -70,9 +83,12 @@
 		4B2E222F24549277006067FD /* CoffeeBeansWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeBeansWeight.swift; sourceTree = "<group>"; };
 		4B2E22342454930A006067FD /* Either.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		4B2E223924549357006067FD /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
-		4C86B9492455387C000154D1 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		4BC93D57245572390093BDA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4BC93D59245572400093BDA7 /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appstore.png; sourceTree = "<group>"; };
+		4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoiledWaterAmountPresenter.swift; sourceTree = "<group>"; };
+		4BC93D6C2455DA5D0093BDA7 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
+		4BC93D702455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boiledWaterAmountPereseterImplTests.swift; sourceTree = "<group>"; };
+		4C86B9492455387C000154D1 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,14 +140,13 @@
 		4B2E21F024548308006067FD /* coffeebrew46 */ = {
 			isa = PBXGroup;
 			children = (
+				4BC93D622455C7960093BDA7 /* view */,
+				4BC93D5D2455B4F50093BDA7 /* presenter */,
 				4B2E2233245492F9006067FD /* util */,
 				4B2E222524548F5C006067FD /* service */,
-				4B2E222124548D08006067FD /* model */,
+				4B2E222124548D08006067FD /* value */,
 				4B2E21F124548308006067FD /* AppDelegate.swift */,
 				4B2E21F324548308006067FD /* SceneDelegate.swift */,
-				4B2E21F524548308006067FD /* ContentView.swift */,
-				4C86B9492455387C000154D1 /* ContentViewModel.swift */,
-				4B2E21F72454830A006067FD /* Assets.xcassets */,
 				4B2E21FC2454830A006067FD /* LaunchScreen.storyboard */,
 				4BC93D57245572390093BDA7 /* Assets.xcassets */,
 				4BC93D59245572400093BDA7 /* appstore.png */,
@@ -152,8 +167,8 @@
 		4B2E22072454830A006067FD /* coffeebrew46Tests */ = {
 			isa = PBXGroup;
 			children = (
-				4B2E22082454830A006067FD /* coffeebrew46Tests.swift */,
 				4B2E220A2454830A006067FD /* Info.plist */,
+				4BC93D702455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift */,
 			);
 			path = coffeebrew46Tests;
 			sourceTree = "<group>";
@@ -167,14 +182,14 @@
 			path = coffeebrew46UITests;
 			sourceTree = "<group>";
 		};
-		4B2E222124548D08006067FD /* model */ = {
+		4B2E222124548D08006067FD /* value */ = {
 			isa = PBXGroup;
 			children = (
 				4B2E22382454933A006067FD /* error */,
 				4B2E222224548D6C006067FD /* BoiledWaterAmount.swift */,
 				4B2E222F24549277006067FD /* CoffeeBeansWeight.swift */,
 			);
-			path = model;
+			path = value;
 			sourceTree = "<group>";
 		};
 		4B2E222524548F5C006067FD /* service */ = {
@@ -189,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				4B2E22342454930A006067FD /* Either.swift */,
+				4BC93D6C2455DA5D0093BDA7 /* Optional.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -199,6 +215,31 @@
 				4B2E223924549357006067FD /* Errors.swift */,
 			);
 			path = error;
+			sourceTree = "<group>";
+		};
+		4BC93D5D2455B4F50093BDA7 /* presenter */ = {
+			isa = PBXGroup;
+			children = (
+				4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */,
+			);
+			path = presenter;
+			sourceTree = "<group>";
+		};
+		4BC93D622455C7960093BDA7 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				4BC93D632455C7B10093BDA7 /* model */,
+				4B2E21F524548308006067FD /* ContentView.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		4BC93D632455C7B10093BDA7 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				4C86B9492455387C000154D1 /* ContentViewModel.swift */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,6 +375,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BC93D5F2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
+				4BC93D6D2455DA5D0093BDA7 /* Optional.swift in Sources */,
 				4B2E22352454930A006067FD /* Either.swift in Sources */,
 				4B2E222724548F83006067FD /* CurriculateBoiledWaterAmountService.swift in Sources */,
 				4B2E222324548D6C006067FD /* BoiledWaterAmount.swift in Sources */,
@@ -351,11 +394,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B2E222824548F83006067FD /* CurriculateBoiledWaterAmountService.swift in Sources */,
+				4BC93D6E2455DA5D0093BDA7 /* Optional.swift in Sources */,
 				4B2E222424548D6C006067FD /* BoiledWaterAmount.swift in Sources */,
-				4B2E22092454830A006067FD /* coffeebrew46Tests.swift in Sources */,
+				4BC93D602455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
+				4BC93D692455D24A0093BDA7 /* ContentViewModel.swift in Sources */,
 				4B2E223124549277006067FD /* CoffeeBeansWeight.swift in Sources */,
+				4BC93D672455D2460093BDA7 /* ContentView.swift in Sources */,
 				4B2E223B24549357006067FD /* Errors.swift in Sources */,
 				4B2E22362454930A006067FD /* Either.swift in Sources */,
+				4BC93D722455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift in Sources */,
+				4BC93D642455D1F80093BDA7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,10 +411,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BC93D612455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
+				4BC93D6F2455DA5D0093BDA7 /* Optional.swift in Sources */,
 				4B2E223C24549357006067FD /* Errors.swift in Sources */,
+				4BC93D682455D2470093BDA7 /* ContentView.swift in Sources */,
+				4BC93D662455D2340093BDA7 /* BoiledWaterAmount.swift in Sources */,
 				4B2E22142454830A006067FD /* coffeebrew46UITests.swift in Sources */,
+				4BC93D6A2455D24B0093BDA7 /* ContentViewModel.swift in Sources */,
 				4B2E22372454930A006067FD /* Either.swift in Sources */,
 				4B2E223224549277006067FD /* CoffeeBeansWeight.swift in Sources */,
+				4BC93D6B2455D2530093BDA7 /* CurriculateBoiledWaterAmountService.swift in Sources */,
+				4BC93D652455D1FB0093BDA7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

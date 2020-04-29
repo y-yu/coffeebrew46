@@ -5,11 +5,17 @@ enum Either<E, A>{
 
 extension Either {
     func map<B>(_ f: (A) -> B) -> Either<E, B> {
+        return self.flatMap(
+            { (a) -> Either<E, B> in return .Right(f(a)) }
+        )
+    }
+    
+    func flatMap<B>(_ f: (A) -> Either<E, B>) -> Either<E, B> {
         switch self {
         case .Left(let leftValue):
             return .Left(leftValue)
         case .Right(let rightValue):
-            return .Right(f(rightValue))
+            return f(rightValue)
         }
     }
     

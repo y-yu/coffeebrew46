@@ -1,12 +1,12 @@
 /*
- # Interface to curriculate boiled water amount service
+ # Interface to calculate boiled water amount service
  
  In the '4:6 method', which is one of the berwing coffee methods, invented by TETSU KASUYA,
- the boiled water amount for each step must be curriculated only the coffee beans weight.
+ the boiled water amount for each step must be calculated only the coffee beans weight.
  This interface is a reprentation of the curriculation.
  */
-protocol CurriculateBoiledWaterAmountService {
-    func curriculate(
+protocol CalculateBoiledWaterAmountService {
+    func calculate(
         coffeeBeansWeight: Double,
         firstBoiledWaterAmount: Double,
         numberOf6: Int
@@ -14,8 +14,8 @@ protocol CurriculateBoiledWaterAmountService {
 }
 
 // Implementation
-class CurriculateBoiledWaterAmountServiceImpl: CurriculateBoiledWaterAmountService {
-    func curriculate(
+class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
+    func calculate(
         coffeeBeansWeight: Double,
         firstBoiledWaterAmount: Double,
         numberOf6: Int

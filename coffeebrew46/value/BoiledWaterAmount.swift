@@ -1,3 +1,6 @@
+/*
+ # Boild water amount for 4:6 method.
+ */
 struct BoiledWaterAmount {
     let totalAmount: Double
     let values: (Double, Double, Double, Double, Double)
@@ -9,6 +12,7 @@ struct BoiledWaterAmount {
 }
 
 extension BoiledWaterAmount {
+    // FIXME
     func toString() -> String {
         return "\(values.0), \(values.1), \(values.2), \(values.3), \(values.4)"
     }
