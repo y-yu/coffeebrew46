@@ -31,7 +31,7 @@ class BoiledWaterAmountPresenterImpl: BoiledWaterAmountPresenter {
             return CCons<Text, CNil<Image>>
                 .apply(Text("Boiled water amounts are " + boiledWaterAmount.toString()))
         case .failure(/* let coffeeErrors*/ _):
-            return CCons<Text,CNil<Image>>
+            return CCons<Text, CNil<Image>>
                 .apply(CNil(Image("wood_nata")))
         }
     }
