@@ -1,4 +1,4 @@
-/*
+/**
  # Boild water amount for 4:6 method.
  */
 struct BoiledWaterAmount {

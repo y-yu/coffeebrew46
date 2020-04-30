@@ -32,12 +32,12 @@ final class ContentViewModel<
     // This function generate a view.
     public func calculate(_ textInput: String) -> Void {
         // Convert input text to Double
-        let weightEither: Result<Double, CoffeeError> =
+        let weightEither: ResultNel<Double, CoffeeError> =
             Double(textInput)
-                .toResult(CoffeeError.CoffeeBeansWeightIsNotNumberError(.none)) // XCode says it is an error but it's a lie!
+                .toResultNel(CoffeeError.CoffeeBeansWeightIsNotNumberError)
         
         // Calc and binding boiledWaterAmountText
-        let result: Result<BoiledWaterAmount, CoffeeError> =
+        let result: ResultNel<BoiledWaterAmount, CoffeeError> =
             weightEither.flatMap { (weight) in
                 calculateBoiledWaterAmountService
                     .calculate(

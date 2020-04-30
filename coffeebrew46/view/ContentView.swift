@@ -20,7 +20,9 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(
             viewModel: ContentViewModel(
-                calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl(),
+                calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl(
+                    validateInputService: ValidateInputServiceImpl()
+                ),
                 boiledWaterAmountPresenter: BoiledWaterAmountPresenterImpl()
             )
         )

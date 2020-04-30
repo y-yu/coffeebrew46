@@ -1,0 +1,3 @@
+precedencegroup AssociativityRight {
+    associativity: right
+}

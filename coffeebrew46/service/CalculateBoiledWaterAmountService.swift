@@ -1,4 +1,4 @@
-/*
+/**
  # Interface to calculate boiled water amount service
  
  In the '4:6 method', which is one of the berwing coffee methods, invented by TETSU KASUYA,
@@ -10,25 +10,37 @@ protocol CalculateBoiledWaterAmountService {
         coffeeBeansWeight: Double,
         firstBoiledWaterAmount: Double,
         numberOf6: Int
-    ) -> Result<BoiledWaterAmount, CoffeeError>
+    ) -> ResultNel<BoiledWaterAmount, CoffeeError>
 }
 
 // Implementation
 class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
+    let validateInputService: ValidateInputService
+    
+    init(validateInputService: ValidateInputService) {
+        self.validateInputService = validateInputService
+    }
+    
     func calculate(
         coffeeBeansWeight: Double,
         firstBoiledWaterAmount: Double,
         numberOf6: Int
-    ) -> Result<BoiledWaterAmount, CoffeeError> {
-        // This is a sloppy impletementation!!!!!!!!!!!!!!
-        // TODO: Fix it
-        return (coffeeBeansWeight <= 0 ? .failure(CoffeeError.CoffeeBeansWeightUnderZeroError(.none)) : .success(
+    ) -> ResultNel<BoiledWaterAmount, CoffeeError> {
+        let wholeBoiledWaterAmount = coffeeBeansWeight * 15
+        let validatedInput = validateInputService.validate(
+            coffeeBeansWeight: coffeeBeansWeight,
+            wholeBoiledWaterAmount: wholeBoiledWaterAmount,
+            firstBoiledWaterAmount: firstBoiledWaterAmount,
+            numberOf6: numberOf6
+        )
+        
+        return validatedInput.map { (input) in
             BoiledWaterAmount(
-                totalAmount: coffeeBeansWeight * 15,
+                totalAmount: wholeBoiledWaterAmount,
                 f: { (ta) -> (Double, Double, Double, Double, Double) in
                     (ta / 5, ta / 5, ta / 5, ta / 5, ta / 5)
                 }
             )
-        ))
+        }
     }
 }
