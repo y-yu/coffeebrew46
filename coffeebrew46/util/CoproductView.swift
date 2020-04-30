@@ -1,7 +1,5 @@
 import SwiftUI
 
-protocol Coproduct { }
-
 /**
  # A type of `Coproduct` which can be behave as `View`.
  */
@@ -33,7 +31,7 @@ enum CCons<H: View, T: CoproductView & CoproductViewTraverse>: CoproductView {
         }
     }
     
-    struct Inr: Coproduct {
+    struct Inr: CoproductView {
         let tail: T
         
         init(_ tail: T) {
@@ -95,5 +93,3 @@ extension CCons.Inr: View where T: CoproductViewTraverse {
         }
     }
 }
-
-extension CCons.Inr: CoproductView where T: CoproductViewTraverse { }

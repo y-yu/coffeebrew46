@@ -25,7 +25,7 @@ extension CCons.Inl: CoproductViewTraverse {
     }
 }
 
-extension CCons.Inr: CoproductViewTraverse where T: CoproductViewTraverse {
+extension CCons.Inr: CoproductViewTraverse {
     typealias Out = T.Out
     
     func traverse() -> T.Out {
