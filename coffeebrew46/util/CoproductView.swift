@@ -16,7 +16,7 @@ struct CNil<E: View>: CoproductView {
 /**
  # A Container which has some `View`s heterogeneously.
  */
-enum CCons<H: View, T: CoproductViewTraverse>: CoproductView {
+enum CCons<H: View, T: CoproductView>: CoproductView {
     struct Inl: CoproductView {
         let head: H
         
@@ -57,13 +57,13 @@ extension CCons {
     }
 }
 
-extension CCons: View where T: CoproductViewTraverse {
+extension CCons: View {
     var body: AnyView {
         switch self {
         case .inl(let left):
-            return AnyView(left.traverse())
+            return AnyView(left.body)
         case .inr(let right):
-            return AnyView(right.traverse())
+            return AnyView(right.body)
         }
     }
 }
@@ -73,17 +73,17 @@ extension CCons.Inl: View {
     
     var body: H {
         get {
-            return self.traverse()
+            return head
         }
     }
 }
 
-extension CCons.Inr: View where T: CoproductViewTraverse {
-    typealias Body = CCons.Inr.Out
+extension CCons.Inr: View {
+    typealias Body = T.Body
     
-    var body: CCons.Inr.Out {
+    var body: T.Body {
         get {
-            return self.traverse()
+            return tail.body
         }
     }
 }

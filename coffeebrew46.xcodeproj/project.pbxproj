@@ -26,9 +26,6 @@
 		4B4550272459B23500A791F1 /* CoproductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4550262459B23500A791F1 /* CoproductView.swift */; };
 		4B4550282459B23500A791F1 /* CoproductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4550262459B23500A791F1 /* CoproductView.swift */; };
 		4B4550292459B23500A791F1 /* CoproductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4550262459B23500A791F1 /* CoproductView.swift */; };
-		4B45502B2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45502A2459F38400A791F1 /* CoproductViewTraverse.swift */; };
-		4B45502C2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45502A2459F38400A791F1 /* CoproductViewTraverse.swift */; };
-		4B45502D2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45502A2459F38400A791F1 /* CoproductViewTraverse.swift */; };
 		4B45502E2459F6DD00A791F1 /* ResultNel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E32459A3DB00596B44 /* ResultNel.swift */; };
 		4B45502F2459F6DD00A791F1 /* ResultNel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E32459A3DB00596B44 /* ResultNel.swift */; };
 		4B4550302459F6E100A791F1 /* NonEmptyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7DF2459962600596B44 /* NonEmptyList.swift */; };
@@ -98,7 +95,6 @@
 		4B2E222F24549277006067FD /* ValidatedInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedInput.swift; sourceTree = "<group>"; };
 		4B2E223924549357006067FD /* CoffeeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeError.swift; sourceTree = "<group>"; };
 		4B4550262459B23500A791F1 /* CoproductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoproductView.swift; sourceTree = "<group>"; };
-		4B45502A2459F38400A791F1 /* CoproductViewTraverse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoproductViewTraverse.swift; sourceTree = "<group>"; };
 		4BC93D57245572390093BDA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4BC93D59245572400093BDA7 /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appstore.png; sourceTree = "<group>"; };
 		4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoiledWaterAmountPresenter.swift; sourceTree = "<group>"; };
@@ -229,7 +225,6 @@
 				4BFFB7DF2459962600596B44 /* NonEmptyList.swift */,
 				4BFFB7E72459A6C600596B44 /* Associativity.swift */,
 				4B4550262459B23500A791F1 /* CoproductView.swift */,
-				4B45502A2459F38400A791F1 /* CoproductViewTraverse.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -400,7 +395,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B45502B2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */,
 				4BFFB7E42459A3DB00596B44 /* ResultNel.swift in Sources */,
 				4BC93D5F2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
 				4BC93D6D2455DA5D0093BDA7 /* Optional.swift in Sources */,
@@ -424,7 +418,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B4550342459F70400A791F1 /* ValidateInputService.swift in Sources */,
-				4B45502C2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */,
 				4B45502E2459F6DD00A791F1 /* ResultNel.swift in Sources */,
 				4BFFB7E92459A6C600596B44 /* Associativity.swift in Sources */,
 				4BC93D6E2455DA5D0093BDA7 /* Optional.swift in Sources */,
@@ -447,7 +440,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B4550352459F70400A791F1 /* ValidateInputService.swift in Sources */,
-				4B45502D2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */,
 				4B45502F2459F6DD00A791F1 /* ResultNel.swift in Sources */,
 				4BFFB7EA2459A6C600596B44 /* Associativity.swift in Sources */,
 				4BC93D612455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
