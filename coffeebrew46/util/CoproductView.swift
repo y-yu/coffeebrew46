@@ -6,16 +6,10 @@ import SwiftUI
 protocol CoproductView: View {}
 
 struct CNil<E: View>: CoproductView {
-    let value: E
+    var body: E
     
-    init (_ value: E) {
-        self.value = value
-    }
-}
-
-extension CNil: View {
-    var body: E {
-        value
+    init (_ body: E) {
+        self.body = body
     }
 }
 

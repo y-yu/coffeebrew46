@@ -13,7 +13,7 @@ extension CNil: CoproductViewTraverse {
     typealias Out = E
     
     func traverse() -> E {
-        return value
+        return self.body
     }
 }
 
