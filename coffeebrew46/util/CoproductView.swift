@@ -22,7 +22,7 @@ extension CNil: View {
 /**
  # A Container which has some `View`s heterogeneously.
  */
-enum CCons<H: View, T: CoproductView & CoproductViewTraverse>: CoproductView {
+enum CCons<H: View, T: CoproductViewTraverse>: CoproductView {
     struct Inl: CoproductView {
         let head: H
         
