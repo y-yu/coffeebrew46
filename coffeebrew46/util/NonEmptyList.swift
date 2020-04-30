@@ -49,7 +49,7 @@ extension NonEmptyList {
 }
 
 // Append operator.
-infix operator ++: AssociativityRight
+infix operator ++: AssociativityLeft
 
 func ++<A>(_ nel1: NonEmptyList<A>, _ nel2: NonEmptyList<A>) -> NonEmptyList<A> {
     return NonEmptyList(

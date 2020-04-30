@@ -56,9 +56,9 @@
 		4BFFB7E02459962600596B44 /* NonEmptyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7DF2459962600596B44 /* NonEmptyList.swift */; };
 		4BFFB7E22459A37E00596B44 /* ValidateInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E12459A37E00596B44 /* ValidateInputService.swift */; };
 		4BFFB7E42459A3DB00596B44 /* ResultNel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E32459A3DB00596B44 /* ResultNel.swift */; };
-		4BFFB7E82459A6C600596B44 /* AssociativityRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E72459A6C600596B44 /* AssociativityRight.swift */; };
-		4BFFB7E92459A6C600596B44 /* AssociativityRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E72459A6C600596B44 /* AssociativityRight.swift */; };
-		4BFFB7EA2459A6C600596B44 /* AssociativityRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E72459A6C600596B44 /* AssociativityRight.swift */; };
+		4BFFB7E82459A6C600596B44 /* Associativity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E72459A6C600596B44 /* Associativity.swift */; };
+		4BFFB7E92459A6C600596B44 /* Associativity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E72459A6C600596B44 /* Associativity.swift */; };
+		4BFFB7EA2459A6C600596B44 /* Associativity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E72459A6C600596B44 /* Associativity.swift */; };
 		4C86B94A2455387C000154D1 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C86B9492455387C000154D1 /* ContentViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -107,7 +107,7 @@
 		4BFFB7DF2459962600596B44 /* NonEmptyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonEmptyList.swift; sourceTree = "<group>"; };
 		4BFFB7E12459A37E00596B44 /* ValidateInputService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateInputService.swift; sourceTree = "<group>"; };
 		4BFFB7E32459A3DB00596B44 /* ResultNel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultNel.swift; sourceTree = "<group>"; };
-		4BFFB7E72459A6C600596B44 /* AssociativityRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociativityRight.swift; sourceTree = "<group>"; };
+		4BFFB7E72459A6C600596B44 /* Associativity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Associativity.swift; sourceTree = "<group>"; };
 		4C86B9492455387C000154D1 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -227,7 +227,7 @@
 				4BC93D6C2455DA5D0093BDA7 /* Optional.swift */,
 				4BFFB7E32459A3DB00596B44 /* ResultNel.swift */,
 				4BFFB7DF2459962600596B44 /* NonEmptyList.swift */,
-				4BFFB7E72459A6C600596B44 /* AssociativityRight.swift */,
+				4BFFB7E72459A6C600596B44 /* Associativity.swift */,
 				4B4550262459B23500A791F1 /* CoproductView.swift */,
 				4B45502A2459F38400A791F1 /* CoproductViewTraverse.swift */,
 			);
@@ -412,7 +412,7 @@
 				4B2E21F424548308006067FD /* SceneDelegate.swift in Sources */,
 				4B2E21F624548308006067FD /* ContentView.swift in Sources */,
 				4B2E223024549277006067FD /* ValidatedInput.swift in Sources */,
-				4BFFB7E82459A6C600596B44 /* AssociativityRight.swift in Sources */,
+				4BFFB7E82459A6C600596B44 /* Associativity.swift in Sources */,
 				4B4550272459B23500A791F1 /* CoproductView.swift in Sources */,
 				4BFFB7E02459962600596B44 /* NonEmptyList.swift in Sources */,
 				4BFFB7E22459A37E00596B44 /* ValidateInputService.swift in Sources */,
@@ -426,7 +426,7 @@
 				4B4550342459F70400A791F1 /* ValidateInputService.swift in Sources */,
 				4B45502C2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */,
 				4B45502E2459F6DD00A791F1 /* ResultNel.swift in Sources */,
-				4BFFB7E92459A6C600596B44 /* AssociativityRight.swift in Sources */,
+				4BFFB7E92459A6C600596B44 /* Associativity.swift in Sources */,
 				4BC93D6E2455DA5D0093BDA7 /* Optional.swift in Sources */,
 				4B4550282459B23500A791F1 /* CoproductView.swift in Sources */,
 				4B2E222424548D6C006067FD /* BoiledWaterAmount.swift in Sources */,
@@ -449,7 +449,7 @@
 				4B4550352459F70400A791F1 /* ValidateInputService.swift in Sources */,
 				4B45502D2459F38400A791F1 /* CoproductViewTraverse.swift in Sources */,
 				4B45502F2459F6DD00A791F1 /* ResultNel.swift in Sources */,
-				4BFFB7EA2459A6C600596B44 /* AssociativityRight.swift in Sources */,
+				4BFFB7EA2459A6C600596B44 /* Associativity.swift in Sources */,
 				4BC93D612455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
 				4B4550292459B23500A791F1 /* CoproductView.swift in Sources */,
 				4BC93D6F2455DA5D0093BDA7 /* Optional.swift in Sources */,
