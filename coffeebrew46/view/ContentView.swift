@@ -2,16 +2,24 @@ import SwiftUI
 
 struct ContentView<
     BoiledWaterAmountPresenterImplType: BoiledWaterAmountPresenter
->: View {
+>
+: View {
     @ObservedObject var viewModel: ContentViewModel<BoiledWaterAmountPresenterImplType>
+    // @State var point: CGPoint
     
     var body: some View {
         VStack {
-            TextField("Weight", text: $viewModel.textInput)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+            HStack(alignment: .top) {
+                Image(systemName: "minus")
+                Slider(value: $viewModel.coffeeBeansWeight, in: 0...50, step: 0.5)
+                Image(systemName: "plus")
+            }
+            Text("Coffee Beans Weight:\(viewModel.coffeeBeansWeight,  specifier: "%.1f")g")
+            //Slider(value: $viewModel.firstShotBoiledWaterAmount, in: 0...50, step: 0.1)
+            ScaleView()
+                .frame(width: 200, height: 200)
             // Text("Coffee beans!: \(String(format: "%.1f", viewModel.weight))g")
-            viewModel.boiledWaterAmountText
+            //viewModel.boiledWaterAmountText
         }
     }
 }

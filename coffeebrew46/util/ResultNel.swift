@@ -22,6 +22,5 @@ public func |+|<A, B, E: Error>(
     }
 }
 
-
 // It is required to use `NonEmptyList` for `Failure` type parameter of `Result`
 extension NonEmptyList: Error where A: Error { }
