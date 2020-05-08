@@ -4,11 +4,18 @@ final class ContentViewModel<
     BoiledWaterAmountPresenterImplType: BoiledWaterAmountPresenter
 >: ObservableObject {
     // Inupt text
-    @Published var textInput: String = "" {
+    @Published var coffeeBeansWeight: Double = 0.0 {
         didSet {
-            calculate(textInput)
+            calculate(coffeeBeansWeight)
         }
     }
+    @Published var firstShotBoiledWaterAmount: Double = 0.0 {
+        didSet {
+            
+        }
+    }
+    
+    @Published var scaleDegrees: Double = 0.0
 
     // Output to the View
     @Published private(set) var boiledWaterAmountText: BoiledWaterAmountPresenterImplType.ResultView =
@@ -30,11 +37,11 @@ final class ContentViewModel<
     }
     
     // This function generate a view.
-    public func calculate(_ textInput: String) -> Void {
+    public func calculate(_ coffeeBeansWeight: Double) -> Void {
         // Convert input text to Double
         let weightEither: ResultNel<Double, CoffeeError> =
-            Double(textInput)
-                .toResultNel(CoffeeError.CoffeeBeansWeightIsNotNumberError)
+            ResultNel.success(coffeeBeansWeight)
+            // Double(textInput).toResultNel(CoffeeError.CoffeeBeansWeightIsNotNumberError)
         
         // Calc and binding boiledWaterAmountText
         let result: ResultNel<BoiledWaterAmount, CoffeeError> =
