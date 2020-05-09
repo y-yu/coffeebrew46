@@ -3,7 +3,7 @@ import SwiftUI
 final class ContentViewModel<
     BoiledWaterAmountPresenterImplType: BoiledWaterAmountPresenter
 >: ObservableObject {
-    // Inupt text
+    // Inupt text.
     @Published var coffeeBeansWeight: Double = 0.0 {
         didSet {
             calculate(coffeeBeansWeight)
@@ -15,7 +15,10 @@ final class ContentViewModel<
         }
     }
     
-    @Published var scaleDegrees: Double = 0.0
+    @Published var scaleMax: Double = 50.0
+    
+    // Degrees which is indicated by the pointer of the scale view.
+    // @Published var scaleDegrees: Array<Double> = [0.0, 0.0]
 
     // Output to the View
     @Published private(set) var boiledWaterAmountText: BoiledWaterAmountPresenterImplType.ResultView =

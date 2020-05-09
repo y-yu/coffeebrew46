@@ -43,9 +43,9 @@
 		4B4A284F2462EA9900F2B037 /* ScaleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A284E2462EA9900F2B037 /* ScaleView.swift */; };
 		4B4A28502462EA9900F2B037 /* ScaleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A284E2462EA9900F2B037 /* ScaleView.swift */; };
 		4B4A28512462EA9900F2B037 /* ScaleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A284E2462EA9900F2B037 /* ScaleView.swift */; };
-		4B4A28532462EADD00F2B037 /* Pointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A28522462EADD00F2B037 /* Pointer.swift */; };
-		4B4A28542462EADD00F2B037 /* Pointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A28522462EADD00F2B037 /* Pointer.swift */; };
-		4B4A28552462EADD00F2B037 /* Pointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A28522462EADD00F2B037 /* Pointer.swift */; };
+		4B4A28532462EADD00F2B037 /* PointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A28522462EADD00F2B037 /* PointerView.swift */; };
+		4B4A28542462EADD00F2B037 /* PointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A28522462EADD00F2B037 /* PointerView.swift */; };
+		4B4A28552462EADD00F2B037 /* PointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A28522462EADD00F2B037 /* PointerView.swift */; };
 		4BC93D58245572390093BDA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D57245572390093BDA7 /* Assets.xcassets */; };
 		4BC93D5A245572400093BDA7 /* appstore.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D59245572400093BDA7 /* appstore.png */; };
 		4BC93D5F2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */; };
@@ -62,6 +62,9 @@
 		4BC93D6E2455DA5D0093BDA7 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D6C2455DA5D0093BDA7 /* Optional.swift */; };
 		4BC93D6F2455DA5D0093BDA7 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D6C2455DA5D0093BDA7 /* Optional.swift */; };
 		4BC93D722455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D702455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift */; };
+		4BFC26CB2466FDF700A2528E /* PointerInfoVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC26CA2466FDF700A2528E /* PointerInfoVIewModel.swift */; };
+		4BFC26CC2466FDF700A2528E /* PointerInfoVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC26CA2466FDF700A2528E /* PointerInfoVIewModel.swift */; };
+		4BFC26CD2466FDF700A2528E /* PointerInfoVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC26CA2466FDF700A2528E /* PointerInfoVIewModel.swift */; };
 		4BFFB7E02459962600596B44 /* NonEmptyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7DF2459962600596B44 /* NonEmptyList.swift */; };
 		4BFFB7E22459A37E00596B44 /* ValidateInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E12459A37E00596B44 /* ValidateInputService.swift */; };
 		4BFFB7E42459A3DB00596B44 /* ResultNel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFB7E32459A3DB00596B44 /* ResultNel.swift */; };
@@ -110,12 +113,13 @@
 		4B4550262459B23500A791F1 /* CoproductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoproductView.swift; sourceTree = "<group>"; };
 		4B4A284A2462AC9000F2B037 /* BoiledWaterAmountStateKeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoiledWaterAmountStateKeeper.swift; sourceTree = "<group>"; };
 		4B4A284E2462EA9900F2B037 /* ScaleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleView.swift; sourceTree = "<group>"; };
-		4B4A28522462EADD00F2B037 /* Pointer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pointer.swift; sourceTree = "<group>"; };
+		4B4A28522462EADD00F2B037 /* PointerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerView.swift; sourceTree = "<group>"; };
 		4BC93D57245572390093BDA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4BC93D59245572400093BDA7 /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appstore.png; sourceTree = "<group>"; };
 		4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoiledWaterAmountPresenter.swift; sourceTree = "<group>"; };
 		4BC93D6C2455DA5D0093BDA7 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
 		4BC93D702455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boiledWaterAmountPereseterImplTests.swift; sourceTree = "<group>"; };
+		4BFC26CA2466FDF700A2528E /* PointerInfoVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerInfoVIewModel.swift; sourceTree = "<group>"; };
 		4BFFB7DF2459962600596B44 /* NonEmptyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonEmptyList.swift; sourceTree = "<group>"; };
 		4BFFB7E12459A37E00596B44 /* ValidateInputService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateInputService.swift; sourceTree = "<group>"; };
 		4BFFB7E32459A3DB00596B44 /* ResultNel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultNel.swift; sourceTree = "<group>"; };
@@ -277,7 +281,7 @@
 				4BC93D632455C7B10093BDA7 /* model */,
 				4B2E21F524548308006067FD /* ContentView.swift */,
 				4B4A284E2462EA9900F2B037 /* ScaleView.swift */,
-				4B4A28522462EADD00F2B037 /* Pointer.swift */,
+				4B4A28522462EADD00F2B037 /* PointerView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -286,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				4C86B9492455387C000154D1 /* ContentViewModel.swift */,
+				4BFC26CA2466FDF700A2528E /* PointerInfoVIewModel.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -424,6 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4BFFB7E42459A3DB00596B44 /* ResultNel.swift in Sources */,
+				4BFC26CB2466FDF700A2528E /* PointerInfoVIewModel.swift in Sources */,
 				4BC93D5F2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
 				4BC93D6D2455DA5D0093BDA7 /* Optional.swift in Sources */,
 				4B2E222724548F83006067FD /* CalculateBoiledWaterAmountService.swift in Sources */,
@@ -435,7 +441,7 @@
 				4B2E21F424548308006067FD /* SceneDelegate.swift in Sources */,
 				4B2E21F624548308006067FD /* ContentView.swift in Sources */,
 				4B2E223024549277006067FD /* ValidatedInput.swift in Sources */,
-				4B4A28532462EADD00F2B037 /* Pointer.swift in Sources */,
+				4B4A28532462EADD00F2B037 /* PointerView.swift in Sources */,
 				4BFFB7E82459A6C600596B44 /* Associativity.swift in Sources */,
 				4B4550272459B23500A791F1 /* CoproductView.swift in Sources */,
 				4B4A284B2462AC9000F2B037 /* BoiledWaterAmountStateKeeper.swift in Sources */,
@@ -450,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B4550342459F70400A791F1 /* ValidateInputService.swift in Sources */,
+				4BFC26CC2466FDF700A2528E /* PointerInfoVIewModel.swift in Sources */,
 				4B45502E2459F6DD00A791F1 /* ResultNel.swift in Sources */,
 				4BFFB7E92459A6C600596B44 /* Associativity.swift in Sources */,
 				4BC93D6E2455DA5D0093BDA7 /* Optional.swift in Sources */,
@@ -461,7 +468,7 @@
 				4B2E223124549277006067FD /* ValidatedInput.swift in Sources */,
 				4B4550302459F6E100A791F1 /* NonEmptyList.swift in Sources */,
 				4BC93D672455D2460093BDA7 /* ContentView.swift in Sources */,
-				4B4A28542462EADD00F2B037 /* Pointer.swift in Sources */,
+				4B4A28542462EADD00F2B037 /* PointerView.swift in Sources */,
 				4B2E223B24549357006067FD /* CoffeeError.swift in Sources */,
 				4BC93D722455E21F0093BDA7 /* boiledWaterAmountPereseterImplTests.swift in Sources */,
 				4B4A284C2462AC9000F2B037 /* BoiledWaterAmountStateKeeper.swift in Sources */,
@@ -476,6 +483,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B4550352459F70400A791F1 /* ValidateInputService.swift in Sources */,
+				4BFC26CD2466FDF700A2528E /* PointerInfoVIewModel.swift in Sources */,
 				4B45502F2459F6DD00A791F1 /* ResultNel.swift in Sources */,
 				4BFFB7EA2459A6C600596B44 /* Associativity.swift in Sources */,
 				4BC93D612455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
@@ -487,7 +495,7 @@
 				4BC93D662455D2340093BDA7 /* BoiledWaterAmount.swift in Sources */,
 				4B4550312459F6E200A791F1 /* NonEmptyList.swift in Sources */,
 				4B2E22142454830A006067FD /* coffeebrew46UITests.swift in Sources */,
-				4B4A28552462EADD00F2B037 /* Pointer.swift in Sources */,
+				4B4A28552462EADD00F2B037 /* PointerView.swift in Sources */,
 				4BC93D6A2455D24B0093BDA7 /* ContentViewModel.swift in Sources */,
 				4B2E223224549277006067FD /* ValidatedInput.swift in Sources */,
 				4B4A284D2462AC9000F2B037 /* BoiledWaterAmountStateKeeper.swift in Sources */,

@@ -6,55 +6,54 @@ import SwiftUI
  These implementation refer from: https://talk.objc.io/episodes/S01E192-analog-clock
  */
 struct ScaleView: View {
+    // Max value of the scale.
+    @Binding var scaleMax: Double
+    
     // This is a public variable.
-    @Binding var degrees: Double
+    @Binding var pointerInfoViewModels: Array<PointerInfoViewModel>
     
     private let density: Int = 40
     private let markInterval: Int = 10
     
+    @State private var lastChanged: Int? = .none
+    
     var body: some View {
+        VStack {
         ZStack {
             ForEach(0..<(self.density * 4)) { t in
                 self.tick(tick: t)
             }
             GeometryReader { (geometry: GeometryProxy) in
-                return ZStack {
-                    Pointer()
-                        .stroke(Color.orange, lineWidth: 2)
-                        .rotationEffect(Angle.degrees(self.degrees))
-                        .gesture(
-                            DragGesture()
-                                .onChanged { value in
-                                    self.degrees =
-                                        self.getDegrees(
-                                            geometry: geometry,
-                                            point: value.location
-                                        )
-                                }
-                                .onEnded { value in
-                                    self.degrees =
-                                        self.getDegrees(
-                                            geometry: geometry,
-                                            point: value.location
-                                        )
-                                }
-                        )
-                    
+                ForEach(0..<self.pointerInfoViewModels.count) { i in
+                    PointerView(
+                        id: i,
+                        pointerInfo: self.$pointerInfoViewModels[i],
+                        lastChanged: self.$lastChanged,
+                        geometry: geometry
+                    )
                 }
-                
             }
             Color.clear
             }
+            Text("last changed: \(self.lastChanged.map { v in String(v) } ?? "none" )")
+        }
     }
     
+    // Print oblique squares as divisions of a scale.
     private func tick(tick: Int) -> some View {
         let angle: Double = Double(tick) / Double(self.density * 4) * 360
         
+        let isMark: Bool = tick % markInterval == 0
+        
         return VStack {
+            Text(isMark ? String(format: "%.0f", scaleMax * angle / 360) : " ")
+                .font(.system(size: 10))
+                .fixedSize()
+                .frame(width: 20)
             Rectangle()
                 .fill(Color.primary)
-                .opacity(tick % markInterval == 0 ? 2 : 0.5)
-                .frame(width: 1, height: 15)
+                .opacity(isMark ? 2 : 0.5)
+                .frame(width: 1, height: isMark ? 40 : 20)
             Spacer()
         }
         .rotationEffect(
@@ -63,29 +62,11 @@ struct ScaleView: View {
         .gesture(
             TapGesture(count: 1)
                 .onEnded { _ in
-                    self.degrees = angle
+                    if let i = self.lastChanged {
+                        self.pointerInfoViewModels[i].degrees = angle
+                    }
                 }
         )
     }
-    
-    /**
-     # Get the angle of the point.
-     
-     This scale would be addressed properly by the iOS.
-     We have to transform the point into (0, 0) to calculate the arctan of the `point`.
-     It requires to know the size of this scale. That's the why
-     this fucntion need to be given the `geometry`.
-     */
-    private func getDegrees(
-        geometry: GeometryProxy,
-        point: CGPoint
-    ) -> Double {
-        let radius: CGFloat =
-            (geometry.size.width < geometry.size.height ?
-                geometry.size.width : geometry.size.height) / 2.0
-        
-        let a = (Double(atan((point.y - radius) / (point.x - radius)))) * 180.0 / Double.pi
-        
-        return point.x >= radius ? a + 90.0 : 360.0 + a - 90.0
-    }
+
 }

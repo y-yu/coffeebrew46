@@ -20,6 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         validateInputService: ValidateInputServiceImpl()
                     ),
                 boiledWaterAmountPresenter: BoiledWaterAmountPresenterImpl()
+            ),
+            pointerInfoViewModels: PointerInfoViewModels().withColorAndDegrees(
+                (.green, 0.0), (.red, 20.0), (.orange, 180.0)
             )
         )
 
