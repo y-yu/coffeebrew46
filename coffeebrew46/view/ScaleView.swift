@@ -18,24 +18,35 @@ struct ScaleView: View {
     @State private var lastChanged: Int? = .none
     
     var body: some View {
-        VStack {
         ZStack {
             ForEach(0..<(self.density * 4)) { t in
                 self.tick(tick: t)
             }
             GeometryReader { (geometry: GeometryProxy) in
                 ForEach(0..<self.pointerInfoViewModels.count) { i in
-                    PointerView(
-                        id: i,
-                        pointerInfo: self.$pointerInfoViewModels[i],
-                        lastChanged: self.$lastChanged,
-                        geometry: geometry
-                    )
+                    self.a(geometry, i)
                 }
             }
             Color.clear
-            }
-            Text("last changed: \(self.lastChanged.map { v in String(v) } ?? "none" )")
+        }
+    }
+    
+    private func a(_ geometry: GeometryProxy, _ i: Int) -> some View {
+        ZStack {
+            ArcView(
+                startDegrees: i - 1 < 0 ? Binding.constant(0.0) :
+                    self.$pointerInfoViewModels[i - 1].degrees,
+                endDegrees: self.$pointerInfoViewModels[i].degrees,
+                color: self.pointerInfoViewModels[i].color,
+                geometry: geometry
+            )
+            PointerView(
+                id: i,
+                pointerInfo: self.$pointerInfoViewModels[i],
+                lastChanged: self.$lastChanged,
+                geometry: geometry
+            )
+
         }
     }
     

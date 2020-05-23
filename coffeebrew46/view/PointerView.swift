@@ -5,7 +5,6 @@ import SwiftUI
  
  These implementation refer from: https://talk.objc.io/episodes/S01E192-analog-clock
  */
-
 struct PointerView: View {
     internal let id: Int
     
@@ -14,7 +13,13 @@ struct PointerView: View {
     @Binding var lastChanged: Int?
     
     internal let geometry: GeometryProxy
-        
+    
+    // This state is needed for anti-locking `pointerInfo.degrees`.
+    // If I tried to use `pointerInfo.degrees` directlly without `internalDegrees`,
+    // the pointer won't move during dragging.
+    // I think it's caused by the lockinig state by iOS memory manager or
+    // something else... That's the why this internal state is needed.
+    //
     // This initial value is not considered well....
     // Actually it would be better that this would be set
     // the same value of `degrees` in the constructor.

@@ -23,9 +23,6 @@
 		4B2E223A24549357006067FD /* CoffeeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* CoffeeError.swift */; };
 		4B2E223B24549357006067FD /* CoffeeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* CoffeeError.swift */; };
 		4B2E223C24549357006067FD /* CoffeeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E223924549357006067FD /* CoffeeError.swift */; };
-		4B3B37F724616877009341F8 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3B37F624616877009341F8 /* State.swift */; };
-		4B3B37F824616877009341F8 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3B37F624616877009341F8 /* State.swift */; };
-		4B3B37F924616877009341F8 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3B37F624616877009341F8 /* State.swift */; };
 		4B4550272459B23500A791F1 /* CoproductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4550262459B23500A791F1 /* CoproductView.swift */; };
 		4B4550282459B23500A791F1 /* CoproductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4550262459B23500A791F1 /* CoproductView.swift */; };
 		4B4550292459B23500A791F1 /* CoproductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4550262459B23500A791F1 /* CoproductView.swift */; };
@@ -46,6 +43,9 @@
 		4B4A28532462EADD00F2B037 /* PointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A28522462EADD00F2B037 /* PointerView.swift */; };
 		4B4A28542462EADD00F2B037 /* PointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A28522462EADD00F2B037 /* PointerView.swift */; };
 		4B4A28552462EADD00F2B037 /* PointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A28522462EADD00F2B037 /* PointerView.swift */; };
+		4BA1D739246801F700C89458 /* ArcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1D738246801F700C89458 /* ArcView.swift */; };
+		4BA1D73A246801F700C89458 /* ArcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1D738246801F700C89458 /* ArcView.swift */; };
+		4BA1D73B246801F700C89458 /* ArcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1D738246801F700C89458 /* ArcView.swift */; };
 		4BC93D58245572390093BDA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D57245572390093BDA7 /* Assets.xcassets */; };
 		4BC93D5A245572400093BDA7 /* appstore.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BC93D59245572400093BDA7 /* appstore.png */; };
 		4BC93D5F2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */; };
@@ -109,11 +109,11 @@
 		4B2E222D24549165006067FD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4B2E222F24549277006067FD /* ValidatedInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedInput.swift; sourceTree = "<group>"; };
 		4B2E223924549357006067FD /* CoffeeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeError.swift; sourceTree = "<group>"; };
-		4B3B37F624616877009341F8 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		4B4550262459B23500A791F1 /* CoproductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoproductView.swift; sourceTree = "<group>"; };
 		4B4A284A2462AC9000F2B037 /* BoiledWaterAmountStateKeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoiledWaterAmountStateKeeper.swift; sourceTree = "<group>"; };
 		4B4A284E2462EA9900F2B037 /* ScaleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleView.swift; sourceTree = "<group>"; };
 		4B4A28522462EADD00F2B037 /* PointerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerView.swift; sourceTree = "<group>"; };
+		4BA1D738246801F700C89458 /* ArcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcView.swift; sourceTree = "<group>"; };
 		4BC93D57245572390093BDA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4BC93D59245572400093BDA7 /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appstore.png; sourceTree = "<group>"; };
 		4BC93D5E2455B5140093BDA7 /* BoiledWaterAmountPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoiledWaterAmountPresenter.swift; sourceTree = "<group>"; };
@@ -246,7 +246,6 @@
 				4BFFB7DF2459962600596B44 /* NonEmptyList.swift */,
 				4BFFB7E72459A6C600596B44 /* Associativity.swift */,
 				4B4550262459B23500A791F1 /* CoproductView.swift */,
-				4B3B37F624616877009341F8 /* State.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -282,6 +281,7 @@
 				4B2E21F524548308006067FD /* ContentView.swift */,
 				4B4A284E2462EA9900F2B037 /* ScaleView.swift */,
 				4B4A28522462EADD00F2B037 /* PointerView.swift */,
+				4BA1D738246801F700C89458 /* ArcView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -436,10 +436,10 @@
 				4B2E222324548D6C006067FD /* BoiledWaterAmount.swift in Sources */,
 				4B2E21F224548308006067FD /* AppDelegate.swift in Sources */,
 				4B2E223A24549357006067FD /* CoffeeError.swift in Sources */,
-				4B3B37F724616877009341F8 /* State.swift in Sources */,
 				4C86B94A2455387C000154D1 /* ContentViewModel.swift in Sources */,
 				4B2E21F424548308006067FD /* SceneDelegate.swift in Sources */,
 				4B2E21F624548308006067FD /* ContentView.swift in Sources */,
+				4BA1D739246801F700C89458 /* ArcView.swift in Sources */,
 				4B2E223024549277006067FD /* ValidatedInput.swift in Sources */,
 				4B4A28532462EADD00F2B037 /* PointerView.swift in Sources */,
 				4BFFB7E82459A6C600596B44 /* Associativity.swift in Sources */,
@@ -463,10 +463,10 @@
 				4B4550282459B23500A791F1 /* CoproductView.swift in Sources */,
 				4B2E222424548D6C006067FD /* BoiledWaterAmount.swift in Sources */,
 				4BC93D602455B5140093BDA7 /* BoiledWaterAmountPresenter.swift in Sources */,
-				4B3B37F824616877009341F8 /* State.swift in Sources */,
 				4BC93D692455D24A0093BDA7 /* ContentViewModel.swift in Sources */,
 				4B2E223124549277006067FD /* ValidatedInput.swift in Sources */,
 				4B4550302459F6E100A791F1 /* NonEmptyList.swift in Sources */,
+				4BA1D73A246801F700C89458 /* ArcView.swift in Sources */,
 				4BC93D672455D2460093BDA7 /* ContentView.swift in Sources */,
 				4B4A28542462EADD00F2B037 /* PointerView.swift in Sources */,
 				4B2E223B24549357006067FD /* CoffeeError.swift in Sources */,
@@ -490,10 +490,10 @@
 				4B4550292459B23500A791F1 /* CoproductView.swift in Sources */,
 				4BC93D6F2455DA5D0093BDA7 /* Optional.swift in Sources */,
 				4B2E223C24549357006067FD /* CoffeeError.swift in Sources */,
-				4B3B37F924616877009341F8 /* State.swift in Sources */,
 				4BC93D682455D2470093BDA7 /* ContentView.swift in Sources */,
 				4BC93D662455D2340093BDA7 /* BoiledWaterAmount.swift in Sources */,
 				4B4550312459F6E200A791F1 /* NonEmptyList.swift in Sources */,
+				4BA1D73B246801F700C89458 /* ArcView.swift in Sources */,
 				4B2E22142454830A006067FD /* coffeebrew46UITests.swift in Sources */,
 				4B4A28552462EADD00F2B037 /* PointerView.swift in Sources */,
 				4BC93D6A2455D24B0093BDA7 /* ContentViewModel.swift in Sources */,

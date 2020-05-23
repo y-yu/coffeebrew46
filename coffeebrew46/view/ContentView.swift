@@ -15,16 +15,14 @@ struct ContentView<
                 Slider(value: $viewModel.scaleMax, in: 0...50, step: 0.5)
                 Image(systemName: "plus")
             }
-            //Slider(value: $viewModel.firstShotBoiledWaterAmount, in: 0...50, step: 0.1)
             ScaleView(
                     scaleMax: $viewModel.scaleMax,
                     pointerInfoViewModels: $pointerInfoViewModels.pointerInfo
                 )
-                .frame(width: 400, height: 400)
+                .frame(width: 350, height: 350)
             ForEach(0 ..< pointerInfoViewModels.pointerInfo.count) { i in
                 Text("Coffee beans(\(i)) wegiht: \(String(format: "%.1f", self.viewModel.scaleMax * self.pointerInfoViewModels.pointerInfo[i].degrees / 360))")
             }
-            //viewModel.boiledWaterAmountText
         }
     }
 }
