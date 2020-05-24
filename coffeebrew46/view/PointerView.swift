@@ -30,7 +30,9 @@ struct PointerView: View {
     var body: some View {
         Pointer()
             .stroke(self.pointerInfo.color, lineWidth: 2)
-            .rotationEffect(Angle.degrees(isDragging ? self.internalDegrees : self.pointerInfo.degrees ))
+            .rotationEffect(
+                Angle.degrees(isDragging ? self.internalDegrees : self.pointerInfo.degrees )
+            )
             .gesture(
                 DragGesture()
                     .onChanged { value in

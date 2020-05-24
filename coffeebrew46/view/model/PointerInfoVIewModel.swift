@@ -38,9 +38,9 @@ final class PointerInfoViewModels: ObservableObject {
     init() {
         self.pointerInfo = []
     }
-    
-    func withColorAndDegrees(_ tuples: (Color, Double)...) -> PointerInfoViewModels {
-        self.pointerInfo = tuples.map { (color, initDegrees) in
+
+    func withColorAndDegrees(_ arr: Array<(Color, Double)>) -> PointerInfoViewModels {
+        self.pointerInfo = arr.map { (color, initDegrees) in
             PointerInfoViewModel(
                 color: color,
                 initDegrees: initDegrees,
@@ -49,6 +49,10 @@ final class PointerInfoViewModels: ObservableObject {
         }
         
         return self
+    }
+    
+    static func withColorAndDegrees(_ tuples: (Color, Double)...) -> PointerInfoViewModels {
+        return PointerInfoViewModels().withColorAndDegrees([]).withColorAndDegrees(tuples)
     }
 }
 

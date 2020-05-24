@@ -23,15 +23,15 @@ struct ScaleView: View {
                 self.tick(tick: t)
             }
             GeometryReader { (geometry: GeometryProxy) in
-                ForEach(0..<self.pointerInfoViewModels.count) { i in
-                    self.a(geometry, i)
+                ForEach((0..<self.pointerInfoViewModels.count), id: \.self) { i in
+                    self.showArcAndPointer(geometry, i)
                 }
             }
             Color.clear
         }
     }
     
-    private func a(_ geometry: GeometryProxy, _ i: Int) -> some View {
+    private func showArcAndPointer(_ geometry: GeometryProxy, _ i: Int) -> some View {
         ZStack {
             ArcView(
                 startDegrees: i - 1 < 0 ? Binding.constant(0.0) :

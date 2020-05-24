@@ -16,6 +16,7 @@ protocol BoiledWaterAmountPresenter {
 }
 
 // An implementation.
+/*
 class BoiledWaterAmountPresenterImpl: BoiledWaterAmountPresenter {
     typealias ResultView = CCons<Text, CNil<Image>>
     
@@ -36,3 +37,4 @@ class BoiledWaterAmountPresenterImpl: BoiledWaterAmountPresenter {
         }
     }
 }
+*/

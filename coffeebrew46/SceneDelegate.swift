@@ -18,12 +18,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             viewModel: ContentViewModel(
                 calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl(
                         validateInputService: ValidateInputServiceImpl()
-                    ),
-                boiledWaterAmountPresenter: BoiledWaterAmountPresenterImpl()
-            ),
+                    )
+                //,boiledWaterAmountPresenter: BoiledWaterAmountPresenterImpl()
+            )
+            /*
+            ,
             pointerInfoViewModels: PointerInfoViewModels().withColorAndDegrees(
                 (.green, 0.0), (.red, 20.0), (.orange, 180.0)
             )
+ */
         )
 
         // Use a UIHostingController as window root view controller.

@@ -11,6 +11,11 @@ protocol CalculateBoiledWaterAmountService {
         firstBoiledWaterAmount: Double,
         numberOf6: Int
     ) -> ResultNel<BoiledWaterAmount, CoffeeError>
+    
+    // From the scale pointers.
+    func calculateFromNel(
+        values: Array<Double>
+    ) -> ResultNel<BoiledWaterAmount, CoffeeError>
 }
 
 // Implementation
@@ -21,12 +26,14 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
         self.validateInputService = validateInputService
     }
     
+    private let coffeeBeansWeightRatio: Int = 15
+    
     func calculate(
         coffeeBeansWeight: Double,
         firstBoiledWaterAmount: Double,
         numberOf6: Int
     ) -> ResultNel<BoiledWaterAmount, CoffeeError> {
-        let wholeBoiledWaterAmount = coffeeBeansWeight * 15
+        let wholeBoiledWaterAmount = coffeeBeansWeight * Double(coffeeBeansWeightRatio)
         let validatedInput = validateInputService.validate(
             coffeeBeansWeight: coffeeBeansWeight,
             wholeBoiledWaterAmount: wholeBoiledWaterAmount,
@@ -36,11 +43,45 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
         
         return validatedInput.map { (input) in
             BoiledWaterAmount(
-                totalAmount: wholeBoiledWaterAmount,
-                f: { (ta) -> (Double, Double, Double, Double, Double) in
-                    (ta / 5, ta / 5, ta / 5, ta / 5, ta / 5)
-                }
+                fourtyPercent: (
+                    firstBoiledWaterAmount,
+                    (wholeBoiledWaterAmount * 0.4) - firstBoiledWaterAmount
+                ),
+                sixtyPercent: {
+                    let sixtyAmount = wholeBoiledWaterAmount * 0.6
+                    let value = NonEmptyList(
+                        head: sixtyAmount / Double(numberOf6),
+                        tail: .Nil
+                    )
+
+                    func loop(_ acc: NonEmptyList<Double>, _ n: Int) ->  NonEmptyList<Double> {
+                        if (n <= 1) {
+                            return acc
+                        } else {
+                            return loop(value ++ acc, n - 1)
+                        }
+                    }
+                    
+                    return loop(value, numberOf6)
+                }()
             )
         }
+    }
+    
+    func calculateFromNel(
+        values: Array<Double>
+    ) -> ResultNel<BoiledWaterAmount, CoffeeError> {
+        let wholeBoiledWaterAmount = values.reduce(
+            0.0,
+            { (acc, v) in acc + v }
+        )
+        let coffeeBeansWeight = wholeBoiledWaterAmount / Double(coffeeBeansWeightRatio)
+        let firstBoiledWaterAmount = values[0]
+        
+        return calculate(
+            coffeeBeansWeight: coffeeBeansWeight,
+            firstBoiledWaterAmount: firstBoiledWaterAmount,
+            numberOf6: values.count - 2
+        )
     }
 }

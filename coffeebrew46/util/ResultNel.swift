@@ -24,3 +24,14 @@ public func |+|<A, B, E: Error>(
 
 // It is required to use `NonEmptyList` for `Failure` type parameter of `Result`
 extension NonEmptyList: Error where A: Error { }
+
+extension ResultNel {
+    func forEach(_ f: (Success) -> Void) -> Void {
+        switch self {
+        case .success(let result):
+            f(result)
+        case .failure(_):
+            return
+        }
+    }
+}
