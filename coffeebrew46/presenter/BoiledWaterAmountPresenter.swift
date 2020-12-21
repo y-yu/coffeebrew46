@@ -16,7 +16,7 @@ protocol BoiledWaterAmountPresenter {
 }
 
 // An implementation.
-/*
+
 class BoiledWaterAmountPresenterImpl: BoiledWaterAmountPresenter {
     typealias ResultView = CCons<Text, CNil<Image>>
     
@@ -30,11 +30,11 @@ class BoiledWaterAmountPresenterImpl: BoiledWaterAmountPresenter {
             // Don't use string interporation!
             // See also: https://twitter.com/_yyu_/status/1255404728638410754?s=20
             return CCons<Text, CNil<Image>>
-                .apply(Text("Boiled water amounts are " + boiledWaterAmount.toString()))
+                .apply(Text("Boiled water amounts are " + boiledWaterAmount.totalAmount().description))
         case .failure(/* let coffeeErrors*/ _):
             return CCons<Text, CNil<Image>>
                 .apply(CNil(Image("wood_nata")))
         }
     }
 }
-*/
+

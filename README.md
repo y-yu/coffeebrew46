@@ -1,7 +1,7 @@
 Coffeebrew46
 =============================
 
-[![Build Status](https://travis-ci.com/y-yu/coffeebrew46.svg?branch=master)](https://travis-ci.com/y-yu/coffeebrew46)
+![CI](https://github.com/y-yu/coffeebrew46/workflows/CI/badge.svg)
 
 This is a 4:6 method coffee brewing utilitiy for iOS.
 
