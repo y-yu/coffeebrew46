@@ -113,8 +113,8 @@ final class ContentViewModel: ObservableObject {
                 .pointerInfo
                 .prefix(2)
         
-        let result = calculateFromNel(
-            pointerInfoViewModels
+        let result = calculateBoiledWaterAmountService.calculateFromNel(
+            values: pointerInfoViewModels
                 .pointerInfo
                 .map { (e) in
                     e.degrees / 360
