@@ -14,10 +14,7 @@ final class ContentViewModel: ObservableObject {
             .red,
             .blue,
             .gray,
-            .purple,
-            .black,
-            .pink,
-            .yellow,
+            .purple
         ]
     
     @Published var pointerInfoViewModels: PointerInfoViewModels =
@@ -108,12 +105,12 @@ final class ContentViewModel: ObservableObject {
     }
     
     private func calculateFromScale() -> Void {
-        let fourtyPercent =
+        _ =
             pointerInfoViewModels
                 .pointerInfo
                 .prefix(2)
         
-        let result = calculateBoiledWaterAmountService.calculateFromNel(
+        _ = calculateBoiledWaterAmountService.calculateFromNel(
             values: pointerInfoViewModels
                 .pointerInfo
                 .map { (e) in

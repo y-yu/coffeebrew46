@@ -1,5 +1,6 @@
 import UIKit
 import SwiftUI
+import BowArch
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -13,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         
-        // TODO: Fix wiring!!!!!!!
+/*
         let contentView = ContentView(
             viewModel: ContentViewModel(
                 calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl(
@@ -21,18 +22,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     )
                 //,boiledWaterAmountPresenter: BoiledWaterAmountPresenterImpl()
             )
+ */
             /*
             ,
             pointerInfoViewModels: PointerInfoViewModels().withColorAndDegrees(
                 (.green, 0.0), (.red, 20.0), (.orange, 180.0)
             )
  */
-        )
+        //)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
+            // window.rootViewController = UIHostingController(rootView: contentView)
+            window.rootViewController = UIHostingController(rootView: contentComponent)
             self.window = window
             window.makeKeyAndVisible()
         }
