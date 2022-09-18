@@ -10,7 +10,7 @@ struct ScaleView: View {
     @Binding var scaleMax: Double
     
     // This is a public variable.
-    @Binding var pointerInfoViewModels: Array<PointerInfoViewModel>
+    @Binding var pointerInfoViewModels: PointerInfoViewModels
     
     private let density: Int = 40
     private let markInterval: Int = 10
@@ -29,7 +29,7 @@ struct ScaleView: View {
             }
             GeometryReader { (geometry: GeometryProxy) in
                 ZStack {
-                    ForEach((0..<self.pointerInfoViewModels.count), id: \.self) { i in
+                    ForEach((0..<self.pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
                         self.showArcAndPointer(geometry, i)
                     }
                     ArcView(
@@ -50,9 +50,18 @@ struct ScaleView: View {
     private func endDegree() -> Double {
         let pt = Double(progressTime)
         if (pt <= steamingTime) {
-            return pt / steamingTime * pointerInfoViewModels[0].degrees
+            return pt / steamingTime * pointerInfoViewModels.pointerInfo[0].degrees
         } else {
-            return pt > totalTime ? 360.0 : ((pt - steamingTime) / (totalTime - steamingTime)) * (360.0 - pointerInfoViewModels[0].degrees) + pointerInfoViewModels[0].degrees
+            let withoutSteamingPerOther = (Double(totalTime) - steamingTime) / Double(pointerInfoViewModels.pointerInfo.count - 1)
+            
+            if (pt <= withoutSteamingPerOther + steamingTime) {
+                return (pt - steamingTime) / withoutSteamingPerOther * (pointerInfoViewModels.pointerInfo[1].degrees - pointerInfoViewModels.pointerInfo[0].degrees) + pointerInfoViewModels.pointerInfo[0].degrees
+            } else {
+                let firstAndSecond = steamingTime + withoutSteamingPerOther
+                
+                return pt > totalTime ? 360.0 : ((pt - firstAndSecond) / (totalTime - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[1].degrees) + pointerInfoViewModels.pointerInfo[1].degrees
+                
+            }
         }
     }
     
@@ -60,15 +69,15 @@ struct ScaleView: View {
         ZStack {
             ArcView(
                 startDegrees: i - 1 < 0 ? 0.0 :
-                    self.pointerInfoViewModels[i - 1].degrees,
-                endDegrees: self.pointerInfoViewModels[i].degrees,
-                color: self.pointerInfoViewModels[i].color,
+                    self.pointerInfoViewModels.pointerInfo[i - 1].degrees,
+                endDegrees: self.pointerInfoViewModels.pointerInfo[i].degrees,
+                color: self.pointerInfoViewModels.pointerInfo[i].color,
                 geometry: geometry,
                 fillColor: .clear
             )
             PointerView(
                 id: i,
-                pointerInfo: self.pointerInfoViewModels[i],
+                pointerInfo: self.pointerInfoViewModels.pointerInfo[i],
                 lastChanged: self.$lastChanged,
                 geometry: geometry,
                 scaleMax: scaleMax
@@ -101,7 +110,7 @@ struct ScaleView: View {
             TapGesture(count: 1)
                 .onEnded { _ in
                     if let i = self.lastChanged {
-                        self.pointerInfoViewModels[i].degrees = angle
+                        self.pointerInfoViewModels.pointerInfo[i].degrees = angle
                     }
                 }
         )

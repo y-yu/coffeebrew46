@@ -27,7 +27,9 @@ struct ContentView/*<
                             viewModel.coffeeBeansWeight -= 0.1
                         }
                     }
+                Spacer()
                 Slider(value: $viewModel.coffeeBeansWeight, in: 0...50, step: 0.5)
+                Spacer()
                 Image(systemName: "plus.circle")
                     .resizable()
                     .frame(width: 40, height: 40, alignment: .center)
@@ -50,11 +52,13 @@ struct ContentView/*<
                             viewModel.firstBoiledWaterPercent -= 0.05
                         }
                     }
+                Spacer()
                 Slider(
                     value: $viewModel.firstBoiledWaterPercent,
                     in: 0...1,
                     step: 0.1
                 )
+                Spacer()
                 Image(systemName: "plus.circle")
                     .resizable()
                     .frame(width: 40, height: 40, alignment: .center)
@@ -94,7 +98,7 @@ struct ContentView/*<
             
             ScaleView(
                 scaleMax: $viewModel.totalWaterAmount,
-                pointerInfoViewModels: $viewModel.pointerInfoViewModels.pointerInfo,
+                pointerInfoViewModels: $viewModel.pointerInfoViewModels,
                 progressTime: $progressTime,
                 steamingTime: steamingTime,
                 totalTime: totalTime
@@ -128,7 +132,6 @@ struct ContentView/*<
                 Text("Stop")
                     .font(.system(size: 20))
                     .padding()
-                    //.frame(width: 50, height: 50, alignment: .center)
                     .background(
                         Rectangle()
                           .stroke(lineWidth: 4)
@@ -148,6 +151,14 @@ struct ContentView/*<
                 Text("Total time: \(String(format: "%.2f", totalTime))")
                 HStack {
                     Spacer()
+                    Image(systemName: "minus.circle")
+                        .resizable()
+                        .frame(width: 40, height: 40, alignment: .center)
+                        .onTapGesture {
+                            if (totalTime > 1) {
+                                totalTime -= 1
+                            }
+                        }
                     Spacer()
                     Slider(
                         value: $totalTime,
@@ -155,18 +166,42 @@ struct ContentView/*<
                         step: 1
                     )
                     Spacer()
+                    Image(systemName: "plus.circle")
+                        .resizable()
+                        .frame(width: 40, height: 40, alignment: .center)
+                        .onTapGesture {
+                            if (totalTime < 300) {
+                                totalTime += 1
+                            }
+                        }
                     Spacer()
                 }
                 Text("Steaming time: \(String(format: "%.2f", steamingTime))")
                 HStack {
                     Spacer()
+                    Image(systemName: "minus.circle")
+                        .resizable()
+                        .frame(width: 40, height: 40, alignment: .center)
+                        .onTapGesture {
+                            if (steamingTime > totalTime / (viewModel.numberOf6 + 2)) {
+                                steamingTime -= 1
+                            }
+                        }
                     Spacer()
                     Slider(
                         value: $steamingTime,
-                        in: (totalTime / (viewModel.numberOf6 + 2))...(totalTime/2),
+                        in: 1...((totalTime / (viewModel.numberOf6 + 2)) * 2),
                         step: 1
                     )
                     Spacer()
+                    Image(systemName: "plus.circle")
+                        .resizable()
+                        .frame(width: 40, height: 40, alignment: .center)
+                        .onTapGesture {
+                            if (steamingTime < (totalTime / (viewModel.numberOf6 + 2)) * 2) {
+                                steamingTime += 1
+                            }
+                        }
                     Spacer()
                 }
                 
