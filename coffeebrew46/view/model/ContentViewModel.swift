@@ -13,12 +13,11 @@ final class ContentViewModel: ObservableObject {
             .green,
             .red,
             .blue,
-            .gray,
+            .orange,
             .purple,
             .cyan,
             .pink,
             .yellow,
-            .orange,
             .brown,
             .black
         ]
@@ -28,7 +27,7 @@ final class ContentViewModel: ObservableObject {
             (.green, 72.0),
             (.red, 144.0),
             (.blue, 216.0),
-            (.gray, 288.0),
+            (.orange, 288.0),
             (.purple, 360.0)
         ) {
             didSet {

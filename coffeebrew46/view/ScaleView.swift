@@ -17,21 +17,42 @@ struct ScaleView: View {
     
     @State private var lastChanged: Int? = .none
     
+    @Binding var progressTime: Int
+    
+    public let steamingTime: Double
+    public let totalTime: Double
+    
     var body: some View {
         ZStack {
             ForEach(0..<(self.density * 4)) { t in
                 self.tick(tick: t)
             }
             GeometryReader { (geometry: GeometryProxy) in
-                ForEach((0..<self.pointerInfoViewModels.count), id: \.self) { i in
-                    self.showArcAndPointer(geometry, i)
-                        .onAppear {
-                            print("hoge")
-                        }
-                        
+                ZStack {
+                    ForEach((0..<self.pointerInfoViewModels.count), id: \.self) { i in
+                        self.showArcAndPointer(geometry, i)
+                    }
+                    ArcView(
+                        startDegrees: 0.0,
+                        endDegrees: endDegree(),
+                        color: .gray.opacity(0.0),
+                        geometry: geometry,
+                        fillColor: .gray.opacity(0.5)
+                    )
                 }
             }
+            CenterCircle()
+                .fill(.cyan)
             Color.clear
+        }
+    }
+    
+    private func endDegree() -> Double {
+        let pt = Double(progressTime)
+        if (pt <= steamingTime) {
+            return pt / steamingTime * pointerInfoViewModels[0].degrees
+        } else {
+            return pt > totalTime ? 360.0 : ((pt - steamingTime) / (totalTime - steamingTime)) * (360.0 - pointerInfoViewModels[0].degrees) + pointerInfoViewModels[0].degrees
         }
     }
     
@@ -43,13 +64,14 @@ struct ScaleView: View {
                 endDegrees: self.pointerInfoViewModels[i].degrees,
                 color: self.pointerInfoViewModels[i].color,
                 geometry: geometry,
-                isEnd: self.pointerInfoViewModels[i].isEnd
+                fillColor: .clear
             )
             PointerView(
                 id: i,
                 pointerInfo: self.pointerInfoViewModels[i],
                 lastChanged: self.$lastChanged,
-                geometry: geometry
+                geometry: geometry,
+                scaleMax: scaleMax
             )
         }
     }
@@ -65,6 +87,7 @@ struct ScaleView: View {
                 .font(.system(size: 10))
                 .fixedSize()
                 .frame(width: 20)
+                .foregroundColor(.gray)
             Rectangle()
                 .fill(Color.primary)
                 .opacity(isMark ? 2 : 0.5)
@@ -84,4 +107,29 @@ struct ScaleView: View {
         )
     }
 
+}
+
+struct CenterCircle: Shape {
+    var circleRadius: CGFloat = 5
+    
+    func path(in rect: CGRect) -> Path {
+        return Path { p in
+            p.addEllipse(in: CGRect(center: rect.getCenter(), radius: circleRadius))
+        }
+    }
+}
+
+extension CGRect {
+    func getCenter() -> CGPoint {
+        CGPoint(x: midX, y: midY)
+    }
+    
+    init(center: CGPoint, radius: CGFloat) {
+        self = CGRect(
+            x: center.x - radius,
+            y: center.y - radius,
+            width: radius * 2,
+            height: radius * 2
+        )
+    }
 }

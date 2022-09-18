@@ -22,7 +22,7 @@ final class PointerInfoViewModel {
     }
 
     public var isEnd: Bool
-
+    
     init(
         color: Color,
         initDegrees: Double = 0.0,

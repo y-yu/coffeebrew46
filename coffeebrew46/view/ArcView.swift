@@ -9,19 +9,17 @@ struct ArcView: View {
     internal let color: Color
     internal let geometry: GeometryProxy
     
-    internal let isEnd: Bool
+    internal let fillColor: Color
     
     var body: some View {
-        VStack {
-            Arc(
-                startDegrees: startDegrees,
-                endDegrees: endDegrees,
-                color: color,
-                geometry: geometry
-            )
-            .fill(self.isEnd ? .gray : .clear)
+        Arc(
+            startDegrees: startDegrees,
+            endDegrees: endDegrees,
+            color: color,
+            geometry: geometry
+        )
+            .fill(fillColor)
             .rotationEffect(Angle.degrees(-90.0), anchor: .center)
-        }
     }
 }
 

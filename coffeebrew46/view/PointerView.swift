@@ -14,6 +14,8 @@ struct PointerView: View {
     
     internal let geometry: GeometryProxy
     
+    internal let scaleMax: Double
+        
     // This state is needed for anti-locking `pointerInfo.degrees`.
     // If I tried to use `pointerInfo.degrees` directlly without `internalDegrees`,
     // the pointer won't move during dragging.
@@ -28,11 +30,23 @@ struct PointerView: View {
     @State private var isDragging: Bool = false
     
     var body: some View {
-        Pointer()
-            .stroke(self.pointerInfo.color, lineWidth: 2)
-            .rotationEffect(
-                Angle.degrees(isDragging ? self.internalDegrees : self.pointerInfo.degrees )
-            )
+        VStack {
+            Text(String(format: "%.0f", scaleMax * self.pointerInfo.degrees / 360))
+                .font(.system(size: 20).bold())
+                .fixedSize()
+                .frame(width: 30)
+                .rotationEffect(
+                    Angle.degrees(isDragging ? -self.internalDegrees : -self.pointerInfo.degrees )
+                )
+                .foregroundColor(pointerInfo.color)
+            Spacer()
+            Pointer()
+                .stroke(self.pointerInfo.color, lineWidth: 2)
+            
+        }
+        .rotationEffect(
+            Angle.degrees(isDragging ? self.internalDegrees : self.pointerInfo.degrees )
+        )
             /*
             .gesture(
                 DragGesture()
@@ -89,23 +103,8 @@ struct Pointer: Shape {
     func path(in rect: CGRect) -> Path {
         return Path { p in
             p.move(to: CGPoint(x: rect.midX, y: rect.minY))
-            p.addLine(to: CGPoint(x: rect.midX, y: rect.midY - circleRadius))
-            p.addEllipse(in: CGRect(center: rect.getCenter(), radius: circleRadius))
+            p.addLine(to: CGPoint(x: rect.midX, y: rect.midY - circleRadius - 15))
         }
     }
 }
 
-extension CGRect {
-    func getCenter() -> CGPoint {
-        CGPoint(x: midX, y: midY)
-    }
-    
-    init(center: CGPoint, radius: CGFloat) {
-        self = CGRect(
-            x: center.x - radius,
-            y: center.y - radius,
-            width: radius * 2,
-            height: radius * 2
-        )
-    }
-}

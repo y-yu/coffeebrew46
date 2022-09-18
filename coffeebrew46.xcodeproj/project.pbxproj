@@ -650,9 +650,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"coffeebrew46/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3KDN4W8346;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = coffeebrew46/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -672,9 +673,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"coffeebrew46/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3KDN4W8346;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = coffeebrew46/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
