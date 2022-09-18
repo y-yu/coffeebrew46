@@ -21,6 +21,8 @@ final class PointerInfoViewModel {
         }
     }
 
+    public var isEnd: Bool
+
     init(
         color: Color,
         initDegrees: Double = 0.0,
@@ -29,6 +31,7 @@ final class PointerInfoViewModel {
         self.degrees = initDegrees
         self.color = color
         self.send = send
+        self.isEnd = false
     }
 }
 

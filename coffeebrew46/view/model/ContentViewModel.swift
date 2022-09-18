@@ -2,7 +2,7 @@ import SwiftUI
 
 final class ContentViewModel: ObservableObject {
     // Inupt text.
-    @Published var coffeeBeansWeight: Double = 0.0 {
+    @Published var coffeeBeansWeight: Double = 30.0 {
         didSet {
             calculateScale()
         }
@@ -15,14 +15,21 @@ final class ContentViewModel: ObservableObject {
             .blue,
             .gray,
             .purple,
-            .black,
+            .cyan,
             .pink,
             .yellow,
+            .orange,
+            .brown,
+            .black
         ]
     
     @Published var pointerInfoViewModels: PointerInfoViewModels =
         .withColorAndDegrees(
-            (.green, 0.0)
+            (.green, 72.0),
+            (.red, 144.0),
+            (.blue, 216.0),
+            (.gray, 288.0),
+            (.purple, 360.0)
         ) {
             didSet {
                 calculateFromScale()
@@ -35,16 +42,14 @@ final class ContentViewModel: ObservableObject {
         }
     }
     
-    @Published var firstBoiledWaterAmount: Double = 10.0 {
+    @Published var firstBoiledWaterPercent: Double = 0.5 {
         didSet {
             calculateScale()
         }
     }
     
-    @Published var totalWaterAmount: Double = 50.0
+    @Published var totalWaterAmount: Double = 300
     
-    @Published var firstBoiledWaterAmountMax: Double = 10.0
-
     // For DI
     private let calculateBoiledWaterAmountService: CalculateBoiledWaterAmountService
     // private let boiledWaterAmountPresenter: BoiledWaterAmountPresenterImplType
@@ -72,16 +77,13 @@ final class ContentViewModel: ObservableObject {
                 calculateBoiledWaterAmountService
                     .calculate(
                         coffeeBeansWeight: weight,
-                        // This is a sloppy impletementation!!!!!!!!!!!!!!
-                        // TODO: Fix it
-                        firstBoiledWaterAmount: firstBoiledWaterAmount,
+                        firstBoiledWaterAmount: firstBoiledWaterPercent * coffeeBeansWeight * 3 * 2,
                         numberOf6: Int(numberOf6)
                 )
             }
 
         result.forEach { r in
             totalWaterAmount = r.totalAmount()
-            firstBoiledWaterAmountMax = totalWaterAmount * 0.4
             
             let values = [
                 r.fourtyPercent.0,

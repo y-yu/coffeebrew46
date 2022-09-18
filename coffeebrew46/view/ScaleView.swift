@@ -25,6 +25,10 @@ struct ScaleView: View {
             GeometryReader { (geometry: GeometryProxy) in
                 ForEach((0..<self.pointerInfoViewModels.count), id: \.self) { i in
                     self.showArcAndPointer(geometry, i)
+                        .onAppear {
+                            print("hoge")
+                        }
+                        
                 }
             }
             Color.clear
@@ -34,19 +38,19 @@ struct ScaleView: View {
     private func showArcAndPointer(_ geometry: GeometryProxy, _ i: Int) -> some View {
         ZStack {
             ArcView(
-                startDegrees: i - 1 < 0 ? Binding.constant(0.0) :
-                    self.$pointerInfoViewModels[i - 1].degrees,
-                endDegrees: self.$pointerInfoViewModels[i].degrees,
+                startDegrees: i - 1 < 0 ? 0.0 :
+                    self.pointerInfoViewModels[i - 1].degrees,
+                endDegrees: self.pointerInfoViewModels[i].degrees,
                 color: self.pointerInfoViewModels[i].color,
-                geometry: geometry
+                geometry: geometry,
+                isEnd: self.pointerInfoViewModels[i].isEnd
             )
             PointerView(
                 id: i,
-                pointerInfo: self.$pointerInfoViewModels[i],
+                pointerInfo: self.pointerInfoViewModels[i],
                 lastChanged: self.$lastChanged,
                 geometry: geometry
             )
-
         }
     }
     

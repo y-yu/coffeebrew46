@@ -7,8 +7,8 @@ import SwiftUI
  */
 struct PointerView: View {
     internal let id: Int
-    
-    @Binding var pointerInfo: PointerInfoViewModel
+
+    internal let pointerInfo: PointerInfoViewModel
     
     @Binding var lastChanged: Int?
     
@@ -33,6 +33,7 @@ struct PointerView: View {
             .rotationEffect(
                 Angle.degrees(isDragging ? self.internalDegrees : self.pointerInfo.degrees )
             )
+            /*
             .gesture(
                 DragGesture()
                     .onChanged { value in
@@ -57,6 +58,7 @@ struct PointerView: View {
                         self.isDragging = false
                     }
             )
+             */
     }
     
     /**

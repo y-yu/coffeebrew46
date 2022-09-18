@@ -2,31 +2,33 @@ import SwiftUI
 
 
 struct ArcView: View {
-    @Binding var startDegrees: Double
+    internal let startDegrees: Double
     
-    @Binding var endDegrees: Double
+    internal let endDegrees: Double
     
     internal let color: Color
     internal let geometry: GeometryProxy
     
+    internal let isEnd: Bool
+    
     var body: some View {
         VStack {
             Arc(
-                startDegrees: $startDegrees,
-                endDegrees: $endDegrees,
+                startDegrees: startDegrees,
+                endDegrees: endDegrees,
                 color: color,
                 geometry: geometry
             )
-            .fill(self.color)
+            .fill(self.isEnd ? .gray : .clear)
             .rotationEffect(Angle.degrees(-90.0), anchor: .center)
         }
     }
 }
 
 struct Arc: Shape {
-    @Binding var startDegrees: Double
+    internal let startDegrees: Double
     
-    @Binding var endDegrees: Double
+    internal let endDegrees: Double
     
     internal let color: Color
     internal let geometry: GeometryProxy

@@ -13,24 +13,36 @@ struct ContentView/*<
             
             HStack(alignment: .top) {
                 Image(systemName: "minus")
+                    .onTapGesture {
+                        viewModel.coffeeBeansWeight -= 0.1
+                    }
                 Slider(value: $viewModel.coffeeBeansWeight, in: 0...50, step: 0.5)
                 Image(systemName: "plus")
+                    .onTapGesture {
+                        viewModel.coffeeBeansWeight += 0.1
+                    }
             }
             
+            Text("The first warter percent of 40%: \(String(format: "%.2f", viewModel.firstBoiledWaterPercent))")
             HStack(alignment: .top) {
                 Image(systemName: "minus")
+                    .onTapGesture {
+                        viewModel.firstBoiledWaterPercent -= 0.05
+                    }
                 Slider(
-                    value: $viewModel.firstBoiledWaterAmount,
-                    in: 0...viewModel.firstBoiledWaterAmountMax,
-                    step: 0.5
+                    value: $viewModel.firstBoiledWaterPercent,
+                    in: 0...1,
+                    step: 0.1
                 )
                 Image(systemName: "plus")
+                    .onTapGesture {
+                        viewModel.firstBoiledWaterPercent += 0.05
+                    }
             }
             
+            Text("The number of partitions of 60%: \(String(format: "%1.0f", viewModel.numberOf6))")
             HStack(alignment: .top) {
-                Image(systemName: "minus")
-                Slider(value: $viewModel.numberOf6, in: 1...5, step: 1)
-                Image(systemName: "plus")
+                Slider(value: $viewModel.numberOf6, in: 1...4, step: 1)
             }
             
             ScaleView(
@@ -43,7 +55,7 @@ struct ContentView/*<
                 0 ..< viewModel.pointerInfoViewModels.pointerInfo.count,
                 id: \.self
             ) { i in
-                Text("Coffee beans(\(i)) wegiht: \(String(format: "%.1f", self.viewModel.totalWaterAmount * self.viewModel.pointerInfoViewModels.pointerInfo[i].degrees / 360))")
+                Text("The \(i + 1)th water wegiht: \(String(format: "%.1f", self.viewModel.totalWaterAmount * self.viewModel.pointerInfoViewModels.pointerInfo[i].degrees / 360))")
             }
         }
     }
