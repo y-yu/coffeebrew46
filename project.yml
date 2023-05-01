@@ -1,0 +1,123 @@
+attributes:
+  LastSwiftUpdateCheck: '1140'
+  LastUpgradeCheck: '1140'
+configs:
+  Debug: debug
+  Release: release
+name: coffeebrew46
+options:
+  defaultConfig: Release
+  groupSortPosition: bottom
+  transitivelyLinkDependencies: false
+settings:
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: 15.0
+  configs:
+    Debug:
+      MTL_ENABLE_DEBUG_INFO: INCLUDE_SOURCE
+      MTL_FAST_MATH: 'YES'
+      SDKROOT: iphoneos
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+      SWIFT_OPTIMIZATION_LEVEL: -Onone
+    Release:
+      MTL_FAST_MATH: 'YES'
+      SDKROOT: iphoneos
+      SWIFT_COMPILATION_MODE: wholemodule
+      SWIFT_OPTIMIZATION_LEVEL: -O
+targets:
+  coffeebrew46:
+    platform: iOS
+    productName: coffeebrew64
+    settings:
+      base:
+        INFOPLIST_FILE: coffeebrew46/Info.plist
+        DEVELOPMENT_TEAM: 3KDN4W8346
+      configs:
+        Debug:
+          CODE_SIGN_IDENTITY: Apple Development
+          CODE_SIGN_STYLE: Automatic
+          DEVELOPMENT_ASSET_PATHS: '"coffeebrew46/Preview Content"'
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug
+          PRODUCT_NAME: coffeebrew46
+          PROVISIONING_PROFILE_SPECIFIER: ''
+        Release:
+          CODE_SIGN_IDENTITY: Apple Development
+          CODE_SIGN_STYLE: Automatic
+          DEVELOPMENT_ASSET_PATHS: '"coffeebrew46/Preview Content"'
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46
+          PRODUCT_NAME: coffeebrew46
+          PROVISIONING_PROFILE_SPECIFIER: ''
+    sources:
+    - path: coffeebrew46
+      name: coffeebrew46
+    type: application
+  coffeebrew46Tests:
+    dependencies:
+    - target: coffeebrew46
+    platform: iOS
+    productName: coffeebrew64Tests
+    settings:
+      configs:
+        Debug:
+          ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
+          BUNDLE_LOADER: $(TEST_HOST)
+          CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
+          CODE_SIGN_STYLE: Manual
+          DEVELOPMENT_TEAM: ''
+          INFOPLIST_FILE: coffeebrew46Tests/Info.plist
+          IPHONEOS_DEPLOYMENT_TARGET: '15.0'
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew64Tests
+          PROVISIONING_PROFILE_SPECIFIER: ''
+          PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
+          SWIFT_VERSION: '5.0'
+          TEST_HOST: $(BUILT_PRODUCTS_DIR)/coffeebrew46.app/coffeebrew46
+        Release:
+          ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
+          BUNDLE_LOADER: $(TEST_HOST)
+          CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
+          CODE_SIGN_STYLE: Manual
+          DEVELOPMENT_TEAM: ''
+          INFOPLIST_FILE: coffeebrew46Tests/Info.plist
+          IPHONEOS_DEPLOYMENT_TARGET: '15.0'
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew64Tests
+          PROVISIONING_PROFILE_SPECIFIER: ''
+          PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
+          SWIFT_VERSION: '5.0'
+          TEST_HOST: $(BUILT_PRODUCTS_DIR)/coffeebrew46.app/coffeebrew46
+    sources:
+    - path: coffeebrew46Tests
+      name: coffeebrew46Tests
+    type: bundle.unit-test
+  coffeebrew46UITests:
+    dependencies:
+    - target: coffeebrew46
+    platform: iOS
+    productName: coffeebrew64UITests
+    settings:
+      configs:
+        Debug:
+          ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
+          CODE_SIGN_IDENTITY[sdk=macosx*]: Apple Development
+          CODE_SIGN_STYLE: Manual
+          DEVELOPMENT_TEAM: ''
+          INFOPLIST_FILE: coffeebrew46UITests/Info.plist
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46UITests
+          PROVISIONING_PROFILE_SPECIFIER: ''
+          PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
+          SWIFT_VERSION: '5.0'
+          TEST_TARGET_NAME: coffeebrew46
+        Release:
+          ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
+          CODE_SIGN_IDENTITY[sdk=macosx*]: Apple Development
+          CODE_SIGN_STYLE: Manual
+          DEVELOPMENT_TEAM: ''
+          INFOPLIST_FILE: coffeebrew46UITests/Info.plist
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46UITests
+          PROVISIONING_PROFILE_SPECIFIER: ''
+          PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
+          SWIFT_VERSION: '5.0'
+          TEST_TARGET_NAME: coffeebrew46
+    sources:
+    - path: coffeebrew46UITests
+      name: coffeebrew46UITests
+    type: bundle.ui-testing
