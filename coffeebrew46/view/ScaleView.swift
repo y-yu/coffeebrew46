@@ -142,3 +142,27 @@ extension CGRect {
         )
     }
 }
+
+struct ScaleView_Previews: PreviewProvider {
+    @State static var scaleMax = 210.0
+    @State static var progressTime = 0
+    @State static var pointerInfoViewModels = PointerInfoViewModels
+            .withColorAndDegrees(
+                (.green, 72.0),
+                (.red, 144.0),
+                (.blue, 216.0),
+                (.orange, 288.0),
+                (.purple, 360.0)
+            )
+    
+    static var previews: some View {
+        ScaleView(
+            scaleMax: $scaleMax,
+            pointerInfoViewModels: $pointerInfoViewModels,
+            progressTime: $progressTime,
+            steamingTime: 50,
+            totalTime: 180
+        )
+        .frame(width: 300, height: 300)
+    }
+}

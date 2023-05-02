@@ -48,3 +48,17 @@ struct Arc: Shape {
         }
     }
 }
+
+struct ArcView_Previews: PreviewProvider {
+    static var previews: some View {
+        GeometryReader { geometry in
+            ArcView(
+                startDegrees: 0.0,
+                endDegrees: 300.0,
+                color: .gray.opacity(0.0),
+                geometry: geometry,
+                fillColor: .gray.opacity(0.3)
+            )
+        }
+    }
+}
