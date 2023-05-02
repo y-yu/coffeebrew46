@@ -7,4 +7,17 @@ extension Optional {
             return .success(value)
         }
     }
+
+    internal func isDefined() -> Bool {
+        switch self {
+        case .none:
+            return false
+        case .some:
+            return true
+        }
+    }
+
+    internal func isEmpty() -> Bool {
+        !isDefined()
+    }
 }
