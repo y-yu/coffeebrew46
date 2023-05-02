@@ -58,10 +58,8 @@ final class ContentViewModel: ObservableObject {
     // which are required to do my business logic.
     init(
         calculateBoiledWaterAmountService: CalculateBoiledWaterAmountService
-        // ,boiledWaterAmountPresenter: BoiledWaterAmountPresenterImplType
     ) {
         self.calculateBoiledWaterAmountService = calculateBoiledWaterAmountService
-        //self.boiledWaterAmountPresenter = boiledWaterAmountPresenter
     }
     
     // This function calculate parameters for the scale view.
