@@ -37,7 +37,7 @@ struct ContentView: View {
                 HStack {
                     Spacer()
                     ButtonView(
-                        buttonType: .minus(1),
+                        buttonType: .minus(2),
                         step: 1.0,
                         isDisabled: timer.isDefined(),
                         target: $viewModel.numberOf6

@@ -4,6 +4,9 @@ import SwiftUI
  # A tuple for color and degree of the pointer.
  */
 final class PointerInfoViewModel {
+    // Value of the pointer.
+    public let value: Double
+
     public var color: Color
     
     // This is an event sender function for the parent model.
@@ -20,10 +23,9 @@ final class PointerInfoViewModel {
             self.send()
         }
     }
-
-    public var isEnd: Bool
     
     init(
+        value: Double,
         color: Color,
         initDegrees: Double = 0.0,
         send: @escaping () -> ()
@@ -31,7 +33,7 @@ final class PointerInfoViewModel {
         self.degrees = initDegrees
         self.color = color
         self.send = send
-        self.isEnd = false
+        self.value = value
     }
 }
 
@@ -42,9 +44,10 @@ final class PointerInfoViewModels: ObservableObject {
         self.pointerInfo = []
     }
 
-    func withColorAndDegrees(_ arr: Array<(Color, Double)>) -> PointerInfoViewModels {
-        self.pointerInfo = arr.map { (color, initDegrees) in
+    func withColorAndDegrees(_ arr: Array<(Double, Color, Double)>) -> PointerInfoViewModels {
+        self.pointerInfo = arr.map { (value, color, initDegrees) in
             PointerInfoViewModel(
+                value: value,
                 color: color,
                 initDegrees: initDegrees,
                 send: { self.objectWillChange.send() }
@@ -54,7 +57,7 @@ final class PointerInfoViewModels: ObservableObject {
         return self
     }
     
-    static func withColorAndDegrees(_ tuples: (Color, Double)...) -> PointerInfoViewModels {
+    static func withColorAndDegrees(_ tuples: (Double, Color, Double)...) -> PointerInfoViewModels {
         return PointerInfoViewModels().withColorAndDegrees([]).withColorAndDegrees(tuples)
     }
 }

@@ -15,8 +15,6 @@ struct ScaleView: View {
     private let density: Int = 40
     private let markInterval: Int = 10
     
-    @State private var lastChanged: Int? = .none
-    
     @Binding var progressTime: Int
     
     public let steamingTime: Double
@@ -42,7 +40,7 @@ struct ScaleView: View {
                 }
             }
             CenterCircle()
-                .fill(.cyan)
+                .fill(.black)
             Color.clear
         }
     }
@@ -50,16 +48,16 @@ struct ScaleView: View {
     private func endDegree() -> Double {
         let pt = Double(progressTime)
         if (pt <= steamingTime) {
-            return pt / steamingTime * pointerInfoViewModels.pointerInfo[0].degrees
+            return pt / steamingTime * pointerInfoViewModels.pointerInfo[1].degrees
         } else {
             let withoutSteamingPerOther = (Double(totalTime) - steamingTime) / Double(pointerInfoViewModels.pointerInfo.count - 1)
             
             if (pt <= withoutSteamingPerOther + steamingTime) {
-                return (pt - steamingTime) / withoutSteamingPerOther * (pointerInfoViewModels.pointerInfo[1].degrees - pointerInfoViewModels.pointerInfo[0].degrees) + pointerInfoViewModels.pointerInfo[0].degrees
+                return (pt - steamingTime) / withoutSteamingPerOther * (pointerInfoViewModels.pointerInfo[2].degrees - pointerInfoViewModels.pointerInfo[1].degrees) + pointerInfoViewModels.pointerInfo[1].degrees
             } else {
                 let firstAndSecond = steamingTime + withoutSteamingPerOther
                 
-                return pt > totalTime ? 360.0 : ((pt - firstAndSecond) / (totalTime - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[1].degrees) + pointerInfoViewModels.pointerInfo[1].degrees
+                return pt > totalTime ? 360.0 : ((pt - firstAndSecond) / (totalTime - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[2].degrees) + pointerInfoViewModels.pointerInfo[2].degrees
                 
             }
         }
@@ -78,9 +76,8 @@ struct ScaleView: View {
             PointerView(
                 id: i,
                 pointerInfo: self.pointerInfoViewModels.pointerInfo[i],
-                lastChanged: self.$lastChanged,
                 geometry: geometry,
-                scaleMax: scaleMax
+                value: self.pointerInfoViewModels.pointerInfo[i].value
             )
         }
     }
@@ -105,14 +102,6 @@ struct ScaleView: View {
         }
         .rotationEffect(
             Angle.degrees(angle)
-        )
-        .gesture(
-            TapGesture(count: 1)
-                .onEnded { _ in
-                    if let i = self.lastChanged {
-                        self.pointerInfoViewModels.pointerInfo[i].degrees = angle
-                    }
-                }
         )
     }
 
@@ -148,11 +137,11 @@ struct ScaleView_Previews: PreviewProvider {
     @State static var progressTime = 0
     @State static var pointerInfoViewModels = PointerInfoViewModels
             .withColorAndDegrees(
-                (.green, 72.0),
-                (.red, 144.0),
-                (.blue, 216.0),
-                (.orange, 288.0),
-                (.purple, 360.0)
+                (0.0, .cyan, 0.0),
+                (120, .green, 72.0),
+                (180, .red, 144.0),
+                (240, .blue, 216.0),
+                (300, .orange, 288.0)
             )
     
     static var previews: some View {

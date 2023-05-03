@@ -10,13 +10,12 @@ final class ContentViewModel: ObservableObject {
     
     private let colors: Array<Color> =
         [
+            .cyan,
             .green,
             .red,
             .blue,
             .orange,
             .purple,
-            .cyan,
-            .pink,
             .yellow,
             .brown,
             .black
@@ -24,16 +23,12 @@ final class ContentViewModel: ObservableObject {
     
     @Published var pointerInfoViewModels: PointerInfoViewModels =
         .withColorAndDegrees(
-            (.green, 72.0),
-            (.red, 144.0),
-            (.blue, 216.0),
-            (.orange, 288.0),
-            (.purple, 360.0)
-        ) {
-            didSet {
-                calculateFromScale()
-            }
-        }
+            (90, .cyan, 0.0),
+            (180, .green, 72.0),
+            (270, .red, 144.0),
+            (360, .blue, 216.0),
+            (450, .orange, 288.0)
+        )
     
     @Published var numberOf6: Double = 3.0 {
         didSet {
@@ -89,37 +84,25 @@ final class ContentViewModel: ObservableObject {
             
             let colorAndDegreesArray =
                 values.enumerated().reduce(
-                    (0.0, Array<(Color, Double)>.init()),
+                    
+                    (
+                        (0.0, 0.0), // (degree, value)
+                        Array<(Double, Color, Double)>.init()
+                    ),
                     { (acc, element) in
-                        var (degree, arr) = acc
+                        var (prev, arr) = acc
+                        let (degree, value) = prev
                         let (i, v) = element
                         let d = (v / totalWaterAmount) * 360 + degree
                         
-                        arr.append((colors[i], d))
+                        arr.append((value + v, colors[i], degree))
                         
-                        return (d, arr)
+                        return ((d, value + v), arr)
                     }
                 ).1
             
             pointerInfoViewModels =
                 pointerInfoViewModels.withColorAndDegrees(colorAndDegreesArray)
         }
-    }
-    
-    private func calculateFromScale() -> Void {
-        let fourtyPercent =
-            pointerInfoViewModels
-                .pointerInfo
-                .prefix(2)
-        
-        let result = calculateBoiledWaterAmountService.calculateFromNel(
-            values: pointerInfoViewModels
-                .pointerInfo
-                .map { (e) in
-                    e.degrees / 360
-                }
-        )
-        
-        
     }
 }
