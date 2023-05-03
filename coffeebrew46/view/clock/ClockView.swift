@@ -5,7 +5,7 @@ import SwiftUI
 
  These implementation refer from: https://talk.objc.io/episodes/S01E192-analog-clock
  */
-struct ScaleView: View {
+struct ClockView: View {
     // Max value of the scale.
     @Binding var scaleMax: Double
     
@@ -21,27 +21,29 @@ struct ScaleView: View {
     public let totalTime: Double
     
     var body: some View {
-        ZStack {
-            ForEach(0..<(self.density * 4)) { t in
-                self.tick(tick: t)
-            }
-            GeometryReader { (geometry: GeometryProxy) in
-                ZStack {
-                    ForEach((0..<self.pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
-                        self.showArcAndPointer(geometry, i)
-                    }
-                    ArcView(
-                        startDegrees: 0.0,
-                        endDegrees: endDegree(),
-                        color: .gray.opacity(0.0),
-                        geometry: geometry,
-                        fillColor: .gray.opacity(0.5)
-                    )
+        GeometryReader { (geometry: GeometryProxy) in
+            ZStack {
+                ForEach(0..<(self.density * 4), id: \.self) { t in
+                    self.tick(tick: t)
                 }
+                ZStack {
+                    GeometryReader { (geometry: GeometryProxy) in
+                        ForEach((0..<self.pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
+                            self.showArcAndPointer(geometry, i)
+                        }
+                        ArcView(
+                            startDegrees: 0.0,
+                            endDegrees: endDegree(),
+                            color: .gray.opacity(0.0),
+                            geometry: geometry,
+                            fillColor: .gray.opacity(0.5)
+                        )
+                    }
+                }
+                CenterCircle().fill(.black)
+                Color.clear
             }
-            CenterCircle()
-                .fill(.black)
-            Color.clear
+            .frame(maxWidth: .infinity, maxHeight: geometry.size.width * 0.95)
         }
     }
     
@@ -145,7 +147,7 @@ struct ScaleView_Previews: PreviewProvider {
             )
     
     static var previews: some View {
-        ScaleView(
+        ClockView(
             scaleMax: $scaleMax,
             pointerInfoViewModels: $pointerInfoViewModels,
             progressTime: $progressTime,
