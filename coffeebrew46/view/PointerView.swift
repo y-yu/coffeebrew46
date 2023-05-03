@@ -10,11 +10,9 @@ struct PointerView: View {
 
     internal let pointerInfo: PointerInfoViewModel
     
-    @Binding var lastChanged: Int?
-    
     internal let geometry: GeometryProxy
     
-    internal let scaleMax: Double
+    internal let value: Double
         
     // This state is needed for anti-locking `pointerInfo.degrees`.
     // If I tried to use `pointerInfo.degrees` directlly without `internalDegrees`,
@@ -31,7 +29,7 @@ struct PointerView: View {
     
     var body: some View {
         VStack {
-            Text(String(format: "%.0f", scaleMax * self.pointerInfo.degrees / 360))
+            Text(String(format: "%.0f", value))
                 .font(.system(size: 20).bold())
                 .fixedSize()
                 .frame(width: 30)
@@ -45,34 +43,8 @@ struct PointerView: View {
             
         }
         .rotationEffect(
-            Angle.degrees(isDragging ? self.internalDegrees : self.pointerInfo.degrees )
+            Angle.degrees(self.pointerInfo.degrees)
         )
-            /*
-            .gesture(
-                DragGesture()
-                    .onChanged { value in
-                        if (!self.isDragging) {
-                            self.isDragging = true
-                        }
-                        
-                        self.internalDegrees =
-                            self.getDegrees(
-                                geometry: self.geometry,
-                                point: value.location
-                            )
-                    }
-                    .onEnded { value in
-                        self.internalDegrees =
-                            self.getDegrees(
-                                geometry: self.geometry,
-                                point: value.location
-                            )
-                        self.pointerInfo.degrees = self.internalDegrees
-                        self.lastChanged = .some(self.id)
-                        self.isDragging = false
-                    }
-            )
-             */
     }
     
     /**
