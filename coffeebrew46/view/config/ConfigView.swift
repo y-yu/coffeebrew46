@@ -4,6 +4,8 @@ struct ConfigView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: ContentViewModel
     
+    private let timerStep: Double = 1.0
+    
     var body: some View {
         Form {
             Section(header: Text("Weight settings")) {
@@ -52,19 +54,25 @@ struct ConfigView: View {
                 Text("Total time: \(String(format: "%.0f", viewModel.totalTime)) sec")
                 ButtonSliderButtonView(
                     maximum: 300.0,
-                    minimum: -1.0,
-                    sliderStep: 2.0,
-                    buttonStep: 1.0,
+                    // If `totalTime` would be going down less than `steamingTime` + its step,
+                    // then `SliderView` will crash so this `steamingTime + timerStep` is needed to avoid crash.
+                    minimum: viewModel.steamingTime + timerStep,
+                    sliderStep: timerStep,
+                    buttonStep: timerStep,
                     isDisable: appEnvironment.isTimerStarted,
                     target: $viewModel.totalTime
                 )
                 
                 Text("Steaming time: \(String(format: "%.0f", viewModel.steamingTime)) sec")
                 ButtonSliderButtonView(
-                    maximum: ((viewModel.totalTime / (viewModel.numberOf6 + 2)) * 2),
-                    minimum: 10,
-                    sliderStep: 2.0,
-                    buttonStep: 1.0,
+                    // This is required to avoid crash.
+                    // If the maximum is `viewModel.totalTime - timerStep` then
+                    // `totalTime`'s slider range could be 300~300 and it will crash
+                    // so that's the why `timerStep` double subtractions are required.
+                    maximum: viewModel.totalTime - timerStep - timerStep > 1 + timerStep ? viewModel.totalTime - timerStep - timerStep : 1 + timerStep,
+                    minimum: 1,
+                    sliderStep: timerStep,
+                    buttonStep: timerStep,
                     isDisable: appEnvironment.isTimerStarted,
                     target: $viewModel.steamingTime
                 )
