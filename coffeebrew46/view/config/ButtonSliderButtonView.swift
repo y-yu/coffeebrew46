@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ButtonSliderView: View {
+struct ButtonSliderButtonView: View {
     public let maximum: Double
     public let minimum: Double
     public let sliderStep: Double
@@ -43,7 +43,7 @@ struct ButtonSliderView_Previews: PreviewProvider {
     
     static var previews: some View {
         VStack {
-            ButtonSliderView(
+            ButtonSliderButtonView(
                 maximum: 100,
                 minimum: 10,
                 sliderStep: 0.1,
@@ -51,7 +51,7 @@ struct ButtonSliderView_Previews: PreviewProvider {
                 isDisable: false,
                 target: $target
             )
-            ButtonSliderView(
+            ButtonSliderButtonView(
                 maximum: 100,
                 minimum: 10,
                 sliderStep: 0.1,

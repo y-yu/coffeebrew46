@@ -9,12 +9,14 @@ protocol CalculateBoiledWaterAmountService {
     func calculate(
         coffeeBeansWeight: Double,
         firstBoiledWaterAmount: Double,
-        numberOf6: Int
+        numberOf6: Int,
+        coffeeBeansWeightRatio: Int
     ) -> ResultNel<BoiledWaterAmount, CoffeeError>
     
     // From the scale pointers.
     func calculateFromNel(
-        values: Array<Double>
+        values: Array<Double>,
+        coffeeBeansWeightRatio: Int
     ) -> ResultNel<BoiledWaterAmount, CoffeeError>
 }
 
@@ -26,12 +28,11 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
         self.validateInputService = validateInputService
     }
     
-    private let coffeeBeansWeightRatio: Int = 15
-    
     func calculate(
         coffeeBeansWeight: Double,
         firstBoiledWaterAmount: Double,
-        numberOf6: Int
+        numberOf6: Int,
+        coffeeBeansWeightRatio: Int
     ) -> ResultNel<BoiledWaterAmount, CoffeeError> {
         let wholeBoiledWaterAmount = coffeeBeansWeight * Double(coffeeBeansWeightRatio)
         let validatedInput = validateInputService.validate(
@@ -69,7 +70,8 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
     }
     
     func calculateFromNel(
-        values: Array<Double>
+        values: Array<Double>,
+        coffeeBeansWeightRatio: Int
     ) -> ResultNel<BoiledWaterAmount, CoffeeError> {
         let wholeBoiledWaterAmount = values.reduce(
             0.0,
@@ -81,7 +83,8 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
         return calculate(
             coffeeBeansWeight: coffeeBeansWeight,
             firstBoiledWaterAmount: firstBoiledWaterAmount,
-            numberOf6: values.count - 2
+            numberOf6: values.count - 2,
+            coffeeBeansWeightRatio: coffeeBeansWeightRatio
         )
     }
 }

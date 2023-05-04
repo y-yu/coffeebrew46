@@ -48,6 +48,12 @@ final class ContentViewModel: ObservableObject {
     
     @Published var steamingTime: Double = 55
     
+    @Published var coffeeBeansWeightRatio: Double = 15 {
+        didSet {
+            calculateScale()
+        }
+    }
+    
     // For DI
     private let calculateBoiledWaterAmountService: CalculateBoiledWaterAmountService
     // private let boiledWaterAmountPresenter: BoiledWaterAmountPresenterImplType
@@ -73,8 +79,9 @@ final class ContentViewModel: ObservableObject {
                 calculateBoiledWaterAmountService
                     .calculate(
                         coffeeBeansWeight: weight,
-                        firstBoiledWaterAmount: firstBoiledWaterPercent * coffeeBeansWeight * 3 * 2,
-                        numberOf6: Int(numberOf6)
+                        firstBoiledWaterAmount: firstBoiledWaterPercent * coffeeBeansWeight * (coffeeBeansWeightRatio * 2 / 5),
+                        numberOf6: Int(numberOf6),
+                        coffeeBeansWeightRatio: Int(coffeeBeansWeightRatio)
                 )
             }
 
