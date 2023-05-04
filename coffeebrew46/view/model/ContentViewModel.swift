@@ -44,6 +44,10 @@ final class ContentViewModel: ObservableObject {
     
     @Published var totalWaterAmount: Double = 300
     
+    @Published var totalTime: Double = 210
+    
+    @Published var steamingTime: Double = 55
+    
     // For DI
     private let calculateBoiledWaterAmountService: CalculateBoiledWaterAmountService
     // private let boiledWaterAmountPresenter: BoiledWaterAmountPresenterImplType

@@ -11,7 +11,7 @@ options:
   transitivelyLinkDependencies: false
 settings:
   base:
-    IPHONEOS_DEPLOYMENT_TARGET: 15.0
+    IPHONEOS_DEPLOYMENT_TARGET: 16.0
   configs:
     Debug:
       MTL_ENABLE_DEBUG_INFO: INCLUDE_SOURCE
@@ -65,7 +65,6 @@ targets:
           CODE_SIGN_STYLE: Manual
           DEVELOPMENT_TEAM: ''
           INFOPLIST_FILE: coffeebrew46Tests/Info.plist
-          IPHONEOS_DEPLOYMENT_TARGET: '15.0'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew64Tests
           PROVISIONING_PROFILE_SPECIFIER: ''
           PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
@@ -78,7 +77,6 @@ targets:
           CODE_SIGN_STYLE: Manual
           DEVELOPMENT_TEAM: ''
           INFOPLIST_FILE: coffeebrew46Tests/Info.plist
-          IPHONEOS_DEPLOYMENT_TARGET: '15.0'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew64Tests
           PROVISIONING_PROFILE_SPECIFIER: ''
           PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
