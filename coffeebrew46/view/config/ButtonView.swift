@@ -30,7 +30,7 @@ struct ButtonView: View {
     var body: some View {
         Image(systemName: buttonType.toSystemName())
             .resizable()
-            .frame(width: 40, height: 40, alignment: .center)
+            .frame(width: 30, height: 30, alignment: .center)
             .onTapGesture {
                 switch buttonType {
                 case let .minus(min):
