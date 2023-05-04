@@ -19,6 +19,15 @@ extension ButtonType {
             return "plus.circle"
         }
     }
+    
+    internal func toColor() -> Color {
+        switch self {
+        case .minus(_):
+            return .red
+        case .plus(_):
+            return .blue
+        }
+    }
 }
 
 struct ButtonView: View {
@@ -43,6 +52,9 @@ struct ButtonView: View {
                     }
                 }
             }
+            .foregroundColor(
+                isDisabled ? .gray : buttonType.toColor()
+            )
             .disabled(isDisabled)
             .id(!isDisabled)
     }
