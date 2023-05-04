@@ -10,31 +10,45 @@
 \newcommand{\verteq}{\rotatebox{90}{$=$}}
 \Large
 \begin{tikzpicture}
-\draw (0.5,-0.36) [line width=0.1mm,color=black,fill=white!10] circle[radius=1.22cm];
-\draw (0.5,-0.36) [line width=0.1mm,color=black,fill=white!10] circle[radius=1.2cm];
-            \path[
-                postaction={
-                    decoration={raise=.1ex,
-                        text along path,
-                        text format delimiters={|}{|},
-                        text={%
-                          |\tiny|
-                          In the strong constraint we trust.
-                        },
-                        text align={left, left indent=4.45cm},
-                        %reverse path
-                    },
-                    decorate
-                }
-            ]
-             (1.7,-0.35) arc (0:360:1.2cm);
-\node (A) at (-0.05,-0.2) [above] {\Huge 4};
-\node (B) at (0.49,-0.1) [above] {\Huge $:$};
-\node (C) at (1,-0.2) [above] {\Huge 6};
-\node (D) at (0.03,-0.6) [above] {\verteq};
-\node (E) at (0.5,-1.2) [above] {\textit{CoffeeBrew}};
-\node (F) at (1.03,-0.6) [above] {\verteq};
+%\draw (0.5,-0.65) [line width=0.1mm,color=black,fill=white!10] circle[radius=1.2cm];
+%\draw (0.5,-0.36) [line width=0.1mm,color=black,fill=white!10] circle[radius=1.2cm];
+\path[
+    postaction={
+        decoration={raise=.1ex,
+            text along path,
+            text format delimiters={|}{|},
+            text={%
+                |\footnotesize\color{black!50}|
+                in the strong constraint
+            },
+            text align={left, left indent=4.25cm},
+            %reverse path
+        },
+        decorate
+    }
+]
+(1.7,-0.65) arc (0:360:1.2cm);
+\path[
+    postaction={
+        decoration={raise=.1ex,
+            text along path,
+            text format delimiters={|}{|},
+            text={%
+                |\footnotesize\color{black!50}|
+                we trust
+            },
+            text align={left, left indent=1.33cm},
+            %reverse path
+        },
+        decorate
+    }
+]
+(1.7,-0.65) arc (0:360:1.2cm);
+\node (A) at (-0.08,-0.45) [above] {\Huge 4};
+\node (B) at (0.5,-0.38) [above] {\Huge $:$};
+\node (C) at (1.08,-0.45) [above] {\Huge 6};
+\node (D) at (0,-0.8) [above] {\verteq};
+\node (F) at (1.1,-0.8) [above] {\verteq};
+\node (E) at (0.5,-1.3) [above] {\textit{BrewCoffee}};
 \end{tikzpicture}
-
-
 \end{document}
