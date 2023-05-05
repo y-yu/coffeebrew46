@@ -1,12 +1,12 @@
 /**
- # Boild water amount for 4:6 method.
+ # Water amount for 4:6 method.
  */
-struct BoiledWaterAmount {
-    // The first and second warter amounts (gram)
-    let fourtyPercent: (Double, Double)
+struct WaterAmount {
+    // The first and second water amounts (gram)
+    var fourtyPercent: (Double, Double)
 
-    // Others warter amounts (gram)
-    let sixtyPercent: NonEmptyList<Double>
+    // Others water amounts (gram)
+    var sixtyPercent: NonEmptyList<Double>
     
     // Return total amount of the water (gram).
     func totalAmount() -> Double {

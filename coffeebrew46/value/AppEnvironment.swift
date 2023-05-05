@@ -1,11 +1,6 @@
 import Foundation
 import SwiftUI
 
-enum Route {
-    case stopwatch
-    case config
-}
-
 final class AppEnvironment: ObservableObject {
     @Published var selectedTab: Route = .stopwatch
     @Published var isTimerStarted: Bool = false

@@ -7,7 +7,7 @@ import SwiftUI
  */
 struct ClockView: View {
     // Max value of the scale.
-    @Binding var scaleMax: Double
+    var scaleMax: Double
     
     // This is a public variable.
     @Binding var pointerInfoViewModels: PointerInfoViewModels
@@ -17,8 +17,8 @@ struct ClockView: View {
     
     @Binding var progressTime: Int
     
-    public let steamingTime: Double
-    public let totalTime: Double
+    var steamingTime: Double
+    var totalTime: Double
     
     var body: some View {
         GeometryReader { (geometry: GeometryProxy) in
@@ -135,7 +135,6 @@ extension CGRect {
 }
 
 struct ScaleView_Previews: PreviewProvider {
-    @State static var scaleMax = 210.0
     @State static var progressTime = 0
     @State static var pointerInfoViewModels = PointerInfoViewModels
             .withColorAndDegrees(
@@ -148,7 +147,7 @@ struct ScaleView_Previews: PreviewProvider {
     
     static var previews: some View {
         ClockView(
-            scaleMax: $scaleMax,
+            scaleMax: 210.0,
             pointerInfoViewModels: $pointerInfoViewModels,
             progressTime: $progressTime,
             steamingTime: 50,
