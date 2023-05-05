@@ -12,11 +12,11 @@ struct StopwatchView: View {
             Spacer()
             Spacer()
             ClockView(
-                scaleMax: $viewModel.totalWaterAmount,
+                scaleMax: viewModel.currentConfig.totalWaterAmount(),
                 pointerInfoViewModels: $viewModel.pointerInfoViewModels,
                 progressTime: $progressTime,
-                steamingTime: viewModel.steamingTime,
-                totalTime: viewModel.totalTime
+                steamingTime: viewModel.currentConfig.steamingTimeSec,
+                totalTime: viewModel.currentConfig.totalTimeSec
             )
             HStack {
                 Spacer()

@@ -10,6 +10,8 @@ struct NavigationModifier: ViewModifier {
             ConfigView()
         case .stopwatch:
             StopwatchView()
+        case .saveLoad:
+            SaveLoadView()
         }
     }
 

@@ -1,9 +1,9 @@
 /**
  # Interface to calculate boiled water amount service
  
- In the '4:6 method', which is one of the berwing coffee methods, invented by TETSU KASUYA,
+ In the '4:6 method', which is one of the brewing coffee methods, invented by TETSU KASUYA,
  the boiled water amount for each step must be calculated only the coffee beans weight.
- This interface is a reprentation of the curriculation.
+ This interface is a representation of the calculation.
  */
 protocol CalculateBoiledWaterAmountService {
     func calculate(
@@ -11,13 +11,13 @@ protocol CalculateBoiledWaterAmountService {
         firstBoiledWaterAmount: Double,
         numberOf6: Int,
         coffeeBeansWeightRatio: Int
-    ) -> ResultNel<BoiledWaterAmount, CoffeeError>
+    ) -> ResultNel<WaterAmount, CoffeeError>
     
     // From the scale pointers.
     func calculateFromNel(
         values: Array<Double>,
         coffeeBeansWeightRatio: Int
-    ) -> ResultNel<BoiledWaterAmount, CoffeeError>
+    ) -> ResultNel<WaterAmount, CoffeeError>
 }
 
 // Implementation
@@ -33,7 +33,7 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
         firstBoiledWaterAmount: Double,
         numberOf6: Int,
         coffeeBeansWeightRatio: Int
-    ) -> ResultNel<BoiledWaterAmount, CoffeeError> {
+    ) -> ResultNel<WaterAmount, CoffeeError> {
         let wholeBoiledWaterAmount = coffeeBeansWeight * Double(coffeeBeansWeightRatio)
         let validatedInput = validateInputService.validate(
             coffeeBeansWeight: coffeeBeansWeight,
@@ -43,7 +43,7 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
         )
         
         return validatedInput.map { (input) in
-            BoiledWaterAmount(
+            WaterAmount(
                 fourtyPercent: (
                     firstBoiledWaterAmount,
                     (wholeBoiledWaterAmount * 0.4) - firstBoiledWaterAmount
@@ -72,7 +72,7 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
     func calculateFromNel(
         values: Array<Double>,
         coffeeBeansWeightRatio: Int
-    ) -> ResultNel<BoiledWaterAmount, CoffeeError> {
+    ) -> ResultNel<WaterAmount, CoffeeError> {
         let wholeBoiledWaterAmount = values.reduce(
             0.0,
             { (acc, v) in acc + v }
