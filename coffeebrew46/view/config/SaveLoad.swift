@@ -8,45 +8,43 @@ struct SaveLoadView: View {
     @State var errorMessage: String = ""
     
     var body: some View {
-        GeometryReader { geometory in
-            Form {
-                Section {
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            updateConfig()
-                        }){
-                            HStack {
-                                Spacer()
-                                Text("Import")
-                                Spacer()
-                            }
+        Form {
+            Section {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        updateConfig()
+                    }){
+                        HStack {
+                            Spacer()
+                            Text("Import")
+                            Spacer()
                         }
-                        .buttonStyle(BorderlessButtonStyle())
-                        Divider()
-                        Button(action: {
-                            exportJSON()
-                            
-                        }){
-                            HStack {
-                                Spacer()
-                                Text("Export")
-                                Spacer()
-                            }
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                        Spacer()
                     }
+                    .buttonStyle(BorderlessButtonStyle())
+                    Divider()
+                    Button(action: {
+                        exportJSON()
+                        
+                    }){
+                        HStack {
+                            Spacer()
+                            Text("Export")
+                            Spacer()
+                        }
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    Spacer()
                 }
-                Section(header: Text("JSON")) {
-                    TextEditor(text: $json)
-                        .frame(maxHeight: geometory.size.height)
-                }
-                Section(header: Text("Error")) {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .hidden(errorMessage == "")
-                }
+            }
+            Section(header: Text("JSON")) {
+                TextEditor(text: $json)
+                    .frame(maxHeight: .infinity)
+            }
+            Section(header: Text("Error")) {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+                    .hidden(errorMessage == "")
             }
         }
         .navigationTitle("Import & Export")
