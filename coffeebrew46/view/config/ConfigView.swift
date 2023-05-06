@@ -10,7 +10,7 @@ struct ConfigView: View {
         Form {
             Section {
                 NavigationLink(value: Route.saveLoad) {
-                    Text("Save & Load")
+                    Text("Import & Export")
                 }
             }
             Section(header: Text("Weight settings")) {
