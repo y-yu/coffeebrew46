@@ -5,41 +5,74 @@ struct SaveLoadView: View {
     @EnvironmentObject var viewModel: ContentViewModel
         
     @State var json: String = ""
+    @State var errorMessage: String = ""
     
     var body: some View {
         GeometryReader { geometory in
             Form {
                 Section {
-                    Button(action: {
-                        exportJSON()
-                    }){
-                        Text("Export")
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            updateConfig()
+                        }){
+                            HStack {
+                                Spacer()
+                                Text("Import")
+                                Spacer()
+                            }
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                        Divider()
+                        Button(action: {
+                            exportJSON()
+                            
+                        }){
+                            HStack {
+                                Spacer()
+                                Text("Export")
+                                Spacer()
+                            }
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                        Spacer()
                     }
                 }
-                Section{
-                    Button(action: {
-                        updateConfig()
-                    }){
-                        Text("Import")
-                    }
+                Section(header: Text("JSON")) {
+                    TextEditor(text: $json)
+                        .frame(maxHeight: geometory.size.height)
                 }
-                TextEditor(text: $json)
-                    .frame(maxHeight: geometory.size.height)
+                Section(header: Text("Error")) {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .hidden(errorMessage == "")
+                }
             }
         }
-        .navigationTitle("Save & Load")
+        .navigationTitle("Import & Export")
     }
     
     private func updateConfig() {
         let decoder = JSONDecoder()
         let jsonData = json.data(using: .utf8)!
-        let config = try! decoder.decode(Config.self, from: jsonData)
-        viewModel.currentConfig = config
+        do {
+            try viewModel.currentConfig = decoder.decode(Config.self, from: jsonData)
+            errorMessage = ""
+        } catch {
+            errorMessage = "\(error)"
+        }
     }
     
     private func exportJSON() {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         json = try! String(data: encoder.encode(viewModel.currentConfig), encoding: .utf8)!
+        errorMessage = ""
+    }
+}
+
+extension View {
+    func hidden(_ shouldHide: Bool) -> some View {
+        opacity(shouldHide ? 0 : 1)
     }
 }
