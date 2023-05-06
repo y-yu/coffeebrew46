@@ -8,6 +8,11 @@ struct ConfigView: View {
     
     var body: some View {
         Form {
+            Section {
+                NavigationLink(value: Route.saveLoad) {
+                    Text("Save & Load")
+                }
+            }
             Section(header: Text("Weight settings")) {
                 Text("Coffee beans weight: \(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
                 ButtonSliderButtonView(
