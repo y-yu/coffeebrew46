@@ -1,6 +1,6 @@
 import Foundation
 
-struct Config {
+struct Config: Equatable {
     var coffeeBeansWeight: Double
     
     var partitionsCountOf6: Double
@@ -64,4 +64,13 @@ extension Config: Encodable {
         try container.encode(totalTimeSec, forKey: .totalTimeSec)
         try container.encode(steamingTimeSec, forKey: .steamingTimeSec)
     }
+}
+
+func ==(lhs: Config, rhs: Config) -> Bool {
+    lhs.coffeeBeansWeight == rhs.coffeeBeansWeight &&
+    lhs.firstWaterPercent == rhs.firstWaterPercent &&
+    lhs.partitionsCountOf6 == rhs.partitionsCountOf6 &&
+    lhs.steamingTimeSec == rhs.steamingTimeSec &&
+    lhs.totalTimeSec == rhs.totalTimeSec &&
+    lhs.waterToCoffeeBeansWeightRatio == rhs.waterToCoffeeBeansWeightRatio
 }
