@@ -36,6 +36,10 @@ extension Config {
     func totalWaterAmount() -> Double {
         self.coffeeBeansWeight * self.waterToCoffeeBeansWeightRatio
     }
+    
+    func fortyPercentWaterAmount() -> Double {
+        totalWaterAmount() * 0.4
+    }
 }
 
 extension Config: Decodable {

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ConfigView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
-    @EnvironmentObject var viewModel: ContentViewModel
+    @EnvironmentObject var viewModel: CurrentConfigViewModel
     
     private let timerStep: Double = 1.0
     
@@ -48,7 +48,7 @@ struct ConfigView: View {
                 Text("The number of partitions of later 6")
                 ButtonNumberButtonView(
                     maximum: 6,
-                    minimum: 2,
+                    minimum: 1,
                     step: 1.0,
                     isDisable: appEnvironment.isTimerStarted,
                     target: $viewModel.currentConfig.partitionsCountOf6

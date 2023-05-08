@@ -7,84 +7,35 @@
  */
 protocol CalculateBoiledWaterAmountService {
     func calculate(
-        coffeeBeansWeight: Double,
-        firstBoiledWaterAmount: Double,
-        numberOf6: Int,
-        coffeeBeansWeightRatio: Int
-    ) -> ResultNel<WaterAmount, CoffeeError>
-    
-    // From the scale pointers.
-    func calculateFromNel(
-        values: Array<Double>,
-        coffeeBeansWeightRatio: Int
-    ) -> ResultNel<WaterAmount, CoffeeError>
+        config: Config
+    ) -> WaterAmount
 }
 
 // Implementation
 class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
-    let validateInputService: ValidateInputService
-    
-    init(validateInputService: ValidateInputService) {
-        self.validateInputService = validateInputService
-    }
-    
-    func calculate(
-        coffeeBeansWeight: Double,
-        firstBoiledWaterAmount: Double,
-        numberOf6: Int,
-        coffeeBeansWeightRatio: Int
-    ) -> ResultNel<WaterAmount, CoffeeError> {
-        let wholeBoiledWaterAmount = coffeeBeansWeight * Double(coffeeBeansWeightRatio)
-        let validatedInput = validateInputService.validate(
-            coffeeBeansWeight: coffeeBeansWeight,
-            wholeBoiledWaterAmount: wholeBoiledWaterAmount,
-            firstBoiledWaterAmount: firstBoiledWaterAmount,
-            numberOf6: numberOf6
-        )
-        
-        return validatedInput.map { (input) in
-            WaterAmount(
-                fourtyPercent: (
-                    firstBoiledWaterAmount,
-                    (wholeBoiledWaterAmount * 0.4) - firstBoiledWaterAmount
-                ),
-                sixtyPercent: {
-                    let sixtyAmount = wholeBoiledWaterAmount * 0.6
-                    let value = NonEmptyList(
-                        head: sixtyAmount / Double(numberOf6),
-                        tail: .Nil
-                    )
+    func calculate(config: Config) -> WaterAmount {
+        WaterAmount(
+            fortyPercent: (
+                config.fortyPercentWaterAmount() * config.firstWaterPercent,
+                config.fortyPercentWaterAmount() * (1 - config.firstWaterPercent)
+            ),
+            sixtyPercent: {
+                let sixtyAmount = config.totalWaterAmount() * 0.6
+                let value = NonEmptyList(
+                    head: sixtyAmount / Double(config.partitionsCountOf6),
+                    tail: .Nil
+                )
 
-                    func loop(_ acc: NonEmptyList<Double>, _ n: Int) ->  NonEmptyList<Double> {
-                        if (n <= 1) {
-                            return acc
-                        } else {
-                            return loop(value ++ acc, n - 1)
-                        }
+                func loop(_ acc: NonEmptyList<Double>, _ n: Int) ->  NonEmptyList<Double> {
+                    if (n <= 1) {
+                        return acc
+                    } else {
+                        return loop(value ++ acc, n - 1)
                     }
-                    
-                    return loop(value, numberOf6)
-                }()
-            )
-        }
-    }
-    
-    func calculateFromNel(
-        values: Array<Double>,
-        coffeeBeansWeightRatio: Int
-    ) -> ResultNel<WaterAmount, CoffeeError> {
-        let wholeBoiledWaterAmount = values.reduce(
-            0.0,
-            { (acc, v) in acc + v }
-        )
-        let coffeeBeansWeight = wholeBoiledWaterAmount / Double(coffeeBeansWeightRatio)
-        let firstBoiledWaterAmount = values[0]
-        
-        return calculate(
-            coffeeBeansWeight: coffeeBeansWeight,
-            firstBoiledWaterAmount: firstBoiledWaterAmount,
-            numberOf6: values.count - 2,
-            coffeeBeansWeightRatio: coffeeBeansWeightRatio
+                }
+                
+                return loop(value, Int(config.partitionsCountOf6))
+            }()
         )
     }
 }

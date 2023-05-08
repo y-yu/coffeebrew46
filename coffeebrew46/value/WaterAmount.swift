@@ -3,15 +3,15 @@
  */
 struct WaterAmount {
     // The first and second water amounts (gram)
-    var fourtyPercent: (Double, Double)
+    var fortyPercent: (Double, Double)
 
     // Others water amounts (gram)
     var sixtyPercent: NonEmptyList<Double>
     
     // Return total amount of the water (gram).
     func totalAmount() -> Double {
-        fourtyPercent.0 +
-            fourtyPercent.1 +
+        fortyPercent.0 +
+            fortyPercent.1 +
             sixtyPercent.toArray().reduce(
                 0.0,
                 { (acc, v) in return acc + v }

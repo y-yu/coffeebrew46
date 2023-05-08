@@ -1,40 +1,22 @@
 /**
- # Validation for the inputs.
+ # Validation for the config.
  */
 protocol ValidateInputService {
     func validate(
-        coffeeBeansWeight: Double,
-        // `wholeBoiledWaterAmount` can be calcurated from `coffeeBeansWeight`
-        // but this validation shouldn't have the logic.
-        wholeBoiledWaterAmount: Double,
-        firstBoiledWaterAmount: Double,
-        numberOf6: Int
-    ) -> ResultNel<ValidatedInput, CoffeeError>
+        config: Config
+    ) -> ResultNel<Void, CoffeeError>
 }
 
 class ValidateInputServiceImpl: ValidateInputService {
     func validate(
-        coffeeBeansWeight: Double,
-        wholeBoiledWaterAmount: Double,
-        firstBoiledWaterAmount: Double,
-        numberOf6: Int
-    ) -> ResultNel<ValidatedInput, CoffeeError> {
+        config: Config
+    ) -> ResultNel<Void, CoffeeError> {
         let validatedTuple =
-            validateCoffeeBeansWeight(coffeeBeansWeight) |+|
-            validateFirstBoiledWaterAmount(
-                wholeBoiledWaterAmount: wholeBoiledWaterAmount,
-                firstBoiledWaterAmount: firstBoiledWaterAmount
-            ) |+|
-            validationNumberOf6(numberOf6)
+            validateCoffeeBeansWeight(config.coffeeBeansWeight) |+|
+            validationNumberOf6(Int(config.partitionsCountOf6))
             
-        return validatedTuple.map { (tuple: (Double, (Double, Int))) in
-            let (coffeeBeansWeight, (firstBoiledWaterAmount, numberOf6)) = tuple
-            
-            return ValidatedInput(
-                coffeeBeansWeight: coffeeBeansWeight,
-                firstBoiledWaterAmount: firstBoiledWaterAmount,
-                numberOf6: numberOf6
-            )
+        return validatedTuple.map { _ in
+            ()
         }
     }
 
