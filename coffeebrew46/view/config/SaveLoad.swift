@@ -43,7 +43,7 @@ struct SaveLoadView: View {
                 TextEditor(text: $json)
                     .frame(maxHeight: .infinity)
             }
-            Section(header: Text("Error")) {
+            Section(header: Text("Log")) {
                 Text(viewModel.errors)
                     .foregroundColor(.red)
                     .hidden(viewModel.errors == "")
@@ -53,6 +53,7 @@ struct SaveLoadView: View {
     }
     
     private func updateConfig() {
+        viewModel.errors = ""
         let decoder = JSONDecoder()
         let jsonData = json.data(using: .utf8)!
         do {
@@ -63,10 +64,14 @@ struct SaveLoadView: View {
     }
     
     private func exportJSON() {
+        viewModel.errors = ""
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
-        json = try! String(data: encoder.encode(viewModel.currentConfig), encoding: .utf8)!
-        viewModel.errors = ""
+        do {
+            json = try String(data: encoder.encode(viewModel.currentConfig), encoding: .utf8)!
+        } catch {
+            viewModel.errors = "\(error)"
+        }
     }
 }
 
