@@ -8,8 +8,7 @@ import SwiftUI
 struct ClockView: View {
     // Max value of the scale.
     var scaleMax: Double
-    
-    // This is a public variable.
+
     @Binding var pointerInfoViewModels: PointerInfoViewModels
     
     private let density: Int = 40

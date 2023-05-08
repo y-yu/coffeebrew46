@@ -2,7 +2,7 @@ import SwiftUI
 
 struct StopwatchView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
-    @EnvironmentObject var viewModel: ContentViewModel
+    @EnvironmentObject var viewModel: CurrentConfigViewModel
 
     @State private var progressTime = 0
     @State private var timer: Timer?

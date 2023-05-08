@@ -2,7 +2,7 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
-    @EnvironmentObject var viewModel: ContentViewModel
+    @EnvironmentObject var viewModel: CurrentConfigViewModel
 
     var body: some View {
         TabView(selection: appEnvironment.tabSelection) {

@@ -2,14 +2,14 @@ import SwiftUI
 
 
 struct ArcView: View {
-    internal let startDegrees: Double
+    var startDegrees: Double
     
-    internal let endDegrees: Double
+    var endDegrees: Double
     
-    internal let color: Color
-    internal let geometry: GeometryProxy
+    var color: Color
+    var geometry: GeometryProxy
     
-    internal let fillColor: Color
+    var fillColor: Color
     
     var body: some View {
         Arc(
@@ -24,12 +24,12 @@ struct ArcView: View {
 }
 
 struct Arc: Shape {
-    internal let startDegrees: Double
+    var startDegrees: Double
     
-    internal let endDegrees: Double
+    var endDegrees: Double
     
-    internal let color: Color
-    internal let geometry: GeometryProxy
+    var color: Color
+    var geometry: GeometryProxy
     
     private let scale: Double = 0.7
     

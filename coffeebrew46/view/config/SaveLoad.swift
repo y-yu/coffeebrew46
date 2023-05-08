@@ -2,10 +2,9 @@ import SwiftUI
 
 struct SaveLoadView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
-    @EnvironmentObject var viewModel: ContentViewModel
+    @EnvironmentObject var viewModel: CurrentConfigViewModel
         
     @State var json: String = ""
-    @State var errorMessage: String = ""
     
     var body: some View {
         Form {
@@ -22,10 +21,13 @@ struct SaveLoadView: View {
                         }
                     }
                     .buttonStyle(BorderlessButtonStyle())
+                    .disabled(appEnvironment.isTimerStarted)
+                    .id(!appEnvironment.isTimerStarted)
+        
                     Divider()
+
                     Button(action: {
                         exportJSON()
-                        
                     }){
                         HStack {
                             Spacer()
@@ -42,9 +44,9 @@ struct SaveLoadView: View {
                     .frame(maxHeight: .infinity)
             }
             Section(header: Text("Error")) {
-                Text(errorMessage)
+                Text(viewModel.errors)
                     .foregroundColor(.red)
-                    .hidden(errorMessage == "")
+                    .hidden(viewModel.errors == "")
             }
         }
         .navigationTitle("Import & Export")
@@ -55,9 +57,8 @@ struct SaveLoadView: View {
         let jsonData = json.data(using: .utf8)!
         do {
             try viewModel.currentConfig = decoder.decode(Config.self, from: jsonData)
-            errorMessage = ""
         } catch {
-            errorMessage = "\(error)"
+            viewModel.errors = "\(error)"
         }
     }
     
@@ -65,7 +66,7 @@ struct SaveLoadView: View {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         json = try! String(data: encoder.encode(viewModel.currentConfig), encoding: .utf8)!
-        errorMessage = ""
+        viewModel.errors = ""
     }
 }
 
