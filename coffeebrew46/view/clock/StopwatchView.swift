@@ -26,17 +26,16 @@ struct StopwatchView: View {
             )
             HStack {
                 Spacer()
-                Text("Start")
-                    .font(.system(size: 20))
-                    .padding()
-                    .background(
-                        Rectangle()
-                            .stroke(lineWidth: 4)
-                            .padding(6)
-                    )
-                    .onTapGesture {
-                        startTimer()
-                    }
+                Button(action: { startTimer() }) {
+                    Text("Start")
+                        .font(.system(size: 20))
+                        .padding()
+                        .background(
+                            Rectangle()
+                                .stroke(lineWidth: 4)
+                                .padding(6)
+                        )
+                }
                 Spacer()
                 Text("\(String(format: "%d", progressTime))")
                     .font(.system(size: 40))
@@ -44,17 +43,16 @@ struct StopwatchView: View {
                     .frame(width: 100, height: 40)
                 Text(" sec")
                 Spacer()
-                Text("Stop")
-                    .font(.system(size: 20))
-                    .padding()
-                    .background(
-                        Rectangle()
-                            .stroke(lineWidth: 4)
-                            .padding(6)
-                    )
-                    .onTapGesture {
-                        stopTimer()
-                    }
+                Button(action: { stopTimer() }) {
+                    Text("Stop")
+                        .font(.system(size: 20))
+                        .padding()
+                        .background(
+                            Rectangle()
+                                .stroke(lineWidth: 4)
+                                .padding(6)
+                        )
+                }
                 Spacer()
             }
             Spacer()
@@ -113,5 +111,18 @@ struct StopwatchView: View {
 
     private func fetchStartTime() -> Date? {
          UserDefaults.standard.object(forKey: "startTime") as? Date
+    }
+}
+
+struct StopwatchView_Previews: PreviewProvider {
+    static var previews: some View {
+        StopwatchView()
+            .environmentObject(
+                CurrentConfigViewModel.init(
+                    validateInputService: ValidateInputServiceImpl(),
+                    calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
+                )
+            )
+            .environmentObject(AppEnvironment.init())
     }
 }

@@ -5,9 +5,11 @@ struct SaveLoadView: View {
     @EnvironmentObject var viewModel: CurrentConfigViewModel
         
     @State var json: String = ""
+    @State var isPrettyPrint: Bool = true
     
     var body: some View {
         Form {
+            Toggle("JSON pretty printing", isOn: $isPrettyPrint)
             Section {
                 HStack {
                     Spacer()
@@ -66,7 +68,9 @@ struct SaveLoadView: View {
     private func exportJSON() {
         viewModel.errors = ""
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+        if isPrettyPrint {
+            encoder.outputFormatting = .prettyPrinted
+        }
         do {
             json = try String(data: encoder.encode(viewModel.currentConfig), encoding: .utf8)!
         } catch {
@@ -78,5 +82,18 @@ struct SaveLoadView: View {
 extension View {
     func hidden(_ shouldHide: Bool) -> some View {
         opacity(shouldHide ? 0 : 1)
+    }
+}
+
+struct SaveLoadView_Previews: PreviewProvider {
+    static var previews: some View {
+        SaveLoadView()
+            .environmentObject(
+                CurrentConfigViewModel.init(
+                    validateInputService: ValidateInputServiceImpl(),
+                    calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
+                )
+            )
+            .environmentObject(AppEnvironment.init())
     }
 }
