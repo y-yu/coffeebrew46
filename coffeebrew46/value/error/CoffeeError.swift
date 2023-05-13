@@ -2,32 +2,37 @@
  # This app error interface.
  */
 enum CoffeeError: Error {
-    case CoffeeBeansWeightUnderZeroError
+    case coffeeBeansWeightUnderZeroError
     
-    case CoffeeBeansWeightIsNotNumberError
+    case coffeeBeansWeightIsNotNumberError
     
-    case BoiledWaterAmountIsTooLessError
+    case waterAmountIsTooLessError
     
-    case FirstShotBoiledWaterAmountExceededWholeAmountError
+    case first40PercentWaterAmountExceededWholeWaterAmountError
     
-    case ShotTimesNumberIsNeededAtLeastOne
+    case partitionsCountOf6IsNeededAtLeastOne
+    
+    case steamingTimeIsTooMuchThanTotal
     
     func getMessage() -> String {
         switch self {
-        case .CoffeeBeansWeightUnderZeroError:
+        case .coffeeBeansWeightUnderZeroError:
             return "The coffee beans weight must be greater than 0."
             
-        case .CoffeeBeansWeightIsNotNumberError:
+        case .coffeeBeansWeightIsNotNumberError:
             return "The coffee beans weight must be number."
             
-        case .BoiledWaterAmountIsTooLessError:
+        case .waterAmountIsTooLessError:
             return "The boiled water need its amount greater than 0cc."
             
-        case .FirstShotBoiledWaterAmountExceededWholeAmountError:
+        case .first40PercentWaterAmountExceededWholeWaterAmountError:
             return "The first shot boiled water amount less than or equal whole water amount."
             
-        case .ShotTimesNumberIsNeededAtLeastOne:
-            return "The numeber of times of shots for 60% is needed at least one."
+        case .partitionsCountOf6IsNeededAtLeastOne:
+            return "The number of times of shots for 60% is needed at least one."
+            
+        case .steamingTimeIsTooMuchThanTotal:
+            return "The streaming time must be less than total time."
         }
     }
 }
