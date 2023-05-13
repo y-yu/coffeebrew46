@@ -15,15 +15,15 @@ struct StopwatchView: View {
 
     var body: some View {
         VStack {
-            Spacer()
-            Spacer()
-            ClockView(
-                scaleMax: viewModel.currentConfig.totalWaterAmount(),
-                pointerInfoViewModels: $viewModel.pointerInfoViewModels,
-                progressTime: $progressTime,
-                steamingTime: viewModel.currentConfig.steamingTimeSec,
-                totalTime: viewModel.currentConfig.totalTimeSec
-            )
+            Group {
+                ClockView(
+                    scaleMax: viewModel.currentConfig.totalWaterAmount(),
+                    pointerInfoViewModels: $viewModel.pointerInfoViewModels,
+                    progressTime: $progressTime,
+                    steamingTime: viewModel.currentConfig.steamingTimeSec,
+                    totalTime: viewModel.currentConfig.totalTimeSec
+                )
+            }
             HStack {
                 Spacer()
                 Button(action: { startTimer() }) {
@@ -55,9 +55,6 @@ struct StopwatchView: View {
                 }
                 Spacer()
             }
-            Spacer()
-            Spacer()
-            Spacer()
             Spacer()
         }
         .navigationTitle("Stopwatch")
