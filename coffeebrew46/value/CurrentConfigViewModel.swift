@@ -21,7 +21,7 @@ final class CurrentConfigViewModel: ObservableObject {
             case .success():
                 calculateScale()
             case let .failure(es):
-                errors = "\(es.toArray())"
+                errors = "\(es.toArray().map({e in e.getMessage()}))"
                 currentConfig = oldValue
             }
         }
