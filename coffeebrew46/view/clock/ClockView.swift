@@ -21,28 +21,35 @@ struct ClockView: View {
     
     var body: some View {
         GeometryReader { (geometry: GeometryProxy) in
-            ZStack {
-                ForEach(0..<(self.density * 4), id: \.self) { t in
-                    self.tick(tick: t)
-                }
+            VStack {
                 ZStack {
-                    GeometryReader { (geometry: GeometryProxy) in
-                        ForEach((0..<self.pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
-                            self.showArcAndPointer(geometry, i)
-                        }
-                        ArcView(
-                            startDegrees: 0.0,
-                            endDegrees: endDegree(),
-                            color: .gray.opacity(0.0),
-                            geometry: geometry,
-                            fillColor: .gray.opacity(0.5)
-                        )
+                    ForEach(0..<(self.density * 4), id: \.self) { t in
+                        self.tick(tick: t)
                     }
+                    ZStack {
+                        GeometryReader { (geometry: GeometryProxy) in
+                            ForEach((0..<self.pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
+                                self.showArcAndPointer(geometry, i)
+                            }
+                            ArcView(
+                                startDegrees: 0.0,
+                                endDegrees: endDegree(),
+                                color: .gray.opacity(0.0),
+                                geometry: geometry,
+                                fillColor: .gray.opacity(0.5)
+                            )
+                        }
+                    }
+                    CenterCircle().fill(.black)
+                    Color.clear
                 }
-                CenterCircle().fill(.black)
-                Color.clear
+                .frame(maxWidth: .infinity, maxHeight: geometry.size.width * 0.98)
+                PhaseListView(
+                    pointerInfoViewModels: pointerInfoViewModels,
+                    degree: endDegree()
+                )
+                .frame(maxWidth: .infinity, maxHeight: geometry.size.width * 0.5)
             }
-            .frame(maxWidth: .infinity, maxHeight: geometry.size.width * 0.95)
         }
     }
     
@@ -59,7 +66,6 @@ struct ClockView: View {
                 let firstAndSecond = steamingTime + withoutSteamingPerOther
                 
                 return pt > totalTime ? 360.0 : ((pt - firstAndSecond) / (totalTime - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[2].degrees) + pointerInfoViewModels.pointerInfo[2].degrees
-                
             }
         }
     }
@@ -134,7 +140,7 @@ extension CGRect {
 }
 
 struct ScaleView_Previews: PreviewProvider {
-    @State static var progressTime = 0
+    @State static var progressTime = 55
     @State static var pointerInfoViewModels = PointerInfoViewModels
             .withColorAndDegrees(
                 (0.0, .cyan, 0.0),
