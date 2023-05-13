@@ -3,6 +3,7 @@ import SwiftUI
 struct StopwatchView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
+    @Environment(\.scenePhase) private var scenePhase
 
     @State private var startTime: Date? {
         didSet {
@@ -63,10 +64,9 @@ struct StopwatchView: View {
         }
         .navigationTitle("Stopwatch")
         .navigation(path: $appEnvironment.stopwatchPath)
-        .onAppear {
-            if let time = fetchStartTime() {
-                startTime = time
-                startTimer()
+        .onChange(of: scenePhase) { phase in
+            if phase == .active {
+                restoreTimer()
             }
         }
     }
@@ -88,16 +88,10 @@ struct StopwatchView: View {
     
     private func saveStartTime() {
         if let time = startTime {
-            print("save")
             UserDefaults.standard.set(time, forKey: "startTime")
         } else {
-            print("removed")
             UserDefaults.standard.removeObject(forKey: "startTime")
         }
-    }
-    
-    private func fetchStartTime() -> Date? {
-         UserDefaults.standard.object(forKey: "startTime") as? Date
     }
     
     private func stopTimer() {
@@ -108,5 +102,16 @@ struct StopwatchView: View {
             self.timer = .none
             self.startTime = .none
         }
+    }
+    
+    private func restoreTimer() {
+        if let time = fetchStartTime() {
+            startTime = time
+            startTimer()
+        }
+    }
+
+    private func fetchStartTime() -> Date? {
+         UserDefaults.standard.object(forKey: "startTime") as? Date
     }
 }
