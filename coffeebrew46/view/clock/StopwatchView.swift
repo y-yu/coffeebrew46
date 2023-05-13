@@ -4,6 +4,11 @@ struct StopwatchView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
 
+    @State private var startTime: Date? {
+        didSet {
+            saveStartTime()
+        }
+    }
     @State private var progressTime = 0
     @State private var timer: Timer?
 
@@ -29,12 +34,7 @@ struct StopwatchView: View {
                             .padding(6)
                     )
                     .onTapGesture {
-                        if (self.timer == nil) {
-                            self.appEnvironment.isTimerStarted = true
-                            self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {_ in
-                                progressTime += 1
-                            }
-                        }
+                        startTimer()
                     }
                 Spacer()
                 Text("\(String(format: "%d", progressTime))")
@@ -52,12 +52,7 @@ struct StopwatchView: View {
                             .padding(6)
                     )
                     .onTapGesture {
-                        if let t = self.timer {
-                            t.invalidate()
-                            self.appEnvironment.isTimerStarted = false
-                            progressTime = 0
-                            self.timer = .none
-                        }
+                        stopTimer()
                     }
                 Spacer()
             }
@@ -68,5 +63,50 @@ struct StopwatchView: View {
         }
         .navigationTitle("Stopwatch")
         .navigation(path: $appEnvironment.stopwatchPath)
+        .onAppear {
+            if let time = fetchStartTime() {
+                startTime = time
+                startTimer()
+            }
+        }
+    }
+    
+    private func startTimer() {
+        if (self.timer == nil) {
+            self.appEnvironment.isTimerStarted = true
+            if (self.startTime == nil) {
+                self.startTime = Date()
+            }
+            self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                if let time = startTime {
+                    let now = Date()
+                    progressTime = Int(now.timeIntervalSince(time))
+                }
+            }
+        }
+    }
+    
+    private func saveStartTime() {
+        if let time = startTime {
+            print("save")
+            UserDefaults.standard.set(time, forKey: "startTime")
+        } else {
+            print("removed")
+            UserDefaults.standard.removeObject(forKey: "startTime")
+        }
+    }
+    
+    private func fetchStartTime() -> Date? {
+         UserDefaults.standard.object(forKey: "startTime") as? Date
+    }
+    
+    private func stopTimer() {
+        if let t = self.timer {
+            t.invalidate()
+            self.appEnvironment.isTimerStarted = false
+            progressTime = 0
+            self.timer = .none
+            self.startTime = .none
+        }
     }
 }
