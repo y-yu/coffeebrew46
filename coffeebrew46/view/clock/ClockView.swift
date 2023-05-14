@@ -6,6 +6,7 @@ import SwiftUI
  These implementation refer from: https://talk.objc.io/episodes/S01E192-analog-clock
  */
 struct ClockView: View {
+    @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
     
     // Max value of the scale.
@@ -41,6 +42,7 @@ struct ClockView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: geometry.size.width * 0.98)
+                Divider()
                 // We need `endDegree` function to call `PhaseListView` so that's the why
                 // `PhaseListView` is here rather than `StopwatchView`.
                 PhaseListView(degree: endDegree())
@@ -80,22 +82,26 @@ struct ClockView: View {
                 pointerInfo: viewModel.pointerInfoViewModels.pointerInfo[i],
                 geometry: geometry,
                 value: viewModel.pointerInfoViewModels.pointerInfo[i].value,
-                isOnGoing: viewModel.pointerInfoViewModels.getNthPhase(degree: endDegree()) == i
+                isOnGoing: viewModel.pointerInfoViewModels.getNthPhase(degree: endDegree()) >= i && appEnvironment.isTimerStarted
             )
         }
     }
-    
+
     // Print oblique squares as divisions of a scale.
     private func tick(tick: Int) -> some View {
         let angle: Double = Double(tick) / Double(self.density * 4) * 360
         let isMark: Bool = tick % markInterval == 0
+        let caption = angle <= viewModel.pointerInfoViewModels.pointerInfo[1].degree ?
+            // In this case, it's steaming.
+            steamingTime * angle / viewModel.pointerInfoViewModels.pointerInfo[1].degree :
+            (totalTime - steamingTime) * (angle - viewModel.pointerInfoViewModels.pointerInfo[1].degree) / (360 - viewModel.pointerInfoViewModels.pointerInfo[1].degree) + steamingTime
         
         return VStack {
-            Text(isMark ? String(format: "%.0f", scaleMax * angle / 360) : " ")
-                .font(.system(size: 10))
+            Text(isMark ? String(format: "%.0f", ceil(caption)) : " ")
+                .font(.system(size: 10).weight(.light))
                 .fixedSize()
                 .frame(width: 20)
-                .foregroundColor(.gray.opacity(0.5))
+                .foregroundColor(!appEnvironment.isTimerStarted || angle > endDegree() ? .gray.opacity(0.5) : .blue)
             Rectangle()
                 .fill(Color.primary)
                 .opacity(isMark ? 0.4 : 0.2)
@@ -159,7 +165,7 @@ struct ScaleView_Previews: PreviewProvider {
 extension PointerInfoViewModels {
     func getNthPhase(degree: Double) -> Int {
         if let nth = self.pointerInfo.firstIndex(where: { e in
-            e.degree >= degree
+            e.degree > degree
         }) {
             return nth - 1
         } else {

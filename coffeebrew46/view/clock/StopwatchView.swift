@@ -13,6 +13,11 @@ struct StopwatchView: View {
     @State private var progressTime = 0
     @State private var timer: Timer?
 
+    private let buttonBackground: some View =
+        RoundedRectangle(cornerRadius: 10, style: .continuous)
+            .stroke(lineWidth: 1)
+            .padding(6)
+
     var body: some View {
         VStack {
             Group {
@@ -23,17 +28,14 @@ struct StopwatchView: View {
                     totalTime: viewModel.currentConfig.totalTimeSec
                 )
             }
+            Divider()
             HStack {
                 Spacer()
                 Button(action: { startTimer() }) {
                     Text("Start")
                         .font(.system(size: 20))
                         .padding()
-                        .background(
-                            Rectangle()
-                                .stroke(lineWidth: 4)
-                                .padding(6)
-                        )
+                        .background(buttonBackground)
                 }
                 Spacer()
                 Text("\(String(format: "%d", progressTime))")
@@ -50,11 +52,7 @@ struct StopwatchView: View {
                     Text("Stop")
                         .font(.system(size: 20))
                         .padding()
-                        .background(
-                            Rectangle()
-                                .stroke(lineWidth: 4)
-                                .padding(6)
-                        )
+                        .background(buttonBackground)
                 }
                 Spacer()
             }

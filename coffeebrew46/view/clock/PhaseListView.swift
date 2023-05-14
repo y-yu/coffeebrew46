@@ -53,7 +53,7 @@ struct PhaseListView: View {
     ) -> A {
         let phase = viewModel.pointerInfoViewModels.getNthPhase(degree: degree)
         
-        if (phase == i) {
+        if (phase == i && appEnvironment.isTimerStarted) {
             return onGoing
         } else if (phase > i) {
             return done
