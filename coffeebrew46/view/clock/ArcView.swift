@@ -13,8 +13,8 @@ struct ArcView: View {
             endDegrees: endDegrees,
             geometry: geometry
         )
-            .fill(fillColor)
-            .rotationEffect(Angle.degrees(-90.0), anchor: .center)
+        .fill(fillColor)
+        .rotationEffect(Angle.degrees(-90.0), anchor: .center)
     }
 }
 

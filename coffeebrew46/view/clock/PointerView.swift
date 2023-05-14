@@ -10,7 +10,7 @@ struct PointerView: View {
     var pointerInfo: PointerInfoViewModel
     var geometry: GeometryProxy
     var value: Double
-    @State private var isDragging: Bool = false
+    var isOnGoing: Bool
     
     private let offset: Double = 10
     
@@ -19,6 +19,9 @@ struct PointerView: View {
             VStack {
                 Text(String(format: "%.0fg\n(#\(id + 1))", value))
                     .font(.system(size: 20))
+                    .foregroundColor(
+                        isOnGoing ? .blue : .black
+                    )
                     .fixedSize()
                     .frame(width: 30)
                     .rotationEffect(
@@ -28,6 +31,9 @@ struct PointerView: View {
                 Spacer()
                 Pointer(offset: offset)
                     .stroke(lineWidth: 1)
+                    .foregroundColor(
+                        isOnGoing ? .blue : .black
+                    )
                 
             }
             .rotationEffect(
@@ -69,7 +75,8 @@ struct PointerView_Previews: PreviewProvider {
                         id: i,
                         pointerInfo: pointerInfoViewModels.pointerInfo[i],
                         geometry: geometry,
-                        value: pointerInfoViewModels.pointerInfo[i].value
+                        value: pointerInfoViewModels.pointerInfo[i].value,
+                        isOnGoing: i == 2
                     )
                 }
             }

@@ -2,26 +2,32 @@ import SwiftUI
 
 struct PhaseListView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
-    
-    var pointerInfoViewModels: PointerInfoViewModels
+    @EnvironmentObject var viewModel: CurrentConfigViewModel
+
     var degree: Double
     
     @State private var selection: Int?
     
     var body: some View {
         List(selection: $selection) {
-            ForEach(0..<self.pointerInfoViewModels.pointerInfo.count, id: \.self) { i in
-                let waterAmount = "\(String(format: "%.0f", self.pointerInfoViewModels.pointerInfo[i].value))g"
+            ForEach(0..<viewModel.pointerInfoViewModels.pointerInfo.count, id: \.self) { i in
+                let waterAmount = "\(String(format: "%.0f", viewModel.pointerInfoViewModels.pointerInfo[i].value))g"
                 HStack {
                     Text("#\(i + 1)")
                         .font(
                             doneOnGoingScheduled(i, done: Font.headline.weight(.light), onGoing: Font.headline.weight(.bold), scheduled: Font.headline.weight(.light))
+                        )
+                        .foregroundColor(
+                            doneOnGoingScheduled(i, done: .black, onGoing: .blue, scheduled: .black)
                         )
                     Text(
                         doneOnGoingScheduled(i, done: "Done: \(waterAmount)", onGoing: "On going: \(waterAmount)", scheduled: "Scheduled: \(waterAmount)")
                     )
                     .font(
                         doneOnGoingScheduled(i, done: Font.headline.weight(.light), onGoing: Font.headline.weight(.bold), scheduled: Font.headline.weight(.light))
+                    )
+                    .foregroundColor(
+                        doneOnGoingScheduled(i, done: .black, onGoing: .blue, scheduled: .black)
                     )
                     Spacer()
                     Image(
@@ -45,7 +51,7 @@ struct PhaseListView: View {
         onGoing: A,
         scheduled: A
     ) -> A {
-        let phase = getNthPhase()
+        let phase = viewModel.pointerInfoViewModels.getNthPhase(degree: degree)
         
         if (phase == i) {
             return onGoing
@@ -55,38 +61,20 @@ struct PhaseListView: View {
             return scheduled
         }
     }
-    
-    private func getNthPhase() -> Int {
-        if let nth = self.pointerInfoViewModels.pointerInfo.firstIndex(where: { e in
-            e.degree >= degree
-        }) {
-            return nth - 1
-        } else {
-            if (degree >= 360) {
-                return self.pointerInfoViewModels.pointerInfo.count
-            } else {
-                return self.pointerInfoViewModels.pointerInfo.count - 1
-            }
-        }
-    }
 }
 
 struct PhaseListView_Preview: PreviewProvider {
+    @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel(
+        validateInputService: ValidateInputServiceImpl(),
+        calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
+    )
     @State static var progressTime = 55
-    @State static var pointerInfoViewModels = PointerInfoViewModels
-        .withColorAndDegrees(
-            (0.0, 0.0),
-            (120, 72.0),
-            (180, 144.0),
-            (240, 216.0),
-            (300, 288.0)
-        )
     
     static var previews: some View {
         PhaseListView(
-            pointerInfoViewModels: pointerInfoViewModels,
             degree: 120
         )
         .environmentObject(AppEnvironment.init())
+        .environmentObject(viewModel)
     }
 }
