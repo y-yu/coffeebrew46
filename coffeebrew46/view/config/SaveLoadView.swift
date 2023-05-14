@@ -10,7 +10,7 @@ struct SaveLoadView: View {
     var body: some View {
         Form {
             Toggle("JSON pretty printing", isOn: $isPrettyPrint)
-            Section {
+            Section(header: Text("JSON")) {
                 HStack {
                     Spacer()
                     Button(action: {
@@ -41,7 +41,7 @@ struct SaveLoadView: View {
                     Spacer()
                 }
             }
-            Section(header: Text("JSON")) {
+            Section(header: Text("Output")) {
                 TextEditor(text: $json)
                     .frame(maxHeight: .infinity)
             }

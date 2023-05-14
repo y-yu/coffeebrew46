@@ -1,19 +1,6 @@
 import SwiftUI
 
 final class CurrentConfigViewModel: ObservableObject {
-    private static let colors: Array<Color> =
-        [
-            .cyan,
-            .green,
-            .red,
-            .blue,
-            .orange,
-            .purple,
-            .yellow,
-            .brown,
-            .black
-        ]
-    
     @Published var currentConfig: Config = Config.init() {
         didSet {
             let result = validateInputService.validate(config: currentConfig)
@@ -31,11 +18,11 @@ final class CurrentConfigViewModel: ObservableObject {
     
     @Published var pointerInfoViewModels: PointerInfoViewModels =
         .withColorAndDegrees(
-            (90, colors[0], 0.0),
-            (180, colors[1], 72.0),
-            (270, colors[2], 144.0),
-            (360, colors[3], 216.0),
-            (450, colors[4], 288.0)
+            (90, 0.0),
+            (180, 72.0),
+            (270, 144.0),
+            (360, 216.0),
+            (450, 288.0)
         )
     
     // For DI
@@ -64,21 +51,19 @@ final class CurrentConfigViewModel: ObservableObject {
         ] + waterAmount.sixtyPercent.toArray()
         
         let colorAndDegreesArray =
-            values.enumerated().reduce(
-                
+            values.reduce(
                 (
                     (0.0, 0.0), // (degree, value)
-                    Array<(Double, Color, Double)>.init()
+                    Array<(Double, Double)>.init()
                 ),
                 { (acc, element) in
                     var (prev, arr) = acc
                     let (degree, value) = prev
-                    let (i, v) = element
-                    let d = (v / totalWaterAmount) * 360 + degree
+                    let d = (element / totalWaterAmount) * 360 + degree
                     
-                    arr.append((value + v, CurrentConfigViewModel.colors[i], degree))
+                    arr.append((value + element, degree))
                     
-                    return ((d, value + v), arr)
+                    return ((d, value + element), arr)
                 }
             ).1
         

@@ -34,16 +34,15 @@ struct ClockView: View {
                             ArcView(
                                 startDegrees: 0.0,
                                 endDegrees: endDegree(),
-                                color: .gray.opacity(0.0),
                                 geometry: geometry,
-                                fillColor: .gray.opacity(0.5)
+                                fillColor: .cyan.opacity(0.3)
                             )
                         }
                     }
-                    CenterCircle().fill(.black)
-                    Color.clear
                 }
                 .frame(maxWidth: .infinity, maxHeight: geometry.size.width * 0.98)
+                // We need `endDegree` function to call `PhaseListView` so that's the why
+                // `PhaseListView` is here rather than `StopwatchView`.
                 PhaseListView(
                     pointerInfoViewModels: pointerInfoViewModels,
                     degree: endDegree()
@@ -56,16 +55,16 @@ struct ClockView: View {
     private func endDegree() -> Double {
         let pt = Double(progressTime)
         if (pt <= steamingTime) {
-            return pt / steamingTime * pointerInfoViewModels.pointerInfo[1].degrees
+            return pt / steamingTime * pointerInfoViewModels.pointerInfo[1].degree
         } else {
             let withoutSteamingPerOther = (Double(totalTime) - steamingTime) / Double(pointerInfoViewModels.pointerInfo.count - 1)
             
             if (pt <= withoutSteamingPerOther + steamingTime) {
-                return (pt - steamingTime) / withoutSteamingPerOther * (pointerInfoViewModels.pointerInfo[2].degrees - pointerInfoViewModels.pointerInfo[1].degrees) + pointerInfoViewModels.pointerInfo[1].degrees
+                return (pt - steamingTime) / withoutSteamingPerOther * (pointerInfoViewModels.pointerInfo[2].degree - pointerInfoViewModels.pointerInfo[1].degree) + pointerInfoViewModels.pointerInfo[1].degree
             } else {
                 let firstAndSecond = steamingTime + withoutSteamingPerOther
                 
-                return pt > totalTime ? 360.0 : ((pt - firstAndSecond) / (totalTime - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[2].degrees) + pointerInfoViewModels.pointerInfo[2].degrees
+                return pt > totalTime ? 360.0 : ((pt - firstAndSecond) / (totalTime - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[2].degree) + pointerInfoViewModels.pointerInfo[2].degree
             }
         }
     }
@@ -74,9 +73,8 @@ struct ClockView: View {
         ZStack {
             ArcView(
                 startDegrees: i - 1 < 0 ? 0.0 :
-                    self.pointerInfoViewModels.pointerInfo[i - 1].degrees,
-                endDegrees: self.pointerInfoViewModels.pointerInfo[i].degrees,
-                color: self.pointerInfoViewModels.pointerInfo[i].color,
+                    self.pointerInfoViewModels.pointerInfo[i - 1].degree,
+                endDegrees: self.pointerInfoViewModels.pointerInfo[i].degree,
                 geometry: geometry,
                 fillColor: .clear
             )
@@ -100,10 +98,10 @@ struct ClockView: View {
                 .font(.system(size: 10))
                 .fixedSize()
                 .frame(width: 20)
-                .foregroundColor(.gray)
+                .foregroundColor(.gray.opacity(0.5))
             Rectangle()
                 .fill(Color.primary)
-                .opacity(isMark ? 2 : 0.5)
+                .opacity(isMark ? 0.4 : 0.2)
                 .frame(width: 1, height: isMark ? 40 : 20)
             Spacer()
         }
@@ -140,24 +138,27 @@ extension CGRect {
 }
 
 struct ScaleView_Previews: PreviewProvider {
+    @ObservedObject static var appEnvironment: AppEnvironment = .init()
     @State static var progressTime = 55
     @State static var pointerInfoViewModels = PointerInfoViewModels
             .withColorAndDegrees(
-                (0.0, .cyan, 0.0),
-                (120, .green, 72.0),
-                (180, .red, 144.0),
-                (240, .blue, 216.0),
-                (300, .orange, 288.0)
+                (0.0, 0.0),
+                (120, 72.0),
+                (180, 144.0),
+                (240, 216.0),
+                (300, 288.0)
             )
     
     static var previews: some View {
-        ClockView(
+        appEnvironment.isTimerStarted = true
+
+        return ClockView(
             scaleMax: 210.0,
             pointerInfoViewModels: $pointerInfoViewModels,
             progressTime: $progressTime,
             steamingTime: 50,
             totalTime: 180
         )
-        .frame(width: 300, height: 300)
+        .environmentObject(appEnvironment)
     }
 }

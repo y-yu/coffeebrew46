@@ -6,8 +6,6 @@ import SwiftUI
 final class PointerInfoViewModel {
     // Value of the pointer.
     public let value: Double
-
-    public var color: Color
     
     // This is an event sender function for the parent model.
     // This model will be an element of the array of `PointerInfoViewModels`,
@@ -18,7 +16,7 @@ final class PointerInfoViewModel {
     // that's the why this private function is defined.
     private let send: () -> ()
     
-    var degrees: Double = 0.0 {
+    var degree: Double = 0.0 {
         didSet {
             self.send()
         }
@@ -26,12 +24,10 @@ final class PointerInfoViewModel {
     
     init(
         value: Double,
-        color: Color,
         initDegrees: Double = 0.0,
         send: @escaping () -> ()
     ) {
-        self.degrees = initDegrees
-        self.color = color
+        self.degree = initDegrees
         self.send = send
         self.value = value
     }
@@ -44,11 +40,10 @@ final class PointerInfoViewModels: ObservableObject {
         self.pointerInfo = []
     }
 
-    func withColorAndDegrees(_ arr: Array<(Double, Color, Double)>) -> PointerInfoViewModels {
-        self.pointerInfo = arr.map { (value, color, initDegrees) in
+    func withColorAndDegrees(_ arr: Array<(Double, Double)>) -> PointerInfoViewModels {
+        self.pointerInfo = arr.map { (value, initDegrees) in
             PointerInfoViewModel(
                 value: value,
-                color: color,
                 initDegrees: initDegrees,
                 send: { self.objectWillChange.send() }
             )
@@ -57,7 +52,7 @@ final class PointerInfoViewModels: ObservableObject {
         return self
     }
     
-    static func withColorAndDegrees(_ tuples: (Double, Color, Double)...) -> PointerInfoViewModels {
+    static func withColorAndDegrees(_ tuples: (Double, Double)...) -> PointerInfoViewModels {
         return PointerInfoViewModels().withColorAndDegrees([]).withColorAndDegrees(tuples)
     }
 }

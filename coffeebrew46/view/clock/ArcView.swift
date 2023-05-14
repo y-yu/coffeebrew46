@@ -3,19 +3,14 @@ import SwiftUI
 
 struct ArcView: View {
     var startDegrees: Double
-    
     var endDegrees: Double
-    
-    var color: Color
     var geometry: GeometryProxy
-    
     var fillColor: Color
     
     var body: some View {
         Arc(
             startDegrees: startDegrees,
             endDegrees: endDegrees,
-            color: color,
             geometry: geometry
         )
             .fill(fillColor)
@@ -25,10 +20,7 @@ struct ArcView: View {
 
 struct Arc: Shape {
     var startDegrees: Double
-    
     var endDegrees: Double
-    
-    var color: Color
     var geometry: GeometryProxy
     
     private let scale: Double = 0.7
@@ -55,9 +47,8 @@ struct ArcView_Previews: PreviewProvider {
             ArcView(
                 startDegrees: 0.0,
                 endDegrees: 300.0,
-                color: .gray.opacity(0.0),
                 geometry: geometry,
-                fillColor: .gray.opacity(0.3)
+                fillColor: .blue.opacity(0.3)
             )
         }
     }

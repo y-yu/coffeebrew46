@@ -58,11 +58,15 @@ struct PhaseListView: View {
     
     private func getNthPhase() -> Int {
         if let nth = self.pointerInfoViewModels.pointerInfo.firstIndex(where: { e in
-            e.degrees >= degree
+            e.degree >= degree
         }) {
             return nth - 1
         } else {
-            return self.pointerInfoViewModels.pointerInfo.count - 1
+            if (degree >= 360) {
+                return self.pointerInfoViewModels.pointerInfo.count
+            } else {
+                return self.pointerInfoViewModels.pointerInfo.count - 1
+            }
         }
     }
 }
@@ -70,13 +74,13 @@ struct PhaseListView: View {
 struct PhaseListView_Preview: PreviewProvider {
     @State static var progressTime = 55
     @State static var pointerInfoViewModels = PointerInfoViewModels
-            .withColorAndDegrees(
-                (0.0, .cyan, 0.0),
-                (120, .green, 72.0),
-                (180, .red, 144.0),
-                (240, .blue, 216.0),
-                (300, .orange, 288.0)
-            )
+        .withColorAndDegrees(
+            (0.0, 0.0),
+            (120, 72.0),
+            (180, 144.0),
+            (240, 216.0),
+            (300, 288.0)
+        )
     
     static var previews: some View {
         PhaseListView(
