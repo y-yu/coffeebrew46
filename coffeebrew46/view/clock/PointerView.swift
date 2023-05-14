@@ -6,77 +6,74 @@ import SwiftUI
  These implementation refer from: https://talk.objc.io/episodes/S01E192-analog-clock
  */
 struct PointerView: View {
-    internal let id: Int
-
-    internal let pointerInfo: PointerInfoViewModel
-    
-    internal let geometry: GeometryProxy
-    
-    internal let value: Double
-        
-    // This state is needed for anti-locking `pointerInfo.degrees`.
-    // If I tried to use `pointerInfo.degrees` directlly without `internalDegrees`,
-    // the pointer won't move during dragging.
-    // I think it's caused by the lockinig state by iOS memory manager or
-    // something else... That's the why this internal state is needed.
-    //
-    // This initial value is not considered well....
-    // Actually it would be better that this would be set
-    // the same value of `degrees` in the constructor.
-    @State private var internalDegrees: Double = 0.0
-    
+    var id: Int
+    var pointerInfo: PointerInfoViewModel
+    var geometry: GeometryProxy
+    var value: Double
     @State private var isDragging: Bool = false
     
-    var body: some View {
-        VStack {
-            Text(String(format: "%.0f", value))
-                .font(.system(size: 20).bold())
-                .fixedSize()
-                .frame(width: 30)
-                .rotationEffect(
-                    Angle.degrees(isDragging ? -self.internalDegrees : -self.pointerInfo.degrees )
-                )
-                .foregroundColor(pointerInfo.color)
-            Spacer()
-            Pointer()
-                .stroke(self.pointerInfo.color, lineWidth: 2)
-            
-        }
-        .rotationEffect(
-            Angle.degrees(self.pointerInfo.degrees)
-        )
-    }
+    private let offset: Double = 10
     
-    /**
-     # Get the angle of the point.
-     
-     This scale would be addressed properly by the iOS.
-     We have to transform the point into (0, 0) to calculate the arctan of the `point`.
-     It requires to know the size of this scale. That's the why
-     this fucntion need to be given the `geometry`.
-     */
-    private func getDegrees(
-        geometry: GeometryProxy,
-        point: CGPoint
-    ) -> Double {
-        let radius: CGFloat =
-            (geometry.size.width < geometry.size.height ?
-                geometry.size.width : geometry.size.height) / 2.0
-        
-        let a = (Double(atan((point.y - radius) / (point.x - radius)))) * 180.0 / Double.pi
-        
-        return point.x >= radius ? a + 90.0 : 360.0 + a - 90.0
+    var body: some View {
+        ZStack {
+            VStack {
+                Text(String(format: "%.0fg\n(#\(id + 1))", value))
+                    .font(.system(size: 20))
+                    .fixedSize()
+                    .frame(width: 30)
+                    .rotationEffect(
+                        Angle.degrees(-self.pointerInfo.degree)
+                    )
+                    .offset(y: -offset)
+                Spacer()
+                Pointer(offset: offset)
+                    .stroke(lineWidth: 1)
+                
+            }
+            .rotationEffect(
+                Angle.degrees(self.pointerInfo.degree)
+            )
+            CenterCircle().fill(.black)
+        }
     }
 }
 
 struct Pointer: Shape {    
     var circleRadius: CGFloat = 5
     
+    var offset: Double
+    
     func path(in rect: CGRect) -> Path {
         return Path { p in
-            p.move(to: CGPoint(x: rect.midX, y: rect.minY))
-            p.addLine(to: CGPoint(x: rect.midX, y: rect.midY - circleRadius - 15))
+            p.move(to: CGPoint(x: rect.midX, y: rect.minY - (offset * 1.5)))
+            p.addLine(to: CGPoint(x: rect.midX, y: rect.midY - circleRadius - 25))
         }
     }
 }
 
+struct PointerView_Previews: PreviewProvider {
+    static var pointerInfoViewModels =
+        PointerInfoViewModels.withColorAndDegrees(
+            (0.0, 0.0),
+            (120, 72.0),
+            (180, 144.0),
+            (240, 216.0),
+            (300, 288.0)
+        )
+    
+    static var previews: some View {
+        ZStack {
+            GeometryReader { (geometry: GeometryProxy) in
+                ForEach((0..<pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
+                    PointerView(
+                        id: i,
+                        pointerInfo: pointerInfoViewModels.pointerInfo[i],
+                        geometry: geometry,
+                        value: pointerInfoViewModels.pointerInfo[i].value
+                    )
+                }
+            }
+        }
+        .frame(width: 300, height: 300)
+    }
+}

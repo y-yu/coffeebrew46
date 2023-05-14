@@ -8,7 +8,7 @@ struct ConfigView: View {
     
     var body: some View {
         Form {
-            Section {
+            Section(header: Text("JSON")) {
                 NavigationLink(value: Route.saveLoad) {
                     Text("Import & Export")
                 }

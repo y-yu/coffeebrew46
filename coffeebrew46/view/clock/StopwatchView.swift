@@ -38,9 +38,13 @@ struct StopwatchView: View {
                 }
                 Spacer()
                 Text("\(String(format: "%d", progressTime))")
-                    .font(.system(size: 40))
+                    .font(.system(size: 40).weight(.light))
                     .fixedSize()
                     .frame(width: 100, height: 40)
+                    .foregroundColor(
+                        progressTime < Int(viewModel.currentConfig.totalTimeSec) ? .black : .red
+                    )
+                Text("/ \(String(format: "%.0f", viewModel.currentConfig.totalTimeSec))")
                 Text(" sec")
                 Spacer()
                 Button(action: { stopTimer() }) {
