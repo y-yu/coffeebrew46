@@ -6,10 +6,10 @@ import SwiftUI
  These implementation refer from: https://talk.objc.io/episodes/S01E192-analog-clock
  */
 struct ClockView: View {
+    @EnvironmentObject var viewModel: CurrentConfigViewModel
+    
     // Max value of the scale.
     var scaleMax: Double
-
-    @Binding var pointerInfoViewModels: PointerInfoViewModels
     
     private let density: Int = 40
     private let markInterval: Int = 10
@@ -28,14 +28,14 @@ struct ClockView: View {
                     }
                     ZStack {
                         GeometryReader { (geometry: GeometryProxy) in
-                            ForEach((0..<self.pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
-                                self.showArcAndPointer(geometry, i)
+                            ForEach((0..<viewModel.pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
+                                showArcAndPointer(geometry, i)
                             }
                             ArcView(
                                 startDegrees: 0.0,
                                 endDegrees: endDegree(),
                                 geometry: geometry,
-                                fillColor: .cyan.opacity(0.3)
+                                fillColor: .blue.opacity(0.3)
                             )
                         }
                     }
@@ -43,10 +43,7 @@ struct ClockView: View {
                 .frame(maxWidth: .infinity, maxHeight: geometry.size.width * 0.98)
                 // We need `endDegree` function to call `PhaseListView` so that's the why
                 // `PhaseListView` is here rather than `StopwatchView`.
-                PhaseListView(
-                    pointerInfoViewModels: pointerInfoViewModels,
-                    degree: endDegree()
-                )
+                PhaseListView(degree: endDegree())
                 .frame(maxWidth: .infinity, maxHeight: geometry.size.width * 0.5)
             }
         }
@@ -55,16 +52,16 @@ struct ClockView: View {
     private func endDegree() -> Double {
         let pt = Double(progressTime)
         if (pt <= steamingTime) {
-            return pt / steamingTime * pointerInfoViewModels.pointerInfo[1].degree
+            return pt / steamingTime * viewModel.pointerInfoViewModels.pointerInfo[1].degree
         } else {
-            let withoutSteamingPerOther = (Double(totalTime) - steamingTime) / Double(pointerInfoViewModels.pointerInfo.count - 1)
+            let withoutSteamingPerOther = (Double(totalTime) - steamingTime) / Double(viewModel.pointerInfoViewModels.pointerInfo.count - 1)
             
             if (pt <= withoutSteamingPerOther + steamingTime) {
-                return (pt - steamingTime) / withoutSteamingPerOther * (pointerInfoViewModels.pointerInfo[2].degree - pointerInfoViewModels.pointerInfo[1].degree) + pointerInfoViewModels.pointerInfo[1].degree
+                return (pt - steamingTime) / withoutSteamingPerOther * (viewModel.pointerInfoViewModels.pointerInfo[2].degree - viewModel.pointerInfoViewModels.pointerInfo[1].degree) + viewModel.pointerInfoViewModels.pointerInfo[1].degree
             } else {
                 let firstAndSecond = steamingTime + withoutSteamingPerOther
                 
-                return pt > totalTime ? 360.0 : ((pt - firstAndSecond) / (totalTime - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[2].degree) + pointerInfoViewModels.pointerInfo[2].degree
+                return pt > totalTime ? 360.0 : ((pt - firstAndSecond) / (totalTime - firstAndSecond)) * (360.0 - viewModel.pointerInfoViewModels.pointerInfo[2].degree) + viewModel.pointerInfoViewModels.pointerInfo[2].degree
             }
         }
     }
@@ -73,16 +70,17 @@ struct ClockView: View {
         ZStack {
             ArcView(
                 startDegrees: i - 1 < 0 ? 0.0 :
-                    self.pointerInfoViewModels.pointerInfo[i - 1].degree,
-                endDegrees: self.pointerInfoViewModels.pointerInfo[i].degree,
+                    viewModel.pointerInfoViewModels.pointerInfo[i - 1].degree,
+                endDegrees: viewModel.pointerInfoViewModels.pointerInfo[i].degree,
                 geometry: geometry,
                 fillColor: .clear
             )
             PointerView(
                 id: i,
-                pointerInfo: self.pointerInfoViewModels.pointerInfo[i],
+                pointerInfo: viewModel.pointerInfoViewModels.pointerInfo[i],
                 geometry: geometry,
-                value: self.pointerInfoViewModels.pointerInfo[i].value
+                value: viewModel.pointerInfoViewModels.pointerInfo[i].value,
+                isOnGoing: viewModel.pointerInfoViewModels.getNthPhase(degree: endDegree()) == i
             )
         }
     }
@@ -90,7 +88,6 @@ struct ClockView: View {
     // Print oblique squares as divisions of a scale.
     private func tick(tick: Int) -> some View {
         let angle: Double = Double(tick) / Double(self.density * 4) * 360
-        
         let isMark: Bool = tick % markInterval == 0
         
         return VStack {
@@ -139,26 +136,38 @@ extension CGRect {
 
 struct ScaleView_Previews: PreviewProvider {
     @ObservedObject static var appEnvironment: AppEnvironment = .init()
+    @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel(
+        validateInputService: ValidateInputServiceImpl(),
+        calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
+    )
     @State static var progressTime = 55
-    @State static var pointerInfoViewModels = PointerInfoViewModels
-            .withColorAndDegrees(
-                (0.0, 0.0),
-                (120, 72.0),
-                (180, 144.0),
-                (240, 216.0),
-                (300, 288.0)
-            )
     
     static var previews: some View {
         appEnvironment.isTimerStarted = true
 
         return ClockView(
             scaleMax: 210.0,
-            pointerInfoViewModels: $pointerInfoViewModels,
             progressTime: $progressTime,
             steamingTime: 50,
             totalTime: 180
         )
         .environmentObject(appEnvironment)
+        .environmentObject(viewModel)
+    }
+}
+
+extension PointerInfoViewModels {
+    func getNthPhase(degree: Double) -> Int {
+        if let nth = self.pointerInfo.firstIndex(where: { e in
+            e.degree >= degree
+        }) {
+            return nth - 1
+        } else {
+            if (degree >= 360) {
+                return self.pointerInfo.count
+            } else {
+                return self.pointerInfo.count - 1
+            }
+        }
     }
 }

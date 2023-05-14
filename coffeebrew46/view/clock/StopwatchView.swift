@@ -18,7 +18,6 @@ struct StopwatchView: View {
             Group {
                 ClockView(
                     scaleMax: viewModel.currentConfig.totalWaterAmount(),
-                    pointerInfoViewModels: $viewModel.pointerInfoViewModels,
                     progressTime: $progressTime,
                     steamingTime: viewModel.currentConfig.steamingTimeSec,
                     totalTime: viewModel.currentConfig.totalTimeSec
