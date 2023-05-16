@@ -29,7 +29,7 @@ struct StopwatchView: View {
                 )
             }
             Divider()
-            HStack {
+            HStack(alignment: .firstTextBaseline) {
                 Spacer()
                 Button(action: { startTimer() }) {
                     Text("Start")
