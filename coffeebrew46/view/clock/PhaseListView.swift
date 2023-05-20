@@ -1,48 +1,83 @@
 import SwiftUI
 
+struct PhaseList: Identifiable {
+    var id = UUID()
+    var index: Int
+    var waterAmount: Double
+    var dripAt: Double
+}
+
 struct PhaseListView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
-
-    var degree: Double
-    
+    @Binding var progressTime: Int
     @State private var selection: Int?
     
     var body: some View {
-        List(selection: $selection) {
-            ForEach(0..<viewModel.pointerInfoViewModels.pointerInfo.count, id: \.self) { i in
-                let waterAmount = "\(String(format: "%.0f", viewModel.pointerInfoViewModels.pointerInfo[i].value))g"
-                HStack {
-                    Text("#\(i + 1)")
+        let phaseList = viewModel.pointerInfoViewModels.pointerInfo.enumerated().map( { infoWithIndex in
+            let (index, info) = infoWithIndex
+            
+            return PhaseList(
+                index: index,
+                waterAmount: info.value,
+                dripAt: info.dripAt
+            )
+        })
+
+        return ScrollView {
+            Grid(alignment: .bottom, horizontalSpacing: 40, verticalSpacing: 5) {
+                GridRow {
+                    Text("#")
+                    Text("Water")
+                    Text("Timing")
+                }
+                .font(Font.headline.weight(.bold))
+                ForEach(phaseList, id: \.id) { phase in
+                    let waterAmount = "\(String(format: "%.0f", phase.waterAmount))g"
+                    GridRow {
+                        Text("\(phase.index + 1)")
+                            .font(
+                                doneOnGoingScheduled(phase.index, done: Font.headline.weight(.light), onGoing: Font.headline.weight(.bold), scheduled: Font.headline.weight(.light))
+                            )
+                            .foregroundColor(
+                                doneOnGoingScheduled(phase.index, done: .primary, onGoing: .accentColor, scheduled: .primary)
+                            )
+                        Text(
+                            doneOnGoingScheduled(phase.index, done: "Done: \(waterAmount)", onGoing: "Dripping: \(waterAmount)", scheduled: "Scheduled: \(waterAmount)")
+                        )
                         .font(
-                            doneOnGoingScheduled(i, done: Font.headline.weight(.light), onGoing: Font.headline.weight(.bold), scheduled: Font.headline.weight(.light))
+                            doneOnGoingScheduled(phase.index, done: Font.headline.weight(.light), onGoing: Font.headline.weight(.bold), scheduled: Font.headline.weight(.light))
                         )
                         .foregroundColor(
-                            doneOnGoingScheduled(i, done: .primary, onGoing: .accentColor, scheduled: .primary)
+                            doneOnGoingScheduled(phase.index, done: .primary, onGoing: .accentColor, scheduled: .primary)
                         )
-                    Text(
-                        doneOnGoingScheduled(i, done: "Done: \(waterAmount)", onGoing: "Dripping: \(waterAmount)", scheduled: "Scheduled: \(waterAmount)")
-                    )
-                    .font(
-                        doneOnGoingScheduled(i, done: Font.headline.weight(.light), onGoing: Font.headline.weight(.bold), scheduled: Font.headline.weight(.light))
-                    )
-                    .foregroundColor(
-                        doneOnGoingScheduled(i, done: .primary, onGoing: .accentColor, scheduled: .primary)
-                    )
-                    Spacer()
-                    Image(
-                        systemName: doneOnGoingScheduled(i, done: "checkmark.circle.fill", onGoing: "drop.fill", scheduled: "checkmark")
-                    )
-                    .scaledToFit()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(
-                        doneOnGoingScheduled(i, done: .green, onGoing: .accentColor, scheduled: .gray)
-                    )
+                        Text(
+                            doneOnGoingScheduled(
+                                phase.index,
+                                done: String(format: "+%.0f", Double(progressTime) - phase.dripAt),
+                                onGoing: String(format: "%.0f", Double(progressTime) - phase.dripAt),
+                                scheduled: String(format: "%.0f", Double(progressTime) - phase.dripAt)
+                            ) + " sec"
+                        )
+                        .font(
+                            doneOnGoingScheduled(phase.index, done: Font.headline.weight(.light), onGoing: Font.headline.weight(.bold), scheduled: Font.headline.weight(.light))
+                        )
+                        .foregroundColor(
+                            doneOnGoingScheduled(phase.index, done: .primary, onGoing: .accentColor, scheduled: .primary)
+                        )
+                        Image(
+                            systemName: doneOnGoingScheduled(phase.index, done: "checkmark.circle.fill", onGoing: "drop.fill", scheduled: "checkmark")
+                        )
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(
+                            doneOnGoingScheduled(phase.index, done: .green, onGoing: .accentColor, scheduled: .gray)
+                        )
+                    }
+                    .foregroundColor(appEnvironment.isTimerStarted ? .primary : .primary.opacity(0.5))
                 }
-                .foregroundColor(appEnvironment.isTimerStarted ? .primary : .primary.opacity(0.5))
             }
         }
-        .listStyle(PlainListStyle())
     }
     
     private func doneOnGoingScheduled<A>(
@@ -51,7 +86,7 @@ struct PhaseListView: View {
         onGoing: A,
         scheduled: A
     ) -> A {
-        let phase = viewModel.pointerInfoViewModels.getNthPhase(degree: degree)
+        let phase = viewModel.getNthPhase(progressTime: Double(progressTime))
         
         if (phase == i && appEnvironment.isTimerStarted) {
             return onGoing
@@ -71,10 +106,8 @@ struct PhaseListView_Preview: PreviewProvider {
     @State static var progressTime = 55
     
     static var previews: some View {
-        PhaseListView(
-            degree: 120
-        )
-        .environmentObject(AppEnvironment.init())
-        .environmentObject(viewModel)
+        PhaseListView(progressTime: $progressTime)
+            .environmentObject(AppEnvironment.init())
+            .environmentObject(viewModel)
     }
 }

@@ -25,6 +25,8 @@ struct ClockView: View {
                         Spacer()
                         Spacer()
                         mainClockView.frame(minWidth: 400)
+                        Spacer()
+                        Spacer()
                     }
                 }
             }
@@ -70,7 +72,7 @@ struct ClockView: View {
                 pointerInfo: viewModel.pointerInfoViewModels.pointerInfo[i],
                 geometry: geometry,
                 value: viewModel.pointerInfoViewModels.pointerInfo[i].value,
-                isOnGoing: viewModel.pointerInfoViewModels.getNthPhase(degree: viewModel.endDegree(progressTime)) >= i && appEnvironment.isTimerStarted
+                isOnGoing: viewModel.getNthPhase(progressTime: Double(progressTime)) >= i && appEnvironment.isTimerStarted
             )
         }
     }
@@ -121,21 +123,5 @@ struct ScaleView_Previews: PreviewProvider {
         )
         .environmentObject(appEnvironment)
         .environmentObject(viewModel)
-    }
-}
-
-extension PointerInfoViewModels {
-    func getNthPhase(degree: Double) -> Int {
-        if let nth = self.pointerInfo.firstIndex(where: { e in
-            e.degree > degree
-        }) {
-            return nth - 1
-        } else {
-            if (degree >= 360) {
-                return self.pointerInfo.count
-            } else {
-                return self.pointerInfo.count - 1
-            }
-        }
     }
 }

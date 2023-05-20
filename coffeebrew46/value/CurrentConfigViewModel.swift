@@ -17,13 +17,7 @@ final class CurrentConfigViewModel: ObservableObject {
     @Published var errors: String = ""
     
     @Published var pointerInfoViewModels: PointerInfoViewModels =
-        .withColorAndDegrees(
-            (90, 0.0),
-            (180, 72.0),
-            (270, 144.0),
-            (360, 216.0),
-            (450, 288.0)
-        )
+        PointerInfoViewModels.defaultValue
     
     // For DI
     private let validateInputService: ValidateInputService
@@ -50,20 +44,24 @@ final class CurrentConfigViewModel: ObservableObject {
             waterAmount.fortyPercent.1
         ] + waterAmount.sixtyPercent.toArray()
         
+        let timeSecPerDripExceptFirst: Double = (currentConfig.totalTimeSec - currentConfig.steamingTimeSec) / Double((waterAmount.sixtyPercent.toArray().count + 1))
+        
         let colorAndDegreesArray =
-            values.reduce(
+            values.enumerated().reduce(
                 (
-                    (0.0, 0.0), // (degree, value)
-                    Array<(Double, Double)>.init()
+                    (0.0, 0.0, 0.0), // (degree, value, dripAt)
+                    Array<(Double, Double, Double)>.init()
                 ),
-                { (acc, element) in
+                { (acc, elementWithIndex) in
+                    let (index, element) = elementWithIndex
                     var (prev, arr) = acc
-                    let (degree, value) = prev
+                    let (degree, value, prevDripAt) = prev
                     let d = (element / totalWaterAmount) * 360 + degree
+                    let dripAtAdded = index == 0 ? currentConfig.steamingTimeSec : timeSecPerDripExceptFirst
                     
-                    arr.append((value + element, degree))
+                    arr.append((value + element, degree, prevDripAt))
                     
-                    return ((d, value + element), arr)
+                    return ((d, value + element, prevDripAt + dripAtAdded), arr)
                 }
             ).1
         
@@ -86,6 +84,22 @@ extension CurrentConfigViewModel {
                 let firstAndSecond = currentConfig.steamingTimeSec + withoutSteamingPerOther
                 
                 return pt > currentConfig.totalTimeSec ? 360.0 : ((pt - firstAndSecond) / (currentConfig.totalTimeSec - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[2].degree) + pointerInfoViewModels.pointerInfo[2].degree
+            }
+        }
+    }
+}
+
+extension CurrentConfigViewModel {
+    func getNthPhase(progressTime: Double) -> Int {
+        if let nth = pointerInfoViewModels.pointerInfo.firstIndex(where: { e in
+            e.dripAt > progressTime
+        }) {
+            return nth - 1
+        } else {
+            if (progressTime >= currentConfig.totalTimeSec) {
+                return pointerInfoViewModels.pointerInfo.count
+            } else {
+                return pointerInfoViewModels.pointerInfo.count - 1
             }
         }
     }

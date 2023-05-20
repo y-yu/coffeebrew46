@@ -58,15 +58,8 @@ struct Pointer: Shape {
 }
 
 struct PointerView_Previews: PreviewProvider {
-    static var pointerInfoViewModels =
-        PointerInfoViewModels.withColorAndDegrees(
-            (0.0, 0.0),
-            (120, 72.0),
-            (180, 144.0),
-            (240, 216.0),
-            (300, 288.0)
-        )
-    
+    static var pointerInfoViewModels =  PointerInfoViewModels.defaultValue
+
     static var previews: some View {
         ZStack {
             GeometryReader { (geometry: GeometryProxy) in
