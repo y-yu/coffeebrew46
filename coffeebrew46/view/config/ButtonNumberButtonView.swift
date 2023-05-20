@@ -20,7 +20,7 @@ struct ButtonNumberButtonView: View {
             Spacer()
             Text(String(format: "%1.0f", target))
                 .font(.system(size: 30))
-                .foregroundStyle(isDisable ? .gray : .black)
+                .foregroundStyle(isDisable ? Color.primary.opacity(0.5) : Color.primary)
             Spacer()
             ButtonView(
                 buttonType: .plus(maximum),

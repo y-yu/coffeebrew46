@@ -53,7 +53,7 @@ struct ButtonView: View {
                 }
             }
             .foregroundColor(
-                isDisabled ? .gray : buttonType.toColor()
+                isDisabled ? .primary.opacity(0.5) : buttonType.toColor()
             )
             .disabled(isDisabled)
             .id(!isDisabled)
