@@ -21,3 +21,17 @@ struct RootView: View {
         }
     }
 }
+
+struct RootView_Previews: PreviewProvider {
+    @ObservedObject static var appEnvironment: AppEnvironment = .init()
+    @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel(
+        validateInputService: ValidateInputServiceImpl(),
+        calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
+    )
+    @State static var progressTime = 55
+    static var previews: some View {
+        RootView()
+            .environmentObject(appEnvironment)
+            .environmentObject(viewModel)
+    }
+}

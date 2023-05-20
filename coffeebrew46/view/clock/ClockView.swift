@@ -21,49 +21,40 @@ struct ClockView: View {
     var totalTime: Double
     
     var body: some View {
-        GeometryReader { (geometry: GeometryProxy) in
-            VStack {
-                ZStack {
-                    ForEach(0..<(self.density * 4), id: \.self) { t in
-                        self.tick(tick: t)
-                    }
-                    ZStack {
-                        GeometryReader { (geometry: GeometryProxy) in
-                            ForEach((0..<viewModel.pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
-                                showArcAndPointer(geometry, i)
-                            }
-                            ArcView(
-                                startDegrees: 0.0,
-                                endDegrees: endDegree(),
-                                geometry: geometry,
-                                fillColor: .blue.opacity(0.3)
-                            )
-                        }
+        ViewThatFits(in: .horizontal) {
+            HStack {
+                GeometryReader { (geometry: GeometryProxy) in
+                    VStack {
+                        Spacer()
+                        Spacer()
+                        mainClockView.frame(minWidth: 400)
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: geometry.size.width * 0.98)
-                Divider()
-                // We need `endDegree` function to call `PhaseListView` so that's the why
-                // `PhaseListView` is here rather than `StopwatchView`.
-                PhaseListView(degree: endDegree())
-                .frame(maxWidth: .infinity, maxHeight: geometry.size.width * 0.5)
+            }
+            .frame(minWidth: 400)
+            GeometryReader { (geometry: GeometryProxy) in
+                mainClockView.frame(maxHeight: geometry.size.width * 0.98)
             }
         }
     }
     
-    private func endDegree() -> Double {
-        let pt = Double(progressTime)
-        if (pt <= steamingTime) {
-            return pt / steamingTime * viewModel.pointerInfoViewModels.pointerInfo[1].degree
-        } else {
-            let withoutSteamingPerOther = (Double(totalTime) - steamingTime) / Double(viewModel.pointerInfoViewModels.pointerInfo.count - 1)
-            
-            if (pt <= withoutSteamingPerOther + steamingTime) {
-                return (pt - steamingTime) / withoutSteamingPerOther * (viewModel.pointerInfoViewModels.pointerInfo[2].degree - viewModel.pointerInfoViewModels.pointerInfo[1].degree) + viewModel.pointerInfoViewModels.pointerInfo[1].degree
-            } else {
-                let firstAndSecond = steamingTime + withoutSteamingPerOther
-                
-                return pt > totalTime ? 360.0 : ((pt - firstAndSecond) / (totalTime - firstAndSecond)) * (360.0 - viewModel.pointerInfoViewModels.pointerInfo[2].degree) + viewModel.pointerInfoViewModels.pointerInfo[2].degree
+    private var mainClockView: some View {
+        ZStack {
+            ForEach(0..<(self.density * 4), id: \.self) { t in
+                self.tick(tick: t)
+            }
+            ZStack {
+                GeometryReader { (geometry: GeometryProxy) in
+                    ForEach((0..<viewModel.pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
+                        showArcAndPointer(geometry, i)
+                    }
+                    ArcView(
+                        startDegrees: 0.0,
+                        endDegrees: viewModel.endDegree(progressTime),
+                        geometry: geometry,
+                        fillColor: .blue.opacity(0.3)
+                    )
+                }
             }
         }
     }
@@ -82,7 +73,7 @@ struct ClockView: View {
                 pointerInfo: viewModel.pointerInfoViewModels.pointerInfo[i],
                 geometry: geometry,
                 value: viewModel.pointerInfoViewModels.pointerInfo[i].value,
-                isOnGoing: viewModel.pointerInfoViewModels.getNthPhase(degree: endDegree()) >= i && appEnvironment.isTimerStarted
+                isOnGoing: viewModel.pointerInfoViewModels.getNthPhase(degree: viewModel.endDegree(progressTime)) >= i && appEnvironment.isTimerStarted
             )
         }
     }
@@ -101,7 +92,7 @@ struct ClockView: View {
                 .font(.system(size: 10).weight(.light))
                 .fixedSize()
                 .frame(width: 20)
-                .foregroundColor(!appEnvironment.isTimerStarted || angle > endDegree() ? .gray.opacity(0.5) : .blue)
+                .foregroundColor(!appEnvironment.isTimerStarted || angle > viewModel.endDegree(progressTime) ? .gray.opacity(0.5) : .blue)
             Rectangle()
                 .fill(Color.primary)
                 .opacity(isMark ? 0.4 : 0.2)

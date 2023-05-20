@@ -8,13 +8,27 @@ struct ArcView: View {
     var fillColor: Color
     
     var body: some View {
-        Arc(
-            startDegrees: startDegrees,
-            endDegrees: endDegrees,
-            geometry: geometry
-        )
-        .fill(fillColor)
-        .rotationEffect(Angle.degrees(-90.0), anchor: .center)
+        ViewThatFits(in: .horizontal) {
+            HStack {
+                Arc(
+                    startDegrees: startDegrees,
+                    endDegrees: endDegrees,
+                    geometry: geometry,
+                    scale: 0.5
+                )
+                .fill(fillColor)
+                .rotationEffect(Angle.degrees(-90.0), anchor: .center)
+            }
+            .frame(minWidth: 400)
+
+            Arc(
+                startDegrees: startDegrees,
+                endDegrees: endDegrees,
+                geometry: geometry
+            )
+            .fill(fillColor)
+            .rotationEffect(Angle.degrees(-90.0), anchor: .center)
+        }
     }
 }
 
@@ -22,8 +36,7 @@ struct Arc: Shape {
     var startDegrees: Double
     var endDegrees: Double
     var geometry: GeometryProxy
-    
-    private let scale: Double = 0.7
+    var scale: Double = 0.7
     
     func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
