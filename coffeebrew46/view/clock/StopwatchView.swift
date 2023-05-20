@@ -19,44 +19,49 @@ struct StopwatchView: View {
             .padding(6)
 
     var body: some View {
-        VStack {
-            Group {
-                ClockView(
-                    scaleMax: viewModel.currentConfig.totalWaterAmount(),
-                    progressTime: $progressTime,
-                    steamingTime: viewModel.currentConfig.steamingTimeSec,
-                    totalTime: viewModel.currentConfig.totalTimeSec
-                )
-            }
-            Divider()
-            HStack(alignment: .firstTextBaseline) {
-                Spacer()
-                Button(action: { startTimer() }) {
-                    Text("Start")
-                        .font(.system(size: 20))
-                        .padding()
-                        .background(buttonBackground)
-                }
-                Spacer()
-                Text("\(String(format: "%d", progressTime))")
-                    .font(.system(size: 40).weight(.light))
-                    .fixedSize()
-                    .frame(width: 100, height: 40)
-                    .foregroundColor(
-                        progressTime < Int(viewModel.currentConfig.totalTimeSec) ? .black : .red
+        ViewThatFits(in: .horizontal) {
+            HStack {
+                GeometryReader { (geometry: GeometryProxy) in
+                    ClockView(
+                        scaleMax: viewModel.currentConfig.totalWaterAmount(),
+                        progressTime: $progressTime,
+                        steamingTime: viewModel.currentConfig.steamingTimeSec,
+                        totalTime: viewModel.currentConfig.totalTimeSec
                     )
-                Text("/ \(String(format: "%.0f", viewModel.currentConfig.totalTimeSec))")
-                Text(" sec")
-                Spacer()
-                Button(action: { stopTimer() }) {
-                    Text("Stop")
-                        .font(.system(size: 20))
-                        .padding()
-                        .background(buttonBackground)
+                    .frame(minWidth: 400)
                 }
-                Spacer()
+                GeometryReader { (geometry: GeometryProxy) in
+                    VStack {
+                        PhaseListView(
+                            degree: viewModel.endDegree(progressTime)
+                        )
+                        .frame(height: geometry.size.height * 0.75)
+                        Spacer()
+                        timerController
+                    }
+                }
             }
-            Spacer()
+            .frame(minWidth: 400)
+            
+            GeometryReader { (geometry: GeometryProxy) in
+                VStack {
+                    Group {
+                        ClockView(
+                            scaleMax: viewModel.currentConfig.totalWaterAmount(),
+                            progressTime: $progressTime,
+                            steamingTime: viewModel.currentConfig.steamingTimeSec,
+                            totalTime: viewModel.currentConfig.totalTimeSec
+                        )
+                        .frame(height: geometry.size.width * 0.95)
+                    }
+                    Divider()
+                    PhaseListView(
+                        degree: viewModel.endDegree(progressTime)
+                    )
+                    timerController
+                    Spacer()
+                }
+            }
         }
         .navigationTitle("Stopwatch")
         .navigation(path: $appEnvironment.stopwatchPath)
@@ -64,6 +69,36 @@ struct StopwatchView: View {
             if phase == .active {
                 restoreTimer()
             }
+        }
+    }
+    
+    private var timerController: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Spacer()
+            Button(action: { startTimer() }) {
+                Text("Start")
+                    .font(.system(size: 20))
+                    .padding()
+                    .background(buttonBackground)
+            }
+            Spacer()
+            Text("\(String(format: "%d", progressTime))")
+                .font(.system(size: 40).weight(.light))
+                .fixedSize()
+                .frame(width: 100, height: 40)
+                .foregroundColor(
+                    progressTime < Int(viewModel.currentConfig.totalTimeSec) ? .black : .red
+                )
+            Text("/ \(String(format: "%.0f", viewModel.currentConfig.totalTimeSec))")
+            Text(" sec")
+            Spacer()
+            Button(action: { stopTimer() }) {
+                Text("Stop")
+                    .font(.system(size: 20))
+                    .padding()
+                    .background(buttonBackground)
+            }
+            Spacer()
         }
     }
     

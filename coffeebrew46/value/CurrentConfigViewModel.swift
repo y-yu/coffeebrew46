@@ -71,3 +71,22 @@ final class CurrentConfigViewModel: ObservableObject {
             pointerInfoViewModels.withColorAndDegrees(colorAndDegreesArray)
     }
 }
+
+extension CurrentConfigViewModel {
+    func endDegree(_ progressTime: Int) -> Double {
+        let pt = Double(progressTime)
+        if (pt <= currentConfig.steamingTimeSec) {
+            return pt /  currentConfig.steamingTimeSec * pointerInfoViewModels.pointerInfo[1].degree
+        } else {
+            let withoutSteamingPerOther = (Double(currentConfig.totalTimeSec) - currentConfig.steamingTimeSec) / Double(pointerInfoViewModels.pointerInfo.count - 1)
+            
+            if (pt <= withoutSteamingPerOther + currentConfig.steamingTimeSec) {
+                return (pt - currentConfig.steamingTimeSec) / withoutSteamingPerOther * (pointerInfoViewModels.pointerInfo[2].degree - pointerInfoViewModels.pointerInfo[1].degree) + pointerInfoViewModels.pointerInfo[1].degree
+            } else {
+                let firstAndSecond = currentConfig.steamingTimeSec + withoutSteamingPerOther
+                
+                return pt > currentConfig.totalTimeSec ? 360.0 : ((pt - firstAndSecond) / (currentConfig.totalTimeSec - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[2].degree) + pointerInfoViewModels.pointerInfo[2].degree
+            }
+        }
+    }
+}
