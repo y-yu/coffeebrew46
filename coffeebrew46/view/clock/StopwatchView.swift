@@ -23,19 +23,17 @@ struct StopwatchView: View {
             HStack {
                 GeometryReader { (geometry: GeometryProxy) in
                     ClockView(
-                        scaleMax: viewModel.currentConfig.totalWaterAmount(),
                         progressTime: $progressTime,
                         steamingTime: viewModel.currentConfig.steamingTimeSec,
                         totalTime: viewModel.currentConfig.totalTimeSec
                     )
-                    .frame(minWidth: 400)
                 }
                 GeometryReader { (geometry: GeometryProxy) in
                     VStack {
                         PhaseListView(
                             degree: viewModel.endDegree(progressTime)
                         )
-                        .frame(height: geometry.size.height * 0.75)
+                        .frame(height: geometry.size.height * 0.80)
                         Spacer()
                         timerController
                     }
@@ -47,7 +45,6 @@ struct StopwatchView: View {
                 VStack {
                     Group {
                         ClockView(
-                            scaleMax: viewModel.currentConfig.totalWaterAmount(),
                             progressTime: $progressTime,
                             steamingTime: viewModel.currentConfig.steamingTimeSec,
                             totalTime: viewModel.currentConfig.totalTimeSec
@@ -74,7 +71,6 @@ struct StopwatchView: View {
     
     private var timerController: some View {
         HStack(alignment: .firstTextBaseline) {
-            Spacer()
             Button(action: { startTimer() }) {
                 Text("Start")
                     .font(.system(size: 20))
@@ -89,8 +85,7 @@ struct StopwatchView: View {
                 .foregroundColor(
                     progressTime < Int(viewModel.currentConfig.totalTimeSec) ? .black : .red
                 )
-            Text("/ \(String(format: "%.0f", viewModel.currentConfig.totalTimeSec))")
-            Text(" sec")
+            Text("/ \(String(format: "%.0f", viewModel.currentConfig.totalTimeSec)) sec")
             Spacer()
             Button(action: { stopTimer() }) {
                 Text("Stop")
@@ -98,7 +93,6 @@ struct StopwatchView: View {
                     .padding()
                     .background(buttonBackground)
             }
-            Spacer()
         }
     }
     

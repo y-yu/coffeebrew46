@@ -9,9 +9,6 @@ struct ClockView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
     
-    // Max value of the scale.
-    var scaleMax: Double
-    
     private let density: Int = 40
     private let markInterval: Int = 10
     
@@ -143,7 +140,6 @@ struct ScaleView_Previews: PreviewProvider {
         appEnvironment.isTimerStarted = true
 
         return ClockView(
-            scaleMax: 210.0,
             progressTime: $progressTime,
             steamingTime: 50,
             totalTime: 180
