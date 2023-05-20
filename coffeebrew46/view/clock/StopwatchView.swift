@@ -83,7 +83,7 @@ struct StopwatchView: View {
                 .fixedSize()
                 .frame(width: 100, height: 40)
                 .foregroundColor(
-                    progressTime < Int(viewModel.currentConfig.totalTimeSec) ? .black : .red
+                    progressTime < Int(viewModel.currentConfig.totalTimeSec) ? .primary : .red
                 )
             Text("/ \(String(format: "%.0f", viewModel.currentConfig.totalTimeSec)) sec")
             Spacer()

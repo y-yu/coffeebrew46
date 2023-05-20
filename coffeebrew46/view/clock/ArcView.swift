@@ -52,7 +52,7 @@ struct ArcView_Previews: PreviewProvider {
                 startDegrees: 0.0,
                 endDegrees: 300.0,
                 geometry: geometry,
-                fillColor: .blue.opacity(0.3),
+                fillColor: .accentColor.opacity(0.3),
                 scale: 0.7
             )
         }

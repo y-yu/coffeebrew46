@@ -20,7 +20,7 @@ struct PointerView: View {
                 Text(String(format: "%.0fg\n(#\(id + 1))", value))
                     .font(.system(size: 20))
                     .foregroundColor(
-                        isOnGoing ? .blue : .black
+                        isOnGoing ? .accentColor : .primary
                     )
                     .fixedSize()
                     .frame(width: 30)
@@ -32,14 +32,14 @@ struct PointerView: View {
                 Pointer(offset: offset)
                     .stroke(lineWidth: 1)
                     .foregroundColor(
-                        isOnGoing ? .blue : .black
+                        isOnGoing ? .accentColor : .primary
                     )
                 
             }
             .rotationEffect(
                 Angle.degrees(self.pointerInfo.degree)
             )
-            CenterCircle().fill(.black)
+            CenterCircle().fill(.primary)
         }
     }
 }

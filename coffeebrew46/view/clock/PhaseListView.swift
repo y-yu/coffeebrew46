@@ -18,16 +18,16 @@ struct PhaseListView: View {
                             doneOnGoingScheduled(i, done: Font.headline.weight(.light), onGoing: Font.headline.weight(.bold), scheduled: Font.headline.weight(.light))
                         )
                         .foregroundColor(
-                            doneOnGoingScheduled(i, done: .black, onGoing: .blue, scheduled: .black)
+                            doneOnGoingScheduled(i, done: .primary, onGoing: .accentColor, scheduled: .primary)
                         )
                     Text(
-                        doneOnGoingScheduled(i, done: "Done: \(waterAmount)", onGoing: "On going: \(waterAmount)", scheduled: "Scheduled: \(waterAmount)")
+                        doneOnGoingScheduled(i, done: "Done: \(waterAmount)", onGoing: "Dripping: \(waterAmount)", scheduled: "Scheduled: \(waterAmount)")
                     )
                     .font(
                         doneOnGoingScheduled(i, done: Font.headline.weight(.light), onGoing: Font.headline.weight(.bold), scheduled: Font.headline.weight(.light))
                     )
                     .foregroundColor(
-                        doneOnGoingScheduled(i, done: .black, onGoing: .blue, scheduled: .black)
+                        doneOnGoingScheduled(i, done: .primary, onGoing: .accentColor, scheduled: .primary)
                     )
                     Spacer()
                     Image(
@@ -36,10 +36,10 @@ struct PhaseListView: View {
                     .scaledToFit()
                     .frame(width: 24, height: 24)
                     .foregroundColor(
-                        doneOnGoingScheduled(i, done: .green, onGoing: .blue, scheduled: .gray)
+                        doneOnGoingScheduled(i, done: .green, onGoing: .accentColor, scheduled: .gray)
                     )
                 }
-                .foregroundColor(appEnvironment.isTimerStarted ? .black : .gray)
+                .foregroundColor(appEnvironment.isTimerStarted ? .primary : .primary.opacity(0.5))
             }
         }
         .listStyle(PlainListStyle())

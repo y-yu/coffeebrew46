@@ -49,7 +49,7 @@ struct ClockView: View {
                         startDegrees: 0.0,
                         endDegrees: viewModel.endDegree(progressTime),
                         geometry: geometry,
-                        fillColor: .blue.opacity(0.3)
+                        fillColor: .accentColor.opacity(0.3)
                     )
                 }
             }
@@ -89,7 +89,7 @@ struct ClockView: View {
                 .font(.system(size: 10).weight(.light))
                 .fixedSize()
                 .frame(width: 20)
-                .foregroundColor(!appEnvironment.isTimerStarted || angle > viewModel.endDegree(progressTime) ? .gray.opacity(0.5) : .blue)
+                .foregroundColor(!appEnvironment.isTimerStarted || angle > viewModel.endDegree(progressTime) ? .primary.opacity(0.7) : .accentColor)
             Rectangle()
                 .fill(Color.primary)
                 .opacity(isMark ? 0.4 : 0.2)
@@ -101,31 +101,6 @@ struct ClockView: View {
         )
     }
 
-}
-
-struct CenterCircle: Shape {
-    var circleRadius: CGFloat = 5
-    
-    func path(in rect: CGRect) -> Path {
-        return Path { p in
-            p.addEllipse(in: CGRect(center: rect.getCenter(), radius: circleRadius))
-        }
-    }
-}
-
-extension CGRect {
-    func getCenter() -> CGPoint {
-        CGPoint(x: midX, y: midY)
-    }
-    
-    init(center: CGPoint, radius: CGFloat) {
-        self = CGRect(
-            x: center.x - radius,
-            y: center.y - radius,
-            width: radius * 2,
-            height: radius * 2
-        )
-    }
 }
 
 struct ScaleView_Previews: PreviewProvider {
