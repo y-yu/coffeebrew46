@@ -38,10 +38,10 @@ final class PointerInfoViewModels: ObservableObject {
 extension PointerInfoViewModels {
     static var defaultValue =
         PointerInfoViewModels.withColorAndDegrees(
-            (0.0, 0.0, 0.0),
-            (120, 72.0, 55.0),
-            (180, 144.0, 106.666666),
-            (240, 216.0, 158.333333),
-            (300, 288.0, 209.999999)
+            (90, 0.0, 0.0),
+            (180, 72.0, 55.0),
+            (270, 144.0, 94.0),
+            (360, 216.0, 132.0),
+            (450, 288.0, 171.0)
         )
 }
