@@ -6,29 +6,17 @@ struct ArcView: View {
     var endDegrees: Double
     var geometry: GeometryProxy
     var fillColor: Color
+    var scale: Double = 0.8
     
     var body: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack {
-                Arc(
-                    startDegrees: startDegrees,
-                    endDegrees: endDegrees,
-                    geometry: geometry,
-                    scale: 0.5
-                )
-                .fill(fillColor)
-                .rotationEffect(Angle.degrees(-90.0), anchor: .center)
-            }
-            .frame(minWidth: 400)
-
-            Arc(
-                startDegrees: startDegrees,
-                endDegrees: endDegrees,
-                geometry: geometry
-            )
-            .fill(fillColor)
-            .rotationEffect(Angle.degrees(-90.0), anchor: .center)
-        }
+        Arc(
+            startDegrees: startDegrees,
+            endDegrees: endDegrees,
+            geometry: geometry,
+            scale: scale
+        )
+        .fill(fillColor)
+        .rotationEffect(Angle.degrees(-90.0), anchor: .center)
     }
 }
 
@@ -36,16 +24,19 @@ struct Arc: Shape {
     var startDegrees: Double
     var endDegrees: Double
     var geometry: GeometryProxy
-    var scale: Double = 0.7
+    var scale: Double
     
     func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
+        let radius =
+            (geometry.size.width < geometry.size.height ? geometry.size.width : geometry.size.height) / 2 * CGFloat(self.scale)
+        
         
         return Path { p in
             p.move(to: center)
             p.addArc(
                 center: center,
-                radius: (geometry.size.width / 2) * CGFloat(self.scale),
+                radius: radius,
                 startAngle: .degrees(self.startDegrees),
                 endAngle: .degrees(self.endDegrees),
                 clockwise: false
@@ -61,7 +52,8 @@ struct ArcView_Previews: PreviewProvider {
                 startDegrees: 0.0,
                 endDegrees: 300.0,
                 geometry: geometry,
-                fillColor: .blue.opacity(0.3)
+                fillColor: .blue.opacity(0.3),
+                scale: 0.7
             )
         }
     }
