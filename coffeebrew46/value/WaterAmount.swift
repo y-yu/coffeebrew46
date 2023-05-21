@@ -7,7 +7,9 @@ struct WaterAmount {
 
     // Others water amounts (gram)
     var sixtyPercent: NonEmptyList<Double>
-    
+}
+
+extension WaterAmount {
     // Return total amount of the water (gram).
     func totalAmount() -> Double {
         fortyPercent.0 +
@@ -16,5 +18,13 @@ struct WaterAmount {
                 0.0,
                 { (acc, v) in return acc + v }
             )
+    }
+    
+    func toArray() -> Array<Double> {
+        if fortyPercent.1 <= 0 {
+            return [fortyPercent.0] + sixtyPercent.toArray()
+        } else {
+            return [fortyPercent.0, fortyPercent.1] + sixtyPercent.toArray()
+        }
     }
 }

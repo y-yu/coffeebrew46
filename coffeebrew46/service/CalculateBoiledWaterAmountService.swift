@@ -38,16 +38,10 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
             }()
         )
         let totalWaterAmount = config.totalWaterAmount()
-        
-        let values = [
-            waterAmount.fortyPercent.0,
-            waterAmount.fortyPercent.1
-        ] + waterAmount.sixtyPercent.toArray()
-        
         let timeSecPerDripExceptFirst: Double = (config.totalTimeSec - config.steamingTimeSec) / Double((waterAmount.sixtyPercent.toArray().count + 1))
         
         let colorAndDegreesArray =
-            values.enumerated().reduce(
+            waterAmount.toArray().enumerated().reduce(
                 (
                     (0.0, 0.0, 0.0), // (degree, value, dripAt)
                     Array<(Double, Double, Double)>.init()

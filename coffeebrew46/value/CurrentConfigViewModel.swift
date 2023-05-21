@@ -44,17 +44,21 @@ final class CurrentConfigViewModel: ObservableObject {
 extension CurrentConfigViewModel {
     func endDegree(_ progressTime: Int) -> Double {
         let pt = Double(progressTime)
-        if (pt <= currentConfig.steamingTimeSec) {
+        if (pt > currentConfig.totalTimeSec) {
+            return 360
+        } else if (pt <= currentConfig.steamingTimeSec) {
             return pt /  currentConfig.steamingTimeSec * pointerInfoViewModels.pointerInfo[1].degree
         } else {
             let withoutSteamingPerOther = (Double(currentConfig.totalTimeSec) - currentConfig.steamingTimeSec) / Double(pointerInfoViewModels.pointerInfo.count - 1)
             
-            if (pt <= withoutSteamingPerOther + currentConfig.steamingTimeSec) {
+            if (currentConfig.firstWaterPercent < 1 && pt <= withoutSteamingPerOther + currentConfig.steamingTimeSec) {
                 return (pt - currentConfig.steamingTimeSec) / withoutSteamingPerOther * (pointerInfoViewModels.pointerInfo[2].degree - pointerInfoViewModels.pointerInfo[1].degree) + pointerInfoViewModels.pointerInfo[1].degree
-            } else {
+            } else if (currentConfig.firstWaterPercent < 1) {
                 let firstAndSecond = currentConfig.steamingTimeSec + withoutSteamingPerOther
                 
-                return pt > currentConfig.totalTimeSec ? 360.0 : ((pt - firstAndSecond) / (currentConfig.totalTimeSec - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[2].degree) + pointerInfoViewModels.pointerInfo[2].degree
+                return ((pt - firstAndSecond) / (currentConfig.totalTimeSec - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[2].degree) + pointerInfoViewModels.pointerInfo[2].degree
+            } else {
+                return ((pt - currentConfig.steamingTimeSec) / (currentConfig.totalTimeSec - currentConfig.steamingTimeSec)) * (360.0 - pointerInfoViewModels.pointerInfo[1].degree) + pointerInfoViewModels.pointerInfo[1].degree
             }
         }
     }
