@@ -12,6 +12,8 @@ struct NavigationModifier: ViewModifier {
             StopwatchView()
         case .saveLoad:
             SaveLoadView()
+        case .info:
+            InfoView()
         }
     }
 
