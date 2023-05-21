@@ -32,7 +32,7 @@ struct StopwatchView: View {
                     VStack {
                         PhaseListView(progressTime: $progressTime)
                             .frame(height: geometry.size.height * 0.80)
-                        Spacer()
+                        Divider()
                         timerController
                     }
                 }
@@ -51,8 +51,8 @@ struct StopwatchView: View {
                     }
                     Divider()
                     PhaseListView(progressTime: $progressTime)
+                    Divider()
                     timerController
-                    Spacer()
                 }
             }
         }
