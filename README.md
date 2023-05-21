@@ -9,4 +9,4 @@ This is a coffee brewing utility for iOS.
 
 ## Demo
 
-https://github.com/y-yu/coffeebrew46/assets/612043/7a24e2ba-773d-44ae-9f6f-956aec4c948b.mp4
+https://github.com/y-yu/coffeebrew46/assets/612043/5801e7fe-ef36-4336-9f00-f82eadc3a907.mov
