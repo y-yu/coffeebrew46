@@ -11,7 +11,6 @@ struct ClockView: View {
     
     private let density: Int = 40
     private let markInterval: Int = 10
-    
     @Binding var progressTime: Int
     
     var steamingTime: Double
@@ -24,13 +23,13 @@ struct ClockView: View {
                     VStack {
                         Spacer()
                         Spacer()
-                        mainClockView.frame(minWidth: 400)
+                        mainClockView.frame(minWidth: appEnvironment.minWidth)
                         Spacer()
                         Spacer()
                     }
                 }
             }
-            .frame(minWidth: 400)
+            .frame(minWidth: appEnvironment.minWidth)
             GeometryReader { (geometry: GeometryProxy) in
                 mainClockView.frame(maxHeight: geometry.size.width * 0.98)
             }

@@ -47,7 +47,7 @@ struct ConfigView: View {
                 
                 Text("The number of partitions of later 6")
                 ButtonNumberButtonView(
-                    maximum: 6,
+                    maximum: 10,
                     minimum: 1,
                     step: 1.0,
                     isDisable: appEnvironment.isTimerStarted,

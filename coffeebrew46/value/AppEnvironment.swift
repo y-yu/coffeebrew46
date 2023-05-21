@@ -8,6 +8,17 @@ final class AppEnvironment: ObservableObject {
     @Published var configPath: [Route] = []
     @Published var infoPath: [Route] = []
     
+    var minWidth: Double
+
+    init() {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            self.minWidth = 800
+        @unknown default:
+            self.minWidth = 400
+        }
+    }
+    
     var tabSelection: Binding<Route> {
         Binding { [weak self] in
             self?.selectedTab ?? .stopwatch
