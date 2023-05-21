@@ -6,6 +6,7 @@ final class AppEnvironment: ObservableObject {
     @Published var isTimerStarted: Bool = false
     @Published var stopwatchPath: [Route] = []
     @Published var configPath: [Route] = []
+    @Published var infoPath: [Route] = []
     
     var tabSelection: Binding<Route> {
         Binding { [weak self] in

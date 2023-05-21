@@ -82,6 +82,9 @@ struct ConfigView: View {
                     target: $viewModel.currentConfig.steamingTimeSec
                 )
             }
+            NavigationLink(value: Route.info) {
+                Text("Information")
+            }
         }
         .navigationTitle("Configuration")
         .navigation(path: $appEnvironment.configPath)
