@@ -8,13 +8,13 @@
 protocol CalculateBoiledWaterAmountService {
     func calculate(
         config: Config
-    ) -> WaterAmount
+    ) -> PointerInfoViewModels
 }
 
 // Implementation
 class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
-    func calculate(config: Config) -> WaterAmount {
-        WaterAmount(
+    func calculate(config: Config) -> PointerInfoViewModels {
+        let waterAmount = WaterAmount(
             fortyPercent: (
                 config.fortyPercentWaterAmount() * config.firstWaterPercent,
                 config.fortyPercentWaterAmount() * (1 - config.firstWaterPercent)
@@ -37,5 +37,34 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
                 return loop(value, Int(config.partitionsCountOf6))
             }()
         )
+        let totalWaterAmount = config.totalWaterAmount()
+        
+        let values = [
+            waterAmount.fortyPercent.0,
+            waterAmount.fortyPercent.1
+        ] + waterAmount.sixtyPercent.toArray()
+        
+        let timeSecPerDripExceptFirst: Double = (config.totalTimeSec - config.steamingTimeSec) / Double((waterAmount.sixtyPercent.toArray().count + 1))
+        
+        let colorAndDegreesArray =
+            values.enumerated().reduce(
+                (
+                    (0.0, 0.0, 0.0), // (degree, value, dripAt)
+                    Array<(Double, Double, Double)>.init()
+                ),
+                { (acc, elementWithIndex) in
+                    let (index, element) = elementWithIndex
+                    var (prev, arr) = acc
+                    let (degree, value, prevDripAt) = prev
+                    let d = (element / totalWaterAmount) * 360 + degree
+                    let dripAtAdded = index == 0 ? config.steamingTimeSec : timeSecPerDripExceptFirst
+                    
+                    arr.append((value + element, degree, prevDripAt))
+                    
+                    return ((d, value + element, prevDripAt + dripAtAdded), arr)
+                }
+            ).1
+        
+        return PointerInfoViewModels.fromArray(colorAndDegreesArray)
     }
 }

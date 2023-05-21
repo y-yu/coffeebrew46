@@ -36,37 +36,8 @@ final class CurrentConfigViewModel: ObservableObject {
     
     // This function calculate parameters for the scale view.
     private func calculateScale() -> Void {
-        let waterAmount = calculateBoiledWaterAmountService.calculate(config: currentConfig)
-        let totalWaterAmount = currentConfig.totalWaterAmount()
-        
-        let values = [
-            waterAmount.fortyPercent.0,
-            waterAmount.fortyPercent.1
-        ] + waterAmount.sixtyPercent.toArray()
-        
-        let timeSecPerDripExceptFirst: Double = (currentConfig.totalTimeSec - currentConfig.steamingTimeSec) / Double((waterAmount.sixtyPercent.toArray().count + 1))
-        
-        let colorAndDegreesArray =
-            values.enumerated().reduce(
-                (
-                    (0.0, 0.0, 0.0), // (degree, value, dripAt)
-                    Array<(Double, Double, Double)>.init()
-                ),
-                { (acc, elementWithIndex) in
-                    let (index, element) = elementWithIndex
-                    var (prev, arr) = acc
-                    let (degree, value, prevDripAt) = prev
-                    let d = (element / totalWaterAmount) * 360 + degree
-                    let dripAtAdded = index == 0 ? currentConfig.steamingTimeSec : timeSecPerDripExceptFirst
-                    
-                    arr.append((value + element, degree, prevDripAt))
-                    
-                    return ((d, value + element, prevDripAt + dripAtAdded), arr)
-                }
-            ).1
-        
-        pointerInfoViewModels =
-            pointerInfoViewModels.withColorAndDegrees(colorAndDegreesArray)
+        self.pointerInfoViewModels =
+            calculateBoiledWaterAmountService.calculate(config: currentConfig)
     }
 }
 
