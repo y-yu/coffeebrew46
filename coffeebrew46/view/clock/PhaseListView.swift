@@ -26,7 +26,7 @@ struct PhaseListView: View {
 
         return ScrollView {
             GeometryReader { (geometry: GeometryProxy) in
-                Grid(alignment: .bottom, horizontalSpacing: 40, verticalSpacing: 5) {
+                Grid(alignment: .bottom, horizontalSpacing: 50, verticalSpacing: 5) {
                     GridRow {
                         Text("#")
                         Text("Water")
@@ -87,13 +87,18 @@ struct PhaseListView: View {
     private func timingView(phase: Phase) -> AnyView {
         let nth = viewModel.getNthPhase(progressTime: Double(progressTime))
         
-        if ((nth == phase.index || nth + 1 == phase.index) && appEnvironment.isTimerStarted) {
-            // in case on going or next
+        if (nth == phase.index && appEnvironment.isTimerStarted) {
+            // in case on going
             return AnyView(
-                fontConfig(
-                    Text(String(format: "%.0f", Double(progressTime) - phase.dripAt)),
-                    phase: phase
-                )
+                Image(systemName: "drop.fill")
+                    .scaledToFit()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.blue)
+            )
+        } else if (nth + 1 == phase.index && appEnvironment.isTimerStarted) {
+            // in case next
+            return AnyView(
+                Text(String(format: "%.0f", Double(progressTime) - phase.dripAt))
             )
         } else if (nth > phase.index) {
             // in case done
