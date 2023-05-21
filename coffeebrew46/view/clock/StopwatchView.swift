@@ -37,7 +37,7 @@ struct StopwatchView: View {
                     }
                 }
             }
-            .frame(minWidth: 400)
+            .frame(minWidth: appEnvironment.minWidth)
             
             GeometryReader { (geometry: GeometryProxy) in
                 VStack {
