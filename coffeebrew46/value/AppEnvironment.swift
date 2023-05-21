@@ -14,7 +14,7 @@ final class AppEnvironment: ObservableObject {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             self.minWidth = 800
-        @unknown default:
+        default:
             self.minWidth = 400
         }
     }
