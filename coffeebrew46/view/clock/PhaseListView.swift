@@ -99,6 +99,7 @@ struct PhaseListView: View {
             // in case next
             return AnyView(
                 Text(String(format: "%.0f", Double(progressTime) - phase.dripAt))
+                    .frame(height: 24)
             )
         } else if (nth > phase.index) {
             // in case done
