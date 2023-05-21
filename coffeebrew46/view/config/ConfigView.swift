@@ -38,9 +38,9 @@ struct ConfigView: View {
                 Text("1st water percent of former 4: \(String(format: "%.0f%", viewModel.currentConfig.firstWaterPercent * 100))%")
                 ButtonSliderButtonView(
                     maximum: 1.0,
-                    minimum: 0,
-                    sliderStep: 0.1,
-                    buttonStep: 0.05,
+                    minimum: 0.01,
+                    sliderStep: 0.05,
+                    buttonStep: 0.01,
                     isDisable: appEnvironment.isTimerStarted,
                     target: $viewModel.currentConfig.firstWaterPercent
                 )

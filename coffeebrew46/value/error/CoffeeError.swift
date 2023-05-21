@@ -14,6 +14,8 @@ enum CoffeeError: Error {
     
     case steamingTimeIsTooMuchThanTotal
     
+    case firstWaterPercentIsZeroError
+    
     func getMessage() -> String {
         switch self {
         case .coffeeBeansWeightUnderZeroError:
@@ -33,6 +35,9 @@ enum CoffeeError: Error {
             
         case .steamingTimeIsTooMuchThanTotal:
             return "The streaming time must be less than total time."
+            
+        case .firstWaterPercentIsZeroError:
+            return "The first water percent must be more than 0."
         }
     }
 }

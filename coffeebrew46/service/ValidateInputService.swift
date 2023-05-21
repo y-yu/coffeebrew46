@@ -14,7 +14,8 @@ class ValidateInputServiceImpl: ValidateInputService {
         let validatedTuple =
             validateCoffeeBeansWeight(config.coffeeBeansWeight) |+|
             validationNumberOf6(Int(config.partitionsCountOf6)) |+|
-            validationTimer(steamingTime: config.steamingTimeSec, totalTime: config.totalTimeSec)
+            validationTimer(steamingTime: config.steamingTimeSec, totalTime: config.totalTimeSec) |+|
+            validationFirstWaterPercent(config.firstWaterPercent)
             
         return validatedTuple.map { _ in
             ()
@@ -45,5 +46,13 @@ class ValidateInputServiceImpl: ValidateInputService {
         steamingTime < totalTime ?
             ResultNel.success(()) :
             CoffeeError.steamingTimeIsTooMuchThanTotal.toFailureNel()
+    }
+    
+    private func validationFirstWaterPercent(
+        _ firstWaterPercent: Double
+    ) -> ResultNel<Void, CoffeeError> {
+        firstWaterPercent > 0 ?
+            ResultNel.success(()) :
+            CoffeeError.firstWaterPercentIsZeroError.toFailureNel()
     }
 }
