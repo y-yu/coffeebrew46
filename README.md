@@ -5,6 +5,8 @@ CoffeeBrew46
 
 This is a coffee brewing utility for iOS.
 
+<img width="70%" src="https://github.com/y-yu/coffeebrew46/assets/612043/07d1504c-f2c1-4827-94ae-36030ae9ad12">
+
 <img width="30%" src="https://github.com/y-yu/coffeebrew46/blob/master/coffeebrew46/appstore.png?raw=true"/>
 
 ## Demo
