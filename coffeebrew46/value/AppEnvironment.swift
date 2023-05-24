@@ -15,7 +15,7 @@ final class AppEnvironment: ObservableObject {
         case .pad:
             self.minWidth = 800
         default:
-            self.minWidth = 400
+            self.minWidth = 500
         }
     }
     
