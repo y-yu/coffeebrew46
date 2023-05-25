@@ -12,3 +12,8 @@ This is a coffee brewing utility for iOS.
 ## Demo
 
 https://github.com/y-yu/coffeebrew46/assets/612043/5801e7fe-ef36-4336-9f00-f82eadc3a907.mov
+
+## Contact
+
+- Email: `yyu@mental.poker`
+- Twitter: [@\_yyu\_](https://twitter.com/_yyu_)
