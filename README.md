@@ -17,3 +17,8 @@ https://github.com/y-yu/coffeebrew46/assets/612043/5801e7fe-ef36-4336-9f00-f82ea
 
 - Email: `yyu@mental.poker`
 - Twitter: [@\_yyu\_](https://twitter.com/_yyu_)
+
+## Acknowledgement
+
+- [@nanashiki](https://github.com/nanashiki)（[Twitter](https://twitter.com/7_6_)）
+    - Thanks for the advices about SwiftUI techniques and iOS app release procedure and so on.
