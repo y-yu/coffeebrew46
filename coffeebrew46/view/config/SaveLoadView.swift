@@ -85,6 +85,7 @@ extension View {
     }
 }
 
+#if DEBUG
 struct SaveLoadView_Previews: PreviewProvider {
     static var previews: some View {
         SaveLoadView()
@@ -97,3 +98,4 @@ struct SaveLoadView_Previews: PreviewProvider {
             .environmentObject(AppEnvironment.init())
     }
 }
+#endif

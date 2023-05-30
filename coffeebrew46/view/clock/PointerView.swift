@@ -57,6 +57,7 @@ struct Pointer: Shape {
     }
 }
 
+#if DEBUG
 struct PointerView_Previews: PreviewProvider {
     static var pointerInfoViewModels =  PointerInfoViewModels.defaultValue
 
@@ -77,3 +78,4 @@ struct PointerView_Previews: PreviewProvider {
         .frame(width: 300, height: 300)
     }
 }
+#endif

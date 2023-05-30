@@ -22,6 +22,7 @@ struct RootView: View {
     }
 }
 
+#if DEBUG
 struct RootView_Previews: PreviewProvider {
     @ObservedObject static var appEnvironment: AppEnvironment = .init()
     @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel(
@@ -35,3 +36,4 @@ struct RootView_Previews: PreviewProvider {
             .environmentObject(viewModel)
     }
 }
+#endif

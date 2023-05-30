@@ -10,7 +10,7 @@ struct StopwatchView: View {
             saveStartTime()
         }
     }
-    @State private var progressTime = 0
+    @State private var progressTime: Double = 0
     @State private var timer: Timer?
 
     private let buttonBackground: some View =
@@ -74,14 +74,17 @@ struct StopwatchView: View {
                     .background(buttonBackground)
             }
             Spacer()
-            Text("\(String(format: "%d", progressTime))")
-                .font(.system(size: 40).weight(.light))
+            Text("\(String(format: "%.1f", progressTime))")
+                .font(Font(UIFont.monospacedSystemFont(ofSize: 38, weight: .light)))
                 .fixedSize()
                 .frame(width: 100, height: 40)
                 .foregroundColor(
-                    progressTime < Int(viewModel.currentConfig.totalTimeSec) ? .primary : .red
+                    progressTime < viewModel.currentConfig.totalTimeSec ? .primary : .red
                 )
-            Text("/ \(String(format: "%.0f", viewModel.currentConfig.totalTimeSec)) sec")
+            Text("/ ")
+            Text(String(format: "%.0f", viewModel.currentConfig.totalTimeSec))
+                .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .light)))
+            Text(" sec")
             Spacer()
             Button(action: { stopTimer() }) {
                 Text("Stop")
@@ -101,7 +104,7 @@ struct StopwatchView: View {
             self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                 if let time = startTime {
                     let now = Date()
-                    progressTime = Int(now.timeIntervalSince(time))
+                    progressTime = now.timeIntervalSince(time)
                 }
             }
         }
@@ -137,6 +140,7 @@ struct StopwatchView: View {
     }
 }
 
+#if DEBUG
 struct StopwatchView_Previews: PreviewProvider {
     static var previews: some View {
         StopwatchView()
@@ -149,3 +153,4 @@ struct StopwatchView_Previews: PreviewProvider {
             .environmentObject(AppEnvironment.init())
     }
 }
+#endif
