@@ -11,7 +11,7 @@ struct ClockView: View {
     
     private let density: Int = 40
     private let markInterval: Int = 10
-    @Binding var progressTime: Int
+    @Binding var progressTime: Double
     
     var steamingTime: Double
     var totalTime: Double
@@ -71,7 +71,7 @@ struct ClockView: View {
                 pointerInfo: viewModel.pointerInfoViewModels.pointerInfo[i],
                 geometry: geometry,
                 value: viewModel.pointerInfoViewModels.pointerInfo[i].value,
-                isOnGoing: viewModel.getNthPhase(progressTime: Double(progressTime)) >= i && appEnvironment.isTimerStarted
+                isOnGoing: viewModel.getNthPhase(progressTime: progressTime) >= i && appEnvironment.isTimerStarted
             )
         }
     }
@@ -104,13 +104,14 @@ struct ClockView: View {
 
 }
 
+#if DEBUG
 struct ScaleView_Previews: PreviewProvider {
     @ObservedObject static var appEnvironment: AppEnvironment = .init()
     @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel(
         validateInputService: ValidateInputServiceImpl(),
         calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
     )
-    @State static var progressTime = 55
+    @State static var progressTime: Double = 55
     
     static var previews: some View {
         appEnvironment.isTimerStarted = true
@@ -124,3 +125,4 @@ struct ScaleView_Previews: PreviewProvider {
         .environmentObject(viewModel)
     }
 }
+#endif

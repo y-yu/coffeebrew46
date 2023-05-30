@@ -42,23 +42,22 @@ final class CurrentConfigViewModel: ObservableObject {
 }
 
 extension CurrentConfigViewModel {
-    func endDegree(_ progressTime: Int) -> Double {
-        let pt = Double(progressTime)
-        if (pt > currentConfig.totalTimeSec) {
+    func endDegree(_ progressTime: Double) -> Double {
+        if (progressTime > currentConfig.totalTimeSec) {
             return 360
-        } else if (pt <= currentConfig.steamingTimeSec) {
-            return pt /  currentConfig.steamingTimeSec * pointerInfoViewModels.pointerInfo[1].degree
+        } else if (progressTime <= currentConfig.steamingTimeSec) {
+            return progressTime /  currentConfig.steamingTimeSec * pointerInfoViewModels.pointerInfo[1].degree
         } else {
             let withoutSteamingPerOther = (Double(currentConfig.totalTimeSec) - currentConfig.steamingTimeSec) / Double(pointerInfoViewModels.pointerInfo.count - 1)
             
-            if (currentConfig.firstWaterPercent < 1 && pt <= withoutSteamingPerOther + currentConfig.steamingTimeSec) {
-                return (pt - currentConfig.steamingTimeSec) / withoutSteamingPerOther * (pointerInfoViewModels.pointerInfo[2].degree - pointerInfoViewModels.pointerInfo[1].degree) + pointerInfoViewModels.pointerInfo[1].degree
+            if (currentConfig.firstWaterPercent < 1 && progressTime <= withoutSteamingPerOther + currentConfig.steamingTimeSec) {
+                return (progressTime - currentConfig.steamingTimeSec) / withoutSteamingPerOther * (pointerInfoViewModels.pointerInfo[2].degree - pointerInfoViewModels.pointerInfo[1].degree) + pointerInfoViewModels.pointerInfo[1].degree
             } else if (currentConfig.firstWaterPercent < 1) {
                 let firstAndSecond = currentConfig.steamingTimeSec + withoutSteamingPerOther
                 
-                return ((pt - firstAndSecond) / (currentConfig.totalTimeSec - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[2].degree) + pointerInfoViewModels.pointerInfo[2].degree
+                return ((progressTime - firstAndSecond) / (currentConfig.totalTimeSec - firstAndSecond)) * (360.0 - pointerInfoViewModels.pointerInfo[2].degree) + pointerInfoViewModels.pointerInfo[2].degree
             } else {
-                return ((pt - currentConfig.steamingTimeSec) / (currentConfig.totalTimeSec - currentConfig.steamingTimeSec)) * (360.0 - pointerInfoViewModels.pointerInfo[1].degree) + pointerInfoViewModels.pointerInfo[1].degree
+                return ((progressTime - currentConfig.steamingTimeSec) / (currentConfig.totalTimeSec - currentConfig.steamingTimeSec)) * (360.0 - pointerInfoViewModels.pointerInfo[1].degree) + pointerInfoViewModels.pointerInfo[1].degree
             }
         }
     }

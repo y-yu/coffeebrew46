@@ -60,6 +60,7 @@ struct ButtonView: View {
     }
 }
 
+#if DEBUG
 struct ButtonView_Previews: PreviewProvider {
     @State static var target: Double = 10.0
     
@@ -80,3 +81,4 @@ struct ButtonView_Previews: PreviewProvider {
         }
     }
 }
+#endif

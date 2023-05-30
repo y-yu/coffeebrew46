@@ -10,7 +10,7 @@ struct Phase: Identifiable {
 struct PhaseListView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
-    @Binding var progressTime: Int
+    @Binding var progressTime: Double
     @State private var selection: Int?
     
     var body: some View {
@@ -64,7 +64,7 @@ struct PhaseListView: View {
         onGoing: A,
         scheduled: A
     ) -> A {
-        let phase = viewModel.getNthPhase(progressTime: Double(progressTime))
+        let phase = viewModel.getNthPhase(progressTime: progressTime)
         
         if (phase == i && appEnvironment.isTimerStarted) {
             return onGoing
@@ -85,7 +85,7 @@ struct PhaseListView: View {
     }
     
     private func timingView(phase: Phase) -> AnyView {
-        let nth = viewModel.getNthPhase(progressTime: Double(progressTime))
+        let nth = viewModel.getNthPhase(progressTime: progressTime)
         
         if (nth == phase.index && appEnvironment.isTimerStarted) {
             // in case on going
@@ -98,7 +98,8 @@ struct PhaseListView: View {
         } else if (nth + 1 == phase.index && appEnvironment.isTimerStarted) {
             // in case next
             return AnyView(
-                Text(String(format: "%.0f", Double(progressTime) - phase.dripAt))
+                Text(String(format: "%.1f", progressTime - phase.dripAt))
+                    .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .light)))
                     .frame(height: 24)
             )
         } else if (nth > phase.index) {
@@ -121,12 +122,13 @@ struct PhaseListView: View {
     }
 }
 
+#if DEBUG
 struct PhaseListView_Preview: PreviewProvider {
     @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel(
         validateInputService: ValidateInputServiceImpl(),
         calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
     )
-    @State static var progressTime = 55
+    @State static var progressTime: Double = 55
     
     static var previews: some View {
         PhaseListView(progressTime: $progressTime)
@@ -134,3 +136,4 @@ struct PhaseListView_Preview: PreviewProvider {
             .environmentObject(viewModel)
     }
 }
+#endif

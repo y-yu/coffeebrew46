@@ -38,6 +38,7 @@ struct ButtonSliderButtonView: View {
     }
 }
 
+#if DEBUG
 struct ButtonSliderView_Previews: PreviewProvider {
     @State static var target: Double = 10.0
     
@@ -62,3 +63,4 @@ struct ButtonSliderView_Previews: PreviewProvider {
         }
     }
 }
+#endif
