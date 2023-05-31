@@ -48,7 +48,7 @@ struct ClockView: View {
                     }
                     ArcView(
                         startDegrees: 0.0,
-                        endDegrees: viewModel.endDegree(progressTime),
+                        endDegrees: viewModel.toDegree(progressTime),
                         geometry: geometry,
                         fillColor: .accentColor.opacity(0.3)
                     )
@@ -80,17 +80,14 @@ struct ClockView: View {
     private func tick(tick: Int) -> some View {
         let angle: Double = Double(tick) / Double(self.density * 4) * 360
         let isMark: Bool = tick % markInterval == 0
-        let caption = angle <= viewModel.pointerInfoViewModels.pointerInfo[1].degree ?
-            // In this case, it's steaming.
-            steamingTime * angle / viewModel.pointerInfoViewModels.pointerInfo[1].degree :
-            (totalTime - steamingTime) * (angle - viewModel.pointerInfoViewModels.pointerInfo[1].degree) / (360 - viewModel.pointerInfoViewModels.pointerInfo[1].degree) + steamingTime
+        let caption = viewModel.toProgressTime(angle)
         
         return VStack {
-            Text(isMark ? String(format: "%.0f", ceil(caption)) : " ")
+            Text(isMark ? String(format: "%.0f", round(caption)) : " ")
                 .font(.system(size: 10).weight(.light))
                 .fixedSize()
                 .frame(width: 20)
-                .foregroundColor(!appEnvironment.isTimerStarted || angle > viewModel.endDegree(progressTime) ? .primary.opacity(0.7) : .accentColor)
+                .foregroundColor(!appEnvironment.isTimerStarted || angle > viewModel.toDegree(progressTime) ? .primary.opacity(0.7) : .accentColor)
             Rectangle()
                 .fill(Color.primary)
                 .opacity(isMark ? 0.4 : 0.2)

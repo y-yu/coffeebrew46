@@ -4,7 +4,7 @@ attributes:
 configs:
   Debug: debug
   Release: release
-name: coffeebrew46
+name: CoffeeBrew46
 options:
   defaultConfig: Release
   groupSortPosition: bottom
@@ -86,36 +86,3 @@ targets:
     - path: coffeebrew46Tests
       name: coffeebrew46Tests
     type: bundle.unit-test
-  coffeebrew46UITests:
-    dependencies:
-    - target: coffeebrew46
-    platform: iOS
-    productName: coffeebrew64UITests
-    settings:
-      configs:
-        Debug:
-          ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
-          CODE_SIGN_IDENTITY[sdk=macosx*]: Apple Development
-          CODE_SIGN_STYLE: Manual
-          DEVELOPMENT_TEAM: ''
-          INFOPLIST_FILE: coffeebrew46UITests/Info.plist
-          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46UITests
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
-          SWIFT_VERSION: '5.0'
-          TEST_TARGET_NAME: coffeebrew46
-        Release:
-          ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
-          CODE_SIGN_IDENTITY[sdk=macosx*]: Apple Development
-          CODE_SIGN_STYLE: Manual
-          DEVELOPMENT_TEAM: ''
-          INFOPLIST_FILE: coffeebrew46UITests/Info.plist
-          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46UITests
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
-          SWIFT_VERSION: '5.0'
-          TEST_TARGET_NAME: coffeebrew46
-    sources:
-    - path: coffeebrew46UITests
-      name: coffeebrew46UITests
-    type: bundle.ui-testing
