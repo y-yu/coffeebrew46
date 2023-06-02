@@ -28,7 +28,7 @@ struct Config: Equatable {
         waterToCoffeeBeansWeightRatio = 15
         firstWaterPercent = 0.5
         totalTimeSec = 210
-        steamingTimeSec = 55
+        steamingTimeSec = 45
     }
 }
 
