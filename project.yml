@@ -25,30 +25,35 @@ settings:
       SWIFT_COMPILATION_MODE: wholemodule
       SWIFT_OPTIMIZATION_LEVEL: -O
 targets:
-  CoffeeBrew46:
+  coffeebrew46:
     platform: iOS
-    productName: CoffeeBrew64
+    productName: coffeebrew64
     settings:
       base:
         INFOPLIST_FILE: coffeebrew46/Info.plist
         DEVELOPMENT_TEAM: 3KDN4W8346
-        PRODUCT_NAME: CoffeeBrew64
-        CODE_SIGN_IDENTITY: Apple Development
-        CODE_SIGN_STYLE: Automatic
-        DEVELOPMENT_ASSET_PATHS: '"coffeebrew46/Preview Content"'
-        PROVISIONING_PROFILE_SPECIFIER: ''
       configs:
         Debug:
+          CODE_SIGN_IDENTITY: Apple Development
+          CODE_SIGN_STYLE: Automatic
+          DEVELOPMENT_ASSET_PATHS: '"coffeebrew46/Preview Content"'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug
+          PRODUCT_NAME: coffeebrew46
+          PROVISIONING_PROFILE_SPECIFIER: ''
         Release:
+          CODE_SIGN_IDENTITY: Apple Development
+          CODE_SIGN_STYLE: Automatic
+          DEVELOPMENT_ASSET_PATHS: '"coffeebrew46/Preview Content"'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46
+          PRODUCT_NAME: coffeebrew46
+          PROVISIONING_PROFILE_SPECIFIER: ''
     sources:
     - path: coffeebrew46
       name: coffeebrew46
     type: application
-  CoffeeBrew46Tests:
+  coffeebrew46Tests:
     dependencies:
-    - target: CoffeeBrew46
+    - target: coffeebrew46
     platform: iOS
     productName: coffeebrew64Tests
     settings:
