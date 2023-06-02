@@ -1,0 +1,26 @@
+"config json" = "JSON";
+"config import export" = "Import & Export";
+
+"config show tips" = "Show tips";
+
+"config weight settings" = "Weight settings";
+"config coffee beans weight" = "Coffee beans weight:";
+"config water ratio" = "Water ratio against coffee beans weight";
+"config water ratio tips" = "config water ratio tips";
+
+"config 4:6 settings" = "4:6 settings";
+"config 1st water percent" = "1st water percent of former 4:";
+"config 1st water percent tips" = "sweet vs acidity";
+"config number of partitions of later 6" = "The number of partitions of later 6";
+"config number of partitions of later 6 tips" = "strong vs mild";
+
+"config timer setting" = "Timer settings";
+"config total time" = "Total brewing time:";
+"config sec unit" = "sec";
+"config steaming time" = "Steaming(1st -> 2nd drip) time:";
+
+"config information" = "Information";
+
+"info license" = "License";
+"info source code" = "Source code";
+"info author" = "Author";

@@ -5,17 +5,17 @@ struct InfoView: View {
     
     var body: some View {
         Form {
-            Section(header: Text("License")) {
+            Section(header: Text("info license")) {
                 Link("MIT License",
                       destination: URL(string: "https://github.com/y-yu/coffeebrew46/blob/master/LICENSE")!)
             }
             
-            Section(header: Text("Source code")) {
+            Section(header: Text("info source code")) {
                 Link("https://github.com/y-yu/coffeebrew46",
                       destination: URL(string: "https://github.com/y-yu/coffeebrew46")!)
             }
             
-            Section(header: Text("Author")) {
+            Section(header: Text("info author")) {
                 HStack {
                     Text("Email:")
                     Text("yyu@mental.poker")

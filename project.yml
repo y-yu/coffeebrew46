@@ -9,6 +9,11 @@ options:
   defaultConfig: Release
   groupSortPosition: bottom
   transitivelyLinkDependencies: false
+  useBaseInternationalization: false
+packages:
+  SwiftUITooltip:
+    url: https://github.com/quassum/SwiftUI-Tooltip.git
+    from: 1.4.0
 settings:
   base:
     IPHONEOS_DEPLOYMENT_TARGET: 16.0
@@ -27,7 +32,7 @@ settings:
 targets:
   coffeebrew46:
     platform: iOS
-    productName: coffeebrew64
+    productName: CoffeeBrew46
     settings:
       base:
         INFOPLIST_FILE: coffeebrew46/Info.plist
@@ -38,24 +43,26 @@ targets:
           CODE_SIGN_STYLE: Automatic
           DEVELOPMENT_ASSET_PATHS: '"coffeebrew46/Preview Content"'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug
-          PRODUCT_NAME: coffeebrew46
+          PRODUCT_NAME: CoffeeBrew46
           PROVISIONING_PROFILE_SPECIFIER: ''
         Release:
           CODE_SIGN_IDENTITY: Apple Development
           CODE_SIGN_STYLE: Automatic
           DEVELOPMENT_ASSET_PATHS: '"coffeebrew46/Preview Content"'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46
-          PRODUCT_NAME: coffeebrew46
+          PRODUCT_NAME: CoffeeBrew46
           PROVISIONING_PROFILE_SPECIFIER: ''
     sources:
     - path: coffeebrew46
       name: coffeebrew46
+    dependencies:
+      - package: SwiftUITooltip
     type: application
   coffeebrew46Tests:
     dependencies:
     - target: coffeebrew46
     platform: iOS
-    productName: coffeebrew64Tests
+    productName: CoffeeBrew46Tests
     settings:
       configs:
         Debug:
@@ -65,11 +72,11 @@ targets:
           CODE_SIGN_STYLE: Manual
           DEVELOPMENT_TEAM: ''
           INFOPLIST_FILE: coffeebrew46Tests/Info.plist
-          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew64Tests
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46Tests
           PROVISIONING_PROFILE_SPECIFIER: ''
           PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
           SWIFT_VERSION: '5.0'
-          TEST_HOST: $(BUILT_PRODUCTS_DIR)/coffeebrew46.app/coffeebrew46
+          TEST_HOST: $(BUILT_PRODUCTS_DIR)/CoffeeBrew46.app/CoffeeBrew46
         Release:
           ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
           BUNDLE_LOADER: $(TEST_HOST)
@@ -77,11 +84,11 @@ targets:
           CODE_SIGN_STYLE: Manual
           DEVELOPMENT_TEAM: ''
           INFOPLIST_FILE: coffeebrew46Tests/Info.plist
-          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew64Tests
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46Tests
           PROVISIONING_PROFILE_SPECIFIER: ''
           PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
           SWIFT_VERSION: '5.0'
-          TEST_HOST: $(BUILT_PRODUCTS_DIR)/coffeebrew46.app/coffeebrew46
+          TEST_HOST: $(BUILT_PRODUCTS_DIR)/CoffeeBrew46.app/CoffeeBrew46
     sources:
     - path: coffeebrew46Tests
       name: coffeebrew46Tests

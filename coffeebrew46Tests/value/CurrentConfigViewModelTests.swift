@@ -1,14 +1,14 @@
 import XCTest
-@testable import coffeebrew46
+@testable import CoffeeBrew46
 
-class MockValidateInputService: ValidateInputService {
-    func validate(config: coffeebrew46.Config) -> coffeebrew46.ResultNel<Void, coffeebrew46.CoffeeError> {
+class MockValidateInputService: ValidateInputService{
+    func validate(config: CoffeeBrew46.Config) -> CoffeeBrew46.ResultNel<Void, CoffeeBrew46.CoffeeError> {
         fatalError("not implemented!")
     }
 }
 
 class MockCalculateBoiledWaterAmountService: CalculateBoiledWaterAmountService {
-    func calculate(config: coffeebrew46.Config) -> coffeebrew46.PointerInfoViewModels {
+    func calculate(config: CoffeeBrew46.Config) -> CoffeeBrew46.PointerInfoViewModels {
         fatalError("not implemented!")
     }
 }

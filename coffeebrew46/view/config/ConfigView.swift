@@ -1,20 +1,21 @@
 import SwiftUI
+import SwiftUITooltip
 
 struct ConfigView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
     
+    @State var showTips: Bool = false
     private let timerStep: Double = 1.0
     
     var body: some View {
         Form {
-            Section(header: Text("JSON")) {
-                NavigationLink(value: Route.saveLoad) {
-                    Text("Import & Export")
+            Toggle("config show tips", isOn: $showTips)
+            Section(header: Text("config weight settings")) {
+                HStack {
+                    Text("config coffee beans weight")
+                    Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
                 }
-            }
-            Section(header: Text("Weight settings")) {
-                Text("Coffee beans weight: \(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
                 ButtonSliderButtonView(
                     maximum: 50.0,
                     minimum: 0,
@@ -24,7 +25,11 @@ struct ConfigView: View {
                     target: $viewModel.currentConfig.coffeeBeansWeight
                 )
                 
-                Text("Water ratio against coffee beans weight")
+                TipsView(
+                    showTips,
+                    content: Text("config water ratio"),
+                    tips: Text("config water ratio tips")
+                )
                 ButtonNumberButtonView(
                     maximum: 20,
                     minimum: 5,
@@ -34,8 +39,16 @@ struct ConfigView: View {
                 )
             }
             
-            Section(header: Text("4:6 settings")) {
-                Text("1st water percent of former 4: \(String(format: "%.0f%", viewModel.currentConfig.firstWaterPercent * 100))%")
+            Section(header: Text("config 4:6 settings")) {
+                TipsView(
+                    showTips,
+                    content: HStack {
+                        Text("config 1st water percent")
+                        Text("\(String(format: "%.0f%", viewModel.currentConfig.firstWaterPercent * 100))%")
+                        
+                    },
+                    tips: Text("config 1st water percent tips")
+                )
                 ButtonSliderButtonView(
                     maximum: 1.0,
                     minimum: 0.01,
@@ -45,7 +58,11 @@ struct ConfigView: View {
                     target: $viewModel.currentConfig.firstWaterPercent
                 )
                 
-                Text("The number of partitions of later 6")
+                TipsView(
+                    showTips,
+                    content: Text("config number of partitions of later 6"),
+                    tips: Text("config number of partitions of later 6 tips")
+                )
                 ButtonNumberButtonView(
                     maximum: 10,
                     minimum: 1,
@@ -55,8 +72,12 @@ struct ConfigView: View {
                 )
             }
             
-            Section(header: Text("Timer settings")) {
-                Text("Total time: \(String(format: "%.0f", viewModel.currentConfig.totalTimeSec)) sec")
+            Section(header: Text("config timer setting")) {
+                HStack {
+                    Text("config total time")
+                    Text((String(format: "%.0f", viewModel.currentConfig.totalTimeSec)))
+                    Text("config sec unit")
+                }
                 ButtonSliderButtonView(
                     maximum: 300.0,
                     // If `totalTime` would be going down less than `steamingTime` + its step,
@@ -68,7 +89,11 @@ struct ConfigView: View {
                     target: $viewModel.currentConfig.totalTimeSec
                 )
                 
-                Text("Steaming time: \(String(format: "%.0f", viewModel.currentConfig.steamingTimeSec)) sec")
+                HStack {
+                    Text("config steaming time")
+                    Text(String(format: "%.0f", viewModel.currentConfig.steamingTimeSec))
+                    Text("config sec unit")
+                }
                 ButtonSliderButtonView(
                     // This is required to avoid crash.
                     // If the maximum is `viewModel.totalTime - timerStep` then
@@ -82,11 +107,32 @@ struct ConfigView: View {
                     target: $viewModel.currentConfig.steamingTimeSec
                 )
             }
+            Section(header: Text("config json")) {
+                NavigationLink(value: Route.saveLoad) {
+                    Text("config import export")
+                }
+            }
             NavigationLink(value: Route.info) {
-                Text("Information")
+                Text("config information")
             }
         }
         .navigationTitle("Configuration")
         .navigation(path: $appEnvironment.configPath)
     }
 }
+
+#if DEBUG
+struct ConfigView_Previews: PreviewProvider {
+    static var previews: some View {
+        ConfigView()
+            .environment(\.locale, .init(identifier: "ja"))
+            .environmentObject(
+                CurrentConfigViewModel.init(
+                    validateInputService: ValidateInputServiceImpl(),
+                    calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
+                )
+            )
+            .environmentObject(AppEnvironment.init())
+    }
+}
+#endif
