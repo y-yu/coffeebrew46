@@ -23,10 +23,10 @@ extension PointerInfoViewModels {
     static var defaultValue =
         fromTuples(
             (90, 0.0, 0.0),
-            (180, 72.0, 55.0),
-            (270, 144.0, 94.0),
-            (360, 216.0, 132.0),
-            (450, 288.0, 171.0)
+            (180, 72.0, 45.0),
+            (270, 144.0, 86.25),
+            (360, 216.0, 127.5),
+            (450, 288.0, 168.75)
         )
     
     static func fromArray(_ arr: Array<(Double, Double, Double)>) -> PointerInfoViewModels {
