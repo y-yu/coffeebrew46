@@ -1,0 +1,26 @@
+"config json" = "JSON";
+"config import export" = "Import & Export";
+
+"config show tips" = "Tipsを表示";
+
+"config weight settings" = "重量設定";
+"config coffee beans weight" = "コーヒー豆の量:";
+"config water ratio" = "コーヒー豆（1）に対する水の質量比";
+"config water ratio tips" = "小さければ濃く、大きければ薄くなる";
+
+"config 4:6 settings" = "4:6設定";
+"config 1st water percent" = "1投目の割合:";
+"config 1st water percent tips" = "大きいと酸味が、小さいと甘みが強調される";
+"config number of partitions of later 6" = "後半6割の分割数";
+"config number of partitions of later 6 tips" = "大きいと濃く、小さいとマイルド";
+
+"config timer setting" = "タイマー設定";
+"config total time" = "抽出全体時間:";
+"config sec unit" = "秒";
+"config steaming time" = "蒸らし（1〜2投目までの）時間:";
+
+"config information" = "情報";
+
+"info license" = "ライセンス";
+"info source code" = "ソースコード";
+"info author" = "作者";

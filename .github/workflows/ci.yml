@@ -28,7 +28,7 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild \
-            -project coffeebrew46.xcodeproj \
+            -project CoffeeBrew46.xcodeproj \
             -scheme coffeebrew46 \
             -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=iPhone 14" \
             -sdk iphonesimulator${{ matrix.ios-version }} test | xcpretty -c
