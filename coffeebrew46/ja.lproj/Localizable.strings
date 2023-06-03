@@ -22,6 +22,17 @@
 "config sec unit" = "秒";
 "config steaming time" = "蒸らし（1〜2投目までの）時間:";
 
+"config save load setting" = "設定のセーブとロード";
+"config select save load index" = "セーブ / ロード対象";
+"config load button" = "ロード";
+"config save button" = "セーブ";
+"config delete button" = "削除";
+"config load success log" = "ロード成功";
+"config load data not found log" = "データがありません";
+"config save success log" = "セーブ成功";
+"config delete success log" = "削除成功";
+
+
 "config information" = "情報";
 
 "info license" = "ライセンス";
