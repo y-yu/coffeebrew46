@@ -15,12 +15,12 @@ struct TipsView: View {
         self.content = content
         self.tips = tips
         
-        self.tooltipConfig.borderColor = .primary.opacity(opacity - 0.3)
+        self.tooltipConfig.borderColor = .primary.opacity(opacity / 2)
         self.tooltipConfig.borderRadius = 10
         self.tooltipConfig.enableAnimation = true
-        self.tooltipConfig.animationOffset = 5
+        self.tooltipConfig.animationOffset = -5
         self.tooltipConfig.animationTime = 5
-        self.tooltipConfig.margin = -30
+        self.tooltipConfig.margin = -25
     }
     
     var body: some View {
@@ -30,8 +30,8 @@ struct TipsView: View {
                 Spacer()
             }
         }
-            .padding(.bottom, showTips ? 18 : 0)
-            .offset(y: showTips ? 25 : 0)
+            .padding(.bottom, showTips ? 30 : 0)
+            .offset(y: showTips ? 35 : 0)
             .tooltip(showTips, side: .top, config: self.tooltipConfig) {
                 tips
                     .font(.system(size: 12).weight(.light))

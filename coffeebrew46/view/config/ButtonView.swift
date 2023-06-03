@@ -14,18 +14,18 @@ extension ButtonType {
     internal func toSystemName() -> String {
         switch self {
         case .minus(_):
-            return "minus.circle"
+            return "minus.circle.fill"
         case .plus(_):
             return "plus.circle"
         }
     }
-    
-    internal func toColor() -> Color {
+
+    internal func toColor() -> (Color, Color) {
         switch self {
         case .minus(_):
-            return .red
+            return (.white, .red)
         case .plus(_):
-            return .blue
+            return (.accentColor, .accentColor)
         }
     }
 }
@@ -37,26 +37,32 @@ struct ButtonView: View {
     @Binding var target: Double
     
     var body: some View {
-        Image(systemName: buttonType.toSystemName())
-            .resizable()
-            .frame(width: 30, height: 30, alignment: .center)
-            .onTapGesture {
-                switch buttonType {
-                case let .minus(min):
-                    if (target > min) {
-                        target -= step
-                    }
-                case let .plus(max):
-                    if (target < max) {
-                        target += step
-                    }
+        Button(action: {
+            switch buttonType {
+            case let .minus(min):
+                if (target > min) {
+                    target -= step
+                }
+            case let .plus(max):
+                if (target < max) {
+                    target += step
                 }
             }
-            .foregroundColor(
-                isDisabled ? .primary.opacity(0.5) : buttonType.toColor()
-            )
-            .disabled(isDisabled)
-            .id(!isDisabled)
+        }) {
+            HStack {
+                Image(systemName: buttonType.toSystemName())
+                    .resizable()
+                    .frame(width: 30, height: 30, alignment: .center)
+                    .foregroundStyle(
+                        isDisabled ? .primary.opacity(0.5) : buttonType.toColor().0,
+                        isDisabled ? .primary.opacity(0.2) : buttonType.toColor().1
+                    )
+
+            }
+        }
+        .buttonStyle(BorderlessButtonStyle())
+        .disabled(isDisabled)
+        .id(!isDisabled)
     }
 }
 
@@ -65,19 +71,37 @@ struct ButtonView_Previews: PreviewProvider {
     @State static var target: Double = 10.0
     
     static var previews: some View {
-        HStack {
-            ButtonView(
-                buttonType: .minus(10),
-                step: 0.1,
-                isDisabled: true,
-                target: $target
-            )
-            ButtonView(
-                buttonType: .plus(100),
-                step: 0.1,
-                isDisabled: false,
-                target: $target
-            )
+        Form {
+            HStack {
+                ButtonView(
+                    buttonType: .minus(10),
+                    step: 0.1,
+                    isDisabled: true,
+                    target: $target
+                )
+                Divider()
+                ButtonView(
+                    buttonType: .plus(100),
+                    step: 0.1,
+                    isDisabled: true,
+                    target: $target
+                )
+            }
+            HStack {
+                ButtonView(
+                    buttonType: .minus(10),
+                    step: 0.1,
+                    isDisabled: false,
+                    target: $target
+                )
+                Divider()
+                ButtonView(
+                    buttonType: .plus(100),
+                    step: 0.1,
+                    isDisabled: false,
+                    target: $target
+                )
+            }
         }
     }
 }
