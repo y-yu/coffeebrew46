@@ -4,7 +4,10 @@
 "config show tips" = "Show tips";
 
 "config weight settings" = "Weight settings";
+"config calculate coffee beans from water" = "Calculate coffee beans weight from water?";
+"config calculate coffee beans from water tips" = "Turn on if you would like to the specific amount of coffee";
 "config coffee beans weight" = "Coffee beans weight:";
+"config water amount" = "Water amount:";
 "config water ratio" = "Water ratio against coffee beans weight";
 "config water ratio tips" = "config water ratio tips";
 
