@@ -5,6 +5,8 @@ struct ConfigView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
     
+    @Environment(\.saveLoadConfigService) private var saveLoadConfigService: SaveLoadConfigService
+    
     @State var showTips: Bool = false
     @State var calculateCoffeeBeansWeightFromWater: Bool = false
     @State var temporaryWaterAmount: Double = 0.0 {
@@ -12,6 +14,8 @@ struct ConfigView: View {
             viewModel.currentConfig.coffeeBeansWeight = temporaryWaterAmount / viewModel.currentConfig.waterToCoffeeBeansWeightRatio
         }
     }
+    @State var currentSaveLoadIndex: Int = 0
+    @State var log: String = ""
     
     private let timerStep: Double = 1.0
     private let coffeeBeansWeightMax = 50.0
@@ -128,6 +132,64 @@ struct ConfigView: View {
                     )
                 }
             }
+            Section(header: Text("config save load setting")) {
+                Picker("config select save load index", selection: $currentSaveLoadIndex) {
+                    ForEach(1...10, id: \.self) { index in
+                        Text("\(index)").tag(index)
+                    }
+                }
+                .fixedSize(horizontal: false, vertical: true)
+                VStack {
+                    Spacer()
+                    HStack {
+                        Button(action: {
+                            loadConfig()
+                        }){
+                            HStack {
+                                Spacer()
+                                Text("config load button")
+                                Spacer()
+                            }
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                        .disabled(appEnvironment.isTimerStarted)
+                        .id(!appEnvironment.isTimerStarted)
+                        
+                        Divider()
+                        
+                        Button(action: {
+                            saveConfig()
+                        }){
+                            HStack {
+                                Spacer()
+                                Text("config save button")
+                                Spacer()
+                            }
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                        
+                        Divider()
+                        
+                        Button(action: {
+                            saveLoadConfigService.delete(key: "\(currentSaveLoadIndex)")
+                            log = NSLocalizedString("config delete success log", comment: "")
+                        }){
+                            HStack {
+                                Spacer()
+                                Text("config delete button")
+                                    .foregroundColor(.red)
+                                Spacer()
+                            }
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+
+                    Divider()
+                    TextEditor(text: $log)
+                }
+            }
+            
             Section(header: Text("config json")) {
                 NavigationLink(value: Route.saveLoad) {
                     Text("config import export")
@@ -184,6 +246,30 @@ struct ConfigView: View {
                 isDisable: appEnvironment.isTimerStarted,
                 target: temporaryWaterAmountBinding
             )
+        }
+    }
+    
+    private func loadConfig() {
+        switch saveLoadConfigService.load(key: String(currentSaveLoadIndex)) {
+        case .success(.some(let config)):
+            log = NSLocalizedString("config load success log", comment: "")
+            viewModel.currentConfig = config
+        case .success(.none):
+            log = NSLocalizedString("config load data not found log", comment: "")
+        case .failure(let errors):
+            log = "\(errors)"
+        }
+    }
+
+    private func saveConfig() {
+        switch saveLoadConfigService.save(
+            config: viewModel.currentConfig,
+            key: String(currentSaveLoadIndex)
+        ) {
+        case .success():
+            log = NSLocalizedString("config save success log", comment: "")
+        case .failure(let errors):
+            log = "\(errors)"
         }
     }
 }

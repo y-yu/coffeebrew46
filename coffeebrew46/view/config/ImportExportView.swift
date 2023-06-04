@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SaveLoadView: View {
+struct ImportExportView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
         
@@ -56,25 +56,21 @@ struct SaveLoadView: View {
     
     private func updateConfig() {
         viewModel.errors = ""
-        let decoder = JSONDecoder()
-        let jsonData = json.data(using: .utf8)!
-        do {
-            try viewModel.currentConfig = decoder.decode(Config.self, from: jsonData)
-        } catch {
-            viewModel.errors = "\(error)"
+        switch Config.fromJSON(json) {
+        case .success(let config):
+            viewModel.currentConfig = config
+        case .failure(let errors):
+            viewModel.errors = "\(errors)"
         }
     }
     
     private func exportJSON() {
         viewModel.errors = ""
-        let encoder = JSONEncoder()
-        if isPrettyPrint {
-            encoder.outputFormatting = .prettyPrinted
-        }
-        do {
-            json = try String(data: encoder.encode(viewModel.currentConfig), encoding: .utf8)!
-        } catch {
-            viewModel.errors = "\(error)"
+        switch viewModel.currentConfig.toJSON(isPrettyPrint: isPrettyPrint) {
+        case .success(let j):
+            json = j
+        case .failure(let errors):
+            viewModel.errors = "\(errors)"
         }
     }
 }
@@ -88,7 +84,7 @@ extension View {
 #if DEBUG
 struct SaveLoadView_Previews: PreviewProvider {
     static var previews: some View {
-        SaveLoadView()
+        ImportExportView()
             .environmentObject(
                 CurrentConfigViewModel.init(
                     validateInputService: ValidateInputServiceImpl(),

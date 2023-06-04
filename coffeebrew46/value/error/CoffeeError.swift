@@ -16,6 +16,10 @@ enum CoffeeError: Error {
     
     case firstWaterPercentIsZeroError
     
+    case loadedConfigIsNotCompatible
+    
+    case jsonError
+    
     func getMessage() -> String {
         switch self {
         case .coffeeBeansWeightUnderZeroError:
@@ -38,6 +42,12 @@ enum CoffeeError: Error {
             
         case .firstWaterPercentIsZeroError:
             return "The first water percent must be more than 0."
+            
+        case .loadedConfigIsNotCompatible:
+            return "The loaded configuration is not compatible."
+            
+        case .jsonError:
+            return "Something error was occurred in json serialize/deserialize."
         }
     }
 }

@@ -22,6 +22,16 @@
 "config sec unit" = "sec";
 "config steaming time" = "Steaming(1st -> 2nd drip) time:";
 
+"config save load setting" = "Save & Load configuration";
+"config select save load index" = "Select save & load target";
+"config load button" = "Load";
+"config save button" = "Save";
+"config delete button" = "Delete";
+"config load success log" = "Load success!";
+"config load data not found log" = "Data is not found.";
+"config save success log" = "Save success!";
+"config delete success log" = "Delete success!";
+
 "config information" = "Information";
 
 "info license" = "License";
