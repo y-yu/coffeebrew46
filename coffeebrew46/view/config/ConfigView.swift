@@ -173,6 +173,8 @@ struct ConfigView: View {
                 Text("config water amount")
                 Text("\(String(format: "%.0f", temporaryWaterAmount))g")
                 Spacer()
+                Text("config coffee beans weight")
+                Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
             }
             ButtonSliderButtonView(
                 maximum: coffeeBeansWeightMax * viewModel.currentConfig.waterToCoffeeBeansWeightRatio,
