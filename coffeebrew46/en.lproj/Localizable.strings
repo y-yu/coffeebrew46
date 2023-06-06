@@ -34,6 +34,7 @@
 
 "config information" = "Information";
 
+"info version" = "Build version";
 "info license" = "License";
 "info source code" = "Source code";
 "info author" = "Author";
