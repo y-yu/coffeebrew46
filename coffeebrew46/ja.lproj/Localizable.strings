@@ -32,9 +32,9 @@
 "config save success log" = "セーブ成功";
 "config delete success log" = "削除成功";
 
-
 "config information" = "情報";
 
+"info version" = "ビルドバージョン";
 "info license" = "ライセンス";
 "info source code" = "ソースコード";
 "info author" = "作者";

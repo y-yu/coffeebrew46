@@ -5,6 +5,9 @@ struct InfoView: View {
     
     var body: some View {
         Form {
+            Section(header: Text("info version")) {
+                Text((Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String)!)
+            }
             Section(header: Text("info license")) {
                 Link("MIT License",
                       destination: URL(string: "https://github.com/y-yu/coffeebrew46/blob/master/LICENSE")!)
