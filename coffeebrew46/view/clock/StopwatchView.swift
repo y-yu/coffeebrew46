@@ -56,7 +56,7 @@ struct StopwatchView: View {
                 }
             }
         }
-        .navigationTitle("Stopwatch")
+        .navigationTitle("navigation title stopwatch")
         .navigation(path: $appEnvironment.stopwatchPath)
         .onChange(of: scenePhase) { phase in
             if phase == .active {

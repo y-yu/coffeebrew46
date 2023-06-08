@@ -9,13 +9,13 @@ struct RootView: View {
             StopwatchView()
                 .tabItem {
                     Image(systemName: "stopwatch")
-                    Text("Stopwatch")
+                    Text("navigation title stopwatch")
                 }
                 .tag(Route.stopwatch)
             ConfigView()
                 .tabItem {
                     Image(systemName: "slider.horizontal.3")
-                    Text("Configuration")
+                    Text("navigation title configuration")
                 }
                 .tag(Route.config)
         }

@@ -20,14 +20,15 @@ final class PointerInfoViewModels: ObservableObject {
 }
 
 extension PointerInfoViewModels {
-    static var defaultValue =
-        fromTuples(
+    static func defaultValue() -> PointerInfoViewModels {
+        return fromTuples(
             (90, 0.0, 0.0),
             (180, 72.0, 45.0),
             (270, 144.0, 86.25),
             (360, 216.0, 127.5),
             (450, 288.0, 168.75)
         )
+    }
     
     static func fromArray(_ arr: Array<(Double, Double, Double)>) -> PointerInfoViewModels {
         PointerInfoViewModels(

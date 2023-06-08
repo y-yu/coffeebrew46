@@ -44,7 +44,7 @@ struct ClockView: View {
             ZStack {
                 GeometryReader { (geometry: GeometryProxy) in
                     ForEach((0..<viewModel.pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
-                        showArcAndPointer(geometry, i)
+                        showPointer(geometry, i)
                     }
                     ArcView(
                         startDegrees: 0.0,
@@ -57,20 +57,12 @@ struct ClockView: View {
         }
     }
     
-    private func showArcAndPointer(_ geometry: GeometryProxy, _ i: Int) -> some View {
+    private func showPointer(_ geometry: GeometryProxy, _ i: Int) -> some View {
         ZStack {
-            ArcView(
-                startDegrees: i - 1 < 0 ? 0.0 :
-                    viewModel.pointerInfoViewModels.pointerInfo[i - 1].degree,
-                endDegrees: viewModel.pointerInfoViewModels.pointerInfo[i].degree,
-                geometry: geometry,
-                fillColor: .clear
-            )
             PointerView(
                 id: i,
                 pointerInfo: viewModel.pointerInfoViewModels.pointerInfo[i],
                 geometry: geometry,
-                value: viewModel.pointerInfoViewModels.pointerInfo[i].value,
                 isOnGoing: viewModel.getNthPhase(progressTime: progressTime) >= i && appEnvironment.isTimerStarted
             )
         }

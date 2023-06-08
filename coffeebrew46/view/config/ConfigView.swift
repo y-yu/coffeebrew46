@@ -14,7 +14,7 @@ struct ConfigView: View {
             viewModel.currentConfig.coffeeBeansWeight = temporaryWaterAmount / viewModel.currentConfig.waterToCoffeeBeansWeightRatio
         }
     }
-    @State var currentSaveLoadIndex: Int = 0
+    @State var currentSaveLoadIndex: Int = 1
     @State var log: String = ""
     
     private let timerStep: Double = 1.0
@@ -199,7 +199,7 @@ struct ConfigView: View {
                 Text("config information")
             }
         }
-        .navigationTitle("Configuration")
+        .navigationTitle("navigation title configuration")
         .navigation(path: $appEnvironment.configPath)
     }
                              

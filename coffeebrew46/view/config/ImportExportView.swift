@@ -51,7 +51,7 @@ struct ImportExportView: View {
                     .hidden(viewModel.errors == "")
             }
         }
-        .navigationTitle("Import & Export")
+        .navigationTitle("config import export")
     }
     
     private func updateConfig() {

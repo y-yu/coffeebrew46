@@ -1,7 +1,7 @@
 /**
  # Interface to calculate boiled water amount service
  
- In the '4:6 method', which is one of the brewing coffee methods, invented by TETSU KASUYA,
+ In the '4:6 method', which is one of the brewing coffee methods, invented by Tetsu Kasuya,
  the boiled water amount for each step must be calculated only the coffee beans weight.
  This interface is a representation of the calculation.
  */
@@ -38,7 +38,7 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
             }()
         )
         let totalWaterAmount = config.totalWaterAmount()
-        let timeSecPerDripExceptFirst: Double = (config.totalTimeSec - config.steamingTimeSec) / Double((waterAmount.sixtyPercent.toArray().count + 1))
+        let timeSecPerDripExceptFirst: Double = (config.totalTimeSec - config.steamingTimeSec) / Double((waterAmount.sixtyPercent.toArray().count + (config.firstWaterPercent < 1 ? 1 : 0)))
         
         let colorAndDegreesArray =
             waterAmount.toArray().enumerated().reduce(

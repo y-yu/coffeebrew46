@@ -33,7 +33,7 @@ struct InfoView: View {
                 }
             }
         }
-        .navigationTitle("Information")
+        .navigationTitle("navigation title information")
     }
 }
 
