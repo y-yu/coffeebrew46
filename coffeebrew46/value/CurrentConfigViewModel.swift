@@ -16,8 +16,7 @@ final class CurrentConfigViewModel: ObservableObject {
     
     @Published var errors: String = ""
     
-    @Published var pointerInfoViewModels: PointerInfoViewModels =
-        PointerInfoViewModels.defaultValue
+    @Published var pointerInfoViewModels: PointerInfoViewModels = PointerInfoViewModels.defaultValue()
     
     // For DI
     private let validateInputService: ValidateInputService

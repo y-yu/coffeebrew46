@@ -9,7 +9,6 @@ struct PointerView: View {
     var id: Int
     var pointerInfo: PointerInfoViewModel
     var geometry: GeometryProxy
-    var value: Double
     var isOnGoing: Bool
     
     private let offset: Double = 10
@@ -17,7 +16,7 @@ struct PointerView: View {
     var body: some View {
         ZStack {
             VStack {
-                Text(String(format: "%.0fg\n(#\(id + 1))", value))
+                Text(String(format: "%.0fg\n(#\(id + 1))", pointerInfo.value))
                     .font(.system(size: 20))
                     .foregroundColor(
                         isOnGoing ? .accentColor : .primary
@@ -59,7 +58,7 @@ struct Pointer: Shape {
 
 #if DEBUG
 struct PointerView_Previews: PreviewProvider {
-    static var pointerInfoViewModels =  PointerInfoViewModels.defaultValue
+    static var pointerInfoViewModels =  PointerInfoViewModels.defaultValue()
 
     static var previews: some View {
         ZStack {
@@ -69,7 +68,6 @@ struct PointerView_Previews: PreviewProvider {
                         id: i,
                         pointerInfo: pointerInfoViewModels.pointerInfo[i],
                         geometry: geometry,
-                        value: pointerInfoViewModels.pointerInfo[i].value,
                         isOnGoing: i == 2
                     )
                 }
