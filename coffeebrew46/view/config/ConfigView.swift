@@ -46,11 +46,14 @@ struct ConfigView: View {
                     )
                     ButtonNumberButtonView(
                         maximum: 20,
-                        minimum: 5,
+                        minimum: 3,
                         step: 1.0,
                         isDisable: appEnvironment.isTimerStarted,
                         target: $viewModel.currentConfig.waterToCoffeeBeansWeightRatio
                     )
+                    .onChange(of: viewModel.currentConfig.waterToCoffeeBeansWeightRatio) { newValue in
+                        temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
+                    }
                 }
             }
             
