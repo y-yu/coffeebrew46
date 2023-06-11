@@ -32,6 +32,19 @@ struct InfoView: View {
                     )
                 }
             }
+            
+            Section(header: Text("info references")) {
+                VStack {
+                    Link(
+                        destination: URL(string: "https://www.amazon.co.jp/dp/4297134039")!,
+                        label: { Text(verbatim: "誰でも簡単！世界一の4：6メソッドでハマる 美味しいコーヒー") }
+                    )
+                    HStack {
+                        Spacer()
+                        Text("info by kasuya tetsu")
+                    }
+                }
+            }
         }
         .navigationTitle("navigation title information")
     }
