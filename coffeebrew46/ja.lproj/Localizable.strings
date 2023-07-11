@@ -12,7 +12,7 @@
 "config calculate coffee beans from water tips" = "飲みたいコーヒーの量が決まっているとき";
 "config coffee beans weight" = "コーヒー豆の量:";
 "config water amount" = "水量:";
-"config water ratio" = "コーヒー豆（1g）に対する水の質量比";
+"config water ratio" = "コーヒー豆1gに対する水の質量比:";
 "config water ratio tips" = "小さければ濃く、大きければ薄くなる";
 
 "config 4:6 settings" = "4:6設定";

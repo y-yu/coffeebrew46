@@ -41,13 +41,18 @@ struct ConfigView: View {
                 VStack {
                     TipsView(
                         showTips,
-                        content: Text("config water ratio"),
+                        content: HStack {
+                            Text("config water ratio")
+                            Text("\(String(format: "%.1f%", viewModel.currentConfig.waterToCoffeeBeansWeightRatio))")
+                            
+                        },
                         tips: Text("config water ratio tips")
                     )
-                    ButtonNumberButtonView(
+                    ButtonSliderButtonView(
                         maximum: 20,
                         minimum: 3,
-                        step: 1.0,
+                        sliderStep: 1,
+                        buttonStep: 0.1,
                         isDisable: appEnvironment.isTimerStarted,
                         target: $viewModel.currentConfig.waterToCoffeeBeansWeightRatio
                     )
