@@ -7,11 +7,10 @@ This is a coffee brewing utility for iOS.
 
 <img width="70%" src="https://github.com/y-yu/coffeebrew46/assets/612043/07d1504c-f2c1-4827-94ae-36030ae9ad12">
 
-<!-- <img width="30%" src="https://github.com/y-yu/coffeebrew46/blob/master/coffeebrew46/appstore.png?raw=true"/> -->
 
-## Demo
+## Demo (YouTube)
 
-https://github.com/y-yu/coffeebrew46/assets/612043/5801e7fe-ef36-4336-9f00-f82eadc3a907.mov
+[<img width="40%" src="https://github.com/y-yu/coffeebrew46/assets/612043/56562df6-6f4e-4910-9c04-854981bca18e">](https://www.youtube.com/watch?v=nVmMoxDqUrc)
 
 ## Contact
 
