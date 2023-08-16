@@ -97,6 +97,7 @@ struct StopwatchView: View {
     
     private func startTimer() {
         if (self.timer == nil) {
+            UIApplication.shared.isIdleTimerDisabled = true
             self.appEnvironment.isTimerStarted = true
             if (self.startTime == nil) {
                 self.startTime = Date()
@@ -122,6 +123,7 @@ struct StopwatchView: View {
         if let t = self.timer {
             t.invalidate()
             self.appEnvironment.isTimerStarted = false
+            UIApplication.shared.isIdleTimerDisabled = false
             progressTime = 0
             self.timer = .none
             self.startTime = .none
