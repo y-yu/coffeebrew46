@@ -27,7 +27,10 @@
 "config steaming time" = "Steaming(1st -> 2nd drip) time:";
 
 "config save load setting" = "Save & Load configuration";
-"config select save load index" = "Select save & load target";
+"config select save load index" = "Target";
+"config empty" = "No data";
+"config note placeholder" = "Something to characterize configuration";
+"config note empty string" = "No note";
 "config load button" = "Load";
 "config save button" = "Save";
 "config delete button" = "Delete";
