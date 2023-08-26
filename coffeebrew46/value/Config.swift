@@ -13,6 +13,8 @@ struct Config: Equatable {
     
     var steamingTimeSec: Double
     
+    var note: String?
+    
     // If the JSON compatibility of `Config` falls then `version` will increment.
     var version: Int
     
@@ -24,6 +26,7 @@ struct Config: Equatable {
         case totalTimeSec
         case steamingTimeSec
         case version
+        case note
     }
     
     init() {
@@ -33,6 +36,7 @@ struct Config: Equatable {
         firstWaterPercent = 0.5
         totalTimeSec = 210
         steamingTimeSec = 45
+        note = .some("")
         version = Config.currentVersion
     }
 }
@@ -85,6 +89,7 @@ extension Config: Decodable {
         firstWaterPercent = try values.decode(Double.self, forKey: .firstWaterPercent)
         totalTimeSec = try Double(values.decode(Int.self, forKey: .totalTimeSec))
         steamingTimeSec = try Double(values.decode(Int.self, forKey: .steamingTimeSec))
+        note = try values.decodeIfPresent(String.self, forKey: .note)
         version = try values.decode(Int.self, forKey: .version)
     }
 }
@@ -98,6 +103,7 @@ extension Config: Encodable {
         try container.encode(firstWaterPercent, forKey: .firstWaterPercent)
         try container.encode(totalTimeSec, forKey: .totalTimeSec)
         try container.encode(steamingTimeSec, forKey: .steamingTimeSec)
+        try container.encodeIfPresent(note, forKey: .note)
         try container.encode(version, forKey: .version)
     }
 }
@@ -109,5 +115,6 @@ func ==(lhs: Config, rhs: Config) -> Bool {
     lhs.steamingTimeSec == rhs.steamingTimeSec &&
     lhs.totalTimeSec == rhs.totalTimeSec &&
     lhs.waterToCoffeeBeansWeightRatio == rhs.waterToCoffeeBeansWeightRatio &&
+    lhs.note == rhs.note &&
     lhs.version == rhs.version
 }

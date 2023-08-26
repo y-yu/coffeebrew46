@@ -14,8 +14,15 @@ struct ConfigView: View {
             viewModel.currentConfig.coffeeBeansWeight = temporaryWaterAmount / viewModel.currentConfig.waterToCoffeeBeansWeightRatio
         }
     }
-    @State var currentSaveLoadIndex: Int = 1
+    @State var currentSaveLoadIndex: Int = 0
     @State var log: String = ""
+    
+    // The elements of `savedConfigNote` indicates these 3 semantics of saved configuration:
+    //   1. If the element is `.none`, it means the data is empty (not saved yet)
+    //   2. If the element is `.some("")`, it means the data is saved and `note` of the data is empty string
+    //   3. If the element is `.some("hoge")`, it means the data is saved and `note` of the data is not empty
+    @State var savedConfigNote: Array<String?> =
+        [.none, .none, .none, .none, .none, .none, .none, .none, .none, .none, .none]
     
     private let timerStep: Double = 1.0
     private let coffeeBeansWeightMax = 50.0
@@ -140,13 +147,50 @@ struct ConfigView: View {
                     )
                 }
             }
+            
             Section(header: Text("config save load setting")) {
                 Picker("config select save load index", selection: $currentSaveLoadIndex) {
-                    ForEach(1...10, id: \.self) { index in
-                        Text("\(index)").tag(index)
+                    ForEach(Array(zip(savedConfigNote.indices, savedConfigNote)), id: \.0) { index, noteOpt in
+                        if let note = noteOpt {
+                            if note.isEmpty {
+                                Text("\(index): " + NSLocalizedString("config note empty string", comment: ""))
+                            } else {
+                                Text("\(index): \(note)")
+                            }
+                        } else {
+                            Text("\(index): " + NSLocalizedString("config empty", comment: ""))
+                        }
                     }
                 }
+                .onAppear {
+                    updateSavedConfigNote()
+                }
                 .fixedSize(horizontal: false, vertical: true)
+                
+                HStack {
+                    let noteBinding: Binding<String> =
+                        Binding(
+                            get: {
+                                if let note = viewModel.currentConfig.note {
+                                    return note
+                                } else {
+                                    return ""
+                                }
+                            },
+                            set: {
+                                let newValue: String = $0
+                                if newValue.isEmpty {
+                                    viewModel.currentConfig.note = .none
+                                } else {
+                                    viewModel.currentConfig.note = .some(newValue)
+                                }
+                            }
+                        )
+                    TextField("config note placeholder", text: noteBinding)
+                        .textInputAutocapitalization(.never)
+                        .submitLabel(.done)
+                }
+                
                 VStack {
                     Spacer()
                     HStack {
@@ -167,6 +211,8 @@ struct ConfigView: View {
                         
                         Button(action: {
                             saveConfig()
+                            // In order to update save & load target picker label.
+                            updateSavedConfigNote()
                         }){
                             HStack {
                                 Spacer()
@@ -181,6 +227,8 @@ struct ConfigView: View {
                         Button(action: {
                             saveLoadConfigService.delete(key: "\(currentSaveLoadIndex)")
                             log = NSLocalizedString("config delete success log", comment: "")
+                            // In order to update save & load target picker label.
+                            updateSavedConfigNote()
                         }){
                             HStack {
                                 Spacer()
@@ -195,6 +243,8 @@ struct ConfigView: View {
 
                     Divider()
                     TextEditor(text: $log)
+                        .font(.system(size: 12, design: .monospaced).weight(.light))
+                        .foregroundColor(.primary.opacity(0.5))
                 }
             }
             
@@ -254,6 +304,27 @@ struct ConfigView: View {
                 isDisable: appEnvironment.isTimerStarted,
                 target: temporaryWaterAmountBinding
             )
+        }
+    }
+    
+    private func updateSavedConfigNote() {
+        for i in 0..<savedConfigNote.count {
+            switch saveLoadConfigService.load(key: String(i)) {
+            case .success(.some(let config)):
+                if let note = config.note {
+                    savedConfigNote[i] = .some(note)
+                } else {
+                    // If the loaded data was created by old app which has no feature to save note,
+                    // `config.note` is `.none` but `.none` indicates that the data is not found indexed of `i`
+                    // on the semantics of `savedConfigNote` so since `saveLoadConfigService.load` success to load data
+                    // we have to assign an empty string to `savedConfigNote[i]`.
+                    savedConfigNote[i] = .some("")
+                }
+            case .success(.none):
+                savedConfigNote[i] = .none
+            case .failure(let errors):
+                log = "\(errors)"
+            }
         }
     }
     

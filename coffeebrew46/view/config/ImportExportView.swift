@@ -10,7 +10,7 @@ struct ImportExportView: View {
     var body: some View {
         Form {
             Toggle("JSON pretty printing", isOn: $isPrettyPrint)
-            Section(header: Text("JSON")) {
+            Section {
                 HStack {
                     Spacer()
                     Button(action: {
@@ -41,7 +41,7 @@ struct ImportExportView: View {
                     Spacer()
                 }
             }
-            Section(header: Text("Output")) {
+            Section(header: Text("JSON")) {
                 TextEditor(text: $json)
                     .frame(maxHeight: .infinity)
             }
