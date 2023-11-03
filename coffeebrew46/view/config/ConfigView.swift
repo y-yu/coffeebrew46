@@ -6,6 +6,8 @@ struct ConfigView: View {
     @EnvironmentObject var viewModel: CurrentConfigViewModel
     
     @Environment(\.saveLoadConfigService) private var saveLoadConfigService: SaveLoadConfigService
+
+    @Environment(\.scenePhase) private var scenePhase
     
     @State var showTips: Bool = false
     @State var calculateCoffeeBeansWeightFromWater: Bool = false
@@ -28,6 +30,8 @@ struct ConfigView: View {
     private let coffeeBeansWeightMax = 50.0
     private let coffeeBeansWeightMin = 1.0
     
+    private let temporaryCurrentConfigKey = "temporaryCurrentConfig"
+
     var body: some View {
         Form {
             Toggle("config show tips", isOn: $showTips)
@@ -259,6 +263,38 @@ struct ConfigView: View {
         }
         .navigationTitle("navigation title configuration")
         .navigation(path: $appEnvironment.configPath)
+        .onChange(of: scenePhase) { phase in
+            switch phase {
+            case .background:
+                ()
+            case .inactive:
+                switch scenePhase {
+                case .active:
+                    let _ = saveLoadConfigService.save(
+                        config: viewModel.currentConfig,
+                        key: temporaryCurrentConfigKey
+                    )
+                case .background:
+                    ()
+                default:
+                    ()
+                }
+            case .active:
+                switch saveLoadConfigService.load(
+                    key: temporaryCurrentConfigKey
+                ) {
+                case .success(.some(let config)):
+                    viewModel.currentConfig = config
+                case .success(.none):
+                    ()
+                case .failure(_):
+                    // Nice catch!
+                    ()
+                }
+            @unknown default:
+                ()
+            }
+        }
     }
                              
     private var coffeeBeansWeightSettingView: some View {
