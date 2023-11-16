@@ -67,31 +67,43 @@ struct StopwatchView: View {
     
     private var timerController: some View {
         HStack(alignment: .firstTextBaseline) {
-            Button(action: { startTimer() }) {
-                Text("Start")
-                    .font(.system(size: 20))
-                    .padding()
-                    .background(buttonBackground)
-            }
             Spacer()
             Text("\(String(format: "%.1f", progressTime))")
                 .font(Font(UIFont.monospacedSystemFont(ofSize: 38, weight: .light)))
                 .fixedSize()
-                .frame(width: 100, height: 40)
+                .frame(width: 100, height: 40, alignment: .bottom)
                 .foregroundColor(
                     progressTime < viewModel.currentConfig.totalTimeSec ? .primary : .red
                 )
             Text("/ ")
             Text(String(format: "%.0f", viewModel.currentConfig.totalTimeSec))
                 .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .light)))
+                .frame(alignment: .bottom)
             Text(" sec")
+                .frame(alignment: .bottom)
             Spacer()
-            Button(action: { stopTimer() }) {
-                Text("Stop")
-                    .font(.system(size: 20))
-                    .padding()
-                    .background(buttonBackground)
+            if (self.timer == nil) {
+                Button(action: { startTimer() }) {
+                    Text("Start")
+                        .font(.system(size: 20))
+                        .frame(width: 100)
+                        .padding()
+                        .background(buttonBackground)
+                }
+                .frame(width: 100, alignment: .bottom)
+                .foregroundColor(.green)
+            } else {
+                Button(action: { stopTimer() }) {
+                    Text("Stop")
+                        .font(.system(size: 20))
+                        .frame(width: 100)
+                        .padding()
+                        .background(buttonBackground)
+                }
+                .frame(width: 100, alignment: .bottom)
+                .foregroundColor(.red)
             }
+            Spacer()
         }
     }
     

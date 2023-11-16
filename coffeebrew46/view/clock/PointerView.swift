@@ -16,7 +16,7 @@ struct PointerView: View {
     var body: some View {
         ZStack {
             VStack {
-                Text(String(format: "%.0fg\n(#\(id + 1))", pointerInfo.value))
+                Text(String(format: "%.1fg\n(#\(id + 1))", pointerInfo.value))
                     .font(.system(size: 20))
                     .foregroundColor(
                         isOnGoing ? .accentColor : .primary
