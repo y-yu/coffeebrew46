@@ -31,7 +31,7 @@ struct ClockView: View {
             }
             .frame(minWidth: appEnvironment.minWidth)
             GeometryReader { (geometry: GeometryProxy) in
-                mainClockView.frame(maxHeight: geometry.size.width * 0.98)
+                mainClockView.frame(maxHeight: geometry.size.width * 0.9)
             }
         }
     }
@@ -47,10 +47,10 @@ struct ClockView: View {
                         showPointer(geometry, i)
                     }
                     ArcView(
+                        progressTime: $progressTime,
                         startDegrees: 0.0,
                         endDegrees: viewModel.toDegree(progressTime),
-                        geometry: geometry,
-                        fillColor: .accentColor.opacity(0.3)
+                        geometry: geometry
                     )
                 }
             }
@@ -79,11 +79,11 @@ struct ClockView: View {
                 .font(.system(size: 10).weight(.light))
                 .fixedSize()
                 .frame(width: 20)
-                .foregroundColor(!appEnvironment.isTimerStarted || angle > viewModel.toDegree(progressTime) ? .primary.opacity(0.7) : .accentColor)
+                .foregroundColor(!appEnvironment.isTimerStarted || angle > viewModel.toDegree(progressTime) ? .primary.opacity(0.4) : .accentColor)
             Rectangle()
                 .fill(Color.primary)
-                .opacity(isMark ? 0.4 : 0.2)
-                .frame(width: 1, height: isMark ? 40 : 20)
+                .opacity(isMark ? 0.5 : 0.3)
+                .frame(width: 1, height: isMark ? 40 : 40)
             Spacer()
         }
         .rotationEffect(

@@ -2,10 +2,11 @@ import SwiftUI
 
 
 struct ArcView: View {
+    @Binding var progressTime: Double
+    
     var startDegrees: Double
     var endDegrees: Double
     var geometry: GeometryProxy
-    var fillColor: Color
     var scale: Double = 0.8
     
     var body: some View {
@@ -15,8 +16,20 @@ struct ArcView: View {
             geometry: geometry,
             scale: scale
         )
-        .fill(fillColor)
+        .fill(Gradient(stops: [
+            .init(color: .blue.opacity(0.1), location: 0.0),
+            .init(color: .blue.opacity(0.5), location: fillColorLocation())
+        ]))
         .rotationEffect(Angle.degrees(-90.0), anchor: .center)
+    }
+    
+    private func fillColorLocation() -> Double {
+        let value = Double(Int(progressTime) % 10) * 0.1 + ((progressTime - floor(progressTime)) * 0.1)
+        if ((Int(progressTime) / 10) % 2 != 0) {
+            return value
+        } else {
+            return 1.0 - value
+        }
     }
 }
 
@@ -46,13 +59,16 @@ struct Arc: Shape {
 }
 
 struct ArcView_Previews: PreviewProvider {
+    @State static var progressTime: Double = 55
+
+    
     static var previews: some View {
         GeometryReader { geometry in
             ArcView(
+                progressTime: $progressTime,
                 startDegrees: 0.0,
                 endDegrees: 300.0,
                 geometry: geometry,
-                fillColor: .accentColor.opacity(0.3),
                 scale: 0.7
             )
         }
