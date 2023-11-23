@@ -21,12 +21,15 @@ struct StopwatchView: View {
     var body: some View {
         ViewThatFits(in: .horizontal) {
             HStack {
-                GeometryReader { (geometry: GeometryProxy) in
-                    ClockView(
-                        progressTime: $progressTime,
-                        steamingTime: viewModel.currentConfig.steamingTimeSec,
-                        totalTime: viewModel.currentConfig.totalTimeSec
-                    )
+                ZStack {
+                    stopWatchCountShow
+                    GeometryReader { (geometry: GeometryProxy) in
+                        ClockView(
+                            progressTime: $progressTime,
+                            steamingTime: viewModel.currentConfig.steamingTimeSec,
+                            totalTime: viewModel.currentConfig.totalTimeSec
+                        )
+                    }
                 }
                 GeometryReader { (geometry: GeometryProxy) in
                     VStack {
@@ -42,12 +45,15 @@ struct StopwatchView: View {
             GeometryReader { (geometry: GeometryProxy) in
                 VStack {
                     Group {
-                        ClockView(
-                            progressTime: $progressTime,
-                            steamingTime: viewModel.currentConfig.steamingTimeSec,
-                            totalTime: viewModel.currentConfig.totalTimeSec
-                        )
-                        .frame(height: geometry.size.width * 0.95)
+                        ZStack(alignment: .center) {
+                            stopWatchCountShow
+                            ClockView(
+                                progressTime: $progressTime,
+                                steamingTime: viewModel.currentConfig.steamingTimeSec,
+                                totalTime: viewModel.currentConfig.totalTimeSec
+                            )
+                            .frame(height: geometry.size.width * 0.95)
+                        }
                     }
                     Divider()
                     PhaseListView(progressTime: $progressTime)
@@ -65,45 +71,69 @@ struct StopwatchView: View {
         }
     }
     
-    private var timerController: some View {
-        HStack(alignment: .firstTextBaseline) {
+    private var stopWatchCountShow: some View {
+        VStack(alignment: .center) {
             Spacer()
-            Text("\(String(format: "%.1f", progressTime))")
-                .font(Font(UIFont.monospacedSystemFont(ofSize: 38, weight: .light)))
-                .fixedSize()
-                .frame(width: 100, height: 40, alignment: .bottom)
-                .foregroundColor(
-                    progressTime < viewModel.currentConfig.totalTimeSec ? .primary : .red
-                )
-            Text("/ ")
-            Text(String(format: "%.0f", viewModel.currentConfig.totalTimeSec))
+            Spacer()
+            Spacer()
+            Spacer()
+            Spacer()
+            HStack(alignment: .center) {
+                Spacer()
+                Spacer()
+                Spacer()
+                Text(String(format: "%03d", Int(floor(progressTime))))
+                    .font(Font(UIFont.monospacedSystemFont(ofSize: 38, weight: .light)))
+                    .fixedSize()
+                    .foregroundColor(
+                        progressTime < viewModel.currentConfig.totalTimeSec ? .primary : .red
+                    )
+                Spacer()
+                // To show the decimal part of `progressTime`
+                Text(String(format: "%02d", Int((progressTime - floor(progressTime)) * 100)))
+                    .font(Font(UIFont.monospacedSystemFont(ofSize: 38, weight: .light)))
+                    .fixedSize()
+                    .foregroundColor(
+                        progressTime < viewModel.currentConfig.totalTimeSec ? .primary : .red
+                    )
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+            }
+            Text(String(format: "/ %3.0f sec", viewModel.currentConfig.totalTimeSec))
                 .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .light)))
                 .frame(alignment: .bottom)
-            Text(" sec")
-                .frame(alignment: .bottom)
             Spacer()
+            Spacer()
+            Spacer()
+            Spacer()
+            Spacer()
+            Spacer()
+        }
+    }
+    
+    private var timerController: some View {
+        VStack {
             if (self.timer == nil) {
                 Button(action: { startTimer() }) {
                     Text("Start")
                         .font(.system(size: 20))
-                        .frame(width: 100)
+                        .frame(maxWidth: .infinity)
                         .padding()
                         .background(buttonBackground)
                 }
-                .frame(width: 100, alignment: .bottom)
                 .foregroundColor(.green)
             } else {
                 Button(action: { stopTimer() }) {
                     Text("Stop")
                         .font(.system(size: 20))
-                        .frame(width: 100)
+                        .frame(maxWidth: .infinity)
                         .padding()
                         .background(buttonBackground)
                 }
-                .frame(width: 100, alignment: .bottom)
                 .foregroundColor(.red)
             }
-            Spacer()
         }
     }
     
@@ -114,7 +144,7 @@ struct StopwatchView: View {
             if (self.startTime == nil) {
                 self.startTime = Date()
             }
-            self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            self.timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
                 if let time = startTime {
                     let now = Date()
                     progressTime = now.timeIntervalSince(time)

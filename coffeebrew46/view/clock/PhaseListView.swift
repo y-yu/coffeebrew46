@@ -11,7 +11,6 @@ struct PhaseListView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
     @Binding var progressTime: Double
-    @State private var selection: Int?
     
     var body: some View {
         let phaseList = viewModel.pointerInfoViewModels.pointerInfo.enumerated().map { infoWithIndex in
@@ -37,16 +36,29 @@ struct PhaseListView: View {
                         let waterAmount = "\(String(format: "%.1f", phase.waterAmount))g"
                         GridRow {
                             fontConfig(Text("\(phase.index + 1)"), phase: phase)
-                            fontConfig(
-                                Text(
-                                    doneOnGoingScheduled(
-                                        phase.index,
-                                        done: "Done: \(waterAmount)",
-                                        onGoing: "Dripping: \(waterAmount)",
-                                        scheduled: "Scheduled: \(waterAmount)"
-                                    )
-                                ),
-                                phase: phase
+                            doneOnGoingScheduled(
+                                phase.index,
+                                done: AnyView(HStack {
+                                    Image(systemName: "hourglass.tophalf.filled")
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundColor(.primary)
+                                    fontConfig(Text("\(waterAmount)"), phase: phase)
+                                }),
+                                onGoing: AnyView(HStack {
+                                    Image(systemName: "hourglass")
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundColor(.blue)
+                                    fontConfig(Text("\(waterAmount)"), phase: phase)
+                                }),
+                                scheduled: AnyView(HStack {
+                                    Image(systemName: "hourglass.bottomhalf.filled")
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundColor(.primary)
+                                    fontConfig(Text("\(waterAmount)"), phase: phase)
+                                })
                             )
                             timingView(phase: phase)
                         }
@@ -128,7 +140,7 @@ struct PhaseListView_Preview: PreviewProvider {
         validateInputService: ValidateInputServiceImpl(),
         calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
     )
-    @State static var progressTime: Double = 55
+    @State static var progressTime: Double = 90
     
     static var previews: some View {
         PhaseListView(progressTime: $progressTime)

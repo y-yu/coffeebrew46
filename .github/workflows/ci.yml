@@ -9,8 +9,9 @@ jobs:
     runs-on: macos-13
     strategy:
       matrix:
-        xcode-version: [ 14.3 ]
-        ios-version: [ 16.4 ]
+        xcode-version: [ '15.0.1' ]
+        ios-version: [ '17.0.1' ]
+        sdk-version: [ '17.0' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -43,5 +44,5 @@ jobs:
           xcodebuild \
             -project CoffeeBrew46.xcodeproj \
             -scheme coffeebrew46 \
-            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=iPhone 14" \
-            -sdk iphonesimulator${{ matrix.ios-version }} test | xcpretty -c
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=iPhone 15" \
+            -sdk iphonesimulator${{ matrix.sdk-version }} test | xcpretty -c

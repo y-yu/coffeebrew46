@@ -16,8 +16,8 @@ struct PointerView: View {
     var body: some View {
         ZStack {
             VStack {
-                Text(String(format: "%.1fg\n(#\(id + 1))", pointerInfo.value))
-                    .font(.system(size: 20))
+                Text(String(format: "%.1fg", pointerInfo.value))
+                    .font(.system(size: 18))
                     .foregroundColor(
                         isOnGoing ? .accentColor : .primary
                     )
@@ -30,15 +30,15 @@ struct PointerView: View {
                 Spacer()
                 Pointer(offset: offset)
                     .stroke(lineWidth: 1)
+                    .opacity(0.5)
                     .foregroundColor(
                         isOnGoing ? .accentColor : .primary
                     )
-                
             }
             .rotationEffect(
                 Angle.degrees(self.pointerInfo.degree)
             )
-            CenterCircle().fill(.primary)
+            CenterCircle()
         }
     }
 }
@@ -51,13 +51,14 @@ struct Pointer: Shape {
     func path(in rect: CGRect) -> Path {
         return Path { p in
             p.move(to: CGPoint(x: rect.midX, y: rect.minY - (offset * 1.5)))
-            p.addLine(to: CGPoint(x: rect.midX, y: rect.midY - circleRadius - 25))
+            p.addLine(to: CGPoint(x: rect.midX, y: rect.midY - circleRadius - 95))
         }
     }
 }
 
 #if DEBUG
 struct PointerView_Previews: PreviewProvider {
+    @State static var progressTime: Double = 12.34
     static var pointerInfoViewModels =  PointerInfoViewModels.defaultValue()
 
     static var previews: some View {
@@ -73,7 +74,7 @@ struct PointerView_Previews: PreviewProvider {
                 }
             }
         }
-        .frame(width: 300, height: 300)
+        .frame(width: 300, height: 350)
     }
 }
 #endif
