@@ -16,10 +16,16 @@ struct ArcView: View {
             geometry: geometry,
             scale: scale
         )
-        .fill(Gradient(stops: [
-            .init(color: .blue.opacity(0.1), location: 0.0),
-            .init(color: .blue.opacity(0.5), location: fillColorLocation())
-        ]))
+        .fill(
+            LinearGradient(
+                gradient: Gradient(stops: [
+                    .init(color: .blue.opacity(0.1), location: 0.0),
+                    .init(color: .blue.opacity(0.5), location: fillColorLocation())
+                ]),
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        )
         .rotationEffect(Angle.degrees(-90.0), anchor: .center)
     }
     
