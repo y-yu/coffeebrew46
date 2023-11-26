@@ -22,7 +22,6 @@ struct StopwatchView: View {
         ViewThatFits(in: .horizontal) {
             HStack {
                 ZStack {
-                    stopWatchCountShow
                     GeometryReader { (geometry: GeometryProxy) in
                         ClockView(
                             progressTime: $progressTime,
@@ -30,6 +29,7 @@ struct StopwatchView: View {
                             totalTime: viewModel.currentConfig.totalTimeSec
                         )
                     }
+                    stopWatchCountShow
                 }
                 GeometryReader { (geometry: GeometryProxy) in
                     VStack {
@@ -46,13 +46,13 @@ struct StopwatchView: View {
                 VStack {
                     Group {
                         ZStack(alignment: .center) {
-                            stopWatchCountShow
                             ClockView(
                                 progressTime: $progressTime,
                                 steamingTime: viewModel.currentConfig.steamingTimeSec,
                                 totalTime: viewModel.currentConfig.totalTimeSec
                             )
                             .frame(height: geometry.size.width * 0.95)
+                            stopWatchCountShow
                         }
                     }
                     Divider()
