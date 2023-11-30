@@ -1,4 +1,5 @@
 import SwiftUI
+import AudioToolbox
 
 struct StopwatchView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
@@ -12,6 +13,9 @@ struct StopwatchView: View {
     }
     @State private var progressTime: Double = 0
     @State private var timer: Timer?
+    @State private var hasRingingIndex: Int = 0
+    
+    private let soundIdRing = SystemSoundID(1013)
 
     private let buttonBackground: some View =
         RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -148,6 +152,7 @@ struct StopwatchView: View {
                 if let time = startTime {
                     let now = Date()
                     progressTime = now.timeIntervalSince(time)
+                    ringSound()
                 }
             }
         }
@@ -169,6 +174,7 @@ struct StopwatchView: View {
             progressTime = 0
             self.timer = .none
             self.startTime = .none
+            hasRingingIndex = 0
         }
     }
     
@@ -181,6 +187,15 @@ struct StopwatchView: View {
 
     private func fetchStartTime() -> Date? {
          UserDefaults.standard.object(forKey: "startTime") as? Date
+    }
+    
+    private func ringSound() {
+        let nth = viewModel.getNthPhase(progressTime: progressTime)
+        
+        if (nth > hasRingingIndex) {
+            AudioServicesPlaySystemSound(soundIdRing)
+            hasRingingIndex = nth
+        }
     }
 }
 
