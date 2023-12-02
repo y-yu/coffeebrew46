@@ -78,7 +78,7 @@ struct PhaseListView: View {
     ) -> A {
         let phase = viewModel.getNthPhase(progressTime: progressTime)
         
-        if (phase == i && appEnvironment.isTimerStarted) {
+        if (phase == i && appEnvironment.isTimerStarted && progressTime > 0) {
             return onGoing
         } else if (phase > i) {
             return done
