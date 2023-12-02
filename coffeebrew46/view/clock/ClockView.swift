@@ -48,12 +48,19 @@ struct ClockView: View {
                     }
                     ArcView(
                         progressTime: $progressTime,
-                        startDegrees: 0.0,
-                        endDegrees: viewModel.toDegree(progressTime),
-                        geometry: geometry
+                        endDegrees: endDegree(),
+                        size: geometry.size
                     )
                 }
             }
+        }
+    }
+    
+    private func endDegree() -> Double {
+        if (progressTime < 0) {
+            return (progressTime - floor(progressTime)) * 365
+        } else {
+            return viewModel.toDegree(progressTime)
         }
     }
     

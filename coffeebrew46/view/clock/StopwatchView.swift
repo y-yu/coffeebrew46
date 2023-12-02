@@ -11,7 +11,7 @@ struct StopwatchView: View {
             saveStartTime()
         }
     }
-    @State private var progressTime: Double = 0
+    @State private var progressTime: Double = -3
     @State private var timer: Timer?
     @State private var hasRingingIndex: Int = 0
     
@@ -145,14 +145,18 @@ struct StopwatchView: View {
         if (self.timer == nil) {
             UIApplication.shared.isIdleTimerDisabled = true
             self.appEnvironment.isTimerStarted = true
-            if (self.startTime == nil) {
-                self.startTime = Date()
-            }
+            
             self.timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
-                if let time = startTime {
-                    let now = Date()
-                    progressTime = now.timeIntervalSince(time)
-                    ringSound()
+                if (self.startTime == nil && progressTime >= -0.01 && progressTime <= 0.01) {
+                    self.startTime = Date()
+                } else if (progressTime < 0) {
+                    progressTime += 0.01
+                } else {
+                    if let time = startTime {
+                        let now = Date()
+                        progressTime = now.timeIntervalSince(time)
+                        ringSound()
+                    }
                 }
             }
         }
@@ -171,7 +175,7 @@ struct StopwatchView: View {
             t.invalidate()
             self.appEnvironment.isTimerStarted = false
             UIApplication.shared.isIdleTimerDisabled = false
-            progressTime = 0
+            progressTime = -3
             self.timer = .none
             self.startTime = .none
             hasRingingIndex = 0

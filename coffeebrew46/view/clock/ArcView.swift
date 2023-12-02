@@ -4,20 +4,22 @@ import SwiftUI
 struct ArcView: View {
     @Binding var progressTime: Double
     
-    var startDegrees: Double
     var endDegrees: Double
-    var geometry: GeometryProxy
+    var size: CGSize
     var scale: Double = 0.8
     
-    var body: some View {
-        Arc(
-            startDegrees: startDegrees,
-            endDegrees: endDegrees,
-            geometry: geometry,
-            scale: scale
-        )
-        .fill(
-            LinearGradient(
+    
+    private func stopwatchGradient() -> LinearGradient {
+        if (progressTime < 0) {
+            return LinearGradient(
+                gradient: Gradient(stops: [
+                    .init(color: .green.opacity(0.5), location: 0.0)
+                ]),
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        } else {
+            return LinearGradient(
                 gradient: Gradient(stops: [
                     .init(color: .blue.opacity(0.1), location: 0.0),
                     .init(color: .blue.opacity(0.5), location: fillColorLocation())
@@ -25,7 +27,17 @@ struct ArcView: View {
                 startPoint: .leading,
                 endPoint: .trailing
             )
+        }
+    }
+    
+    var body: some View {
+        Arc(
+            startDegrees: 0.0,
+            endDegrees: endDegrees,
+            size: size,
+            scale: scale
         )
+        .fill(stopwatchGradient())
         .rotationEffect(Angle.degrees(-90.0), anchor: .center)
     }
     
@@ -42,13 +54,13 @@ struct ArcView: View {
 struct Arc: Shape {
     var startDegrees: Double
     var endDegrees: Double
-    var geometry: GeometryProxy
+    var size: CGSize
     var scale: Double
     
     func path(in rect: CGRect) -> Path {
-        let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
+        let center = CGPoint(x: size.width / 2, y: size.height / 2)
         let radius =
-            (geometry.size.width < geometry.size.height ? geometry.size.width : geometry.size.height) / 2 * CGFloat(self.scale)
+            (size.width < size.height ? size.width : size.height) / 2 * CGFloat(self.scale)
         
         
         return Path { p in
@@ -72,9 +84,8 @@ struct ArcView_Previews: PreviewProvider {
         GeometryReader { geometry in
             ArcView(
                 progressTime: $progressTime,
-                startDegrees: 0.0,
                 endDegrees: 300.0,
-                geometry: geometry,
+                size: geometry.size,
                 scale: 0.7
             )
         }
