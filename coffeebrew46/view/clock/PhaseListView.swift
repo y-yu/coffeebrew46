@@ -99,7 +99,7 @@ struct PhaseListView: View {
     private func timingView(phase: Phase) -> AnyView {
         let nth = viewModel.getNthPhase(progressTime: progressTime)
         
-        if (nth == phase.index && appEnvironment.isTimerStarted) {
+        if (nth == phase.index && progressTime >= 0 && appEnvironment.isTimerStarted) {
             // in case on going
             return AnyView(
                 Image(systemName: "drop.fill")
@@ -107,7 +107,7 @@ struct PhaseListView: View {
                     .frame(width: 24, height: 24)
                     .foregroundColor(.blue)
             )
-        } else if (nth + 1 == phase.index && appEnvironment.isTimerStarted) {
+        } else if (nth + 1 == phase.index && progressTime >= 0 && appEnvironment.isTimerStarted) {
             // in case next
             return AnyView(
                 Text(String(format: "%.1f", progressTime - phase.dripAt))

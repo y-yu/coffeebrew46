@@ -43,7 +43,9 @@ final class CurrentConfigViewModel: ObservableObject {
 extension CurrentConfigViewModel {
     // TODO: This logic should be injected as dependency!
     func toDegree(_ progressTime: Double) -> Double {
-        if (progressTime > currentConfig.totalTimeSec) {
+        if (progressTime < 0) {
+            return 0
+        } else if (progressTime > currentConfig.totalTimeSec) {
             return 360
         } else if (progressTime <= currentConfig.steamingTimeSec) {
             // In this case, at 1st shot.
@@ -86,6 +88,10 @@ extension CurrentConfigViewModel {
     }
     
     func getNthPhase(progressTime: Double) -> Int {
+        if (progressTime < 0) {
+            return 0
+        }
+        
         if let nth = pointerInfoViewModels.pointerInfo.firstIndex(where: { e in
             e.dripAt > progressTime
         }) {
