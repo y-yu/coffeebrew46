@@ -2,6 +2,11 @@
 "navigation title information" = "Information";
 "navigation title stopwatch" = "Stopwatch";
 
+"stop alert title" = "Notice";
+"stop alert message" = "Do you want to stop counting?";
+"stop alert cancel" = "Cancel";
+"stop alert stop" = "Stop";
+
 "config json" = "JSON";
 "config import export" = "Import & Export";
 

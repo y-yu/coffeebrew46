@@ -14,6 +14,7 @@ struct StopwatchView: View {
     @State private var progressTime: Double = -3
     @State private var timer: Timer?
     @State private var hasRingingIndex: Int = 0
+    @State private var isStop︎AlertPresented: Bool = false
     
     private let soundIdRing = SystemSoundID(1013)
 
@@ -118,7 +119,13 @@ struct StopwatchView: View {
     }
     
     private var timerController: some View {
-        VStack {
+        let stopButtonText = Text("Stop")
+            .font(.system(size: 20))
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(buttonBackground)
+
+        return VStack {
             if (self.timer == nil) {
                 Button(action: { startTimer() }) {
                     Text("Start")
@@ -128,13 +135,27 @@ struct StopwatchView: View {
                         .background(buttonBackground)
                 }
                 .foregroundColor(.green)
+            } else if (progressTime <= viewModel.currentConfig.totalTimeSec) {
+                Button(action: { isStop︎AlertPresented.toggle() }) {
+                    stopButtonText
+                }
+                .foregroundColor(.red)
+                .alert("stop alert title", isPresented: $isStop︎AlertPresented) {
+                    Button(role: .cancel, action: { isStop︎AlertPresented.toggle() } ) {
+                        Text("stop alert cancel")
+                    }
+                    Button(role: .destructive, action: {
+                        isStop︎AlertPresented.toggle()
+                        stopTimer()
+                    }) {
+                        Text("stop alert stop")
+                    }
+                } message: {
+                    Text("stop alert message")
+                }
             } else {
                 Button(action: { stopTimer() }) {
-                    Text("Stop")
-                        .font(.system(size: 20))
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(buttonBackground)
+                    stopButtonText
                 }
                 .foregroundColor(.red)
             }
