@@ -2,6 +2,11 @@
 "navigation title information" = "Information";
 "navigation title stopwatch" = "Stopwatch";
 
+"stop alert title" = "確認";
+"stop alert message" = "ストップウォッチを止めますか？";
+"stop alert cancel" = "戻る";
+"stop alert stop" = "停止";
+
 "config json" = "JSON";
 "config import export" = "Import & Export";
 
