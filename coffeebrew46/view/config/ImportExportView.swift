@@ -85,12 +85,7 @@ extension View {
 struct SaveLoadView_Previews: PreviewProvider {
     static var previews: some View {
         ImportExportView()
-            .environmentObject(
-                CurrentConfigViewModel.init(
-                    validateInputService: ValidateInputServiceImpl(),
-                    calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
-                )
-            )
+            .environmentObject(CurrentConfigViewModel.init())
             .environmentObject(AppEnvironment.init())
     }
 }

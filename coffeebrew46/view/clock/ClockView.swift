@@ -103,10 +103,7 @@ struct ClockView: View {
 #if DEBUG
 struct ScaleView_Previews: PreviewProvider {
     @ObservedObject static var appEnvironment: AppEnvironment = .init()
-    @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel(
-        validateInputService: ValidateInputServiceImpl(),
-        calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
-    )
+    @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel()
     @State static var progressTime: Double = 55
     
     static var previews: some View {

@@ -1,4 +1,5 @@
 import SwiftUI
+import Factory
 
 final class CurrentConfigViewModel: ObservableObject {
     @Published var currentConfig: Config = Config.init() {
@@ -12,26 +13,12 @@ final class CurrentConfigViewModel: ObservableObject {
                 currentConfig = oldValue
             }
         }
-    }
-    
+    }    
     @Published var errors: String = ""
-    
     @Published var pointerInfoViewModels: PointerInfoViewModels = PointerInfoViewModels.defaultValue()
     
-    // For DI
-    private let validateInputService: ValidateInputService
-    private let calculateBoiledWaterAmountService: CalculateBoiledWaterAmountService
-    
-    // This model makes UI. I need to execute the business logic in this.
-    // So I designed this constructor to be able to inject the dependencies
-    // which are required to do my business logic.
-    init(
-        validateInputService: ValidateInputService,
-        calculateBoiledWaterAmountService: CalculateBoiledWaterAmountService
-    ) {
-        self.validateInputService = validateInputService
-        self.calculateBoiledWaterAmountService = calculateBoiledWaterAmountService
-    }
+    @Injected(\.validateInputService) private var validateInputService
+    @Injected(\.calculateBoiledWaterAmountService) private var calculateBoiledWaterAmountService
     
     // This function calculate parameters for the scale view.
     private func calculateScale() -> Void {

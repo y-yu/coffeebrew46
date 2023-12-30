@@ -14,6 +14,9 @@ packages:
   SwiftUITooltip:
     url: https://github.com/quassum/SwiftUI-Tooltip.git
     from: 1.4.0
+  Factory:
+    url: https://github.com/hmlongco/Factory.git
+    from: 2.3.1
 settings:
   base:
     IPHONEOS_DEPLOYMENT_TARGET: 16.0
@@ -57,6 +60,7 @@ targets:
       name: coffeebrew46
     dependencies:
       - package: SwiftUITooltip
+      - package: Factory
     type: application
   coffeebrew46Tests:
     dependencies:

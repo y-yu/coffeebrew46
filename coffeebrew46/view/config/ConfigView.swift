@@ -1,11 +1,12 @@
 import SwiftUI
 import SwiftUITooltip
+import Factory
 
 struct ConfigView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
     
-    @Environment(\.saveLoadConfigService) private var saveLoadConfigService: SaveLoadConfigService
+    @Injected(\.saveLoadConfigService) private var saveLoadConfigService
 
     @Environment(\.scenePhase) private var scenePhase
     
@@ -394,12 +395,7 @@ struct ConfigView_Previews: PreviewProvider {
     static var previews: some View {
         ConfigView()
             .environment(\.locale, .init(identifier: "ja"))
-            .environmentObject(
-                CurrentConfigViewModel.init(
-                    validateInputService: ValidateInputServiceImpl(),
-                    calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
-                )
-            )
+            .environmentObject(CurrentConfigViewModel.init())
             .environmentObject(AppEnvironment.init())
     }
 }
