@@ -136,10 +136,7 @@ struct PhaseListView: View {
 
 #if DEBUG
 struct PhaseListView_Preview: PreviewProvider {
-    @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel(
-        validateInputService: ValidateInputServiceImpl(),
-        calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
-    )
+    @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel()
     @State static var progressTime: Double = 90
     
     static var previews: some View {

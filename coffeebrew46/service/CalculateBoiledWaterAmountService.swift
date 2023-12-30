@@ -1,3 +1,5 @@
+import Factory
+
 /**
  # Interface to calculate boiled water amount service
  
@@ -60,5 +62,11 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
             ).1
         
         return PointerInfoViewModels.fromArray(colorAndDegreesArray)
+    }
+}
+
+extension Container {
+    var calculateBoiledWaterAmountService: Factory<CalculateBoiledWaterAmountService> {
+        Factory(self) { CalculateBoiledWaterAmountServiceImpl() }
     }
 }

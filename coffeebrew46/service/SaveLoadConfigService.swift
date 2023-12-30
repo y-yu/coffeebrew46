@@ -1,5 +1,5 @@
 import Foundation
-import SwiftUI
+import Factory
 
 /**
  # Save & load user's configuration.
@@ -38,13 +38,8 @@ class SaveLoadConfigServiceImpl: SaveLoadConfigService {
     }
 }
 
-struct SaveLoadConfigServiceKey: EnvironmentKey {
-    static let defaultValue: SaveLoadConfigService = SaveLoadConfigServiceImpl()
-}
-
-extension EnvironmentValues {
-    var saveLoadConfigService: SaveLoadConfigService {
-        get { self[SaveLoadConfigServiceKey.self] }
-        set { self[SaveLoadConfigServiceKey.self] = newValue }
+extension Container {
+    var saveLoadConfigService: Factory<SaveLoadConfigService> {
+        Factory(self) { SaveLoadConfigServiceImpl() }
     }
 }

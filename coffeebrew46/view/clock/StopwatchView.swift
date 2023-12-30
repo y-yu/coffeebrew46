@@ -228,12 +228,7 @@ struct StopwatchView: View {
 struct StopwatchView_Previews: PreviewProvider {
     static var previews: some View {
         StopwatchView()
-            .environmentObject(
-                CurrentConfigViewModel.init(
-                    validateInputService: ValidateInputServiceImpl(),
-                    calculateBoiledWaterAmountService: CalculateBoiledWaterAmountServiceImpl()
-                )
-            )
+            .environmentObject(CurrentConfigViewModel.init())
             .environmentObject(AppEnvironment.init())
     }
 }

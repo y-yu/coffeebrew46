@@ -1,3 +1,5 @@
+import Factory
+
 /**
  # Validation for the config.
  */
@@ -54,5 +56,11 @@ class ValidateInputServiceImpl: ValidateInputService {
         firstWaterPercent > 0 ?
             ResultNel.success(()) :
             CoffeeError.firstWaterPercentIsZeroError.toFailureNel()
+    }
+}
+
+extension Container {
+    var validateInputService: Factory<ValidateInputService> {
+        Factory(self) { ValidateInputServiceImpl() }
     }
 }
