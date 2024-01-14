@@ -95,7 +95,7 @@ struct StopwatchView: View {
                     )
                 Spacer()
                 // To show the decimal part of `progressTime`
-                Text(String(format: "%02d", Int((progressTime - floor(progressTime)) * 100)))
+                Text(String(format: "%02d", Int((progressTime < 0 ? ceil(progressTime) - progressTime : progressTime - floor(progressTime)) * 100)))
                     .font(Font(UIFont.monospacedSystemFont(ofSize: 38, weight: .light)))
                     .fixedSize()
                     .foregroundColor(
