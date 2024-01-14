@@ -77,7 +77,9 @@ struct StopwatchView: View {
     }
     
     private var stopWatchCountShow: some View {
-        VStack(alignment: .center) {
+        let progressInt = if progressTime < 0 { ceil(progressTime) } else { floor(progressTime) }
+
+        return VStack(alignment: .center) {
             Spacer()
             Spacer()
             Spacer()
@@ -87,7 +89,7 @@ struct StopwatchView: View {
                 Spacer()
                 Spacer()
                 Spacer()
-                Text(String(format: "%03d", Int(floor(progressTime))))
+                Text(String(format: "%03d", Int(progressInt)))
                     .font(Font(UIFont.monospacedSystemFont(ofSize: 38, weight: .light)))
                     .fixedSize()
                     .foregroundColor(
@@ -95,7 +97,7 @@ struct StopwatchView: View {
                     )
                 Spacer()
                 // To show the decimal part of `progressTime`
-                Text(String(format: "%02d", Int((progressTime < 0 ? ceil(progressTime) - progressTime : progressTime - floor(progressTime)) * 100)))
+                Text(String(format: "%02d", Int((progressTime < 0 ? progressInt - progressTime : progressTime - progressInt) * 100)))
                     .font(Font(UIFont.monospacedSystemFont(ofSize: 38, weight: .light)))
                     .fixedSize()
                     .foregroundColor(
