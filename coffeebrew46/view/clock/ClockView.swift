@@ -58,7 +58,7 @@ struct ClockView: View {
     
     private func endDegree() -> Double {
         if (progressTime < 0) {
-            return (progressTime - floor(progressTime)) * 365
+            return (ceil(progressTime) - progressTime) * 365
         } else {
             return viewModel.toDegree(progressTime)
         }
