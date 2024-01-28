@@ -92,3 +92,49 @@ func == (lhs: RequestReviewInfo, rhs: RequestReviewInfo) -> Bool {
     }
 }
 
+struct RequestReviewGuard {
+    var tryCount: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case tryCount
+    }
+}
+
+extension RequestReviewGuard: Decodable {
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        tryCount = try values.decode(Int.self, forKey: .tryCount)
+    }
+}
+
+extension RequestReviewGuard: Encodable {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(tryCount, forKey: .tryCount)
+    }
+}
+
+extension RequestReviewGuard {
+    func toJSON(isPrettyPrint: Bool) -> ResultNel<String, CoffeeError> {
+        let encoder = JSONEncoder()
+        if isPrettyPrint {
+            encoder.outputFormatting = .prettyPrinted
+        }
+        do {
+            return Result.success(try String(data: encoder.encode(self), encoding: .utf8)!)
+        } catch {
+            return Result.failure(NonEmptyList(CoffeeError.jsonError))
+        }
+    }
+
+    static func fromJSON(_ json: String) -> ResultNel<RequestReviewGuard, CoffeeError> {
+        let decoder = JSONDecoder()
+        let jsonData = json.data(using: .utf8)!
+        do {
+            let config = try decoder.decode(RequestReviewGuard.self, from: jsonData)
+            return Result.success(config)
+        } catch {
+            return Result.failure(NonEmptyList(CoffeeError.jsonError))
+        }
+    }
+}
