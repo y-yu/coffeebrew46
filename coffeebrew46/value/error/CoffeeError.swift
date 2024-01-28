@@ -1,7 +1,7 @@
 /**
  # This app error interface.
  */
-enum CoffeeError: Error {
+public enum CoffeeError: Error {
     case coffeeBeansWeightUnderZeroError
     
     case coffeeBeansWeightIsNotNumberError
@@ -18,7 +18,7 @@ enum CoffeeError: Error {
     
     case loadedConfigIsNotCompatible
     
-    case jsonError
+    case jsonError(_ underlying: Error)
     
     func getMessage() -> String {
         switch self {

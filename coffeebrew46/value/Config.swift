@@ -60,7 +60,7 @@ extension Config {
         do {
             return Result.success(try String(data: encoder.encode(self), encoding: .utf8)!)
         } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError))
+            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
         }
     }
 
@@ -75,7 +75,7 @@ extension Config {
                 return Result.failure(NonEmptyList(CoffeeError.loadedConfigIsNotCompatible))
             }
         } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError))
+            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
         }
     }
 }

@@ -26,6 +26,19 @@ public enum ImmutableList<A> {
     }
 }
 
+extension ImmutableList: Equatable where A: Equatable {
+    static public func ==(lhs: ImmutableList<A>, rhs: ImmutableList<A>) -> Bool {
+        switch (lhs, rhs) {
+        case (.Nil, .Nil):
+            return true
+        case (.Cons(let lh, let lt), .Cons(let rh, let rt)) :
+            return lh == rh && lt == rt
+        default:
+            return false
+        }
+    }
+}
+
 /**
  # Immutable list which size must be grater than 0.
  */
@@ -40,6 +53,13 @@ public struct NonEmptyList<A> {
         return arr
     }
 }
+
+extension NonEmptyList: Equatable where A: Equatable {
+    static public func ==(lhs: NonEmptyList<A>, rhs: NonEmptyList<A>) -> Bool {
+        return lhs.head == rhs.head && lhs.tail == rhs.tail
+    }
+}
+
 
 extension NonEmptyList {
     init(_ a: A) {
