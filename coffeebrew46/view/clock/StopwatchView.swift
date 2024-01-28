@@ -1,5 +1,6 @@
 import SwiftUI
 import AudioToolbox
+import Factory
 
 struct StopwatchView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
@@ -15,6 +16,8 @@ struct StopwatchView: View {
     @State private var timer: Timer?
     @State private var hasRingingIndex: Int = 0
     @State private var isStop︎AlertPresented: Bool = false
+    
+    @Injected(\.requestReviewService) private var requestReviewService
     
     private let soundIdRing = SystemSoundID(1013)
 
@@ -202,6 +205,8 @@ struct StopwatchView: View {
             self.timer = .none
             self.startTime = .none
             hasRingingIndex = 0
+            
+            requestReviewService.show()
         }
     }
     
