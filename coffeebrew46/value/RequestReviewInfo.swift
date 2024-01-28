@@ -63,7 +63,7 @@ extension RequestReviewInfo {
         do {
             return Result.success(try String(data: encoder.encode(self), encoding: .utf8)!)
         } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError))
+            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
         }
     }
 
@@ -74,7 +74,7 @@ extension RequestReviewInfo {
             let config = try decoder.decode(RequestReviewInfo.self, from: jsonData)
             return Result.success(config)
         } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError))
+            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
         }
     }
 }
@@ -123,7 +123,7 @@ extension RequestReviewGuard {
         do {
             return Result.success(try String(data: encoder.encode(self), encoding: .utf8)!)
         } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError))
+            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
         }
     }
 
@@ -134,7 +134,7 @@ extension RequestReviewGuard {
             let config = try decoder.decode(RequestReviewGuard.self, from: jsonData)
             return Result.success(config)
         } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError))
+            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
         }
     }
 }
