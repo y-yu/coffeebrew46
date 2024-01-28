@@ -3,7 +3,7 @@ import StoreKit
 import Factory
 
 protocol RequestReviewService {
-    func show() -> Void
+    func check() -> ResultNel<Bool, CoffeeError>
 }
 
 class RequestReviewServiceImpl: RequestReviewService {
@@ -17,74 +17,71 @@ class RequestReviewServiceImpl: RequestReviewService {
     
     private let minimumTryCount: Int = 3
     
-    func show() -> Void {
-        if beforeCheck() {
-            requestReview()
+    func check() -> ResultNel<Bool, CoffeeError> {
+        beforeCheck().flatMap { result in
+            if result {
+                requestReview()
+            } else {
+                .success(false)
+            }
         }
     }
     
-    private func saveInitGuard() -> Void {
-        RequestReviewGuard(tryCount: 1).toJSON(isPrettyPrint: false).forEach { json in
+    private func saveInitGuard() -> ResultNel<Void, CoffeeError> {
+        RequestReviewGuard(tryCount: 1).toJSON(isPrettyPrint: false).map { json in
             UserDefaults.standard.set(json, forKey: requestReviewGuardKey)
         }
     }
     
-    private func beforeCheck() -> Bool {
+    private func beforeCheck() -> ResultNel<Bool, CoffeeError> {
         if let requestReviewGuardJson = UserDefaults.standard.string(forKey: requestReviewGuardKey) {
-            switch RequestReviewGuard.fromJSON(requestReviewGuardJson) {
-            case .success(let requestReviewGuard):
-                RequestReviewGuard(tryCount: requestReviewGuard.tryCount + 1).toJSON(isPrettyPrint: false).forEach { json in
+            RequestReviewGuard.fromJSON(requestReviewGuardJson).flatMap { requestReviewGuard in
+                RequestReviewGuard(tryCount: requestReviewGuard.tryCount + 1).toJSON(isPrettyPrint: false).map { json in
                     UserDefaults.standard.set(json, forKey: requestReviewGuardKey)
+                    return requestReviewGuard.tryCount >= minimumTryCount
                 }
-                return requestReviewGuard.tryCount >= minimumTryCount
-            case .failure(_):
-                saveInitGuard()
-                return false
+            }
+            .flatMapError { _ in
+                saveInitGuard().map { _ in false }
             }
         } else {
-            saveInitGuard()
-            return false
+            saveInitGuard().map { _ in false }
         }
     }
     
-    private func requestReview() -> Void {
+    private func requestReview() -> ResultNel<Bool, CoffeeError> {
         let now = Date.now
         let appVersion: String = (Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String)!
-        
         let requestReviewItem = RequestReviewItem(appVersion: appVersion, requestedDate: now)
         
         if let requestReviewInfoJson = UserDefaults.standard.string(forKey: requestReviewInfoKey) {
-            let requestReviewInfoResult = RequestReviewInfo.fromJSON(requestReviewInfoJson)
-            requestReviewInfoResult.forEach { requestReviewInfo in
+            return RequestReviewInfo.fromJSON(requestReviewInfoJson).flatMap { requestReviewInfo in
                 if !requestReviewInfo.requestHistory.isEmpty {
                     let latest = requestReviewInfo.requestHistory.last!
                     
                     if now.timeIntervalSince(latest.requestedDate) >= delta {
                         let updatedRequestReviewInfo = RequestReviewInfo(requestHistory: requestReviewInfo.requestHistory + [requestReviewItem])
                         
-                        updatedRequestReviewInfo.toJSON(isPrettyPrint: false).forEach { json in
+                        return updatedRequestReviewInfo.toJSON(isPrettyPrint: false).map { json in
                             UserDefaults.standard.set(json, forKey: requestReviewInfoKey)
-                            DispatchQueue.main.asyncAfter(deadline: .now() + waiting) {
-                                let scenes = UIApplication.shared.connectedScenes
-                                if let windowScene = scenes.first as? UIWindowScene {
-                                    SKStoreReviewController.requestReview(in: windowScene)
-                                }
-                            }
+                            return true
                         }
+                    } else {
+                        return .success(false) as ResultNel<Bool, CoffeeError>
+                    }
+                } else {
+                    let updatedRequestReviewInfo = RequestReviewInfo(requestHistory: [requestReviewItem])
+                    return updatedRequestReviewInfo.toJSON(isPrettyPrint: false).map { json in
+                        UserDefaults.standard.set(json, forKey: requestReviewInfoKey)
+                        return false
                     }
                 }
             }
         } else {
             let updatedRequestReviewInfo = RequestReviewInfo(requestHistory: [requestReviewItem])
-            updatedRequestReviewInfo.toJSON(isPrettyPrint: false).forEach { json in
-                UserDefaults.standard.set(json,  forKey: requestReviewInfoKey)
-    
-                DispatchQueue.main.asyncAfter(deadline: .now() + waiting) {
-                    let scenes = UIApplication.shared.connectedScenes
-                    if let windowScene = scenes.first as? UIWindowScene {
-                        SKStoreReviewController.requestReview(in: windowScene)
-                    }
-                }
+            return updatedRequestReviewInfo.toJSON(isPrettyPrint: false).map { json in
+                UserDefaults.standard.set(json, forKey: requestReviewInfoKey)
+                return false
             }
         }
     }

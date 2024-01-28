@@ -1,4 +1,5 @@
 import SwiftUI
+import StoreKit
 import AudioToolbox
 import Factory
 
@@ -6,6 +7,7 @@ struct StopwatchView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.requestReview) private var requestReview
 
     @State private var startTime: Date? {
         didSet {
@@ -138,6 +140,13 @@ struct StopwatchView: View {
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(buttonBackground)
+                        .onAppear {
+                            requestReviewService.check().forEach { result in
+                                if result {
+                                    requestReview()
+                                }
+                            }
+                        }
                 }
                 .foregroundColor(.green)
             } else if (progressTime <= viewModel.currentConfig.totalTimeSec) {
@@ -205,8 +214,6 @@ struct StopwatchView: View {
             self.timer = .none
             self.startTime = .none
             hasRingingIndex = 0
-            
-            requestReviewService.show()
         }
     }
     
