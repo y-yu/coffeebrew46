@@ -3,14 +3,14 @@ import StoreKit
 import Factory
 
 protocol RequestReviewService {
-    func check() -> ResultNel<Bool, CoffeeError>
+    func check() -> ResultNea<Bool, CoffeeError>
 }
 
 class RequestReviewServiceImpl: RequestReviewService {
     @Injected(\.userDefaultsService) private var userDefaultsService
     @Injected(\.dateService) private var dateService
     
-    func check() -> ResultNel<Bool, CoffeeError> {
+    func check() -> ResultNea<Bool, CoffeeError> {
         beforeCheck().flatMap { result in
             if result {
                 requestReview()
@@ -20,11 +20,11 @@ class RequestReviewServiceImpl: RequestReviewService {
         }
     }
     
-    private func saveInitGuard() -> ResultNel<Void, CoffeeError> {
+    private func saveInitGuard() -> ResultNea<Void, CoffeeError> {
         userDefaultsService.setEncodable(RequestReviewGuard(tryCount: 1), forKey: RequestReviewServiceImpl.requestReviewGuardKey)
     }
     
-    private func beforeCheck() -> ResultNel<Bool, CoffeeError> {
+    private func beforeCheck() -> ResultNea<Bool, CoffeeError> {
         userDefaultsService.getDecodable(forKey: RequestReviewServiceImpl.requestReviewGuardKey).flatMap { (requestReviewGuardOpt: RequestReviewGuard?) in
             if let requestReviewGuard = requestReviewGuardOpt {
                 return userDefaultsService
@@ -44,7 +44,7 @@ class RequestReviewServiceImpl: RequestReviewService {
         }
     }
     
-    private func saveInitRequestReviewInfo(_ requestReviewItem: RequestReviewItem) -> ResultNel<Void, CoffeeError> {
+    private func saveInitRequestReviewInfo(_ requestReviewItem: RequestReviewItem) -> ResultNea<Void, CoffeeError> {
         userDefaultsService
             .setEncodable(
                 RequestReviewInfo(requestHistory: [requestReviewItem]),
@@ -52,7 +52,7 @@ class RequestReviewServiceImpl: RequestReviewService {
             )
     }
     
-    private func requestReview() -> ResultNel<Bool, CoffeeError> {
+    private func requestReview() -> ResultNea<Bool, CoffeeError> {
         let now = dateService.now()
         let appVersion: String = (Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String)!
         let requestReviewItem = RequestReviewItem(appVersion: appVersion, requestedDate: now)

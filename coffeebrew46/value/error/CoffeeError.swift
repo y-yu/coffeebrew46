@@ -20,6 +20,8 @@ public enum CoffeeError: Error {
     
     case jsonError(_ underlying: Error)
     
+    case arrayNumberConversionError(_ message: String)
+    
     func getMessage() -> String {
         switch self {
         case .coffeeBeansWeightUnderZeroError:
@@ -46,14 +48,17 @@ public enum CoffeeError: Error {
         case .loadedConfigIsNotCompatible:
             return "The loaded configuration is not compatible."
             
-        case .jsonError:
-            return "Something error was occurred in json serialize/deserialize."
+        case .jsonError(let error):
+            return "Something error was occurred in JSON serialize/deserialize: \(error)"
+            
+        case .arrayNumberConversionError(let message):
+            return "Something error was occurred in conversion `[Int]` to/from `Double`: \(message)"
         }
     }
 }
 
 extension CoffeeError {
-    func toFailureNel<A>() -> ResultNel<A, Self> {
-        .failure(NonEmptyList(self))
+    func toFailureNel<A>() -> ResultNea<A, Self> {
+        .failure(NonEmptyArray(self))
     }
 }

@@ -30,9 +30,9 @@ struct Config: Equatable {
     }
     
     init() {
-        coffeeBeansWeight = 30
+        coffeeBeansWeight = Config.initCoffeeBeansWeight
         partitionsCountOf6 = 3
-        waterToCoffeeBeansWeightRatio = 15
+        waterToCoffeeBeansWeightRatio = Config.initWaterToCoffeeBeansWeightRatio
         firstWaterPercent = 0.5
         totalTimeSec = 210
         steamingTimeSec = 45
@@ -44,6 +44,10 @@ struct Config: Equatable {
 extension Config {
     static let currentVersion: Int = 1
     
+    static let initCoffeeBeansWeight: Double = 30.0
+    
+    static let initWaterToCoffeeBeansWeightRatio: Double = 15.0
+    
     func totalWaterAmount() -> Double {
         self.coffeeBeansWeight * self.waterToCoffeeBeansWeightRatio
     }
@@ -52,7 +56,7 @@ extension Config {
         totalWaterAmount() * 0.4
     }
     
-    func toJSON(isPrettyPrint: Bool) -> ResultNel<String, CoffeeError> {
+    func toJSON(isPrettyPrint: Bool) -> ResultNea<String, CoffeeError> {
         let encoder = JSONEncoder()
         if isPrettyPrint {
             encoder.outputFormatting = .prettyPrinted
@@ -60,11 +64,11 @@ extension Config {
         do {
             return Result.success(try String(data: encoder.encode(self), encoding: .utf8)!)
         } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
+            return Result.failure(NonEmptyArray(CoffeeError.jsonError(error)))
         }
     }
 
-    static func fromJSON(_ json: String) -> ResultNel<Config, CoffeeError> {
+    static func fromJSON(_ json: String) -> ResultNea<Config, CoffeeError> {
         let decoder = JSONDecoder()
         let jsonData = json.data(using: .utf8)!
         do {
@@ -72,10 +76,10 @@ extension Config {
             if (config.version == currentVersion) {
                 return Result.success(config)
             } else {
-                return Result.failure(NonEmptyList(CoffeeError.loadedConfigIsNotCompatible))
+                return Result.failure(NonEmptyArray(CoffeeError.loadedConfigIsNotCompatible))
             }
         } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
+            return Result.failure(NonEmptyArray(CoffeeError.jsonError(error)))
         }
     }
 }

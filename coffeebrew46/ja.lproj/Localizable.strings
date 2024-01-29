@@ -13,7 +13,8 @@
 "config show tips" = "Tipsを表示";
 
 "config weight settings" = "重量設定";
-"config calculate coffee beans from water" = "水量からコーヒー豆の量を計算";
+"config calculate coffee beans from water" = "水量→コーヒー豆量";
+"config calculate water from coffee beans" = "コーヒー豆量→水量";
 "config calculate coffee beans from water tips" = "飲みたいコーヒーの量が決まっているとき";
 "config coffee beans weight" = "コーヒー豆の量:";
 "config water amount" = "水量:";

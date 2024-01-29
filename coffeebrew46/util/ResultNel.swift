@@ -1,15 +1,15 @@
 /**
- # A `Result` uses `NonEmptyList<Failure>` as errors.
+ # A `Result` uses `NonEmptyArray<Failure>` as errors.
  */
-public typealias ResultNel<Success, Failure: Error> =
-    Result<Success, NonEmptyList<Failure>>
+public typealias ResultNea<Success, Failure: Error> =
+    Result<Success, NonEmptyArray<Failure>>
 
 infix operator |+|: AssociativityRight
 
 public func |+|<A, B, E: Error>(
-    r1: ResultNel<A, E>,
-    r2: ResultNel<B, E>
-) -> ResultNel<(A, B), E> {
+    r1: ResultNea<A, E>,
+    r2: ResultNea<B, E>
+) -> ResultNea<(A, B), E> {
     switch (r1, r2) {
     case (.success(let a), .success(let b)):
         return .success((a, b))
@@ -22,10 +22,10 @@ public func |+|<A, B, E: Error>(
     }
 }
 
-// It is required to use `NonEmptyList` for `Failure` type parameter of `Result`
-extension NonEmptyList: Error where A: Error { }
+// It is required to use `NonEmptyArray` for `Failure` type parameter of `Result`
+extension NonEmptyArray: Error where A: Error { }
 
-extension ResultNel {
+extension ResultNea {
     func forEach(_ f: (Success) -> Void) -> Void {
         switch self {
         case .success(let result):

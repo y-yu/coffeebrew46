@@ -1,10 +1,13 @@
 /**
  # Immutable list.
  */
+/*
 public enum ImmutableList<A> {
     case Nil
     indirect case Cons(A, ImmutableList<A>)
-    
+}
+
+extension ImmutableList {
     func append(_ l: ImmutableList<A>) -> ImmutableList<A> {
         switch self {
         case .Cons(let h, let t):
@@ -24,6 +27,14 @@ public enum ImmutableList<A> {
             return arr
         }
     }
+    
+    static func fromArray(_ array: [A]) -> ImmutableList<A> {
+        var result: ImmutableList<A> = .Nil
+        for e in array {
+            result = .Cons(e, result)
+        }
+        return result
+    }
 }
 
 extension ImmutableList: Equatable where A: Equatable {
@@ -38,42 +49,54 @@ extension ImmutableList: Equatable where A: Equatable {
         }
     }
 }
+ */
 
 /**
- # Immutable list which size must be grater than 0.
+ # Array which size must be grater than 0.
  */
-public struct NonEmptyList<A> {
+public struct NonEmptyArray<A> {
     let head: A
-    let tail: ImmutableList<A>
-    
-    func toArray() -> Array<A> {
-        var arr = tail.toArray()
-        arr.insert(head, at: 0)
-        
-        return arr
-    }
+    let tail: [A]
 }
 
-extension NonEmptyList: Equatable where A: Equatable {
-    static public func ==(lhs: NonEmptyList<A>, rhs: NonEmptyList<A>) -> Bool {
+extension NonEmptyArray: Equatable where A: Equatable {
+    static public func ==(lhs: NonEmptyArray<A>, rhs: NonEmptyArray<A>) -> Bool {
         return lhs.head == rhs.head && lhs.tail == rhs.tail
     }
 }
 
-
-extension NonEmptyList {
+extension NonEmptyArray {
     init(_ a: A) {
         self.head = a
-        self.tail = .Nil
+        self.tail = []
+    }
+    
+    init(_ h: A, _ t: [A]) {
+        self.head = h
+        self.tail = t
+    }
+    
+    func count() -> Int {
+        return tail.count + 1
+    }
+    
+    func toArray() -> Array<A> {
+        var arr: [A] = tail
+        arr.insert(head, at: 0)
+        return arr
     }
 }
 
 // Append operator.
 infix operator ++: AssociativityLeft
 
-func ++<A>(_ nel1: NonEmptyList<A>, _ nel2: NonEmptyList<A>) -> NonEmptyList<A> {
-    return NonEmptyList(
+func ++<A>(_ nel1: NonEmptyArray<A>, _ nel2: NonEmptyArray<A>) -> NonEmptyArray<A> {
+    var arr: [A] = nel1.tail
+    arr.append(nel2.head)
+    arr += nel2.tail
+    
+    return NonEmptyArray(
         head: nel1.head,
-        tail: nel1.tail.append(.Cons(nel2.head, nel2.tail))
+        tail: arr
     )
 }

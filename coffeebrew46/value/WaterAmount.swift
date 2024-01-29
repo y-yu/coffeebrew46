@@ -6,7 +6,7 @@ struct WaterAmount {
     var fortyPercent: (Double, Double)
 
     // Others water amounts (gram)
-    var sixtyPercent: NonEmptyList<Double>
+    var sixtyPercent: NonEmptyArray<Double>
 }
 
 extension WaterAmount {

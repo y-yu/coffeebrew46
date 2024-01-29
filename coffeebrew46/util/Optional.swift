@@ -1,8 +1,8 @@
 extension Optional {
-    internal func toResultNel<E: Error>(_ error: E) -> ResultNel<Wrapped, E> {
+    internal func toResultNea<E: Error>(_ error: E) -> ResultNea<Wrapped, E> {
         switch self {
         case .none:
-            return .failure(NonEmptyList(error))
+            return .failure(NonEmptyArray(error))
         case .some(let value):
             return .success(value)
         }

@@ -4,7 +4,7 @@ import Factory
 @testable import CoffeeBrew46
 
 class MockValidateInputService: ValidateInputService {
-    func validate(config: CoffeeBrew46.Config) -> CoffeeBrew46.ResultNel<Void, CoffeeBrew46.CoffeeError> {
+    func validate(config: CoffeeBrew46.Config) -> CoffeeBrew46.ResultNea<Void, CoffeeBrew46.CoffeeError> {
         .success(())
     }
 }

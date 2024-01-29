@@ -11,8 +11,12 @@ struct ConfigView: View {
     @Environment(\.scenePhase) private var scenePhase
     
     @State var showTips: Bool = false
-    @State var calculateCoffeeBeansWeightFromWater: Bool = false
-    @State var temporaryWaterAmount: Double = 0.0 {
+    @State var calculateCoffeeBeansWeightFromWater: Bool = false {
+        didSet {
+            temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
+        }
+    }
+    @State var temporaryWaterAmount: Double = Config.initCoffeeBeansWeight * Config.initWaterToCoffeeBeansWeightRatio {
         didSet {
             viewModel.currentConfig.coffeeBeansWeight = temporaryWaterAmount / viewModel.currentConfig.waterToCoffeeBeansWeightRatio
         }
@@ -37,19 +41,25 @@ struct ConfigView: View {
         Form {
             Toggle("config show tips", isOn: $showTips)
             Section(header: Text("config weight settings")) {
-                Toggle(isOn: $calculateCoffeeBeansWeightFromWater) {
-                    TipsView(
-                        showTips,
-                        content: Text("config calculate coffee beans from water"),
-                        tips: Text("config calculate coffee beans from water tips")
-                    )
-                }
-                .onChange(of: calculateCoffeeBeansWeightFromWater) { newValue in
-                    if (newValue) {
-                        temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
+                TipsView(
+                    showTips,
+                    content: Picker("", selection: $calculateCoffeeBeansWeightFromWater) {
+                        Text("config calculate water from coffee beans").tag(false)
+                        Text("config calculate coffee beans from water").tag(true)
                     }
+                    .pickerStyle(.segmented)
+                    .onChange(of: calculateCoffeeBeansWeightFromWater) { newValue in
+                        if (newValue) {
+                            temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
+                        }
+                    },
+                    tips: Text("config calculate coffee beans from water tips")
+                )
+                if calculateCoffeeBeansWeightFromWater {
+                    waterAmountSettingView
+                } else {
+                    coffeeBeansWeightSettingView
                 }
-                !calculateCoffeeBeansWeightFromWater ? AnyView(coffeeBeansWeightSettingView) : AnyView(waterAmountSettingView)
                 VStack {
                     TipsView(
                         showTips,
@@ -305,13 +315,12 @@ struct ConfigView: View {
                 Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
                 Spacer()
             }
-            ButtonSliderButtonView(
-                maximum: coffeeBeansWeightMax,
-                minimum: coffeeBeansWeightMin,
-                sliderStep: 0.5,
-                buttonStep: 0.1,
-                isDisable: appEnvironment.isTimerStarted,
-                target: $viewModel.currentConfig.coffeeBeansWeight
+            NumberPickerView(
+                digit: 3,
+                max: coffeeBeansWeightMax,
+                target: $viewModel.currentConfig.coffeeBeansWeight,
+                isDisable: $appEnvironment.isTimerStarted,
+                log: $log
             )
         }
     }
@@ -333,13 +342,13 @@ struct ConfigView: View {
                 Text("config coffee beans weight")
                 Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
             }
-            ButtonSliderButtonView(
-                maximum: coffeeBeansWeightMax * viewModel.currentConfig.waterToCoffeeBeansWeightRatio,
-                minimum: coffeeBeansWeightMin * viewModel.currentConfig.waterToCoffeeBeansWeightRatio,
-                sliderStep: 10,
-                buttonStep: 1,
-                isDisable: appEnvironment.isTimerStarted,
-                target: temporaryWaterAmountBinding
+            //Text("config water amount")
+            NumberPickerView(
+                digit: 4,
+                max: coffeeBeansWeightMax * viewModel.currentConfig.waterToCoffeeBeansWeightRatio,
+                target: temporaryWaterAmountBinding,
+                isDisable: $appEnvironment.isTimerStarted,
+                log: $log
             )
         }
     }
