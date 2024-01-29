@@ -5,6 +5,8 @@ protocol UserDefaultsService {
     func setEncodable<A: Encodable>(_ value: A, forKey defaultName: String) -> ResultNel<Void, CoffeeError>
     
     func getDecodable<A: Decodable>(forKey: String) -> ResultNel<A?, CoffeeError>
+    
+    func delete(forKey: String) -> Void
 }
 
 class UserDefaultsServiceImpl: UserDefaultsService {
@@ -31,6 +33,10 @@ class UserDefaultsServiceImpl: UserDefaultsService {
         } else {
             return .success(.none)
         }
+    }
+    
+    func delete(forKey: String) -> Void {
+        UserDefaults.standard.removeObject(forKey: forKey)
     }
 }
 

@@ -48,6 +48,7 @@ targets:
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug
           PRODUCT_NAME: CoffeeBrew46
           PROVISIONING_PROFILE_SPECIFIER: ''
+          CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
         Release:
           CODE_SIGN_IDENTITY: Apple Development
           CODE_SIGN_STYLE: Automatic
@@ -55,6 +56,7 @@ targets:
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46
           PRODUCT_NAME: CoffeeBrew46
           PROVISIONING_PROFILE_SPECIFIER: ''
+          CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     sources:
     - path: coffeebrew46
       name: coffeebrew46
