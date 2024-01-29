@@ -54,31 +54,6 @@ extension RequestReviewInfo: Encodable {
     }
 }
 
-extension RequestReviewInfo {
-    func toJSON(isPrettyPrint: Bool) -> ResultNel<String, CoffeeError> {
-        let encoder = JSONEncoder()
-        if isPrettyPrint {
-            encoder.outputFormatting = .prettyPrinted
-        }
-        do {
-            return Result.success(try String(data: encoder.encode(self), encoding: .utf8)!)
-        } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
-        }
-    }
-
-    static func fromJSON(_ json: String) -> ResultNel<RequestReviewInfo, CoffeeError> {
-        let decoder = JSONDecoder()
-        let jsonData = json.data(using: .utf8)!
-        do {
-            let config = try decoder.decode(RequestReviewInfo.self, from: jsonData)
-            return Result.success(config)
-        } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
-        }
-    }
-}
-
 func == (lhs: RequestReviewInfo, rhs: RequestReviewInfo) -> Bool {
     if lhs.requestHistory.count == rhs.requestHistory.count {
         for (index, item) in lhs.requestHistory.enumerated() {
@@ -111,30 +86,5 @@ extension RequestReviewGuard: Encodable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(tryCount, forKey: .tryCount)
-    }
-}
-
-extension RequestReviewGuard {
-    func toJSON(isPrettyPrint: Bool) -> ResultNel<String, CoffeeError> {
-        let encoder = JSONEncoder()
-        if isPrettyPrint {
-            encoder.outputFormatting = .prettyPrinted
-        }
-        do {
-            return Result.success(try String(data: encoder.encode(self), encoding: .utf8)!)
-        } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
-        }
-    }
-
-    static func fromJSON(_ json: String) -> ResultNel<RequestReviewGuard, CoffeeError> {
-        let decoder = JSONDecoder()
-        let jsonData = json.data(using: .utf8)!
-        do {
-            let config = try decoder.decode(RequestReviewGuard.self, from: jsonData)
-            return Result.success(config)
-        } catch {
-            return Result.failure(NonEmptyList(CoffeeError.jsonError(error)))
-        }
     }
 }

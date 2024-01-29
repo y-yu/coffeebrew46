@@ -18,7 +18,6 @@ class MockUserDefaultsService: UserDefaultsService {
     let dummyRequestReviewInfo: RequestReviewInfo?
     let dummyRequestReviewGuard: RequestReviewGuard?
     
-    
     init(_ dummyRequestReviewInfo: RequestReviewInfo?, _ dummyRequestReviewGuard: RequestReviewGuard?) {
         self.dummyRequestReviewInfo = dummyRequestReviewInfo
         self.dummyRequestReviewGuard = dummyRequestReviewGuard
@@ -38,6 +37,8 @@ class MockUserDefaultsService: UserDefaultsService {
             .success(.none)
         }
     }
+    
+    func delete(forKey: String) { }
 }
 
 class RequestReviewServiceImplTests: XCTestCase {

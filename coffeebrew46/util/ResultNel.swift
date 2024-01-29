@@ -35,3 +35,16 @@ extension ResultNel {
         }
     }
 }
+
+extension Result {
+    func isSuccess() -> Bool {
+        return switch self {
+        case .success(_): true
+        case .failure(_): false
+        }
+    }
+    
+    func isFailure() -> Bool {
+        return !isSuccess()
+    }
+}
