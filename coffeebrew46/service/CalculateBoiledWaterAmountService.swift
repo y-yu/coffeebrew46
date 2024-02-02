@@ -23,12 +23,12 @@ class CalculateBoiledWaterAmountServiceImpl: CalculateBoiledWaterAmountService {
             ),
             sixtyPercent: {
                 let sixtyAmount = config.totalWaterAmount() * 0.6
-                let value = NonEmptyList(
+                let value = NonEmptyArray(
                     head: sixtyAmount / Double(config.partitionsCountOf6),
-                    tail: .Nil
+                    tail: []
                 )
 
-                func loop(_ acc: NonEmptyList<Double>, _ n: Int) ->  NonEmptyList<Double> {
+                func loop(_ acc: NonEmptyArray<Double>, _ n: Int) ->  NonEmptyArray<Double> {
                     if (n <= 1) {
                         return acc
                     } else {

@@ -10,10 +10,11 @@
 "config json" = "JSON";
 "config import export" = "Import & Export";
 
-"config show tips" = "Show tips";
+"config show tips" = "Show Tips";
 
 "config weight settings" = "Weight settings";
-"config calculate coffee beans from water" = "Calculate coffee beans weight from water?";
+"config calculate coffee beans from water" = "water→coffee beans";
+"config calculate water from coffee beans" = "coffee beans→water";
 "config calculate coffee beans from water tips" = "Turn on if you would like to the specific amount of coffee";
 "config coffee beans weight" = "Coffee beans weight:";
 "config water amount" = "Water amount:";

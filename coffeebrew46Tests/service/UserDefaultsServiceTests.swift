@@ -1,5 +1,4 @@
 import XCTest
-import Factory
 
 @testable import CoffeeBrew46
 
@@ -48,12 +47,12 @@ final class UserDefaultsServiceTests: XCTestCase {
         let actual1 = sut.setEncodable(dummy, forKey: key)
         XCTAssert(actual1.isSuccess())
         
-        let actual2: CoffeeBrew46.ResultNel<Dummy?, CoffeeBrew46.CoffeeError> = sut.getDecodable(forKey: key)
+        let actual2: CoffeeBrew46.ResultNea<Dummy?, CoffeeBrew46.CoffeeError> = sut.getDecodable(forKey: key)
         XCTAssertEqual(actual2, .success(.some(dummy)))
     }
     
     func test_return_none_if_there_is_no_data() throws {
-        let actual: CoffeeBrew46.ResultNel<Dummy?, CoffeeBrew46.CoffeeError> = sut.getDecodable(forKey: key)
+        let actual: CoffeeBrew46.ResultNea<Dummy?, CoffeeBrew46.CoffeeError> = sut.getDecodable(forKey: key)
         XCTAssertEqual(actual, .success(.none))
     }
 }

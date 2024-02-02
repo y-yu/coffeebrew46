@@ -24,11 +24,11 @@ class MockUserDefaultsService: UserDefaultsService {
     }
     
     
-    func setEncodable<A: Encodable>(_ value: A, forKey: String) -> CoffeeBrew46.ResultNel<Void, CoffeeBrew46.CoffeeError>  {
+    func setEncodable<A: Encodable>(_ value: A, forKey: String) -> CoffeeBrew46.ResultNea<Void, CoffeeBrew46.CoffeeError>  {
         .success(())
     }
     
-    func getDecodable<A: Decodable>(forKey: String) -> CoffeeBrew46.ResultNel<A?, CoffeeBrew46.CoffeeError> {
+    func getDecodable<A: Decodable>(forKey: String) -> CoffeeBrew46.ResultNea<A?, CoffeeBrew46.CoffeeError> {
         if forKey == RequestReviewServiceImpl.requestReviewInfoKey {
             .success(dummyRequestReviewInfo as! A?)
         } else if forKey == RequestReviewServiceImpl.requestReviewGuardKey {

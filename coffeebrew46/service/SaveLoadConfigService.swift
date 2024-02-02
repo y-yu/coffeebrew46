@@ -5,9 +5,9 @@ import Factory
  # Save & load user's configuration.
  */
 protocol SaveLoadConfigService {
-    func save(config: Config, key: String) -> ResultNel<Void, CoffeeError>
+    func save(config: Config, key: String) -> ResultNea<Void, CoffeeError>
     
-    func load(key: String) -> ResultNel<Config?, CoffeeError>
+    func load(key: String) -> ResultNea<Config?, CoffeeError>
     
     func delete(key: String) -> Void
 }
@@ -15,11 +15,11 @@ protocol SaveLoadConfigService {
 class SaveLoadConfigServiceImpl: SaveLoadConfigService {
     @Injected(\.userDefaultsService) private var userDefaultsService
     
-    func save(config: Config, key: String) -> ResultNel<Void, CoffeeError> {
+    func save(config: Config, key: String) -> ResultNea<Void, CoffeeError> {
         return userDefaultsService.setEncodable(config, forKey: userDefaultsKey(key))
     }
     
-    func load(key: String) -> ResultNel<Config?, CoffeeError> {
+    func load(key: String) -> ResultNea<Config?, CoffeeError> {
         return userDefaultsService.getDecodable(forKey: userDefaultsKey(key))
     }
     
