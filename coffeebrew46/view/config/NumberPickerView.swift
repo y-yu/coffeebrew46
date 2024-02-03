@@ -82,8 +82,6 @@ struct NumberPickerView: View {
                 if index == (numbers.count - 2) {
                     Text(".")
                         .foregroundStyle(isDisable ? Color.primary.opacity(0.5) : Color.primary)
-                } else {
-                    EmptyView()
                 }
             }
             Text("\(unit)")
