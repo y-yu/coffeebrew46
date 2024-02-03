@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 /**
@@ -31,21 +32,46 @@ extension ButtonType {
 }
 
 struct ButtonView: View {
-    public let buttonType: ButtonType
-    public let step: Double
-    public let isDisabled: Bool
-    @Binding var target: Double
+    private let buttonType: ButtonType
+    private let isDisabled: Bool
+    
+    private let stepInteger: Double
+    private let log10Step: Double
+    
+    @State private var targetInt: Double {
+        didSet {
+            target = targetInt / log10Step
+        }
+    }
+    
+    @Binding private var target: Double
+    
+    init(buttonType: ButtonType, step: Double, isDisabled: Bool, target: Binding<Double>) {
+        self.buttonType = buttonType
+        
+        let log10Step = if floor(log10(step)) < 0.0 {
+            pow(10.0, -floor(log10(step)))
+        } else {
+            1.0
+        }
+        self.log10Step = log10Step
+        self.stepInteger = step * log10Step
+        
+        self.isDisabled = isDisabled
+        self._target = target        
+        self.targetInt = target.wrappedValue * log10Step
+    }
     
     var body: some View {
         Button(action: {
             switch buttonType {
-            case let .minus(min):
-                if (target > min) {
-                    target -= step
+            case .minus(let min):
+                if target > min {
+                    targetInt -= stepInteger
                 }
-            case let .plus(max):
-                if (target < max) {
-                    target += step
+            case .plus(let max):
+                if target < max {
+                    targetInt += stepInteger
                 }
             }
         }) {
@@ -57,6 +83,9 @@ struct ButtonView: View {
                         isDisabled ? .primary.opacity(0.5) : buttonType.toColor().0,
                         isDisabled ? .primary.opacity(0.2) : buttonType.toColor().1
                     )
+                    .onChange(of: target) { newValue in
+                        targetInt = newValue * log10Step
+                    }
 
             }
         }
@@ -74,7 +103,7 @@ struct ButtonView_Previews: PreviewProvider {
         Form {
             HStack {
                 ButtonView(
-                    buttonType: .minus(10),
+                    buttonType: .minus(1),
                     step: 0.1,
                     isDisabled: true,
                     target: $target
