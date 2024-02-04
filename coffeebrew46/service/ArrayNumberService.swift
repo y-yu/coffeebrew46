@@ -20,34 +20,25 @@ protocol ArrayNumberService {
 
 class ArrayNumberServiceImpl: ArrayNumberService {
     func fromDouble(digit: Int, from: Double) -> ResultNea<NonEmptyArray<Int>, CoffeeError> {
-        if from > pow(10.0, Double(digit - 1)) {
+        let value = roundCentesimal(from)
+        
+        if value > pow(10.0, Double(digit - 1)) {
             return .failure(NonEmptyArray(.arrayNumberConversionError("`from` must be less than 10 ** (`digit` - 1).")))
         } else if digit <= 0 {
             return .failure(NonEmptyArray(.arrayNumberConversionError("`digit` must be greater than 0.")))
         } else {
-            let head: Int = Int(floor(from / pow(10.0, Double(digit - 2))))
+            let head: Int = Int(floor(value / pow(10.0, Double(digit - 2))))
             var tail: [Int] = []
             for index in 1..<digit {
                 var arr = tail
                 arr.insert(head, at: 0)
                 
-                var value = Int(floor(from / pow(10.0, Double(digit - index - 2)))) - Int(
+                var value = Int(floor(value / pow(10.0, Double(digit - index - 2)))) - Int(
                     arr.enumerated().reduce(0.0) { (acc, arg) in
                         let (i, item) = arg
                         return acc + (Double(item) * pow(10.0, Double(index - i)))
                     }
                 )
-                if index == (digit - 1) {
-                    let next = Int(floor(from / pow(10.0, -2.0))) - Int(
-                        (arr + [value]).enumerated().reduce(0.0) { (acc, arg) in
-                            let (i, item) = arg
-                            return acc + (Double(item) * pow(10.0, Double((index + 1) - i)))
-                        }
-                    )
-                    if next >= 5 {
-                        value += 1
-                    }
-                }
                 tail += [value]
             }
             return .success(NonEmptyArray(head: head, tail: tail))

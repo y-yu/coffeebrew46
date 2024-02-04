@@ -18,7 +18,7 @@ struct ConfigView: View {
     }
     @State var temporaryWaterAmount: Double = Config.initCoffeeBeansWeight * Config.initWaterToCoffeeBeansWeightRatio {
         didSet {
-            viewModel.currentConfig.coffeeBeansWeight = temporaryWaterAmount / viewModel.currentConfig.waterToCoffeeBeansWeightRatio
+            viewModel.currentConfig.coffeeBeansWeight = roundCentesimal(temporaryWaterAmount / viewModel.currentConfig.waterToCoffeeBeansWeightRatio)
         }
     }
     @State var currentSaveLoadIndex: Int = 0
@@ -307,14 +307,20 @@ struct ConfigView: View {
             }
         }
     }
+    
+    private var coffeeBeansAndWaterWeightView: some View {
+        HStack {
+            Text("config water amount")
+            Text("\(String(format: "%.1f", temporaryWaterAmount))g")
+            Spacer()
+            Text("config coffee beans weight")
+            Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
+        }
+    }
                              
     private var coffeeBeansWeightSettingView: some View {
         VStack {
-            HStack {
-                Text("config coffee beans weight")
-                Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
-                Spacer()
-            }
+            coffeeBeansAndWaterWeightView
             NumberPickerView(
                 digit: 3,
                 max: coffeeBeansWeightMax,
@@ -335,14 +341,7 @@ struct ConfigView: View {
         )
 
         return VStack {
-            HStack {
-                Text("config water amount")
-                Text("\(String(format: "%.0f", temporaryWaterAmount))g")
-                Spacer()
-                Text("config coffee beans weight")
-                Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
-            }
-            //Text("config water amount")
+            coffeeBeansAndWaterWeightView
             NumberPickerView(
                 digit: 4,
                 max: coffeeBeansWeightMax * viewModel.currentConfig.waterToCoffeeBeansWeightRatio,
