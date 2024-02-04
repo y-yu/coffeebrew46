@@ -32,14 +32,13 @@ class ArrayNumberServiceImpl: ArrayNumberService {
             for index in 1..<digit {
                 var arr = tail
                 arr.insert(head, at: 0)
-                
-                var value = Int(floor(value / pow(10.0, Double(digit - index - 2)))) - Int(
+
+                tail += [Int(floor(value / pow(10.0, Double(digit - index - 2)))) - Int(
                     arr.enumerated().reduce(0.0) { (acc, arg) in
                         let (i, item) = arg
                         return acc + (Double(item) * pow(10.0, Double(index - i)))
                     }
-                )
-                tail += [value]
+                )]
             }
             return .success(NonEmptyArray(head: head, tail: tail))
         }
