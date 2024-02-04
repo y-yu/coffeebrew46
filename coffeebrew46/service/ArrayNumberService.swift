@@ -1,17 +1,18 @@
 import Foundation
 import Factory
 
-
-
 /**
  # ArrayNumber to/from `Double`
  
  This service the `Double` number for example `12.3` to/from `[1, 2, 3]` (we called this _ArrayNumber_)`.
- Minimum value that this service handles is `0.1`.
  */
 protocol ArrayNumberService {
+    /**
+     Minimum value that this service handles is `0.1`. The smaller value more than 0.05 would be rounding,
+     for example since the input is `12.39` with `digit = 3` then the return value is `[1, 2, 4]`.
+     */
     func fromDouble(digit: Int, from: Double) -> ResultNea<NonEmptyArray<Int>, CoffeeError>
-    
+
     func toDouble(_ arrayNumber: NonEmptyArray<Int>) -> Double
     
     func toDoubleWithError(_ arrayNumber: [Int]) -> ResultNea<Double, CoffeeError>
@@ -30,15 +31,24 @@ class ArrayNumberServiceImpl: ArrayNumberService {
                 var arr = tail
                 arr.insert(head, at: 0)
                 
-                tail += [
-                    Int(floor(from / pow(10.0, Double(digit - index - 2)))) -
-                    Int(
-                        arr.enumerated().reduce(0.0) { (acc, arg) in
+                var value = Int(floor(from / pow(10.0, Double(digit - index - 2)))) - Int(
+                    arr.enumerated().reduce(0.0) { (acc, arg) in
+                        let (i, item) = arg
+                        return acc + (Double(item) * pow(10.0, Double(index - i)))
+                    }
+                )
+                if index == (digit - 1) {
+                    let next = Int(floor(from / pow(10.0, -2.0))) - Int(
+                        (arr + [value]).enumerated().reduce(0.0) { (acc, arg) in
                             let (i, item) = arg
-                            return acc + (Double(item) * pow(10.0, Double(index - i)))
+                            return acc + (Double(item) * pow(10.0, Double((index + 1) - i)))
                         }
                     )
-                ]
+                    if next >= 5 {
+                        value += 1
+                    }
+                }
+                tail += [value]
             }
             return .success(NonEmptyArray(head: head, tail: tail))
         }
@@ -68,4 +78,3 @@ extension Container {
         Factory(self) { ArrayNumberServiceImpl() }
     }
 }
-
