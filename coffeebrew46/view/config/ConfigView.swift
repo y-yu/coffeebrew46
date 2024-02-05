@@ -319,12 +319,22 @@ struct ConfigView: View {
     }
                              
     private var coffeeBeansWeightSettingView: some View {
-        VStack {
+        let temporaryCoffeeBeansWeightBinding: Binding<Double> = Binding(
+            get: { viewModel.currentConfig.coffeeBeansWeight },
+            set: { newValue in
+                viewModel.currentConfig.coffeeBeansWeight = newValue
+                // To calculate `temporaryWaterAmount` when `coffeeBeansWeight` has been changed.
+                // That's why this `Binding` is defined.
+                temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
+            }
+        )
+        
+        return VStack {
             coffeeBeansAndWaterWeightView
             NumberPickerView(
                 digit: 3,
                 max: coffeeBeansWeightMax,
-                target: $viewModel.currentConfig.coffeeBeansWeight,
+                target: temporaryCoffeeBeansWeightBinding,
                 isDisable: $appEnvironment.isTimerStarted,
                 log: $log
             )
@@ -332,9 +342,7 @@ struct ConfigView: View {
     }
     
     private var waterAmountSettingView: some View {
-        // In order to call `didSet` of `temporaryWaterAmount`,
-        // I cannot help but to define this `Binding` manually.
-        // I don't know why it's required.
+        // In order to call `didSet` of `temporaryWaterAmount`, we define this `Binding`.
         let temporaryWaterAmountBinding: Binding<Double> = Binding(
             get: { self.temporaryWaterAmount },
             set: { self.temporaryWaterAmount = $0 }
