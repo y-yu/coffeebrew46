@@ -49,11 +49,11 @@ extension Config {
     static let initWaterToCoffeeBeansWeightRatio: Double = 15.0
     
     func totalWaterAmount() -> Double {
-        self.coffeeBeansWeight * self.waterToCoffeeBeansWeightRatio
+        roundCentesimal(coffeeBeansWeight * self.waterToCoffeeBeansWeightRatio)
     }
     
     func fortyPercentWaterAmount() -> Double {
-        totalWaterAmount() * 0.4
+        roundCentesimal(totalWaterAmount() * 0.4)
     }
     
     func toJSON(isPrettyPrint: Bool) -> ResultNea<String, CoffeeError> {

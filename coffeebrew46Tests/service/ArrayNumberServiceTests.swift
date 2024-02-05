@@ -11,6 +11,7 @@ final class ArrayNumberServiceTests: XCTestCase {
         XCTAssertEqual(sut.fromDouble(digit: 3, from: 0.1), .success(NonEmptyArray(0, [0, 1])))
         XCTAssertEqual(sut.fromDouble(digit: 3, from: 0.0), .success(NonEmptyArray(0, [0, 0])))
         XCTAssertEqual(sut.fromDouble(digit: 1, from: 0.1), .success(NonEmptyArray(1, [])))
+        XCTAssertEqual(sut.fromDouble(digit: 4, from: 238.70000000000002), .success(NonEmptyArray(2, [3, 8, 7])))
     }
     
     func test_return_array_number_with_rounding_successfully() throws {
