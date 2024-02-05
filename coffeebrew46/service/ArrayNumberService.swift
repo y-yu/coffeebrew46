@@ -29,17 +29,17 @@ class ArrayNumberServiceImpl: ArrayNumberService {
         } else {
             let head: Int = Int(floor(value / pow(10.0, Double(digit - 2))))
             var tail: [Int] = []
-            for index in 1..<digit {
-                var arr = tail
-                arr.insert(head, at: 0)
-
-                tail += [Int(floor(value / pow(10.0, Double(digit - index - 2)))) - Int(
-                    arr.enumerated().reduce(0.0) { (acc, arg) in
-                        let (i, item) = arg
-                        return acc + (Double(item) * pow(10.0, Double(index - i)))
-                    }
-                )]
+            var previous: Int = head * 10
+            
+            if digit > 1 {
+                for index in 1..<(digit - 1) {
+                    tail += [Int(floor(value / pow(10.0, Double(digit - index - 2)))) - previous]
+                    previous = (previous * 10) + tail[index - 1] * 10
+                }
+                // We want to use `round` rather than `floor` for the last value, so the last case is special.
+                tail += [Int(round(value * 10.0 /*= value / pow(10.0, -1) */)) - previous]
             }
+            
             return .success(NonEmptyArray(head: head, tail: tail))
         }
     }

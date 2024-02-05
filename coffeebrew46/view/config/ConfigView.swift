@@ -312,29 +312,29 @@ struct ConfigView: View {
         HStack {
             Text("config water amount")
             Text("\(String(format: "%.1f", temporaryWaterAmount))g")
+                .onChange(of: viewModel.currentConfig.coffeeBeansWeight) { newValue in
+                    temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
+                }
+                .onAppear {
+                    // Initial calculation of `temporaryWaterAmount` from `coffeeBeansWeight`.
+                    temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
+                }
             Spacer()
             Text("config coffee beans weight")
             Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
+                .onChange(of: temporaryWaterAmount) { newValue in
+                    viewModel.currentConfig.coffeeBeansWeight = roundCentesimal(newValue / viewModel.currentConfig.waterToCoffeeBeansWeightRatio)
+                }
         }
     }
                              
     private var coffeeBeansWeightSettingView: some View {
-        let temporaryCoffeeBeansWeightBinding: Binding<Double> = Binding(
-            get: { viewModel.currentConfig.coffeeBeansWeight },
-            set: { newValue in
-                viewModel.currentConfig.coffeeBeansWeight = newValue
-                // To calculate `temporaryWaterAmount` when `coffeeBeansWeight` has been changed.
-                // That's why this `Binding` is defined.
-                temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
-            }
-        )
-        
-        return VStack {
+        VStack {
             coffeeBeansAndWaterWeightView
             NumberPickerView(
                 digit: 3,
                 max: coffeeBeansWeightMax,
-                target: temporaryCoffeeBeansWeightBinding,
+                target: $viewModel.currentConfig.coffeeBeansWeight,
                 isDisable: $appEnvironment.isTimerStarted,
                 log: $log
             )
@@ -342,18 +342,12 @@ struct ConfigView: View {
     }
     
     private var waterAmountSettingView: some View {
-        // In order to call `didSet` of `temporaryWaterAmount`, we define this `Binding`.
-        let temporaryWaterAmountBinding: Binding<Double> = Binding(
-            get: { self.temporaryWaterAmount },
-            set: { self.temporaryWaterAmount = $0 }
-        )
-
-        return VStack {
+        VStack {
             coffeeBeansAndWaterWeightView
             NumberPickerView(
                 digit: 4,
                 max: coffeeBeansWeightMax * viewModel.currentConfig.waterToCoffeeBeansWeightRatio,
-                target: temporaryWaterAmountBinding,
+                target: $temporaryWaterAmount,
                 isDisable: $appEnvironment.isTimerStarted,
                 log: $log
             )
