@@ -310,21 +310,41 @@ struct ConfigView: View {
     
     private var coffeeBeansAndWaterWeightView: some View {
         HStack {
-            Text("config water amount")
-            Text("\(String(format: "%.1f", temporaryWaterAmount))g")
-                .onChange(of: viewModel.currentConfig.coffeeBeansWeight) { newValue in
-                    temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
-                }
-                .onAppear {
-                    // Initial calculation of `temporaryWaterAmount` from `coffeeBeansWeight`.
-                    temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
-                }
             Spacer()
-            Text("config coffee beans weight")
-            Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
-                .onChange(of: temporaryWaterAmount) { newValue in
-                    viewModel.currentConfig.coffeeBeansWeight = roundCentesimal(newValue / viewModel.currentConfig.waterToCoffeeBeansWeightRatio)
-                }
+            Group {
+                Text("config coffee beans weight")
+                    .font(
+                        !calculateCoffeeBeansWeightFromWater ? Font.headline.weight(.bold) :
+                            Font.headline.weight(.regular)
+                    )
+                Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
+                    .onChange(of: temporaryWaterAmount) { newValue in
+                        viewModel.currentConfig.coffeeBeansWeight = roundCentesimal(newValue / viewModel.currentConfig.waterToCoffeeBeansWeightRatio)
+                    }
+            }
+            .font(
+                !calculateCoffeeBeansWeightFromWater ? Font.headline.weight(.bold) :
+                Font.headline.weight(.regular)
+            )
+            Spacer()
+            Spacer()
+            Spacer()
+            Group {
+                Text("config water amount")
+                Text("\(String(format: "%.1f", temporaryWaterAmount))g")
+                    .onChange(of: viewModel.currentConfig.coffeeBeansWeight) { newValue in
+                        temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
+                    }
+                    .onAppear {
+                        // Initial calculation of `temporaryWaterAmount` from `coffeeBeansWeight`.
+                        temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
+                    }
+            }
+            .font(
+                calculateCoffeeBeansWeightFromWater ? Font.headline.weight(.bold) :
+                    Font.headline.weight(.regular)
+            )
+            Spacer()
         }
     }
                              
