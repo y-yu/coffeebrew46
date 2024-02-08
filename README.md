@@ -1,4 +1,4 @@
-CoffeeBrew46
+BrewCoffee46
 =============================
 
 ![CI](https://github.com/y-yu/coffeebrew46/workflows/CI/badge.svg)

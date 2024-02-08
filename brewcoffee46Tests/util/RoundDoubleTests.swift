@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import CoffeeBrew46
+@testable import BrewCoffee46
 
 final class RoundDouble: XCTestCase {
     func test_roundCentesimal_successfully() throws {

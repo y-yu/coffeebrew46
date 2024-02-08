@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import CoffeeBrew46
+@testable import BrewCoffee46
 
 final class ArrayNumberServiceTests: XCTestCase {
     let sut = ArrayNumberServiceImpl()

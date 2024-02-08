@@ -1,7 +1,7 @@
 import XCTest
 import Factory
 
-@testable import CoffeeBrew46
+@testable import BrewCoffee46
 
 class MockDateService: DateService {
     let dummyNow: Date
@@ -24,11 +24,11 @@ class MockUserDefaultsService: UserDefaultsService {
     }
     
     
-    func setEncodable<A: Encodable>(_ value: A, forKey: String) -> CoffeeBrew46.ResultNea<Void, CoffeeBrew46.CoffeeError>  {
+    func setEncodable<A: Encodable>(_ value: A, forKey: String) -> ResultNea<Void, CoffeeError>  {
         .success(())
     }
     
-    func getDecodable<A: Decodable>(forKey: String) -> CoffeeBrew46.ResultNea<A?, CoffeeBrew46.CoffeeError> {
+    func getDecodable<A: Decodable>(forKey: String) -> ResultNea<A?, CoffeeError> {
         if forKey == RequestReviewServiceImpl.requestReviewInfoKey {
             .success(dummyRequestReviewInfo as! A?)
         } else if forKey == RequestReviewServiceImpl.requestReviewGuardKey {
