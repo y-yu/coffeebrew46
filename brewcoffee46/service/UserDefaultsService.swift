@@ -1,11 +1,11 @@
-import Foundation
 import Factory
+import Foundation
 
 protocol UserDefaultsService {
     func setEncodable<A: Encodable>(_ value: A, forKey defaultName: String) -> ResultNea<Void, CoffeeError>
-    
+
     func getDecodable<A: Decodable>(forKey: String) -> ResultNea<A?, CoffeeError>
-    
+
     func delete(forKey: String) -> Void
 }
 
@@ -20,10 +20,10 @@ class UserDefaultsServiceImpl: UserDefaultsService {
             return .failure(NonEmptyArray(CoffeeError.jsonError(error)))
         }
     }
-    
-    func getDecodable<A: Decodable>(forKey: String) -> ResultNea<A?, CoffeeError>  {
+
+    func getDecodable<A: Decodable>(forKey: String) -> ResultNea<A?, CoffeeError> {
         let decoder = JSONDecoder()
-        
+
         if let json = UserDefaults.standard.string(forKey: forKey)?.data(using: .utf8) {
             do {
                 return .success(try decoder.decode(A.self, from: json))
@@ -34,7 +34,7 @@ class UserDefaultsServiceImpl: UserDefaultsService {
             return .success(.none)
         }
     }
-    
+
     func delete(forKey: String) -> Void {
         UserDefaults.standard.removeObject(forKey: forKey)
     }

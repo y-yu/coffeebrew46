@@ -1,11 +1,9 @@
 import Foundation
 import SwiftUI
 
-/**
- # ButtonType
- 
- `minus` requires the minimum limit of the target and `plus` requires the maximum limit of that.
- */
+/// # ButtonType
+///
+/// `minus` requires the minimum limit of the target and `plus` requires the maximum limit of that.
 enum ButtonType {
     case minus(Double)
     case plus(Double)
@@ -34,34 +32,35 @@ extension ButtonType {
 struct ButtonView: View {
     private let buttonType: ButtonType
     private let isDisabled: Bool
-    
+
     private let stepInteger: Double
     private let log10Step: Double
-    
+
     @State private var targetInt: Double {
         didSet {
             target = targetInt / log10Step
         }
     }
-    
+
     @Binding private var target: Double
-    
+
     init(buttonType: ButtonType, step: Double, isDisabled: Bool, target: Binding<Double>) {
         self.buttonType = buttonType
-        
-        let log10Step = if floor(log10(step)) < 0.0 {
-            pow(10.0, -floor(log10(step)))
-        } else {
-            1.0
-        }
+
+        let log10Step =
+            if floor(log10(step)) < 0.0 {
+                pow(10.0, -floor(log10(step)))
+            } else {
+                1.0
+            }
         self.log10Step = log10Step
         self.stepInteger = step * log10Step
-        
+
         self.isDisabled = isDisabled
-        self._target = target        
+        self._target = target
         self.targetInt = target.wrappedValue * log10Step
     }
-    
+
     var body: some View {
         Button(action: {
             switch buttonType {
@@ -96,42 +95,42 @@ struct ButtonView: View {
 }
 
 #if DEBUG
-struct ButtonView_Previews: PreviewProvider {
-    @State static var target: Double = 10.0
-    
-    static var previews: some View {
-        Form {
-            HStack {
-                ButtonView(
-                    buttonType: .minus(1),
-                    step: 0.1,
-                    isDisabled: true,
-                    target: $target
-                )
-                Divider()
-                ButtonView(
-                    buttonType: .plus(100),
-                    step: 0.1,
-                    isDisabled: true,
-                    target: $target
-                )
-            }
-            HStack {
-                ButtonView(
-                    buttonType: .minus(10),
-                    step: 0.1,
-                    isDisabled: false,
-                    target: $target
-                )
-                Divider()
-                ButtonView(
-                    buttonType: .plus(100),
-                    step: 0.1,
-                    isDisabled: false,
-                    target: $target
-                )
+    struct ButtonView_Previews: PreviewProvider {
+        @State static var target: Double = 10.0
+
+        static var previews: some View {
+            Form {
+                HStack {
+                    ButtonView(
+                        buttonType: .minus(1),
+                        step: 0.1,
+                        isDisabled: true,
+                        target: $target
+                    )
+                    Divider()
+                    ButtonView(
+                        buttonType: .plus(100),
+                        step: 0.1,
+                        isDisabled: true,
+                        target: $target
+                    )
+                }
+                HStack {
+                    ButtonView(
+                        buttonType: .minus(10),
+                        step: 0.1,
+                        isDisabled: false,
+                        target: $target
+                    )
+                    Divider()
+                    ButtonView(
+                        buttonType: .plus(100),
+                        step: 0.1,
+                        isDisabled: false,
+                        target: $target
+                    )
+                }
             }
         }
     }
-}
 #endif

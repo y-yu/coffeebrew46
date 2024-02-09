@@ -1,15 +1,15 @@
+import Factory
 import SwiftUI
 import SwiftUITooltip
-import Factory
 
 struct ConfigView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
-    
+
     @Injected(\.saveLoadConfigService) private var saveLoadConfigService
 
     @Environment(\.scenePhase) private var scenePhase
-    
+
     @State var showTips: Bool = false
     @State var calculateCoffeeBeansWeightFromWater: Bool = false {
         didSet {
@@ -23,18 +23,18 @@ struct ConfigView: View {
     }
     @State var currentSaveLoadIndex: Int = 0
     @State var log: String = ""
-    
+
     // The elements of `savedConfigNote` indicates these 3 semantics of saved configuration:
     //   1. If the element is `.none`, it means the data is empty (not saved yet)
     //   2. If the element is `.some("")`, it means the data is saved and `note` of the data is empty string
     //   3. If the element is `.some("hoge")`, it means the data is saved and `note` of the data is not empty
-    @State var savedConfigNote: Array<String?> =
+    @State var savedConfigNote: [String?] =
         [.none, .none, .none, .none, .none, .none, .none, .none, .none, .none, .none]
-    
+
     private let timerStep: Double = 1.0
     private let coffeeBeansWeightMax = 50.0
     private let coffeeBeansWeightMin = 1.0
-    
+
     private let temporaryCurrentConfigKey = "temporaryCurrentConfig"
 
     var body: some View {
@@ -49,7 +49,7 @@ struct ConfigView: View {
                     }
                     .pickerStyle(.segmented)
                     .onChange(of: calculateCoffeeBeansWeightFromWater) { newValue in
-                        if (newValue) {
+                        if newValue {
                             temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
                         }
                     },
@@ -66,7 +66,7 @@ struct ConfigView: View {
                         content: HStack {
                             Text("config water ratio")
                             Text("\(String(format: "%.1f%", viewModel.currentConfig.waterToCoffeeBeansWeightRatio))")
-                            
+
                         },
                         tips: Text("config water ratio tips")
                     )
@@ -83,7 +83,7 @@ struct ConfigView: View {
                     }
                 }
             }
-            
+
             Section(header: Text("config 4:6 settings")) {
                 VStack {
                     TipsView(
@@ -91,7 +91,7 @@ struct ConfigView: View {
                         content: HStack {
                             Text("config 1st water percent")
                             Text("\(String(format: "%.0f%", viewModel.currentConfig.firstWaterPercent * 100))%")
-                            
+
                         },
                         tips: Text("config 1st water percent tips")
                     )
@@ -104,7 +104,7 @@ struct ConfigView: View {
                         target: $viewModel.currentConfig.firstWaterPercent
                     )
                 }
-                
+
                 VStack {
                     TipsView(
                         showTips,
@@ -120,7 +120,7 @@ struct ConfigView: View {
                     )
                 }
             }
-            
+
             Section(header: Text("config timer setting")) {
                 VStack {
                     HStack {
@@ -140,7 +140,7 @@ struct ConfigView: View {
                         target: $viewModel.currentConfig.totalTimeSec
                     )
                 }
-                
+
                 VStack {
                     HStack {
                         Text("config steaming time")
@@ -153,7 +153,8 @@ struct ConfigView: View {
                         // If the maximum is `viewModel.totalTime - timerStep` then
                         // `totalTime`'s slider range could be 300~300 and it will crash
                         // so that's the why `timerStep` double subtractions are required.
-                        maximum: viewModel.currentConfig.totalTimeSec - timerStep - timerStep > 1 + timerStep ? viewModel.currentConfig.totalTimeSec - timerStep - timerStep : 1 + timerStep,
+                        maximum: viewModel.currentConfig.totalTimeSec - timerStep - timerStep > 1 + timerStep
+                            ? viewModel.currentConfig.totalTimeSec - timerStep - timerStep : 1 + timerStep,
                         minimum: 1,
                         sliderStep: timerStep,
                         buttonStep: timerStep,
@@ -162,7 +163,7 @@ struct ConfigView: View {
                     )
                 }
             }
-            
+
             Section(header: Text("config save load setting")) {
                 Picker("config select save load index", selection: $currentSaveLoadIndex) {
                     ForEach(Array(zip(savedConfigNote.indices, savedConfigNote)), id: \.0) { index, noteOpt in
@@ -181,7 +182,7 @@ struct ConfigView: View {
                     updateSavedConfigNote()
                 }
                 .fixedSize(horizontal: false, vertical: true)
-                
+
                 HStack {
                     let noteBinding: Binding<String> =
                         Binding(
@@ -205,13 +206,13 @@ struct ConfigView: View {
                         .textInputAutocapitalization(.never)
                         .submitLabel(.done)
                 }
-                
+
                 VStack {
                     Spacer()
                     HStack {
                         Button(action: {
                             loadConfig()
-                        }){
+                        }) {
                             HStack {
                                 Spacer()
                                 Text("config load button")
@@ -221,14 +222,14 @@ struct ConfigView: View {
                         .buttonStyle(BorderlessButtonStyle())
                         .disabled(appEnvironment.isTimerStarted)
                         .id(!appEnvironment.isTimerStarted)
-                        
+
                         Divider()
-                        
+
                         Button(action: {
                             saveConfig()
                             // In order to update save & load target picker label.
                             updateSavedConfigNote()
-                        }){
+                        }) {
                             HStack {
                                 Spacer()
                                 Text("config save button")
@@ -236,15 +237,15 @@ struct ConfigView: View {
                             }
                         }
                         .buttonStyle(BorderlessButtonStyle())
-                        
+
                         Divider()
-                        
+
                         Button(action: {
                             saveLoadConfigService.delete(key: "\(currentSaveLoadIndex)")
                             log = NSLocalizedString("config delete success log", comment: "")
                             // In order to update save & load target picker label.
                             updateSavedConfigNote()
-                        }){
+                        }) {
                             HStack {
                                 Spacer()
                                 Text("config delete button")
@@ -262,7 +263,7 @@ struct ConfigView: View {
                         .foregroundColor(.primary.opacity(0.5))
                 }
             }
-            
+
             Section(header: Text("config json")) {
                 NavigationLink(value: Route.saveLoad) {
                     Text("config import export")
@@ -307,15 +308,14 @@ struct ConfigView: View {
             }
         }
     }
-    
+
     private var coffeeBeansAndWaterWeightView: some View {
         HStack {
             Spacer()
             Group {
                 Text("config coffee beans weight")
                     .font(
-                        !calculateCoffeeBeansWeightFromWater ? Font.headline.weight(.bold) :
-                            Font.headline.weight(.regular)
+                        !calculateCoffeeBeansWeightFromWater ? Font.headline.weight(.bold) : Font.headline.weight(.regular)
                     )
                 Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
                     .onChange(of: temporaryWaterAmount) { newValue in
@@ -323,8 +323,7 @@ struct ConfigView: View {
                     }
             }
             .font(
-                !calculateCoffeeBeansWeightFromWater ? Font.headline.weight(.bold) :
-                Font.headline.weight(.regular)
+                !calculateCoffeeBeansWeightFromWater ? Font.headline.weight(.bold) : Font.headline.weight(.regular)
             )
             Spacer()
             Spacer()
@@ -341,13 +340,12 @@ struct ConfigView: View {
                     }
             }
             .font(
-                calculateCoffeeBeansWeightFromWater ? Font.headline.weight(.bold) :
-                    Font.headline.weight(.regular)
+                calculateCoffeeBeansWeightFromWater ? Font.headline.weight(.bold) : Font.headline.weight(.regular)
             )
             Spacer()
         }
     }
-                             
+
     private var coffeeBeansWeightSettingView: some View {
         VStack {
             coffeeBeansAndWaterWeightView
@@ -360,7 +358,7 @@ struct ConfigView: View {
             )
         }
     }
-    
+
     private var waterAmountSettingView: some View {
         VStack {
             coffeeBeansAndWaterWeightView
@@ -373,7 +371,7 @@ struct ConfigView: View {
             )
         }
     }
-    
+
     private func updateSavedConfigNote() {
         for i in 0..<savedConfigNote.count {
             switch saveLoadConfigService.load(key: String(i)) {
@@ -394,7 +392,7 @@ struct ConfigView: View {
             }
         }
     }
-    
+
     private func loadConfig() {
         switch saveLoadConfigService.load(key: String(currentSaveLoadIndex)) {
         case .success(.some(let config)):
@@ -421,12 +419,12 @@ struct ConfigView: View {
 }
 
 #if DEBUG
-struct ConfigView_Previews: PreviewProvider {
-    static var previews: some View {
-        ConfigView()
-            .environment(\.locale, .init(identifier: "ja"))
-            .environmentObject(CurrentConfigViewModel.init())
-            .environmentObject(AppEnvironment.init())
+    struct ConfigView_Previews: PreviewProvider {
+        static var previews: some View {
+            ConfigView()
+                .environment(\.locale, .init(identifier: "ja"))
+                .environmentObject(CurrentConfigViewModel.init())
+                .environmentObject(AppEnvironment.init())
+        }
     }
-}
 #endif

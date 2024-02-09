@@ -5,9 +5,9 @@ struct ButtonNumberButtonView: View {
     public let minimum: Double
     public let step: Double
     public let isDisable: Bool
-    
+
     @Binding var target: Double
-    
+
     var body: some View {
         HStack {
             Spacer()

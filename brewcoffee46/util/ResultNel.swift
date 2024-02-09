@@ -1,12 +1,10 @@
-/**
- # A `Result` uses `NonEmptyArray<Failure>` as errors.
- */
+/// # A `Result` uses `NonEmptyArray<Failure>` as errors.
 public typealias ResultNea<Success, Failure: Error> =
     Result<Success, NonEmptyArray<Failure>>
 
-infix operator |+|: AssociativityRight
+infix operator |+| : AssociativityRight
 
-public func |+|<A, B, E: Error>(
+public func |+| <A, B, E: Error>(
     r1: ResultNea<A, E>,
     r2: ResultNea<B, E>
 ) -> ResultNea<(A, B), E> {
@@ -23,7 +21,7 @@ public func |+|<A, B, E: Error>(
 }
 
 // It is required to use `NonEmptyArray` for `Failure` type parameter of `Result`
-extension NonEmptyArray: Error where A: Error { }
+extension NonEmptyArray: Error where A: Error {}
 
 extension ResultNea {
     func forEach(_ f: (Success) -> Void) -> Void {
@@ -43,7 +41,7 @@ extension Result {
         case .failure(_): false
         }
     }
-    
+
     func isFailure() -> Bool {
         return !isSuccess()
     }

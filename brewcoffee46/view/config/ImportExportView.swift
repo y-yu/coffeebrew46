@@ -3,10 +3,10 @@ import SwiftUI
 struct ImportExportView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
-        
+
     @State var json: String = ""
     @State var isPrettyPrint: Bool = true
-    
+
     var body: some View {
         Form {
             Toggle("JSON pretty printing", isOn: $isPrettyPrint)
@@ -15,7 +15,7 @@ struct ImportExportView: View {
                     Spacer()
                     Button(action: {
                         updateConfig()
-                    }){
+                    }) {
                         HStack {
                             Spacer()
                             Text("Import")
@@ -25,12 +25,12 @@ struct ImportExportView: View {
                     .buttonStyle(BorderlessButtonStyle())
                     .disabled(appEnvironment.isTimerStarted)
                     .id(!appEnvironment.isTimerStarted)
-        
+
                     Divider()
 
                     Button(action: {
                         exportJSON()
-                    }){
+                    }) {
                         HStack {
                             Spacer()
                             Text("Export")
@@ -53,7 +53,7 @@ struct ImportExportView: View {
         }
         .navigationTitle("config import export")
     }
-    
+
     private func updateConfig() {
         viewModel.errors = ""
         switch Config.fromJSON(json) {
@@ -63,7 +63,7 @@ struct ImportExportView: View {
             viewModel.errors = "\(errors)"
         }
     }
-    
+
     private func exportJSON() {
         viewModel.errors = ""
         switch viewModel.currentConfig.toJSON(isPrettyPrint: isPrettyPrint) {
@@ -82,11 +82,11 @@ extension View {
 }
 
 #if DEBUG
-struct SaveLoadView_Previews: PreviewProvider {
-    static var previews: some View {
-        ImportExportView()
-            .environmentObject(CurrentConfigViewModel.init())
-            .environmentObject(AppEnvironment.init())
+    struct SaveLoadView_Previews: PreviewProvider {
+        static var previews: some View {
+            ImportExportView()
+                .environmentObject(CurrentConfigViewModel.init())
+                .environmentObject(AppEnvironment.init())
+        }
     }
-}
 #endif

@@ -1,4 +1,3 @@
-
 import BrewCoffee46
 
 extension CoffeeError: Equatable {
@@ -12,7 +11,7 @@ extension CoffeeError: Equatable {
         case (.steamingTimeIsTooMuchThanTotal, .steamingTimeIsTooMuchThanTotal): true
         case (.firstWaterPercentIsZeroError, .firstWaterPercentIsZeroError): true
         case (.loadedConfigIsNotCompatible, .loadedConfigIsNotCompatible): true
-        case (.jsonError(_), .jsonError(_)): 
+        case (.jsonError(_), .jsonError(_)):
             // This case is too much ad-hoc since ignore the difference of `underlying` between `lhs` and `rhs`.
             // That's the why this `Equatable` implementation is put test code rather than main.
             true

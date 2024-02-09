@@ -1,11 +1,9 @@
-import Foundation
 import Factory
+import Foundation
 
-/**
- # ArrayNumber to/from `Double`
- 
- This service the `Double` number for example `12.3` to/from `[1, 2, 3]` (we called this _ArrayNumber_)`.
- */
+/// # ArrayNumber to/from `Double`
+///
+/// This service the `Double` number for example `12.3` to/from `[1, 2, 3]` (we called this _ArrayNumber_)`.
 protocol ArrayNumberService {
     /**
      Minimum value that this service handles is `0.1`. The smaller value more than 0.05 would be rounding,
@@ -14,14 +12,14 @@ protocol ArrayNumberService {
     func fromDouble(digit: Int, from: Double) -> ResultNea<NonEmptyArray<Int>, CoffeeError>
 
     func toDouble(_ arrayNumber: NonEmptyArray<Int>) -> Double
-    
+
     func toDoubleWithError(_ arrayNumber: [Int]) -> ResultNea<Double, CoffeeError>
 }
 
 class ArrayNumberServiceImpl: ArrayNumberService {
     func fromDouble(digit: Int, from: Double) -> ResultNea<NonEmptyArray<Int>, CoffeeError> {
         let value = roundCentesimal(from)
-        
+
         if value > pow(10.0, Double(digit - 1)) {
             return .failure(NonEmptyArray(.arrayNumberConversionError("`from` must be less than 10 ** (`digit` - 1).")))
         } else if digit <= 0 {
@@ -30,7 +28,7 @@ class ArrayNumberServiceImpl: ArrayNumberService {
             let head: Int = Int(floor(value / pow(10.0, Double(digit - 2))))
             var tail: [Int] = []
             var previous: Int = head * 10
-            
+
             if digit > 1 {
                 for index in 1..<(digit - 1) {
                     tail += [Int(floor(value / pow(10.0, Double(digit - index - 2)))) - previous]
@@ -39,21 +37,21 @@ class ArrayNumberServiceImpl: ArrayNumberService {
                 // We want to use `round` rather than `floor` for the last value, so the last case is special.
                 tail += [Int(round(value * 10.0 /*= value / pow(10.0, -1) */)) - previous]
             }
-            
+
             return .success(NonEmptyArray(head: head, tail: tail))
         }
     }
-    
+
     func toDouble(_ arrayNumber: NonEmptyArray<Int>) -> Double {
         var result: Double = 0.0
-        
+
         for (i, item) in arrayNumber.toArray().enumerated() {
             result += Double(item) * pow(10.0, Double(arrayNumber.count() - (i + 2)))
         }
-        
+
         return result
     }
-    
+
     func toDoubleWithError(_ arrayNumber: [Int]) -> ResultNea<Double, CoffeeError> {
         if let head = arrayNumber.first {
             .success(toDouble(NonEmptyArray(head: head, tail: Array(arrayNumber[1...]))))

@@ -1,7 +1,7 @@
-import SwiftUI
-import StoreKit
 import AudioToolbox
 import Factory
+import StoreKit
+import SwiftUI
 
 struct StopwatchView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
@@ -18,15 +18,15 @@ struct StopwatchView: View {
     @State private var timer: Timer?
     @State private var hasRingingIndex: Int = 0
     @State private var isStop︎AlertPresented: Bool = false
-    
+
     @Injected(\.requestReviewService) private var requestReviewService
-    
+
     private let soundIdRing = SystemSoundID(1013)
 
     private let buttonBackground: some View =
         RoundedRectangle(cornerRadius: 10, style: .continuous)
-            .stroke(lineWidth: 1)
-            .padding(6)
+        .stroke(lineWidth: 1)
+        .padding(6)
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
@@ -51,7 +51,7 @@ struct StopwatchView: View {
                 }
             }
             .frame(minWidth: appEnvironment.minWidth)
-            
+
             GeometryReader { (geometry: GeometryProxy) in
                 VStack {
                     Group {
@@ -80,7 +80,7 @@ struct StopwatchView: View {
             }
         }
     }
-    
+
     private var stopWatchCountShow: some View {
         let progressInt = if progressTime < 0 { ceil(progressTime) } else { floor(progressTime) }
 
@@ -124,7 +124,7 @@ struct StopwatchView: View {
             Spacer()
         }
     }
-    
+
     private var timerController: some View {
         let stopButtonText = Text("Stop")
             .font(.system(size: 20))
@@ -133,7 +133,7 @@ struct StopwatchView: View {
             .background(buttonBackground)
 
         return VStack {
-            if (self.timer == nil) {
+            if self.timer == nil {
                 Button(action: { startTimer() }) {
                     Text("Start")
                         .font(.system(size: 20))
@@ -149,19 +149,22 @@ struct StopwatchView: View {
                         }
                 }
                 .foregroundColor(.green)
-            } else if (progressTime <= viewModel.currentConfig.totalTimeSec) {
+            } else if progressTime <= viewModel.currentConfig.totalTimeSec {
                 Button(action: { isStop︎AlertPresented.toggle() }) {
                     stopButtonText
                 }
                 .foregroundColor(.red)
                 .alert("stop alert title", isPresented: $isStop︎AlertPresented) {
-                    Button(role: .cancel, action: { isStop︎AlertPresented.toggle() } ) {
+                    Button(role: .cancel, action: { isStop︎AlertPresented.toggle() }) {
                         Text("stop alert cancel")
                     }
-                    Button(role: .destructive, action: {
-                        isStop︎AlertPresented.toggle()
-                        stopTimer()
-                    }) {
+                    Button(
+                        role: .destructive,
+                        action: {
+                            isStop︎AlertPresented.toggle()
+                            stopTimer()
+                        }
+                    ) {
                         Text("stop alert stop")
                     }
                 } message: {
@@ -175,16 +178,16 @@ struct StopwatchView: View {
             }
         }
     }
-    
+
     private func startTimer() {
-        if (self.timer == nil) {
+        if self.timer == nil {
             UIApplication.shared.isIdleTimerDisabled = true
             self.appEnvironment.isTimerStarted = true
-            
+
             self.timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
-                if (self.startTime == nil && progressTime >= -0.01 && progressTime <= 0.01) {
+                if self.startTime == nil && progressTime >= -0.01 && progressTime <= 0.01 {
                     self.startTime = Date()
-                } else if (progressTime < 0) {
+                } else if progressTime < 0 {
                     progressTime += 0.01
                 } else {
                     if let time = startTime {
@@ -196,7 +199,7 @@ struct StopwatchView: View {
             }
         }
     }
-    
+
     private func saveStartTime() {
         if let time = startTime {
             UserDefaults.standard.set(time, forKey: "startTime")
@@ -204,7 +207,7 @@ struct StopwatchView: View {
             UserDefaults.standard.removeObject(forKey: "startTime")
         }
     }
-    
+
     private func stopTimer() {
         if let t = self.timer {
             t.invalidate()
@@ -216,7 +219,7 @@ struct StopwatchView: View {
             hasRingingIndex = 0
         }
     }
-    
+
     private func restoreTimer() {
         if let time = fetchStartTime() {
             startTime = time
@@ -225,13 +228,13 @@ struct StopwatchView: View {
     }
 
     private func fetchStartTime() -> Date? {
-         UserDefaults.standard.object(forKey: "startTime") as? Date
+        UserDefaults.standard.object(forKey: "startTime") as? Date
     }
-    
+
     private func ringSound() {
         let nth = viewModel.getNthPhase(progressTime: progressTime)
-        
-        if (nth > hasRingingIndex) {
+
+        if nth > hasRingingIndex {
             AudioServicesPlaySystemSound(soundIdRing)
             hasRingingIndex = nth
         }
@@ -239,11 +242,11 @@ struct StopwatchView: View {
 }
 
 #if DEBUG
-struct StopwatchView_Previews: PreviewProvider {
-    static var previews: some View {
-        StopwatchView()
-            .environmentObject(CurrentConfigViewModel.init())
-            .environmentObject(AppEnvironment.init())
+    struct StopwatchView_Previews: PreviewProvider {
+        static var previews: some View {
+            StopwatchView()
+                .environmentObject(CurrentConfigViewModel.init())
+                .environmentObject(AppEnvironment.init())
+        }
     }
-}
 #endif

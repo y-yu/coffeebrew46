@@ -1,18 +1,16 @@
 import SwiftUI
 
-/**
- # A pointer of the scale.
- 
- These implementation refer from: https://talk.objc.io/episodes/S01E192-analog-clock
- */
+/// # A pointer of the scale.
+///
+/// These implementation refer from: https://talk.objc.io/episodes/S01E192-analog-clock
 struct PointerView: View {
     var id: Int
     var pointerInfo: PointerInfoViewModel
     var geometry: GeometryProxy
     var isOnGoing: Bool
-    
+
     private let offset: Double = 10
-    
+
     var body: some View {
         ZStack {
             VStack {
@@ -43,11 +41,11 @@ struct PointerView: View {
     }
 }
 
-struct Pointer: Shape {    
+struct Pointer: Shape {
     var circleRadius: CGFloat = 5
-    
+
     var offset: Double
-    
+
     func path(in rect: CGRect) -> Path {
         return Path { p in
             p.move(to: CGPoint(x: rect.midX, y: rect.minY - (offset * 1.5)))
@@ -57,24 +55,24 @@ struct Pointer: Shape {
 }
 
 #if DEBUG
-struct PointerView_Previews: PreviewProvider {
-    @State static var progressTime: Double = 12.34
-    static var pointerInfoViewModels =  PointerInfoViewModels.defaultValue()
+    struct PointerView_Previews: PreviewProvider {
+        @State static var progressTime: Double = 12.34
+        static var pointerInfoViewModels = PointerInfoViewModels.defaultValue()
 
-    static var previews: some View {
-        ZStack {
-            GeometryReader { (geometry: GeometryProxy) in
-                ForEach((0..<pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
-                    PointerView(
-                        id: i,
-                        pointerInfo: pointerInfoViewModels.pointerInfo[i],
-                        geometry: geometry,
-                        isOnGoing: i == 2
-                    )
+        static var previews: some View {
+            ZStack {
+                GeometryReader { (geometry: GeometryProxy) in
+                    ForEach((0..<pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
+                        PointerView(
+                            id: i,
+                            pointerInfo: pointerInfoViewModels.pointerInfo[i],
+                            geometry: geometry,
+                            isOnGoing: i == 2
+                        )
+                    }
                 }
             }
+            .frame(width: 300, height: 350)
         }
-        .frame(width: 300, height: 350)
     }
-}
 #endif
