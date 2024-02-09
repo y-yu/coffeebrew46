@@ -5,6 +5,35 @@ on:
     branches:
       - master
 jobs:
+  format-check:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get Homebrew cache directory
+        id: brew-cache
+        run: echo "dir=$(brew --cache)/downloads" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            .build
+            ${{ steps.brew-cache.outputs.dir }}
+          key: format-${{ runner.os }}-${{ hashFiles('**/Package.resolved', '.github/workflows/ci.yml') }}
+          restore-keys: |
+            format-${{ runner.os }}-
+
+      - name: Install swift-format
+        run: brew install swift-format
+
+      - name: Run swift-format and check
+        run: |
+          swift-format -r brewcoffee46 brewcoffee46Tests -i
+          if [[ -n `git diff` ]]; then
+            exit 1;
+          fi
+
   build-and-test:
     runs-on: macos-13
     strategy:

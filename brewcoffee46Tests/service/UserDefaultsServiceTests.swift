@@ -6,7 +6,7 @@ struct Dummy: Equatable {
     let a: Int
     let b: Bool
     let c: String
-    
+
     enum CodingKeys: String, CodingKey {
         case a
         case b
@@ -35,22 +35,22 @@ extension Dummy: Encodable {
 final class UserDefaultsServiceTests: XCTestCase {
     let key = "dummy"
     let sut = UserDefaultsServiceImpl()
-    
+
     override func tearDown() {
         super.tearDown()
         UserDefaults.standard.removeObject(forKey: key)
     }
-    
+
     func test_set_and_get_dummy_data() throws {
         let dummy = Dummy(a: 1, b: true, c: "test")
-            
+
         let actual1 = sut.setEncodable(dummy, forKey: key)
         XCTAssert(actual1.isSuccess())
-        
+
         let actual2: ResultNea<Dummy?, CoffeeError> = sut.getDecodable(forKey: key)
         XCTAssertEqual(actual2, .success(.some(dummy)))
     }
-    
+
     func test_return_none_if_there_is_no_data() throws {
         let actual: ResultNea<Dummy?, CoffeeError> = sut.getDecodable(forKey: key)
         XCTAssertEqual(actual, .success(.none))

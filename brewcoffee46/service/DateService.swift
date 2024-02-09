@@ -1,5 +1,5 @@
-import Foundation
 import Factory
+import Foundation
 
 protocol DateService {
     func now() -> Date

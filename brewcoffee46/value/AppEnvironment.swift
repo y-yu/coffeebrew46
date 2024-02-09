@@ -7,7 +7,7 @@ final class AppEnvironment: ObservableObject {
     @Published var stopwatchPath: [Route] = []
     @Published var configPath: [Route] = []
     @Published var infoPath: [Route] = []
-    
+
     var minWidth: Double
 
     init() {
@@ -18,7 +18,7 @@ final class AppEnvironment: ObservableObject {
             self.minWidth = 500
         }
     }
-    
+
     var tabSelection: Binding<Route> {
         Binding { [weak self] in
             self?.selectedTab ?? .stopwatch

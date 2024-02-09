@@ -2,9 +2,9 @@ import Foundation
 
 struct RequestReviewItem: Equatable {
     var appVersion: String
-    
+
     var requestedDate: Date
-    
+
     enum CodingKeys: String, CodingKey {
         case appVersion
         case requestedDate
@@ -12,8 +12,7 @@ struct RequestReviewItem: Equatable {
 }
 
 func == (lhs: RequestReviewItem, rhs: RequestReviewItem) -> Bool {
-    lhs.appVersion == rhs.appVersion &&
-    lhs.requestedDate == rhs.requestedDate
+    lhs.appVersion == rhs.appVersion && lhs.requestedDate == rhs.requestedDate
 }
 
 extension RequestReviewItem: Decodable {
@@ -34,7 +33,7 @@ extension RequestReviewItem: Encodable {
 
 struct RequestReviewInfo: Equatable {
     var requestHistory: [RequestReviewItem]
-    
+
     enum CodingKeys: String, CodingKey {
         case requestHistory
     }
@@ -69,7 +68,7 @@ func == (lhs: RequestReviewInfo, rhs: RequestReviewInfo) -> Bool {
 
 struct RequestReviewGuard {
     var tryCount: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case tryCount
     }

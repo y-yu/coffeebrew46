@@ -1,21 +1,19 @@
 import SwiftUI
 
-/**
- # A scale.
-
- These implementation refer from: https://talk.objc.io/episodes/S01E192-analog-clock
- */
+/// # A scale.
+///
+/// These implementation refer from: https://talk.objc.io/episodes/S01E192-analog-clock
 struct ClockView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
-    
+
     private let density: Int = 40
     private let markInterval: Int = 10
     @Binding var progressTime: Double
-    
+
     var steamingTime: Double
     var totalTime: Double
-    
+
     var body: some View {
         ViewThatFits(in: .horizontal) {
             HStack {
@@ -35,7 +33,7 @@ struct ClockView: View {
             }
         }
     }
-    
+
     private var mainClockView: some View {
         ZStack {
             ForEach(0..<(self.density * 4), id: \.self) { t in
@@ -55,15 +53,15 @@ struct ClockView: View {
             }
         }
     }
-    
+
     private func endDegree() -> Double {
-        if (progressTime < 0) {
+        if progressTime < 0 {
             return (ceil(progressTime) - progressTime) * 365
         } else {
             return viewModel.toDegree(progressTime)
         }
     }
-    
+
     private func showPointer(_ geometry: GeometryProxy, _ i: Int) -> some View {
         ZStack {
             PointerView(
@@ -80,7 +78,7 @@ struct ClockView: View {
         let angle: Double = Double(tick) / Double(self.density * 4) * 360
         let isMark: Bool = tick % markInterval == 0
         let caption = viewModel.toProgressTime(angle)
-        
+
         return VStack {
             Text(isMark ? String(format: "%.0f", round(caption)) : " ")
                 .font(.system(size: 10).weight(.light))
@@ -101,21 +99,21 @@ struct ClockView: View {
 }
 
 #if DEBUG
-struct ScaleView_Previews: PreviewProvider {
-    @ObservedObject static var appEnvironment: AppEnvironment = .init()
-    @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel()
-    @State static var progressTime: Double = 55
-    
-    static var previews: some View {
-        appEnvironment.isTimerStarted = true
+    struct ScaleView_Previews: PreviewProvider {
+        @ObservedObject static var appEnvironment: AppEnvironment = .init()
+        @ObservedObject static var viewModel: CurrentConfigViewModel = CurrentConfigViewModel()
+        @State static var progressTime: Double = 55
 
-        return ClockView(
-            progressTime: $progressTime,
-            steamingTime: 50,
-            totalTime: 180
-        )
-        .environmentObject(appEnvironment)
-        .environmentObject(viewModel)
+        static var previews: some View {
+            appEnvironment.isTimerStarted = true
+
+            return ClockView(
+                progressTime: $progressTime,
+                steamingTime: 50,
+                totalTime: 180
+            )
+            .environmentObject(appEnvironment)
+            .environmentObject(viewModel)
+        }
     }
-}
 #endif
