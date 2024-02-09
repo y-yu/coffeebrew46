@@ -1,10 +1,10 @@
 import XCTest
 import Factory
 
-@testable import CoffeeBrew46
+@testable import BrewCoffee46
 
 class MockValidateInputService: ValidateInputService {
-    func validate(config: CoffeeBrew46.Config) -> CoffeeBrew46.ResultNea<Void, CoffeeBrew46.CoffeeError> {
+    func validate(config: Config) -> ResultNea<Void, CoffeeError> {
         .success(())
     }
 }
@@ -16,7 +16,7 @@ class MockCalculateBoiledWaterAmountService: CalculateBoiledWaterAmountService {
         self.dummyPointerInfoViewModels = dummyPointerInfoViewModels
     }
     
-    func calculate(config: CoffeeBrew46.Config) -> CoffeeBrew46.PointerInfoViewModels {
+    func calculate(config: Config) -> PointerInfoViewModels {
         dummyPointerInfoViewModels
     }
 }
@@ -73,7 +73,7 @@ class CurrentConfigViewModelTests: XCTestCase {
         Container.shared.validateInputService.register { MockValidateInputService() }
         Container.shared.calculateBoiledWaterAmountService.register { MockCalculateBoiledWaterAmountService(
             PointerInfoViewModels(
-                pointerInfo: [CoffeeBrew46.PointerInfoViewModel(value: 66.528, degree: 0.0, dripAt: 0.0), CoffeeBrew46.PointerInfoViewModel(value: 67.2, degree: 142.56, dripAt: 45.0), CoffeeBrew46.PointerInfoViewModel(value: 100.80000000000001, degree: 144.0, dripAt: 86.25), CoffeeBrew46.PointerInfoViewModel(value: 134.4, degree: 216.0, dripAt: 127.5), CoffeeBrew46.PointerInfoViewModel(value: 168.0, degree: 288.0, dripAt: 168.75)]
+                pointerInfo: [PointerInfoViewModel(value: 66.528, degree: 0.0, dripAt: 0.0), PointerInfoViewModel(value: 67.2, degree: 142.56, dripAt: 45.0), PointerInfoViewModel(value: 100.80000000000001, degree: 144.0, dripAt: 86.25), PointerInfoViewModel(value: 134.4, degree: 216.0, dripAt: 127.5), PointerInfoViewModel(value: 168.0, degree: 288.0, dripAt: 168.75)]
 
             )
         ) }
@@ -95,10 +95,10 @@ class CurrentConfigViewModelTests: XCTestCase {
         Container.shared.calculateBoiledWaterAmountService.register { MockCalculateBoiledWaterAmountService(
             PointerInfoViewModels(
                 pointerInfo: [
-                    CoffeeBrew46.PointerInfoViewModel(value: 67.2, degree: 0.0, dripAt: 0.0),
-                    CoffeeBrew46.PointerInfoViewModel(value: 100.80000000000001, degree: 144.0, dripAt: 45.0),
-                    CoffeeBrew46.PointerInfoViewModel(value: 134.4, degree: 216.0, dripAt: 100),
-                    CoffeeBrew46.PointerInfoViewModel(value: 168.0, degree: 288.0, dripAt: 155)
+                    PointerInfoViewModel(value: 67.2, degree: 0.0, dripAt: 0.0),
+                    PointerInfoViewModel(value: 100.80000000000001, degree: 144.0, dripAt: 45.0),
+                    PointerInfoViewModel(value: 134.4, degree: 216.0, dripAt: 100),
+                    PointerInfoViewModel(value: 168.0, degree: 288.0, dripAt: 155)
                 ]
 
             )

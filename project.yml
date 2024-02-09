@@ -4,7 +4,7 @@ attributes:
 configs:
   Debug: debug
   Release: release
-name: CoffeeBrew46
+name: BrewCoffee46
 options:
   defaultConfig: Release
   groupSortPosition: bottom
@@ -33,42 +33,42 @@ settings:
       SWIFT_COMPILATION_MODE: wholemodule
       SWIFT_OPTIMIZATION_LEVEL: -O
 targets:
-  coffeebrew46:
+  brewcoffee46:
     platform: iOS
-    productName: CoffeeBrew46
+    productName: BrewCoffee46
     settings:
       base:
-        INFOPLIST_FILE: coffeebrew46/Info.plist
+        INFOPLIST_FILE: brewcoffee46/Info.plist
         DEVELOPMENT_TEAM: 3KDN4W8346
       configs:
         Debug:
           CODE_SIGN_IDENTITY: Apple Development
           CODE_SIGN_STYLE: Automatic
-          DEVELOPMENT_ASSET_PATHS: '"coffeebrew46/Preview Content"'
+          DEVELOPMENT_ASSET_PATHS: '"brewcoffee46/Preview Content"'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug
-          PRODUCT_NAME: CoffeeBrew46
+          PRODUCT_NAME: BrewCoffee46
           PROVISIONING_PROFILE_SPECIFIER: ''
           CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
         Release:
           CODE_SIGN_IDENTITY: Apple Development
           CODE_SIGN_STYLE: Automatic
-          DEVELOPMENT_ASSET_PATHS: '"coffeebrew46/Preview Content"'
+          DEVELOPMENT_ASSET_PATHS: '"brewcoffee46/Preview Content"'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46
-          PRODUCT_NAME: CoffeeBrew46
+          PRODUCT_NAME: BrewCoffee46
           PROVISIONING_PROFILE_SPECIFIER: ''
           CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     sources:
-    - path: coffeebrew46
-      name: coffeebrew46
+    - path: brewcoffee46
+      name: brewcoffee46
     dependencies:
       - package: SwiftUITooltip
       - package: Factory
     type: application
-  coffeebrew46Tests:
+  brewcoffee46Tests:
     dependencies:
-    - target: coffeebrew46
+    - target: brewcoffee46
     platform: iOS
-    productName: CoffeeBrew46Tests
+    productName: BrewCoffee46Tests
     settings:
       configs:
         Debug:
@@ -77,25 +77,25 @@ targets:
           CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
           CODE_SIGN_STYLE: Manual
           DEVELOPMENT_TEAM: ''
-          INFOPLIST_FILE: coffeebrew46Tests/Info.plist
+          INFOPLIST_FILE: brewcoffee46Tests/Info.plist
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46Tests
           PROVISIONING_PROFILE_SPECIFIER: ''
           PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
           SWIFT_VERSION: '5.0'
-          TEST_HOST: $(BUILT_PRODUCTS_DIR)/CoffeeBrew46.app/CoffeeBrew46
+          TEST_HOST: $(BUILT_PRODUCTS_DIR)/BrewCoffee46.app/BrewCoffee46
         Release:
           ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
           BUNDLE_LOADER: $(TEST_HOST)
           CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
           CODE_SIGN_STYLE: Manual
           DEVELOPMENT_TEAM: ''
-          INFOPLIST_FILE: coffeebrew46Tests/Info.plist
+          INFOPLIST_FILE: brewcoffee46Tests/Info.plist
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46Tests
           PROVISIONING_PROFILE_SPECIFIER: ''
           PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
           SWIFT_VERSION: '5.0'
-          TEST_HOST: $(BUILT_PRODUCTS_DIR)/CoffeeBrew46.app/CoffeeBrew46
+          TEST_HOST: $(BUILT_PRODUCTS_DIR)/BrewCoffee46.app/BrewCoffee46
     sources:
-    - path: coffeebrew46Tests
-      name: coffeebrew46Tests
+    - path: brewcoffee46Tests
+      name: brewcoffee46Tests
     type: bundle.unit-test

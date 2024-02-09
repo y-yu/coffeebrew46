@@ -1,8 +1,8 @@
 
-import CoffeeBrew46
+import BrewCoffee46
 
-extension CoffeeBrew46.CoffeeError: Equatable {
-    public static func == (lhs: CoffeeBrew46.CoffeeError, rhs: CoffeeBrew46.CoffeeError) -> Bool {
+extension CoffeeError: Equatable {
+    public static func == (lhs: CoffeeError, rhs: CoffeeError) -> Bool {
         return switch (lhs, rhs) {
         case (.coffeeBeansWeightUnderZeroError, .coffeeBeansWeightUnderZeroError): true
         case (.coffeeBeansWeightIsNotNumberError, .coffeeBeansWeightIsNotNumberError): true
