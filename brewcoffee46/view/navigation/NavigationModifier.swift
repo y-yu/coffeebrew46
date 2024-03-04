@@ -14,6 +14,8 @@ struct NavigationModifier: ViewModifier {
             ImportExportView()
         case .info:
             InfoView()
+        case .beforeChecklist:
+            BeforeChecklistView()
         }
     }
 

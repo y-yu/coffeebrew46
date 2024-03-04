@@ -15,6 +15,8 @@ struct Config: Equatable {
 
     var note: String?
 
+    var beforeChecklist: [String]
+
     // If the JSON compatibility of `Config` falls then `version` will increment.
     var version: Int
 
@@ -27,6 +29,29 @@ struct Config: Equatable {
         case steamingTimeSec
         case version
         case note
+        case beforeChecklist
+    }
+
+    init(
+        coffeeBeansWeight: Double,
+        partitionsCountOf6: Double,
+        waterToCoffeeBeansWeightRatio: Double,
+        firstWaterPercent: Double,
+        totalTimeSec: Double,
+        steamingTimeSec: Double,
+        note: String,
+        beforeChecklist: [String],
+        version: Int = Config.currentVersion
+    ) {
+        self.coffeeBeansWeight = coffeeBeansWeight
+        self.partitionsCountOf6 = partitionsCountOf6
+        self.waterToCoffeeBeansWeightRatio = waterToCoffeeBeansWeightRatio
+        self.firstWaterPercent = firstWaterPercent
+        self.totalTimeSec = totalTimeSec
+        self.steamingTimeSec = steamingTimeSec
+        self.note = .some(note)
+        self.beforeChecklist = beforeChecklist
+        self.version = version
     }
 
     init() {
@@ -37,6 +62,7 @@ struct Config: Equatable {
         totalTimeSec = 210
         steamingTimeSec = 45
         note = .some("")
+        beforeChecklist = Config.initBeforeCheckList
         version = Config.currentVersion
     }
 }
@@ -47,6 +73,10 @@ extension Config {
     static let initCoffeeBeansWeight: Double = 30.0
 
     static let initWaterToCoffeeBeansWeightRatio: Double = 15.0
+
+    static let initBeforeCheckList: [String] = (1...9).map { i in
+        NSLocalizedString("before check list \(i)", comment: "")
+    }
 
     func totalWaterAmount() -> Double {
         roundCentesimal(coffeeBeansWeight * self.waterToCoffeeBeansWeightRatio)
@@ -94,6 +124,7 @@ extension Config: Decodable {
         totalTimeSec = try Double(values.decode(Int.self, forKey: .totalTimeSec))
         steamingTimeSec = try Double(values.decode(Int.self, forKey: .steamingTimeSec))
         note = try values.decodeIfPresent(String.self, forKey: .note)
+        beforeChecklist = try values.decodeIfPresent([String].self, forKey: .beforeChecklist) ?? Config.initBeforeCheckList
         version = try values.decode(Int.self, forKey: .version)
     }
 }
@@ -108,6 +139,7 @@ extension Config: Encodable {
         try container.encode(totalTimeSec, forKey: .totalTimeSec)
         try container.encode(steamingTimeSec, forKey: .steamingTimeSec)
         try container.encodeIfPresent(note, forKey: .note)
+        try container.encode(beforeChecklist, forKey: .beforeChecklist)
         try container.encode(version, forKey: .version)
     }
 }
@@ -115,5 +147,6 @@ extension Config: Encodable {
 func == (lhs: Config, rhs: Config) -> Bool {
     lhs.coffeeBeansWeight == rhs.coffeeBeansWeight && lhs.firstWaterPercent == rhs.firstWaterPercent
         && lhs.partitionsCountOf6 == rhs.partitionsCountOf6 && lhs.steamingTimeSec == rhs.steamingTimeSec && lhs.totalTimeSec == rhs.totalTimeSec
-        && lhs.waterToCoffeeBeansWeightRatio == rhs.waterToCoffeeBeansWeightRatio && lhs.note == rhs.note && lhs.version == rhs.version
+        && lhs.waterToCoffeeBeansWeightRatio == rhs.waterToCoffeeBeansWeightRatio && lhs.note == rhs.note
+        && lhs.beforeChecklist == rhs.beforeChecklist && lhs.version == rhs.version
 }

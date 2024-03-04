@@ -6,6 +6,12 @@ struct RootView: View {
 
     var body: some View {
         TabView(selection: appEnvironment.tabSelection) {
+            BeforeChecklistView()
+                .tabItem {
+                    Image(systemName: "checklist")
+                    Text("navigation title before checklist")
+                }
+                .tag(Route.beforeChecklist)
             StopwatchView()
                 .tabItem {
                     Image(systemName: "stopwatch")

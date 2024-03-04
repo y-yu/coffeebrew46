@@ -3,4 +3,5 @@ enum Route {
     case config
     case saveLoad
     case info
+    case beforeChecklist
 }
