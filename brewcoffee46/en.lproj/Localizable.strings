@@ -1,6 +1,17 @@
 "navigation title configuration" = "Configuration";
+"navigation title before checklist" = "Before Checklist";
 "navigation title information" = "Information";
 "navigation title stopwatch" = "Stopwatch";
+
+"before check list 1" = "Boil water";
+"before check list 2" = "Measure the weight of coffee beans";
+"before check list 3" = "Grind coffee beans";
+"before check list 4" = "Fold edge of the coffee filter";
+"before check list 5" = "Set the coffee filter to the dripper";
+"before check list 6" = "Rinse the filter";
+"before check list 7" = "Place the coffee grounds in the filter";
+"before check list 8" = "Flatten the coffee grounds";
+"before check list 9" = "Reset the scale value";
 
 "stop alert title" = "Notice";
 "stop alert message" = "Do you want to stop counting?";

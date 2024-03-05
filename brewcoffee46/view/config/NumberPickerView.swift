@@ -46,9 +46,9 @@ struct NumberPickerView: View {
             ForEach(numbers.indices, id: \.self) { index in
                 Picker("NumberPicker", selection: $numbers[index]) {
                     if index == 0
-                        || numbers[0..<index].enumerated().allSatisfy { (i, item) in
+                        || numbers[0..<index].enumerated().allSatisfy({ (i, item) in
                             item >= maxNumbers[i]
-                        }
+                        })
                     {
                         ForEach(0..<maxNumbers[index], id: \.self) { i in
                             Text("\(i)")

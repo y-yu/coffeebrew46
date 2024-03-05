@@ -20,6 +20,12 @@ final class CurrentConfigViewModel: ObservableObject {
     @Injected(\.validateInputService) private var validateInputService
     @Injected(\.calculateBoiledWaterAmountService) private var calculateBoiledWaterAmountService
 
+    init() {}
+
+    init(_ config: Config) {
+        currentConfig = config
+    }
+
     // This function calculate parameters for the scale view.
     private func calculateScale() -> Void {
         self.pointerInfoViewModels =
