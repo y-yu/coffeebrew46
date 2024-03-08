@@ -14,12 +14,29 @@ struct BeforeChecklistView: View {
 
     @State var mode: EditMode = .inactive
 
+    @State private var willMoveToStopwatch: Bool = false
+
     var body: some View {
         Form {
             Section(
                 header: HStack {
+                    if isAllChecked() {
+                        Button(action: {
+                            checks = checks.prefix(viewModel.currentConfig.beforeChecklist.count).map({ _ in false })
+                        }) {
+                            Text("before check list reset")
+                        }
+                    } else {
+                        Button(action: {
+                            checks = checks.prefix(viewModel.currentConfig.beforeChecklist.count).map({ _ in true })
+                        }) {
+                            Text("before check list check all")
+                        }
+                    }
                     Spacer()
+                    // Maybe it's not necessary that the `disabled` constraint when the timer has been started...
                     EditButton()
+                        .disabled(appEnvironment.isTimerStarted)
                 }
             ) {
                 ForEach(Array(zip(viewModel.currentConfig.beforeChecklist.indices, viewModel.currentConfig.beforeChecklist)), id: \.0) { i, item in
@@ -28,6 +45,9 @@ struct BeforeChecklistView: View {
                         Toggle(isOn: $checks[i]) {
                             TextField(item, text: $viewModel.currentConfig.beforeChecklist[i])
                                 .disabled(!mode.isEditing)
+                        }
+                        .onChange(of: checks[i]) { newValue in
+                            willMoveToStopwatch = isAllChecked()
                         }
                     }
                 }
@@ -50,7 +70,7 @@ struct BeforeChecklistView: View {
                     }) {
                         Image(systemName: "plus.circle")
                     }
-                    .disabled(!mode.isEditing || viewModel.currentConfig.beforeChecklist.count >= BeforeChecklistView.checklistSizeLimit)
+                    .disabled(!mode.isEditing || viewModel.currentConfig.beforeChecklist.count >= Config.maxCheckListSize)
                     Spacer()
                 }
             }
@@ -64,11 +84,30 @@ struct BeforeChecklistView: View {
         .environment(\.editMode, $mode)
         .navigationTitle("navigation title before checklist")
         .navigation(path: $appEnvironment.beforeChecklistPath)
+        .sheet(isPresented: $willMoveToStopwatch) {
+            Button(action: {
+                willMoveToStopwatch = false
+                appEnvironment.selectedTab = Route.stopwatch
+            }) {
+                HStack {
+                    Image(systemName: "checkmark.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.green)
+                    Text("before check list go to stopwatch")
+                        .font(.system(size: 30))
+                }
+            }
+            .presentationDetents([
+                .medium,
+                .fraction(0.3),
+            ])
+        }
     }
-}
 
-extension BeforeChecklistView {
-    static let checklistSizeLimit = 100
+    private func isAllChecked() -> Bool {
+        checks.prefix(viewModel.currentConfig.beforeChecklist.count).allSatisfy({ $0 })
+    }
 }
 
 #if DEBUG
