@@ -6,7 +6,7 @@ struct BeforeChecklistView: View {
 
     // We cannot get the number of `viewModel.currentConfig.beforeChecklist` on the initialization
     // so `checks` is initialized `checklistSizeLimit` false values for now.
-    @State private var checks: [Bool] = (0..<BeforeChecklistView.checklistSizeLimit).map { _ in false }
+    @State private var checks: [Bool] = (0..<Config.maxCheckListSize).map { _ in false }
 
     @State private var editingIndex: Int? = .none
 
@@ -43,7 +43,7 @@ struct BeforeChecklistView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        if viewModel.currentConfig.beforeChecklist.count < BeforeChecklistView.checklistSizeLimit {
+                        if viewModel.currentConfig.beforeChecklist.count < Config.maxCheckListSize {
                             editingIndex = .some(viewModel.currentConfig.beforeChecklist.count)
                             viewModel.currentConfig.beforeChecklist.append("")
                         }
@@ -58,7 +58,7 @@ struct BeforeChecklistView: View {
         .onChange(of: appEnvironment.isTimerStarted) { [oldValue = appEnvironment.isTimerStarted] newValue in
             // The checklist will be reset when the timer is reset.
             if oldValue == true && newValue == false {
-                checks = (0..<BeforeChecklistView.checklistSizeLimit).map { _ in false }
+                checks = (0..<Config.maxCheckListSize).map { _ in false }
             }
         }
         .environment(\.editMode, $mode)
