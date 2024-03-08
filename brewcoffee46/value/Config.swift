@@ -74,6 +74,8 @@ extension Config {
 
     static let initWaterToCoffeeBeansWeightRatio: Double = 15.0
 
+    static let maxCheckListSize = 100
+
     static let initBeforeCheckList: [String] = (1...9).map { i in
         NSLocalizedString("before check list \(i)", comment: "")
     }
@@ -124,7 +126,8 @@ extension Config: Decodable {
         totalTimeSec = try Double(values.decode(Int.self, forKey: .totalTimeSec))
         steamingTimeSec = try Double(values.decode(Int.self, forKey: .steamingTimeSec))
         note = try values.decodeIfPresent(String.self, forKey: .note)
-        beforeChecklist = try values.decodeIfPresent([String].self, forKey: .beforeChecklist) ?? Config.initBeforeCheckList
+        let rawBeforeChecklist = try values.decodeIfPresent([String].self, forKey: .beforeChecklist) ?? Config.initBeforeCheckList
+        beforeChecklist = Array(rawBeforeChecklist.prefix(Config.maxCheckListSize))
         version = try values.decode(Int.self, forKey: .version)
     }
 }
