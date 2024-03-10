@@ -3,6 +3,9 @@
 "navigation title information" = "Information";
 "navigation title stopwatch" = "Stopwatch";
 
+"before check list check all" = "全てをチェック";
+"before check list reset" = "リセット";
+"before check list go to stopwatch" = "Move to Stopwatch";
 "before check list 1" = "お湯を沸かす";
 "before check list 2" = "豆を計る";
 "before check list 3" = "豆を挽く";
