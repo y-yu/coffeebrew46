@@ -16,6 +16,8 @@ struct NavigationModifier: ViewModifier {
             InfoView()
         case .beforeChecklist:
             BeforeChecklistView()
+        case .ossLicense:
+            OSSLicenseView()
         }
     }
 

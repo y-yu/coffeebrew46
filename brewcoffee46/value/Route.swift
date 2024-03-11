@@ -4,4 +4,5 @@ enum Route {
     case saveLoad
     case info
     case beforeChecklist
+    case ossLicense
 }
