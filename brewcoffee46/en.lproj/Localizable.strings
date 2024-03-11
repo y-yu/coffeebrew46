@@ -62,8 +62,11 @@
 "config information" = "Information";
 
 "info version" = "Build version";
-"info license" = "License";
+"info license header" = "License";
+"info oss licenses" = "OSS License";
 "info source code" = "Source code";
 "info author" = "Author";
 "info references" = "References";
 "info by kasuya tetsu" = "by Tetsu Kasuya";
+
+"oss license title information" = "OSS License Information";

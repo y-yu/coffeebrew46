@@ -1,17 +1,16 @@
 import SwiftUI
 
 struct InfoView: View {
-    @EnvironmentObject var appEnvironment: AppEnvironment
-
     var body: some View {
         Form {
             Section(header: Text("info version")) {
                 Text((Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String)!)
             }
-            Section(header: Text("info license")) {
-                Link(
-                    "MIT License",
-                    destination: URL(string: "https://github.com/y-yu/coffeebrew46/blob/master/LICENSE")!)
+
+            Section(header: Text("info license header")) {
+                NavigationLink(value: Route.ossLicense) {
+                    Text("info oss licenses")
+                }
             }
 
             Section(header: Text("info source code")) {
@@ -56,7 +55,6 @@ struct InfoView: View {
     struct InfoView_Previews: PreviewProvider {
         static var previews: some View {
             InfoView()
-                .environmentObject(AppEnvironment.init())
         }
     }
 #endif

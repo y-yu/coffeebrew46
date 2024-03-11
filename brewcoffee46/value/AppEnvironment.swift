@@ -6,7 +6,6 @@ final class AppEnvironment: ObservableObject {
     @Published var isTimerStarted: Bool = false
     @Published var stopwatchPath: [Route] = []
     @Published var configPath: [Route] = []
-    @Published var infoPath: [Route] = []
     @Published var beforeChecklistPath: [Route] = []
 
     var minWidth: Double
