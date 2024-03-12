@@ -44,7 +44,7 @@ struct StopwatchView: View {
                 GeometryReader { (geometry: GeometryProxy) in
                     VStack {
                         PhaseListView(progressTime: $progressTime)
-                            .frame(height: geometry.size.height * 0.80)
+                            .frame(height: geometry.size.height * 0.7)
                         Divider()
                         timerController
                     }
