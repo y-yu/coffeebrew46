@@ -332,7 +332,11 @@ struct ConfigView: View {
                 Text("config water amount")
                 Text("\(String(format: "%.1f", temporaryWaterAmount))g")
                     .onChange(of: viewModel.currentConfig.coffeeBeansWeight) { newValue in
-                        temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
+                        // When `calculateCoffeeBeansWeightFromWater = true` then `temporaryWaterAmount` has more priority than the coffee beans weight so
+                        // we stop calculation of `temporaryWaterAmount` from the coffee beans weight.
+                        if !calculateCoffeeBeansWeightFromWater {
+                            temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
+                        }
                     }
                     .onAppear {
                         // Initial calculation of `temporaryWaterAmount` from `coffeeBeansWeight`.
@@ -350,11 +354,10 @@ struct ConfigView: View {
         VStack {
             coffeeBeansAndWaterWeightView
             NumberPickerView(
-                digit: 3,
+                digit: 1,
                 max: coffeeBeansWeightMax,
                 target: $viewModel.currentConfig.coffeeBeansWeight,
-                isDisable: $appEnvironment.isTimerStarted,
-                log: $log
+                isDisable: $appEnvironment.isTimerStarted
             )
         }
     }
@@ -363,11 +366,10 @@ struct ConfigView: View {
         VStack {
             coffeeBeansAndWaterWeightView
             NumberPickerView(
-                digit: 4,
+                digit: 1,
                 max: coffeeBeansWeightMax * viewModel.currentConfig.waterToCoffeeBeansWeightRatio,
                 target: $temporaryWaterAmount,
-                isDisable: $appEnvironment.isTimerStarted,
-                log: $log
+                isDisable: $appEnvironment.isTimerStarted
             )
         }
     }
@@ -416,6 +418,10 @@ struct ConfigView: View {
             log = "\(errors)"
         }
     }
+}
+
+extension ConfigView {
+    private static let digit = 1
 }
 
 #if DEBUG
