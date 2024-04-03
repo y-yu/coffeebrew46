@@ -2,10 +2,23 @@ import SwiftUI
 
 struct ArcView: View {
     @Binding var progressTime: Double
+    @Binding var endDegrees: Double
 
-    var endDegrees: Double
-    var size: CGSize
-    var scale: Double = 0.8
+    private let size: CGSize
+    private let scale: Double
+
+    private let center: CGPoint
+    private let radius: CGFloat
+
+    init(progressTime: Binding<Double>, endDegrees: Binding<Double>, size: CGSize, scale: Double = 0.8) {
+        self._progressTime = progressTime
+        self._endDegrees = endDegrees
+        self.size = size
+        self.scale = scale
+
+        self.center = CGPoint(x: size.width / 2, y: size.height / 2)
+        self.radius = (size.width < size.height ? size.width : size.height) / 2 * CGFloat(self.scale)
+    }
 
     private func stopwatchGradient() -> LinearGradient {
         if progressTime < 0 {
@@ -32,8 +45,8 @@ struct ArcView: View {
         Arc(
             startDegrees: 0.0,
             endDegrees: endDegrees,
-            size: size,
-            scale: scale
+            center: center,
+            radius: radius
         )
         .fill(stopwatchGradient())
         .rotationEffect(Angle.degrees(-90.0), anchor: .center)
@@ -50,16 +63,12 @@ struct ArcView: View {
 }
 
 struct Arc: Shape {
-    var startDegrees: Double
-    var endDegrees: Double
-    var size: CGSize
-    var scale: Double
+    let startDegrees: Double
+    let endDegrees: Double
+    let center: CGPoint
+    let radius: CGFloat
 
     func path(in rect: CGRect) -> Path {
-        let center = CGPoint(x: size.width / 2, y: size.height / 2)
-        let radius =
-            (size.width < size.height ? size.width : size.height) / 2 * CGFloat(self.scale)
-
         return Path { p in
             p.move(to: center)
             p.addArc(
@@ -75,12 +84,13 @@ struct Arc: Shape {
 
 struct ArcView_Previews: PreviewProvider {
     @State static var progressTime: Double = 55
+    @State static var endDegree: Double = 300.0
 
     static var previews: some View {
         GeometryReader { geometry in
             ArcView(
                 progressTime: $progressTime,
-                endDegrees: 300.0,
+                endDegrees: $endDegree,
                 size: geometry.size,
                 scale: 0.7
             )

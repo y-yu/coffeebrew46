@@ -11,8 +11,17 @@ struct ClockView: View {
     private let markInterval: Int = 10
     @Binding var progressTime: Double
 
+    @State var endDegree: Double
+
     var steamingTime: Double
     var totalTime: Double
+
+    init(progressTime: Binding<Double>, steamingTime: Double, totalTime: Double) {
+        self._progressTime = progressTime
+        self.endDegree = (ceil(progressTime.wrappedValue) - progressTime.wrappedValue) * 365
+        self.steamingTime = steamingTime
+        self.totalTime = totalTime
+    }
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
@@ -46,19 +55,18 @@ struct ClockView: View {
                     }
                     ArcView(
                         progressTime: $progressTime,
-                        endDegrees: endDegree(),
+                        endDegrees: $endDegree,
                         size: geometry.size
                     )
+                    .onChange(of: progressTime) { newValue in
+                        if newValue < 0 {
+                            endDegree = (ceil(newValue) - newValue) * 365
+                        } else {
+                            endDegree = viewModel.toDegree(newValue)
+                        }
+                    }
                 }
             }
-        }
-    }
-
-    private func endDegree() -> Double {
-        if progressTime < 0 {
-            return (ceil(progressTime) - progressTime) * 365
-        } else {
-            return viewModel.toDegree(progressTime)
         }
     }
 

@@ -23,6 +23,10 @@ struct StopwatchView: View {
 
     private let soundIdRing = SystemSoundID(1013)
 
+    // `Timer.scheduledTimer` can handle 0.01 second as minimum time window but
+    // if we use it the CPU usage will be 95% so `interval` is set bigger value than it.
+    private let interval = 1.0 / pow(2.0, 5.0)
+
     private let buttonBackground: some View =
         RoundedRectangle(cornerRadius: 10, style: .continuous)
         .stroke(lineWidth: 1)
@@ -184,16 +188,21 @@ struct StopwatchView: View {
             UIApplication.shared.isIdleTimerDisabled = true
             self.appEnvironment.isTimerStarted = true
 
-            self.timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
-                if self.startTime == nil && progressTime >= -0.01 && progressTime <= 0.01 {
+            self.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
+                if self.startTime == nil && progressTime >= -interval && progressTime <= interval {
                     self.startTime = Date()
                 } else if progressTime < 0 {
-                    progressTime += 0.01
+                    progressTime += interval
                 } else {
                     if let time = startTime {
                         let now = Date()
                         progressTime = now.timeIntervalSince(time)
                         ringSound()
+
+                        // For the battery life stop `isIdleTimerDisable` after 10 seconds from `totalTimeSec`.
+                        if progressTime > (viewModel.currentConfig.totalTimeSec + 10.0) && UIApplication.shared.isIdleTimerDisabled {
+                            UIApplication.shared.isIdleTimerDisabled = false
+                        }
                     }
                 }
             }
