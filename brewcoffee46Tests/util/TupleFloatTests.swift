@@ -8,6 +8,7 @@ final class TupleFloatTests: XCTestCase {
         XCTAssertEqual(TupleFloat.fromDouble(0, 12.39), .success(TupleFloat.init(integer: 12, decimal: 0, digit: 0)))
         XCTAssertEqual(TupleFloat.fromDouble(0, 12.5), .success(TupleFloat.init(integer: 13, decimal: 0, digit: 0)))
         XCTAssertEqual(TupleFloat.fromDouble(3, 12.39), .success(TupleFloat.init(integer: 12, decimal: 390, digit: 3)))
+        XCTAssertEqual(TupleFloat.fromDouble(1, 14.1), .success(TupleFloat.init(integer: 14, decimal: 1, digit: 1)))
 
         // negative value
         XCTAssertEqual(TupleFloat.fromDouble(2, -12.39), .success(TupleFloat.init(integer: -12, decimal: 39, digit: 2)))

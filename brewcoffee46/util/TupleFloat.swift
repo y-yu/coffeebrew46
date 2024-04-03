@@ -4,8 +4,8 @@ import Foundation
 ///
 /// `decimal` is always positive value.
 public struct TupleFloat {
-    let integer: Int
-    let decimal: Int
+    var integer: Int
+    var decimal: Int
     let digit: Int
 }
 
@@ -16,14 +16,18 @@ extension TupleFloat {
         if digit < 0 {
             return .failure(NonEmptyArray(.arrayNumberConversionError("`digit` must be greater than 0.")))
         } else {
-            let base = pow(10.0, Double(digit))
-            let value = round(from * base) / base
-            // `valueInt` must be always smaller than `value` so the `if` condition is needed.
-            let valueInt = if value < 0 { ceil(value) } else { floor(value) }
-            let valueDecimal = if value < 0 { valueInt - value } else { value - valueInt }
-
-            return .success(TupleFloat(integer: Int(valueInt), decimal: Int(valueDecimal * base), digit: digit))
+            return .success(unsafeFromDouble(digit, from))
         }
+    }
+
+    static func unsafeFromDouble(_ digit: Int, _ from: Double) -> TupleFloat {
+        let base = pow(10.0, Double(digit))
+        let value = round(from * base) / base
+        // `valueInt` must be always smaller than `value` so the `if` condition is needed.
+        let valueInt = if value < 0 { ceil(value) } else { floor(value) }
+        let valueDecimal = if value < 0 { round((valueInt - value) * base) / base } else { round((value - valueInt) * base) / base }
+
+        return TupleFloat(integer: Int(valueInt), decimal: Int(valueDecimal * base), digit: digit)
     }
 
     func toDouble() -> Double {
