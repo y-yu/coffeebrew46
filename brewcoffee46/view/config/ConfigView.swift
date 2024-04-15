@@ -278,7 +278,10 @@ struct ConfigView: View {
         .onChange(of: scenePhase) { phase in
             switch phase {
             case .background:
-                ()
+                let _ = saveLoadConfigService.save(
+                    config: viewModel.currentConfig,
+                    key: temporaryCurrentConfigKey
+                )
             case .inactive:
                 switch scenePhase {
                 case .active:
