@@ -35,10 +35,10 @@ jobs:
           fi
 
   build-and-test:
-    runs-on: macos-13
+    runs-on: macos-14
     strategy:
       matrix:
-        xcode-version: [ '15.2' ]
+        xcode-version: [ '15.3' ]
         ios-version: [ '17.2' ]
         sdk-version: [ '17.2' ]
     steps:
