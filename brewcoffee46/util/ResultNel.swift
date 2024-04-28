@@ -45,4 +45,22 @@ extension Result {
     func isFailure() -> Bool {
         return !isSuccess()
     }
+
+    func getOrElse(elseValue: Success) -> Success {
+        if case let .success(success) = self {
+            success
+        } else {
+            elseValue
+        }
+    }
+
+    func flatMap<NewSuccess>(_ transform: (Success) async -> Result<NewSuccess, Failure>) async -> Result<NewSuccess, Failure> {
+        switch self {
+        case .success(let success):
+            await transform(success)
+
+        case .failure(let error):
+            .failure(error)
+        }
+    }
 }

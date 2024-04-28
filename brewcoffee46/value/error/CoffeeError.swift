@@ -20,6 +20,8 @@ public enum CoffeeError: Error {
 
     case arrayNumberConversionError(_ message: String)
 
+    case notificationError(_ underlying: Error)
+
     func getMessage() -> String {
         switch self {
         case .coffeeBeansWeightUnderZeroError:
@@ -51,6 +53,9 @@ public enum CoffeeError: Error {
 
         case .arrayNumberConversionError(let message):
             return "Something error was occurred in conversion `[Int]` to/from `Double`: \(message)"
+
+        case .notificationError(let error):
+            return "Something error was occurred in notification: \(error)"
         }
     }
 }

@@ -14,12 +14,16 @@ struct StopwatchView: View {
             saveStartTime()
         }
     }
-    @State private var progressTime: Double = -3
+
+    private static let progressTimeInit: Double = -3
+
+    @State private var progressTime: Double = progressTimeInit
     @State private var timer: Timer?
     @State private var hasRingingIndex: Int = 0
     @State private var isStop︎AlertPresented: Bool = false
 
     @Injected(\.requestReviewService) private var requestReviewService
+    @Injected(\.notificationService) private var notificationService
 
     private let soundIdRing = SystemSoundID(1013)
 
@@ -183,6 +187,59 @@ struct StopwatchView: View {
         }
     }
 
+    private func addNotifications() async -> ResultNea<Void, CoffeeError> {
+        return await withTaskGroup(of: ResultNea<Void, CoffeeError>.self) { group in
+            var errors: [CoffeeError] = []
+
+            for (i, info) in viewModel.pointerInfoViewModels.pointerInfo.dropFirst().enumerated() {
+                let notifiedAt = Int(floor(info.dripAt))
+
+                group.addTask {
+                    let title =
+                        if i == 0 {
+                            NSLocalizedString("notification 2nd drip", comment: "")
+                        } else if i == 1 {
+                            NSLocalizedString("notification 3rd drip", comment: "")
+                        } else {
+                            "\(i + 2)" + NSLocalizedString("notification after 4th drip suffix", comment: "")
+                        }
+
+                    return await notificationService.addNotificationUsingTimer(
+                        title: title,
+                        body: "🫖 \(roundCentesimal(info.value))mg 💧",
+                        notifiedInSeconds: notifiedAt
+                    )
+                }
+
+                for await result in group {
+                    switch result {
+                    case .failure(let error):
+                        errors += error.toArray()
+                    case .success():
+                        ()
+                    }
+                }
+            }
+
+            switch await notificationService.addNotificationUsingTimer(
+                title: "☕️ " + NSLocalizedString("notification drip end", comment: ""),
+                body: "",
+                notifiedInSeconds: Int(ceil(viewModel.currentConfig.totalTimeSec))
+            ) {
+            case .failure(let error):
+                errors += error.toArray()
+            case .success():
+                ()
+            }
+
+            if errors.isEmpty {
+                return .success(())
+            } else {
+                return .failure(NonEmptyArray(errors.first!, Array(errors.dropFirst())))
+            }
+        }
+    }
+
     private func startTimer() {
         if self.timer == nil {
             UIApplication.shared.isIdleTimerDisabled = true
@@ -190,6 +247,9 @@ struct StopwatchView: View {
 
             self.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
                 if self.startTime == nil && progressTime >= -interval && progressTime <= interval {
+                    Task {
+                        await addNotifications()
+                    }
                     self.startTime = Date()
                 } else if progressTime < 0 {
                     progressTime += interval
@@ -222,10 +282,11 @@ struct StopwatchView: View {
             t.invalidate()
             self.appEnvironment.isTimerStarted = false
             UIApplication.shared.isIdleTimerDisabled = false
-            progressTime = -3
+            progressTime = StopwatchView.progressTimeInit
             self.timer = .none
             self.startTime = .none
             hasRingingIndex = 0
+            notificationService.removePendingAll()
         }
     }
 
@@ -243,7 +304,7 @@ struct StopwatchView: View {
     private func ringSound() {
         let nth = viewModel.getNthPhase(progressTime: progressTime)
 
-        if nth > hasRingingIndex {
+        if nth > hasRingingIndex && progressTime <= viewModel.currentConfig.totalTimeSec {
             AudioServicesPlaySystemSound(soundIdRing)
             hasRingingIndex = nth
         }
