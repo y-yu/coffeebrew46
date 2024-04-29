@@ -70,3 +70,9 @@
 "info by kasuya tetsu" = "by Tetsu Kasuya";
 
 "oss license title information" = "OSS License Information";
+
+"notification 1st drip" = "1st Drip Now";
+"notification 2nd drip" = "2nd Drip Now";
+"notification 3rd drip" = "3rd Drip Now";
+"notification after 4th drip suffix" = "th Drip Now";
+"notification drip end" = "End of Dripping";

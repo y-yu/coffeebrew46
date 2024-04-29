@@ -70,3 +70,8 @@
 "info by kasuya tetsu" = " 粕谷 哲（著）";
 
 "oss license title information" = "OSSライセンス情報";
+
+"notification 2nd drip" = "2投目";
+"notification 3rd drip" = "3投目";
+"notification after 4th drip suffix" = "投目";
+"notification drip end" = "抽出終了";
