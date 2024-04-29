@@ -14,7 +14,7 @@ struct PointerView: View {
     var body: some View {
         ZStack {
             VStack {
-                Text(String(format: "%.1fg", pointerInfo.value))
+                Text(String(format: "%.1f", pointerInfo.value) + weightUnit)
                     .font(.system(size: 18))
                     .foregroundColor(
                         isOnGoing ? .accentColor : .primary

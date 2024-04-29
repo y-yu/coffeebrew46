@@ -320,7 +320,7 @@ struct ConfigView: View {
                     .font(
                         !calculateCoffeeBeansWeightFromWater ? Font.headline.weight(.bold) : Font.headline.weight(.regular)
                     )
-                Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))g")
+                Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))\(weightUnit)")
                     .onChange(of: temporaryWaterAmount) { newValue in
                         viewModel.currentConfig.coffeeBeansWeight = roundCentesimal(newValue / viewModel.currentConfig.waterToCoffeeBeansWeightRatio)
                     }
@@ -333,7 +333,7 @@ struct ConfigView: View {
             Spacer()
             Group {
                 Text("config water amount")
-                Text("\(String(format: "%.1f", temporaryWaterAmount))g")
+                Text("\(String(format: "%.1f", temporaryWaterAmount))\(weightUnit)")
                     .onChange(of: viewModel.currentConfig.coffeeBeansWeight) { newValue in
                         // When `calculateCoffeeBeansWeightFromWater = true` then `temporaryWaterAmount` has more priority than the coffee beans weight so
                         // we stop calculation of `temporaryWaterAmount` from the coffee beans weight.

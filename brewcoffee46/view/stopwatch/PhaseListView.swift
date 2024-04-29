@@ -33,7 +33,7 @@ struct PhaseListView: View {
                     }
                     .font(Font.headline.weight(.bold))
                     ForEach(phaseList, id: \.id) { phase in
-                        let waterAmount = "\(String(format: "%.1f", phase.waterAmount))g"
+                        let waterAmount = "\(String(format: "%.1f", phase.waterAmount))\(weightUnit)"
                         GridRow {
                             fontConfig(Text("\(phase.index + 1)"), phase: phase)
                             doneOnGoingScheduled(

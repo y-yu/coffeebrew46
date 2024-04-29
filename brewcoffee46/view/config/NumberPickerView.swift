@@ -10,8 +10,6 @@ struct NumberPickerView: View {
     @Binding private var target: Double
     @Binding private var isDisable: Bool
 
-    private let unit: String = "g"
-
     static func getNumbers(_ digit: Int, _ target: Double) -> TupleFloat {
         switch TupleFloat.fromDouble(digit, target) {
         case .success(let value):
@@ -65,7 +63,7 @@ struct NumberPickerView: View {
                 self.numbers = NumberPickerView.getNumbers(digit, newValue)
             }
 
-            Text("\(unit)").fixedSize()
+            Text("\(weightUnit)").fixedSize()
             Spacer()
         }
     }
