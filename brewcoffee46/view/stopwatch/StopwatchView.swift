@@ -206,7 +206,7 @@ struct StopwatchView: View {
 
                     return await notificationService.addNotificationUsingTimer(
                         title: title,
-                        body: "🫖 \(roundCentesimal(info.value))mg 💧",
+                        body: "🫖 \(roundCentesimal(info.value))g 💧",
                         notifiedInSeconds: notifiedAt
                     )
                 }
