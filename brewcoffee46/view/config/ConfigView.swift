@@ -271,9 +271,7 @@ struct ConfigView: View {
             }
 
             Section(header: Text("config feedback")) {
-                Link(
-                    "config feedback link",
-                    destination: URL(string: "https://forms.gle/HxcdY6xGYMxrx2Bj6")!)
+                FeedbackView()
             }
 
             NavigationLink(value: Route.info) {
