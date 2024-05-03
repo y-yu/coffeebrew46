@@ -58,6 +58,8 @@
 "config load data not found log" = "Data is not found.";
 "config save success log" = "Save success!";
 "config delete success log" = "Delete success!";
+"config feedback" = "Feedback";
+"config feedback link" = "Send feedback";
 
 "config information" = "Information";
 

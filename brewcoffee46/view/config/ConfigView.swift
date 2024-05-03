@@ -269,6 +269,13 @@ struct ConfigView: View {
                     Text("config import export")
                 }
             }
+
+            Section(header: Text("config feedback")) {
+                Link(
+                    "config feedback link",
+                    destination: URL(string: "https://forms.gle/HxcdY6xGYMxrx2Bj6")!)
+            }
+
             NavigationLink(value: Route.info) {
                 Text("config information")
             }
