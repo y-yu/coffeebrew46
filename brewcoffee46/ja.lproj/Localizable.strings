@@ -58,6 +58,8 @@
 "config load data not found log" = "データがありません";
 "config save success log" = "セーブ成功";
 "config delete success log" = "削除成功";
+"config feedback" = "フィードバック";
+"config feedback link" = "フィードバックを送る";
 
 "config information" = "情報";
 
