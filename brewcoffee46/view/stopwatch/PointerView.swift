@@ -36,7 +36,6 @@ struct PointerView: View {
             .rotationEffect(
                 Angle.degrees(self.pointerInfo.degree)
             )
-            CenterCircle()
         }
     }
 }

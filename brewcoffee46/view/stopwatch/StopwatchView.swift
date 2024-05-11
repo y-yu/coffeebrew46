@@ -93,43 +93,22 @@ struct StopwatchView: View {
         let progressInt = if progressTime < 0 { ceil(progressTime) } else { floor(progressTime) }
 
         return VStack(alignment: .center) {
-            Spacer()
-            Spacer()
-            Spacer()
-            Spacer()
-            Spacer()
             HStack(alignment: .center) {
-                Spacer()
-                Spacer()
-                Spacer()
-                Text(String(format: "%03d", Int(progressInt)))
-                    .font(Font(UIFont.monospacedSystemFont(ofSize: 38, weight: .light)))
-                    .fixedSize()
-                    .foregroundColor(
-                        progressTime < viewModel.currentConfig.totalTimeSec ? .primary : .red
-                    )
-                Spacer()
-                // To show the decimal part of `progressTime`
-                Text(String(format: "%02d", Int((progressTime < 0 ? progressInt - progressTime : progressTime - progressInt) * 100)))
-                    .font(Font(UIFont.monospacedSystemFont(ofSize: 38, weight: .light)))
-                    .fixedSize()
-                    .foregroundColor(
-                        progressTime < viewModel.currentConfig.totalTimeSec ? .primary : .red
-                    )
-                Spacer()
-                Spacer()
-                Spacer()
-                Spacer()
+                Text(
+                    String(
+                        format: "%03d.%02d ",  // The suffix space is required to alignment.
+                        Int(progressInt),
+                        Int((progressTime < 0 ? progressInt - progressTime : progressTime - progressInt) * 100))
+                )
+                .font(Font(UIFont.monospacedSystemFont(ofSize: 38, weight: .light)))
+                .fixedSize()
+                .foregroundColor(
+                    progressTime < viewModel.currentConfig.totalTimeSec ? .primary : .red
+                )
             }
             Text(String(format: "/ %3.0f sec", viewModel.currentConfig.totalTimeSec))
                 .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .light)))
                 .frame(alignment: .bottom)
-            Spacer()
-            Spacer()
-            Spacer()
-            Spacer()
-            Spacer()
-            Spacer()
         }
     }
 
