@@ -76,7 +76,7 @@ struct ClockView: View {
                 id: i,
                 pointerInfo: viewModel.pointerInfoViewModels.pointerInfo[i],
                 geometry: geometry,
-                isOnGoing: viewModel.getNthPhase(progressTime: progressTime) >= i && appEnvironment.isTimerStarted
+                isOnGoing: viewModel.getNthPhase(progressTime: progressTime) >= i && appEnvironment.isTimerStarted && progressTime > 0
             )
         }
     }
@@ -92,7 +92,9 @@ struct ClockView: View {
                 .font(.system(size: 10).weight(.light))
                 .fixedSize()
                 .frame(width: 20)
-                .foregroundColor(!appEnvironment.isTimerStarted || angle > viewModel.toDegree(progressTime) ? .primary.opacity(0.4) : .accentColor)
+                .foregroundColor(
+                    progressTime < 0 || !appEnvironment.isTimerStarted || angle > viewModel.toDegree(progressTime)
+                        ? .primary.opacity(0.4) : .accentColor)
             Rectangle()
                 .fill(Color.primary)
                 .opacity(isMark ? 0.5 : 0.3)

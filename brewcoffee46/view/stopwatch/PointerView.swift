@@ -26,8 +26,8 @@ struct PointerView: View {
                     )
                     .offset(y: -offset)
                 Spacer()
-                Pointer(offset: offset)
-                    .stroke(lineWidth: 1)
+                Pointer(offset: offset, lineLength: isOnGoing ? 70 : 95)
+                    .stroke(lineWidth: isOnGoing ? 1.5 : 1)
                     .opacity(0.5)
                     .foregroundColor(
                         isOnGoing ? .accentColor : .primary
@@ -42,13 +42,13 @@ struct PointerView: View {
 
 struct Pointer: Shape {
     var circleRadius: CGFloat = 5
-
     var offset: Double
+    var lineLength: CGFloat
 
     func path(in rect: CGRect) -> Path {
         return Path { p in
             p.move(to: CGPoint(x: rect.midX, y: rect.minY - (offset * 1.5)))
-            p.addLine(to: CGPoint(x: rect.midX, y: rect.midY - circleRadius - 95))
+            p.addLine(to: CGPoint(x: rect.midX, y: rect.midY - circleRadius - lineLength))
         }
     }
 }

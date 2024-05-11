@@ -39,15 +39,16 @@ struct StopwatchView: View {
     var body: some View {
         ViewThatFits(in: .horizontal) {
             HStack {
-                ZStack {
-                    GeometryReader { (geometry: GeometryProxy) in
+                GeometryReader { (geometry: GeometryProxy) in
+                    ZStack(alignment: .center) {
                         ClockView(
                             progressTime: $progressTime,
                             steamingTime: viewModel.currentConfig.steamingTimeSec,
                             totalTime: viewModel.currentConfig.totalTimeSec
                         )
+                        .frame(height: geometry.size.width * 0.95)
+                        stopWatchCountShow
                     }
-                    stopWatchCountShow
                 }
                 GeometryReader { (geometry: GeometryProxy) in
                     VStack {
