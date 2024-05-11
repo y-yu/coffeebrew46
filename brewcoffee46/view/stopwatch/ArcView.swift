@@ -78,6 +78,13 @@ struct Arc: Shape {
                 endAngle: .degrees(self.endDegrees),
                 clockwise: false
             )
+            p.addArc(
+                center: center,
+                radius: radius / 1.5,
+                startAngle: .degrees(self.endDegrees),
+                endAngle: .degrees(self.startDegrees),
+                clockwise: true
+            )
         }
     }
 }
@@ -86,7 +93,7 @@ struct Arc: Shape {
     struct ArcView_Previews: PreviewProvider {
         @State static var progressTime1: Double = 55
         @State static var progressTime2: Double = -2
-        @State static var endDegree: Double = 300.0
+        @State static var endDegree: Double = 270.0
 
         static var previews: some View {
             VStack {
