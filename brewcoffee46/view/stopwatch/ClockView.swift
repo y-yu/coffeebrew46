@@ -11,17 +11,16 @@ struct ClockView: View {
     private let markInterval: Int = 10
     @Binding var progressTime: Double
 
-    @State var endDegree: Double = 360
+    @State var endDegree: Double
 
     var steamingTime: Double
     var totalTime: Double
-    let progressTimeInit: Double
 
-    init(progressTime: Binding<Double>, steamingTime: Double, totalTime: Double, progressTimeInit: Double) {
+    init(progressTime: Binding<Double>, steamingTime: Double, totalTime: Double) {
         self._progressTime = progressTime
+        self.endDegree = (ceil(progressTime.wrappedValue) - progressTime.wrappedValue) * 365
         self.steamingTime = steamingTime
         self.totalTime = totalTime
-        self.progressTimeInit = progressTimeInit
     }
 
     var body: some View {
@@ -61,7 +60,7 @@ struct ClockView: View {
                     )
                     .onChange(of: progressTime) { newValue in
                         if newValue < 0 {
-                            endDegree = (newValue / progressTimeInit) * 360.0
+                            endDegree = (ceil(newValue) - newValue) * 365
                         } else {
                             endDegree = viewModel.toDegree(newValue)
                         }
@@ -119,8 +118,7 @@ struct ClockView: View {
             return ClockView(
                 progressTime: $progressTime,
                 steamingTime: 50,
-                totalTime: 180,
-                progressTimeInit: -3.0
+                totalTime: 180
             )
             .environmentObject(appEnvironment)
             .environmentObject(viewModel)

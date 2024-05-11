@@ -82,29 +82,31 @@ struct Arc: Shape {
     }
 }
 
-struct ArcView_Previews: PreviewProvider {
-    @State static var progressTime1: Double = 55
-    @State static var progressTime2: Double = -2
-    @State static var endDegree: Double = 300.0
+#if DEBUG
+    struct ArcView_Previews: PreviewProvider {
+        @State static var progressTime1: Double = 55
+        @State static var progressTime2: Double = -2
+        @State static var endDegree: Double = 300.0
 
-    static var previews: some View {
-        VStack {
-            GeometryReader { geometry in
-                ArcView(
-                    progressTime: $progressTime1,
-                    endDegrees: $endDegree,
-                    size: geometry.size,
-                    scale: 0.7
-                )
-            }
-            GeometryReader { geometry in
-                ArcView(
-                    progressTime: $progressTime2,
-                    endDegrees: $endDegree,
-                    size: geometry.size,
-                    scale: 0.7
-                )
+        static var previews: some View {
+            VStack {
+                GeometryReader { geometry in
+                    ArcView(
+                        progressTime: $progressTime1,
+                        endDegrees: $endDegree,
+                        size: geometry.size,
+                        scale: 0.7
+                    )
+                }
+                GeometryReader { geometry in
+                    ArcView(
+                        progressTime: $progressTime2,
+                        endDegrees: $endDegree,
+                        size: geometry.size,
+                        scale: 0.7
+                    )
+                }
             }
         }
     }
-}
+#endif
