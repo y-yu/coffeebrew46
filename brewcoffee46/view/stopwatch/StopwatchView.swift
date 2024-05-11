@@ -44,8 +44,7 @@ struct StopwatchView: View {
                         ClockView(
                             progressTime: $progressTime,
                             steamingTime: viewModel.currentConfig.steamingTimeSec,
-                            totalTime: viewModel.currentConfig.totalTimeSec,
-                            progressTimeInit: StopwatchView.progressTimeInit
+                            totalTime: viewModel.currentConfig.totalTimeSec
                         )
                     }
                     stopWatchCountShow
@@ -68,8 +67,7 @@ struct StopwatchView: View {
                             ClockView(
                                 progressTime: $progressTime,
                                 steamingTime: viewModel.currentConfig.steamingTimeSec,
-                                totalTime: viewModel.currentConfig.totalTimeSec,
-                                progressTimeInit: StopwatchView.progressTimeInit
+                                totalTime: viewModel.currentConfig.totalTimeSec
                             )
                             .frame(height: geometry.size.width * 0.95)
                             stopWatchCountShow
