@@ -1,4 +1,5 @@
 import Factory
+import FirebaseCore
 import Foundation
 import NotificationCenter
 import UIKit
@@ -13,6 +14,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         }
 
         UNUserNotificationCenter.current().delegate = self
+
+        FirebaseApp.configure()
 
         return true
     }
