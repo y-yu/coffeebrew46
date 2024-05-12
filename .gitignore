@@ -92,3 +92,7 @@ iOSInjectionProject/
 # xcodegen
 *.xcodeproj
 *.xcworkspace
+
+# Firebase setting
+GoogleService-Info*.plist
+!GoogleService-Info-CI.plist
