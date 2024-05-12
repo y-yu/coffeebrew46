@@ -71,6 +71,18 @@ targets:
       - package: Firebase
         product: FirebaseAnalytics
     type: application
+    postBuildScripts:
+      - script: |
+          if [ "${CI}" == "true" ]; then
+            cp "${PROJECT_DIR}/${PROJECT_NAME}/config/GoogleService-Info-CI.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"            
+          elif [ "${CONFIGURATION}" == "Release" ]; then
+            cp "${PROJECT_DIR}/${PROJECT_NAME}/config/GoogleService-Info-Release.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
+          else
+            cp "${PROJECT_DIR}/${PROJECT_NAME}/config/GoogleService-Info-Debug.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
+          fi
+        name: Generate GoogleService-Info.plist
+        outputFiles:
+          - $(BUILT_PRODUCTS_DIR)/$(PRODUCT_NAME).app/GoogleService-Info.plist
   brewcoffee46Tests:
     dependencies:
     - target: brewcoffee46
