@@ -73,7 +73,7 @@
 
 "oss license title information" = "OSSライセンス情報";
 
-"notification 2nd drip" = "2投目";
-"notification 3rd drip" = "3投目";
-"notification after 4th drip suffix" = "投目";
+"notification 2nd drip" = "2投目 / %d投";
+"notification 3rd drip" = "3投目 / %d投";
+"notification after 4th drip suffix" = "%d投目 / %d投";
 "notification drip end" = "抽出終了";
