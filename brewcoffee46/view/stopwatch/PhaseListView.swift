@@ -24,51 +24,62 @@ struct PhaseListView: View {
         }
 
         return ScrollView {
-            GeometryReader { (geometry: GeometryProxy) in
-                Grid(alignment: .bottom, horizontalSpacing: 50, verticalSpacing: 5) {
-                    GridRow {
-                        Text("#")
-                        Text("Water")
-                        Text("Timing")
-                    }
-                    .font(Font.headline.weight(.bold))
-                    ForEach(phaseList, id: \.id) { phase in
-                        let waterAmount = "\(String(format: "%.1f", phase.waterAmount))\(weightUnit)"
-                        GridRow {
-                            fontConfig(Text("\(phase.index + 1)"), phase: phase)
-                            doneOnGoingScheduled(
-                                phase.index,
-                                done: AnyView(
-                                    HStack {
-                                        Image(systemName: "hourglass.tophalf.filled")
-                                            .scaledToFit()
-                                            .frame(width: 24, height: 24)
-                                            .foregroundColor(.primary)
-                                        fontConfig(Text("\(waterAmount)"), phase: phase)
-                                    }),
-                                onGoing: AnyView(
-                                    HStack {
-                                        Image(systemName: "hourglass")
-                                            .scaledToFit()
-                                            .frame(width: 24, height: 24)
-                                            .foregroundColor(.blue)
-                                        fontConfig(Text("\(waterAmount)"), phase: phase)
-                                    }),
-                                scheduled: AnyView(
-                                    HStack {
-                                        Image(systemName: "hourglass.bottomhalf.filled")
-                                            .scaledToFit()
-                                            .frame(width: 24, height: 24)
-                                            .foregroundColor(.primary)
-                                        fontConfig(Text("\(waterAmount)"), phase: phase)
-                                    })
-                            )
-                            timingView(phase: phase)
-                        }
-                        .foregroundColor(appEnvironment.isTimerStarted ? .primary : .primary.opacity(0.5))
-                    }
+            LazyVGrid(
+                columns: Array(
+                    repeating: .init(),
+                    count: 3
+                ),
+                alignment: .center
+            ) {
+                Group {
+                    Text("#")
+                    Text("Water")
+                    Text("Timing")
                 }
-                .frame(width: geometry.size.width)
+                .font(Font.headline.weight(.bold))
+            }
+            ForEach(phaseList, id: \.id) { phase in
+                let waterAmount = "\(String(format: "%.1f", phase.waterAmount))\(weightUnit)"
+                LazyVGrid(
+                    columns: Array(
+                        repeating: .init(),
+                        count: 3
+                    ),
+                    alignment: .center
+                ) {
+                    Group {
+                        fontConfig(Text("\(phase.index + 1)"), phase: phase)
+                        doneOnGoingScheduled(
+                            phase.index,
+                            done: AnyView(
+                                HStack {
+                                    Image(systemName: "hourglass.tophalf.filled")
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundColor(.primary)
+                                    fontConfig(Text("\(waterAmount)"), phase: phase)
+                                }),
+                            onGoing: AnyView(
+                                HStack {
+                                    Image(systemName: "hourglass")
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundColor(.blue)
+                                    fontConfig(Text("\(waterAmount)"), phase: phase)
+                                }),
+                            scheduled: AnyView(
+                                HStack {
+                                    Image(systemName: "hourglass.bottomhalf.filled")
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundColor(.primary)
+                                    fontConfig(Text("\(waterAmount)"), phase: phase)
+                                })
+                        )
+                        timingView(phase: phase)
+                    }
+                    .foregroundColor(appEnvironment.isTimerStarted ? .primary : .primary.opacity(0.5))
+                }
             }
         }
     }
