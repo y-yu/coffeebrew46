@@ -171,17 +171,18 @@ struct StopwatchView: View {
         return await withTaskGroup(of: ResultNea<Void, CoffeeError>.self) { group in
             var errors: [CoffeeError] = []
 
+            let numberOfAllDrips = viewModel.pointerInfoViewModels.pointerInfo.count
             for (i, info) in viewModel.pointerInfoViewModels.pointerInfo.dropFirst().enumerated() {
                 let notifiedAt = Int(floor(info.dripAt))
 
                 group.addTask {
                     let title =
                         if i == 0 {
-                            NSLocalizedString("notification 2nd drip", comment: "")
+                            String(format: NSLocalizedString("notification 2nd drip", comment: ""), numberOfAllDrips)
                         } else if i == 1 {
-                            NSLocalizedString("notification 3rd drip", comment: "")
+                            String(format: NSLocalizedString("notification 3rd drip", comment: ""), numberOfAllDrips)
                         } else {
-                            "\(i + 2)" + NSLocalizedString("notification after 4th drip suffix", comment: "")
+                            String(format: NSLocalizedString("notification after 4th drip suffix", comment: ""), (i + 2), numberOfAllDrips)
                         }
 
                     return await notificationService.addNotificationUsingTimer(
