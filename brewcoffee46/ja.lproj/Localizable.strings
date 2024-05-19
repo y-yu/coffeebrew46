@@ -61,6 +61,16 @@
 "config feedback" = "フィードバック";
 "config feedback link" = "フィードバックを送る";
 
+"config load setting alert title" = "確認";
+"config load setting alert message" = "設定をロードすると現在の設定は上書きされます。ロードしますか？";
+"config load setting alert cancel" = "キャンセル";
+"config load setting alert load" = "ロード";
+
+"config delete setting alert title" = "確認";
+"config delete setting alert message" = "この設定を消去しますか？";
+"config delete setting alert cancel" = "キャンセル";
+"config delete setting alert delete" = "削除";
+
 "config information" = "情報";
 
 "info version" = "ビルドバージョン";
