@@ -61,6 +61,16 @@
 "config feedback" = "Feedback";
 "config feedback link" = "Send feedback";
 
+"config load setting alert title" = "Notice";
+"config load setting alert message" = "The current setting will be overwritten. Do you sure to load this setting?";
+"config load setting alert cancel" = "Cancel";
+"config load setting alert load" = "Load";
+
+"config delete setting alert title" = "Notice";
+"config delete setting alert message" = "Do you sure to delete this setting?";
+"config delete setting alert cancel" = "Cancel";
+"config delete setting alert delete" = "Delete";
+
 "config information" = "Information";
 
 "info version" = "Build version";

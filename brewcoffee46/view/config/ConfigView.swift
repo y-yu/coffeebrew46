@@ -23,6 +23,8 @@ struct ConfigView: View {
     }
     @State var currentSaveLoadIndex: Int = 0
     @State var log: String = ""
+    @State var isLoadAlertPresented: Bool = false
+    @State var isDeleteAlertPresented: Bool = false
 
     // The elements of `savedConfigNote` indicates these 3 semantics of saved configuration:
     //   1. If the element is `.none`, it means the data is empty (not saved yet)
@@ -210,14 +212,27 @@ struct ConfigView: View {
                 VStack {
                     Spacer()
                     HStack {
-                        Button(action: {
-                            loadConfig()
-                        }) {
+                        Button(action: { isLoadAlertPresented.toggle() }) {
                             HStack {
                                 Spacer()
                                 Text("config load button")
                                 Spacer()
                             }
+                        }
+                        .alert("config load setting alert title", isPresented: $isLoadAlertPresented) {
+                            Button(role: .cancel, action: { isLoadAlertPresented.toggle() }) {
+                                Text("config load setting alert cancel")
+                            }
+                            Button(
+                                role: .destructive,
+                                action: {
+                                    loadConfig()
+                                }
+                            ) {
+                                Text("config load setting alert load")
+                            }
+                        } message: {
+                            Text("config load setting alert message")
                         }
                         .buttonStyle(BorderlessButtonStyle())
                         .disabled(appEnvironment.isTimerStarted)
@@ -240,18 +255,31 @@ struct ConfigView: View {
 
                         Divider()
 
-                        Button(action: {
-                            saveLoadConfigService.delete(key: "\(currentSaveLoadIndex)")
-                            log = NSLocalizedString("config delete success log", comment: "")
-                            // In order to update save & load target picker label.
-                            updateSavedConfigNote()
-                        }) {
+                        Button(action: { isDeleteAlertPresented.toggle() }) {
                             HStack {
                                 Spacer()
                                 Text("config delete button")
                                     .foregroundColor(.red)
                                 Spacer()
                             }
+                        }
+                        .alert("config delete setting alert title", isPresented: $isDeleteAlertPresented) {
+                            Button(role: .cancel, action: { isDeleteAlertPresented.toggle() }) {
+                                Text("config delete setting alert cancel")
+                            }
+                            Button(
+                                role: .destructive,
+                                action: {
+                                    saveLoadConfigService.delete(key: "\(currentSaveLoadIndex)")
+                                    log = NSLocalizedString("config delete success log", comment: "")
+                                    // In order to update save & load target picker label.
+                                    updateSavedConfigNote()
+                                }
+                            ) {
+                                Text("config delete setting alert delete")
+                            }
+                        } message: {
+                            Text("config delete setting alert message")
                         }
                         .buttonStyle(BorderlessButtonStyle())
                     }
