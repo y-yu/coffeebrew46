@@ -298,12 +298,20 @@ struct ConfigView: View {
                 }
             }
 
-            Section(header: Text("config feedback")) {
-                FeedbackView()
-            }
-
-            NavigationLink(value: Route.info) {
-                Text("config information")
+            Section {
+                HStack {
+                    FeedbackView()
+                }
+                HStack {
+                    ShareLink(
+                        item: URL(string: "https://apps.apple.com/jp/app/brewcoffee46/id6449224023")!
+                    ) {
+                        Label("info share app", systemImage: "square.and.arrow.up")
+                    }
+                }
+                NavigationLink(value: Route.info) {
+                    Text("config information")
+                }
             }
         }
         .navigationTitle("navigation title configuration")
