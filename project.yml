@@ -45,6 +45,9 @@ targets:
       base:
         INFOPLIST_FILE: brewcoffee46/Info.plist
         DEVELOPMENT_TEAM: 3KDN4W8346
+        OTHER_LDFLAGS:
+          - $(inherited)
+          - -ObjC
       configs:
         Debug:
           CODE_SIGN_IDENTITY: Apple Development
