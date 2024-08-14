@@ -8,6 +8,15 @@ extension Optional {
         }
     }
 
+    internal func toArray() -> [Wrapped] {
+        switch self {
+        case .none:
+            return []
+        case .some(let value):
+            return [value]
+        }
+    }
+
     internal func isDefined() -> Bool {
         switch self {
         case .none:

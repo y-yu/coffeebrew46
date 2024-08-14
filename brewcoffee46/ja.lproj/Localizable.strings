@@ -2,6 +2,7 @@
 "navigation title before checklist" = "Before Checklist";
 "navigation title information" = "Information";
 "navigation title stopwatch" = "Stopwatch";
+"navigation title save load" = "Save & Load";
 
 "before check list check all" = "全てをチェック";
 "before check list reset" = "リセット";
@@ -25,51 +26,56 @@
 "config import export" = "Import & Export";
 
 "config show tips" = "Tipsを表示";
+"config show current note" = "現在の設定";
 
 "config weight settings" = "重量設定";
 "config calculate coffee beans from water" = "水量→コーヒー豆量";
 "config calculate water from coffee beans" = "コーヒー豆量→水量";
 "config calculate coffee beans from water tips" = "飲みたいコーヒーの量が決まっているとき";
-"config coffee beans weight" = "コーヒー豆量:";
-"config water amount" = "水量:";
-"config water ratio" = "コーヒー豆1gに対する水の質量比:";
+"config coffee beans weight" = "コーヒー豆量";
+"config water amount" = "水量";
+"config water ratio" = "コーヒー豆1gに対する水の質量比";
+"config water ratio short" = "豆と水の質量比";
 "config water ratio tips" = "小さければ濃く、大きければ薄くなる";
 
 "config 4:6 settings" = "4:6設定";
-"config 1st water percent" = "1投目の割合:";
+"config 1st water percent" = "1投目の割合";
 "config 1st water percent tips" = "大きいと酸味が、小さいと甘みが強調される";
 "config number of partitions of later 6" = "後半6割の分割数";
 "config number of partitions of later 6 tips" = "大きいと濃く、小さいとマイルド";
 
 "config timer setting" = "タイマー設定";
-"config total time" = "抽出全体時間:";
+"config total time" = "抽出全体時間";
 "config sec unit" = "秒";
-"config steaming time" = "蒸らし（1〜2投目までの）時間:";
+"config steaming time" = "蒸らし（1〜2投目までの）時間";
+"config steaming time short" = "蒸らし時間";
 
-"config save load setting" = "設定のセーブとロード";
-"config select save load index" = "対象";
+"config save load setting" = "設定の保存と読み込み";
+"config save load current config" = "現在の設定";
+"config saved data" = "保存ずみ設定";
 "config empty" = "データなし";
-"config note placeholder" = "設定の特徴メモ";
+"config note placeholder" = "特徴メモ";
 "config note empty string" = "メモなし";
-"config load button" = "ロード";
-"config save button" = "セーブ";
-"config delete button" = "削除";
-"config load success log" = "ロード成功";
-"config load data not found log" = "データがありません";
-"config save success log" = "セーブ成功";
-"config delete success log" = "削除成功";
-"config feedback" = "フィードバック";
-"config feedback link" = "フィードバックを送る";
-
+"config save button" = "新規保存";
+"config current config have already been saved" = "現在の設定はすでに保存されています。";
 "config load setting alert title" = "確認";
-"config load setting alert message" = "設定をロードすると現在の設定は上書きされます。ロードしますか？";
+"config load setting alert message" = "設定（%@ - %@）を読み込むと現在の設定は上書きされます。読み込みますか？";
 "config load setting alert cancel" = "キャンセル";
-"config load setting alert load" = "ロード";
+"config load setting alert load" = "読み込み";
+"config last edited at" = "更新日時";
+"config none last edited at" = "日時情報なし";
+"config legacy saved setting header" = "過去バージョンの設定";
+"config legacy saved setting convert" = "過去の設定をコンバート";
+"config load legacy setting alert message" = "過去のアプリで保存された設定を読み込みます。すでに保存されている設定に影響はありません。読み込み後、古い設定は消去されます。";
+"config legacy saved setting convert button" = "コンバート";
 
 "config delete setting alert title" = "確認";
 "config delete setting alert message" = "この設定を消去しますか？";
 "config delete setting alert cancel" = "キャンセル";
 "config delete setting alert delete" = "削除";
+
+"config feedback" = "フィードバック";
+"config feedback link" = "フィードバックを送る";
 
 "config information" = "情報";
 

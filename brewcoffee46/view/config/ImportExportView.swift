@@ -82,7 +82,7 @@ extension View {
 }
 
 #if DEBUG
-    struct SaveLoadView_Previews: PreviewProvider {
+    struct ImportExportView_Previews: PreviewProvider {
         static var previews: some View {
             ImportExportView()
                 .environmentObject(CurrentConfigViewModel.init())
