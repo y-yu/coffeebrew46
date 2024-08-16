@@ -35,7 +35,7 @@ extension ResultNea {
 
     func recoverWithErrorLog(_ errorLog: inout String) where Failure == NonEmptyArray<CoffeeError> {
         switch self {
-        case .success(let success):
+        case .success(_):
             ()
 
         case .failure(let errors):
