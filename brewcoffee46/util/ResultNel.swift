@@ -32,6 +32,16 @@ extension ResultNea {
             return
         }
     }
+
+    func recoverWithErrorLog(_ errorLog: inout String) where Failure == NonEmptyArray<CoffeeError> {
+        switch self {
+        case .success(let success):
+            ()
+
+        case .failure(let errors):
+            errorLog += errors.toArray().map { $0.getMessage() }.joined(separator: "\n")
+        }
+    }
 }
 
 extension Result {

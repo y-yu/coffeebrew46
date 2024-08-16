@@ -10,9 +10,7 @@ struct BeforeChecklistView: View {
 
     @State private var editingIndex: Int? = .none
 
-    @State private var isEditing: Bool = false
-
-    @State var mode: EditMode = .inactive
+    @State private var mode: EditMode = .inactive
 
     @State private var willMoveToStopwatch: Bool = false
 
@@ -39,7 +37,7 @@ struct BeforeChecklistView: View {
                         .disabled(appEnvironment.isTimerStarted)
                 }
             ) {
-                ForEach(Array(zip(viewModel.currentConfig.beforeChecklist.indices, viewModel.currentConfig.beforeChecklist)), id: \.0) { i, item in
+                ForEach(Array(viewModel.currentConfig.beforeChecklist.enumerated()), id: \.element) { i, item in
                     HStack {
                         Text("\(i + 1).")
                         Toggle(isOn: $checks[i]) {
@@ -50,6 +48,8 @@ struct BeforeChecklistView: View {
                             willMoveToStopwatch = isAllChecked()
                         }
                     }
+                    .deleteDisabled(appEnvironment.isTimerStarted)
+                    .moveDisabled(appEnvironment.isTimerStarted)
                 }
                 .onDelete(perform: { indexSet in
                     viewModel.currentConfig.beforeChecklist.remove(atOffsets: indexSet)
@@ -121,7 +121,8 @@ struct BeforeChecklistView: View {
                 totalTimeSec: 210,
                 steamingTimeSec: 45,
                 note: "note",
-                beforeChecklist: ["aaaa", "bbb"]
+                beforeChecklist: ["aaaa", "bbb"],
+                editedAtMilliSec: Date.nowEpochTimeMillis()
             )
         )
 

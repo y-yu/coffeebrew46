@@ -1,24 +1,79 @@
 import Foundation
 
 struct Config: Equatable {
-    var coffeeBeansWeight: Double
+    var coffeeBeansWeight: Double {
+        didSet {
+            if coffeeBeansWeight != oldValue {
+                updateLastEditedAt()
+            }
+        }
+    }
 
-    var partitionsCountOf6: Double
+    var partitionsCountOf6: Double {
+        didSet {
+            if partitionsCountOf6 != oldValue {
+                updateLastEditedAt()
+            }
+        }
+    }
 
-    var waterToCoffeeBeansWeightRatio: Double
+    var waterToCoffeeBeansWeightRatio: Double {
+        didSet {
+            if waterToCoffeeBeansWeightRatio != oldValue {
+                updateLastEditedAt()
+            }
+        }
+    }
 
-    var firstWaterPercent: Double
+    var firstWaterPercent: Double {
+        didSet {
+            if firstWaterPercent != oldValue {
+                updateLastEditedAt()
+            }
+        }
+    }
 
-    var totalTimeSec: Double
+    var totalTimeSec: Double {
+        didSet {
+            if totalTimeSec != oldValue {
+                updateLastEditedAt()
+            }
+        }
+    }
 
-    var steamingTimeSec: Double
+    var steamingTimeSec: Double {
+        didSet {
+            if steamingTimeSec != oldValue {
+                updateLastEditedAt()
+            }
+        }
+    }
 
-    var note: String?
+    var note: String? {
+        didSet {
+            if note != oldValue {
+                updateLastEditedAt()
+            }
+        }
+    }
 
-    var beforeChecklist: [String]
+    var beforeChecklist: [String] {
+        didSet {
+            if beforeChecklist != oldValue {
+                updateLastEditedAt()
+            }
+        }
+    }
+
+    /// Unix epoch time as milli seconds.
+    var editedAtMilliSec: UInt64?
 
     // If the JSON compatibility of `Config` falls then `version` will increment.
     var version: Int
+
+    private mutating func updateLastEditedAt() {
+        self.editedAtMilliSec = .some(Date.nowEpochTimeMillis())
+    }
 
     enum CodingKeys: String, CodingKey {
         case coffeeBeansWeight
@@ -30,6 +85,7 @@ struct Config: Equatable {
         case version
         case note
         case beforeChecklist
+        case editedAtMilliSec
     }
 
     init(
@@ -41,6 +97,7 @@ struct Config: Equatable {
         steamingTimeSec: Double,
         note: String,
         beforeChecklist: [String],
+        editedAtMilliSec: UInt64?,
         version: Int = Config.currentVersion
     ) {
         self.coffeeBeansWeight = coffeeBeansWeight
@@ -51,6 +108,7 @@ struct Config: Equatable {
         self.steamingTimeSec = steamingTimeSec
         self.note = .some(note)
         self.beforeChecklist = beforeChecklist
+        self.editedAtMilliSec = editedAtMilliSec
         self.version = version
     }
 
@@ -63,6 +121,7 @@ struct Config: Equatable {
         steamingTimeSec = 45
         note = .some("")
         beforeChecklist = Config.initBeforeCheckList
+        editedAtMilliSec = .some(Date.nowEpochTimeMillis())
         version = Config.currentVersion
     }
 }
@@ -128,6 +187,7 @@ extension Config: Decodable {
         note = try values.decodeIfPresent(String.self, forKey: .note)
         let rawBeforeChecklist = try values.decodeIfPresent([String].self, forKey: .beforeChecklist) ?? Config.initBeforeCheckList
         beforeChecklist = Array(rawBeforeChecklist.prefix(Config.maxCheckListSize))
+        editedAtMilliSec = try values.decodeIfPresent(UInt64.self, forKey: .editedAtMilliSec)
         version = try values.decode(Int.self, forKey: .version)
     }
 }
@@ -143,6 +203,7 @@ extension Config: Encodable {
         try container.encode(steamingTimeSec, forKey: .steamingTimeSec)
         try container.encodeIfPresent(note, forKey: .note)
         try container.encode(beforeChecklist, forKey: .beforeChecklist)
+        try container.encodeIfPresent(editedAtMilliSec, forKey: .editedAtMilliSec)
         try container.encode(version, forKey: .version)
     }
 }
@@ -151,5 +212,20 @@ func == (lhs: Config, rhs: Config) -> Bool {
     lhs.coffeeBeansWeight == rhs.coffeeBeansWeight && lhs.firstWaterPercent == rhs.firstWaterPercent
         && lhs.partitionsCountOf6 == rhs.partitionsCountOf6 && lhs.steamingTimeSec == rhs.steamingTimeSec && lhs.totalTimeSec == rhs.totalTimeSec
         && lhs.waterToCoffeeBeansWeightRatio == rhs.waterToCoffeeBeansWeightRatio && lhs.note == rhs.note
-        && lhs.beforeChecklist == rhs.beforeChecklist && lhs.version == rhs.version
+        && lhs.beforeChecklist == rhs.beforeChecklist && lhs.editedAtMilliSec == rhs.editedAtMilliSec && lhs.version == rhs.version
+}
+
+extension Config: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(coffeeBeansWeight)
+        hasher.combine(partitionsCountOf6)
+        hasher.combine(firstWaterPercent)
+        hasher.combine(steamingTimeSec)
+        hasher.combine(totalTimeSec)
+        hasher.combine(waterToCoffeeBeansWeightRatio)
+        hasher.combine(note)
+        hasher.combine(beforeChecklist)
+        hasher.combine(editedAtMilliSec)
+        hasher.combine(version)
+    }
 }

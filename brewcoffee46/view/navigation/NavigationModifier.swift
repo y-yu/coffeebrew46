@@ -10,8 +10,10 @@ struct NavigationModifier: ViewModifier {
             ConfigView()
         case .stopwatch:
             StopwatchView()
-        case .saveLoad:
+        case .importExport:
             ImportExportView()
+        case .saveLoad:
+            SaveLoadView()
         case .info:
             InfoView()
         case .beforeChecklist:

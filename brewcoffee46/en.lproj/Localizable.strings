@@ -2,6 +2,7 @@
 "navigation title before checklist" = "Before Checklist";
 "navigation title information" = "Information";
 "navigation title stopwatch" = "Stopwatch";
+"navigation title save load" = "Save & Load";
 
 "before check list check all" = "Check All";
 "before check list reset" = "Reset";
@@ -25,44 +26,40 @@
 "config import export" = "Import & Export";
 
 "config show tips" = "Show Tips";
+"config show current note" = "Current configuration";
 
 "config weight settings" = "Weight settings";
 "config calculate coffee beans from water" = "water→coffee beans";
 "config calculate water from coffee beans" = "coffee beans→water";
 "config calculate coffee beans from water tips" = "Turn on if you would like to the specific amount of coffee";
-"config coffee beans weight" = "Coffee beans weight:";
-"config water amount" = "Water amount:";
-"config water ratio" = "Water ratio against coffee beans weight:";
+"config coffee beans weight" = "Coffee beans weight";
+"config water amount" = "Water amount";
+"config water ratio" = "Water ratio against coffee beans weight";
+"config water ratio short" = "Ratio";
 "config water ratio tips" = "config water ratio tips";
 
 "config 4:6 settings" = "4:6 settings";
-"config 1st water percent" = "1st water percent of former 4:";
+"config 1st water percent" = "1st water percent of former 4";
 "config 1st water percent tips" = "sweet vs acidity";
 "config number of partitions of later 6" = "The number of partitions of later 6";
 "config number of partitions of later 6 tips" = "strong vs mild";
 
 "config timer setting" = "Timer settings";
-"config total time" = "Total brewing time:";
+"config total time" = "Total brewing time";
 "config sec unit" = "sec";
-"config steaming time" = "Steaming(1st -> 2nd drip) time:";
+"config steaming time" = "Steaming(1st -> 2nd drip) time";
+"config steaming time short" = "Steaming time";
 
 "config save load setting" = "Save & Load configuration";
-"config select save load index" = "Target";
+"config save load current config" = "Current configuration";
+"config saved data" = "Save data";
 "config empty" = "No data";
 "config note placeholder" = "Something to characterize configuration";
 "config note empty string" = "No note";
-"config load button" = "Load";
-"config save button" = "Save";
-"config delete button" = "Delete";
-"config load success log" = "Load success!";
-"config load data not found log" = "Data is not found.";
-"config save success log" = "Save success!";
-"config delete success log" = "Delete success!";
-"config feedback" = "Feedback";
-"config feedback link" = "Send feedback";
-
+"config save button" = "Save as new";
+"config current config have already been saved" = "The current configuration has already been saved.";
 "config load setting alert title" = "Notice";
-"config load setting alert message" = "The current setting will be overwritten. Do you sure to load this setting?";
+"config load setting alert message" = "After loading setting (%@ - %@), the current setting will be overwritten. Do you sure to load this setting?";
 "config load setting alert cancel" = "Cancel";
 "config load setting alert load" = "Load";
 
@@ -70,6 +67,15 @@
 "config delete setting alert message" = "Do you sure to delete this setting?";
 "config delete setting alert cancel" = "Cancel";
 "config delete setting alert delete" = "Delete";
+"config last edited at" = "Updated at";
+"config none last edited at" = "No date";
+"config legacy saved setting header" = "Legacy version saved configuration";
+"config legacy saved setting convert" = "Convert legacy version configuration";
+"config load legacy setting alert message" = "Load legacy version configurations. It doesn't impact to the configurations already saved. The legacy configurations will be deleted after loading";
+"config legacy saved setting convert button" = "Convert";
+
+"config feedback" = "Feedback";
+"config feedback link" = "Send feedback";
 
 "config information" = "Information";
 
