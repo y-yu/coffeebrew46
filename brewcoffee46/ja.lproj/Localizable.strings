@@ -26,12 +26,12 @@
 "config import export" = "Import & Export";
 
 "config show tips" = "Tipsを表示";
-"config show current note" = "現在の設定";
+"config show current note tips" = "現在の設定";
 
-"config weight settings" = "重量設定";
+"config weight settings" = "抽出量設定";
 "config calculate coffee beans from water" = "水量→コーヒー豆量";
 "config calculate water from coffee beans" = "コーヒー豆量→水量";
-"config calculate coffee beans from water tips" = "飲みたいコーヒーの量が決まっているとき";
+"config calculate coffee beans from water tips" = "コーヒーの量が決まっているときは水量→コーヒー豆量を";
 "config coffee beans weight" = "コーヒー豆量";
 "config water amount" = "水量";
 "config water ratio" = "コーヒー豆1gに対する水の質量比";
@@ -46,6 +46,7 @@
 
 "config timer setting" = "タイマー設定";
 "config total time" = "抽出全体時間";
+"config total time tips" = "抽出速度でコーヒー粉の粗さを変える目安に";
 "config sec unit" = "秒";
 "config steaming time" = "蒸らし（1〜2投目までの）時間";
 "config steaming time short" = "蒸らし時間";

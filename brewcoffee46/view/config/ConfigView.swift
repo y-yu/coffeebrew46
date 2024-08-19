@@ -31,13 +31,21 @@ struct ConfigView: View {
         Form {
             Toggle("config show tips", isOn: $showTips)
 
-            Section(header: Text("config show current note")) {
-                HStack {
-                    Text(viewModel.currentConfig.note ??? NSLocalizedString("config note empty string", comment: ""))
-                    Spacer()
-                    Text(
-                        viewModel.currentConfig.editedAtMilliSec?.toDate().formattedWithSec()
-                            ?? NSLocalizedString("config none last edited at", comment: ""))
+            Section(header: Text("config save load setting")) {
+                TipsView(
+                    showTips,
+                    content: HStack {
+                        Text(viewModel.currentConfig.note ??? NSLocalizedString("config note empty string", comment: ""))
+                        Spacer()
+                        Text(
+                            viewModel.currentConfig.editedAtMilliSec?.toDate().formattedWithSec()
+                                ?? NSLocalizedString("config none last edited at", comment: ""))
+                    },
+                    tips: Text("config show current note tips")
+                )
+
+                NavigationLink(value: Route.saveLoad) {
+                    Text("config save load setting")
                 }
             }
 
@@ -124,12 +132,16 @@ struct ConfigView: View {
 
             Section(header: Text("config timer setting")) {
                 VStack {
-                    HStack {
-                        Text("config total time")
-                        Text((String(format: "%.0f", viewModel.currentConfig.totalTimeSec)))
-                        Text("config sec unit")
-                        Spacer()
-                    }
+                    TipsView(
+                        showTips,
+                        content: HStack {
+                            Text("config total time")
+                            Text(
+                                "\(String(format: "%.0f", viewModel.currentConfig.totalTimeSec))\(NSLocalizedString("config sec unit", comment: ""))")
+                            Spacer()
+                        },
+                        tips: Text("config total time tips")
+                    )
                     ButtonSliderButtonView(
                         maximum: 300.0,
                         // If `totalTime` would be going down less than `steamingTime` + its step,
@@ -145,8 +157,7 @@ struct ConfigView: View {
                 VStack {
                     HStack {
                         Text("config steaming time")
-                        Text(String(format: "%.0f", viewModel.currentConfig.steamingTimeSec))
-                        Text("config sec unit")
+                        Text("\(String(format: "%.0f", viewModel.currentConfig.steamingTimeSec))\(NSLocalizedString("config sec unit", comment: ""))")
                         Spacer()
                     }
                     ButtonSliderButtonView(
@@ -162,12 +173,6 @@ struct ConfigView: View {
                         isDisable: appEnvironment.isTimerStarted,
                         target: $viewModel.currentConfig.steamingTimeSec
                     )
-                }
-            }
-
-            Section(header: Text("config save load setting")) {
-                NavigationLink(value: Route.saveLoad) {
-                    Text("config save load setting")
                 }
             }
 
