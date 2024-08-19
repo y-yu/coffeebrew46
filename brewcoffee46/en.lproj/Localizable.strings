@@ -26,12 +26,12 @@
 "config import export" = "Import & Export";
 
 "config show tips" = "Show Tips";
-"config show current note" = "Current configuration";
+"config show current note tips" = "Current configuration";
 
-"config weight settings" = "Weight settings";
+"config weight settings" = "Amount settings";
 "config calculate coffee beans from water" = "water→coffee beans";
 "config calculate water from coffee beans" = "coffee beans→water";
-"config calculate coffee beans from water tips" = "Turn on if you would like to the specific amount of coffee";
+"config calculate coffee beans from water tips" = "Turn on “water→coffee beans” if you would like to the specific amount of coffee";
 "config coffee beans weight" = "Coffee beans weight";
 "config water amount" = "Water amount";
 "config water ratio" = "Water ratio against coffee beans weight";
@@ -46,6 +46,7 @@
 
 "config timer setting" = "Timer settings";
 "config total time" = "Total brewing time";
+"config total time tips" = "If the brewing would be too fast or slow, change your grinder setting";
 "config sec unit" = "sec";
 "config steaming time" = "Steaming(1st -> 2nd drip) time";
 "config steaming time short" = "Steaming time";
