@@ -7,6 +7,7 @@ struct ConfigView: View {
     @EnvironmentObject var viewModel: CurrentConfigViewModel
 
     @Injected(\.saveLoadConfigService) private var saveLoadConfigService
+    @Injected(\.watchConnectionService) private var watchConnectionService
 
     @Environment(\.scenePhase) private var scenePhase
 
@@ -47,6 +48,12 @@ struct ConfigView: View {
                 NavigationLink(value: Route.saveLoad) {
                     Text("config save load setting")
                 }
+            }
+
+            Button(action: {
+                watchConnectionService.send(config: viewModel.currentConfig)
+            }) {
+                Text("送信")
             }
 
             Section(header: Text("config weight settings")) {

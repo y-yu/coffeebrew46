@@ -25,6 +25,8 @@ settings:
     IPHONEOS_DEPLOYMENT_TARGET: 16.0
     CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
+    MARKETING_VERSION: 2.0.0
+    CURRENT_PROJECT_VERSION: 2.0.0
   configs:
     Debug:
       MTL_ENABLE_DEBUG_INFO: INCLUDE_SOURCE
@@ -69,6 +71,7 @@ targets:
     - path: brewcoffee46
       name: brewcoffee46
     dependencies:
+      - target: brewcoffee46WatchKitApp
       - package: SwiftUITooltip
       - package: Factory
       - package: Firebase
@@ -86,6 +89,7 @@ targets:
         name: Generate GoogleService-Info.plist
         outputFiles:
           - $(BUILT_PRODUCTS_DIR)/$(PRODUCT_NAME).app/GoogleService-Info.plist
+
   brewcoffee46Tests:
     dependencies:
     - target: brewcoffee46
@@ -121,3 +125,38 @@ targets:
     - path: brewcoffee46Tests
       name: brewcoffee46Tests
     type: bundle.unit-test
+
+  brewcoffee46WatchKitApp:
+    platform: watchOS
+    productName: BrewCoffee46WatchKitApp
+    settings:
+      base:
+        INFOPLIST_FILE: 'brewcoffee46 WatchKit App/Info.plist'
+        DEVELOPMENT_TEAM: 3KDN4W8346
+        OTHER_LDFLAGS:
+          - $(inherited)
+      configs:
+        Debug:
+          CODE_SIGN_IDENTITY: Apple Development
+          CODE_SIGN_STYLE: Automatic
+          DEVELOPMENT_ASSET_PATHS: '"brewcoffee46 WatchKit App/Preview Content"'
+          PRODUCT_COMPANION_APP_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug.watchkitapp
+          PRODUCT_NAME: BrewCoffee46WatchKitApp
+          PROVISIONING_PROFILE_SPECIFIER: ''
+          CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
+        Release:
+          CODE_SIGN_IDENTITY: Apple Development
+          CODE_SIGN_STYLE: Automatic
+          DEVELOPMENT_ASSET_PATHS: '"brewcoffee46 WatchKit App/Preview Content"'
+          PRODUCT_COMPANION_APP_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.watchkitapp
+          PRODUCT_NAME: BrewCoffee46WatchKitApp
+          PROVISIONING_PROFILE_SPECIFIER: ''
+          CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
+    sources:
+    - path: 'brewcoffee46 WatchKit App'
+      name: 'brewcoffee46 WatchKit App'
+    # dependencies:
+    type: application
+    deploymentTarget: "10.0"
