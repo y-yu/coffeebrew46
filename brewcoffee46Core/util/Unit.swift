@@ -1,1 +1,0 @@
-let weightUnit: String = "g"
