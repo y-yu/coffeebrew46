@@ -1,4 +1,4 @@
-import BrewCoffee46
+import BrewCoffee46Core
 
 extension CoffeeError: Equatable {
     public static func == (lhs: CoffeeError, rhs: CoffeeError) -> Bool {

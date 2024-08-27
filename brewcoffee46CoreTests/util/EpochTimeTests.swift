@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import BrewCoffee46
+@testable import BrewCoffee46Core
 
 final class EpochTimeTests: XCTestCase {
     let date: Date = getDate()

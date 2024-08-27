@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import BrewCoffee46
+@testable import BrewCoffee46Core
 
 final class TupleFloatTests: XCTestCase {
     func test_TupleFloat_from_double_successfully() throws {
