@@ -29,7 +29,7 @@ jobs:
 
       - name: Run swift-format and check
         run: |
-          swift-format -r brewcoffee46 brewcoffee46Tests -i
+          swift-format -r brewcoffee46 brewcoffee46Tests brewcoffee46Core brewcoffee46CoreTests brewcoffee46WatchKitApp -i
           if [[ -n `git diff` ]]; then
             exit 1;
           fi

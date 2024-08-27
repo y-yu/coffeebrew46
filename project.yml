@@ -10,6 +10,9 @@ options:
   groupSortPosition: bottom
   transitivelyLinkDependencies: false
   useBaseInternationalization: false
+  deploymentTarget: 
+    watchOS: 10.0
+    iOS: 16.0
 packages:
   SwiftUITooltip:
     url: https://github.com/quassum/SwiftUI-Tooltip.git
@@ -22,56 +25,95 @@ packages:
     from: 10.25.0
 settings:
   base:
-    IPHONEOS_DEPLOYMENT_TARGET: 16.0
     CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
+    DEAD_CODE_STRIPPING: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
     MARKETING_VERSION: 2.0.0
     CURRENT_PROJECT_VERSION: 2.0.0
+    SWIFT_VERSION: '5.10'
+    MTL_FAST_MATH: 'YES'
   configs:
     Debug:
       MTL_ENABLE_DEBUG_INFO: INCLUDE_SOURCE
-      MTL_FAST_MATH: 'YES'
-      SDKROOT: iphoneos
       SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
       SWIFT_OPTIMIZATION_LEVEL: -Onone
     Release:
-      MTL_FAST_MATH: 'YES'
-      SDKROOT: iphoneos
       SWIFT_COMPILATION_MODE: wholemodule
       SWIFT_OPTIMIZATION_LEVEL: -O
 targets:
+  brewcoffee46Core:
+    platform: 
+      - iOS
+      - watchOS
+    productName: BrewCoffee46Core
+    settings:
+      base:
+        PRODUCT_NAME: BrewCoffee46Core
+        PROVISIONING_PROFILE_SPECIFIER: ''
+        CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
+        ENABLE_MODULE_VERIFIER: YES
+        OTHER_LDFLAGS:
+          - $(inherited)
+          - $(OTHER_LDFLAGS)
+      configs:
+        Debug:
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.core.debug
+        Release:
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.core
+    sources:
+      - path: brewcoffee46Core
+        name: brewcoffee46Core
+    type: framework
+
+  brewcoffee46CoreTests:
+    platform: 
+      - iOS
+      - watchOS
+    productName: BrewCoffee46CoreTests
+    settings:
+      base:
+        ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
+        BUNDLE_LOADER: $(TEST_HOST)
+        PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46CoreTests
+        PROVISIONING_PROFILE_SPECIFIER: ''
+        PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
+    dependencies:
+      - target: brewcoffee46Core_${platform}
+    sources:
+      - path: brewcoffee46CoreTests
+        name: brewcoffee46CoreTests
+    type: bundle.unit-test
+
   brewcoffee46:
     platform: iOS
     productName: BrewCoffee46
     settings:
       base:
+        SDKROOT: iphoneos
         INFOPLIST_FILE: brewcoffee46/Info.plist
+        CODE_SIGN_IDENTITY: Apple Development
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_ASSET_PATHS: '"brewcoffee46/Preview Content"'
         DEVELOPMENT_TEAM: 3KDN4W8346
+        PRODUCT_NAME: BrewCoffee46
+        PROVISIONING_PROFILE_SPECIFIER: ''
+        CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
         OTHER_LDFLAGS:
           - $(inherited)
           - -ObjC
       configs:
         Debug:
-          CODE_SIGN_IDENTITY: Apple Development
-          CODE_SIGN_STYLE: Automatic
-          DEVELOPMENT_ASSET_PATHS: '"brewcoffee46/Preview Content"'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug
-          PRODUCT_NAME: BrewCoffee46
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
         Release:
-          CODE_SIGN_IDENTITY: Apple Development
-          CODE_SIGN_STYLE: Automatic
-          DEVELOPMENT_ASSET_PATHS: '"brewcoffee46/Preview Content"'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46
-          PRODUCT_NAME: BrewCoffee46
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     sources:
-    - path: brewcoffee46
-      name: brewcoffee46
+      - path: brewcoffee46
+        name: brewcoffee46
     dependencies:
       - target: brewcoffee46WatchKitApp
+      - target: brewcoffee46Core_iOS
+        linkType: static
       - package: SwiftUITooltip
       - package: Factory
       - package: Firebase
@@ -92,38 +134,24 @@ targets:
 
   brewcoffee46Tests:
     dependencies:
-    - target: brewcoffee46
+      - target: brewcoffee46
     platform: iOS
     productName: BrewCoffee46Tests
     settings:
-      configs:
-        Debug:
-          ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
-          BUNDLE_LOADER: $(TEST_HOST)
-          CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
-          CODE_SIGN_STYLE: Manual
-          DEVELOPMENT_TEAM: ''
-          INFOPLIST_FILE: brewcoffee46Tests/Info.plist
-          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46Tests
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
-          SWIFT_VERSION: '5.0'
-          TEST_HOST: $(BUILT_PRODUCTS_DIR)/BrewCoffee46.app/BrewCoffee46
-        Release:
-          ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
-          BUNDLE_LOADER: $(TEST_HOST)
-          CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
-          CODE_SIGN_STYLE: Manual
-          DEVELOPMENT_TEAM: ''
-          INFOPLIST_FILE: brewcoffee46Tests/Info.plist
-          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46Tests
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
-          SWIFT_VERSION: '5.0'
-          TEST_HOST: $(BUILT_PRODUCTS_DIR)/BrewCoffee46.app/BrewCoffee46
+      base:
+        ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
+        BUNDLE_LOADER: $(TEST_HOST)
+        CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
+        CODE_SIGN_STYLE: Manual
+        DEVELOPMENT_TEAM: ''
+        INFOPLIST_FILE: brewcoffee46Tests/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46Tests
+        PROVISIONING_PROFILE_SPECIFIER: ''
+        PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/BrewCoffee46.app/BrewCoffee46
     sources:
-    - path: brewcoffee46Tests
-      name: brewcoffee46Tests
+      - path: brewcoffee46Tests
+        name: brewcoffee46Tests
     type: bundle.unit-test
 
   brewcoffee46WatchKitApp:
@@ -131,32 +159,90 @@ targets:
     productName: BrewCoffee46WatchKitApp
     settings:
       base:
-        INFOPLIST_FILE: 'brewcoffee46 WatchKit App/Info.plist'
+        CODE_SIGN_IDENTITY: Apple Development
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_ASSET_PATHS: '"brewcoffee46WatchKitApp/Preview Content"'
+        INFOPLIST_FILE: 'brewcoffee46WatchKitApp/Info.plist'
         DEVELOPMENT_TEAM: 3KDN4W8346
+        PRODUCT_NAME: BrewCoffee46WatchKitApp
+        PROVISIONING_PROFILE_SPECIFIER: ''
+        CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
         OTHER_LDFLAGS:
           - $(inherited)
+          - $(OTHER_LDFLAGS)
       configs:
         Debug:
-          CODE_SIGN_IDENTITY: Apple Development
-          CODE_SIGN_STYLE: Automatic
-          DEVELOPMENT_ASSET_PATHS: '"brewcoffee46 WatchKit App/Preview Content"'
           PRODUCT_COMPANION_APP_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug.watchkitapp
-          PRODUCT_NAME: BrewCoffee46WatchKitApp
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
         Release:
-          CODE_SIGN_IDENTITY: Apple Development
-          CODE_SIGN_STYLE: Automatic
-          DEVELOPMENT_ASSET_PATHS: '"brewcoffee46 WatchKit App/Preview Content"'
           PRODUCT_COMPANION_APP_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.watchkitapp
-          PRODUCT_NAME: BrewCoffee46WatchKitApp
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     sources:
-    - path: 'brewcoffee46 WatchKit App'
-      name: 'brewcoffee46 WatchKit App'
-    # dependencies:
+      - path: 'brewcoffee46WatchKitApp'
+        name: 'brewcoffee46WatchKitApp'
+    dependencies:
+      - target: brewcoffee46Core_watchOS
     type: application
-    deploymentTarget: "10.0"
+
+schemes:
+  brewcoffee46Core:
+    build:
+      targets:
+        brewcoffee46Core_iOS: all
+        brewcoffee46Core_watchOS: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      coverageTargets:
+        - brewcoffee46Core_iOS
+        - brewcoffee46Core_watchOS
+      targets:
+        - name: brewcoffee46CoreTests_iOS
+          parallelizable: true
+          randomExecutionOrder: true
+        - name: brewcoffee46CoreTests_watchOS
+          parallelizable: true
+          randomExecutionOrder: true
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+
+  brewcoffee46:
+    build:
+      targets:
+        brewcoffee46: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      coverageTargets:
+        - brewcoffee46
+      targets:
+        - name: brewcoffee46Tests
+          parallelizable: true
+          randomExecutionOrder: true
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+
+  brewcoffee46WatchKitApp:
+    build:
+      targets:
+        brewcoffee46WatchKitApp: all
+    run:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
