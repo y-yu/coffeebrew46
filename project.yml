@@ -20,55 +20,57 @@ packages:
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk.git
     from: 10.25.0
+  BrewCoffee46Core:
+    path: BrewCoffee46Core
 settings:
   base:
-    IPHONEOS_DEPLOYMENT_TARGET: 16.0
     CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
+    DEAD_CODE_STRIPPING: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+    MARKETING_VERSION: 2.0.0
+    CURRENT_PROJECT_VERSION: 2.0.0
+    SWIFT_VERSION: '5.10'
+    MTL_FAST_MATH: 'YES'
   configs:
     Debug:
       MTL_ENABLE_DEBUG_INFO: INCLUDE_SOURCE
-      MTL_FAST_MATH: 'YES'
-      SDKROOT: iphoneos
       SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
       SWIFT_OPTIMIZATION_LEVEL: -Onone
     Release:
-      MTL_FAST_MATH: 'YES'
-      SDKROOT: iphoneos
       SWIFT_COMPILATION_MODE: wholemodule
       SWIFT_OPTIMIZATION_LEVEL: -O
 targets:
   brewcoffee46:
     platform: iOS
     productName: BrewCoffee46
+    deploymentTarget: 
+      iOS: 16.0
     settings:
       base:
-        INFOPLIST_FILE: brewcoffee46/Info.plist
+        SDKROOT: iphoneos
+        INFOPLIST_FILE: BrewCoffee46/Info.plist
+        CODE_SIGN_IDENTITY: Apple Development
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_ASSET_PATHS: '"BrewCoffee46/Preview Content"'
         DEVELOPMENT_TEAM: 3KDN4W8346
+        PRODUCT_NAME: BrewCoffee46
+        PROVISIONING_PROFILE_SPECIFIER: ''
+        CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
         OTHER_LDFLAGS:
           - $(inherited)
           - -ObjC
       configs:
         Debug:
-          CODE_SIGN_IDENTITY: Apple Development
-          CODE_SIGN_STYLE: Automatic
-          DEVELOPMENT_ASSET_PATHS: '"brewcoffee46/Preview Content"'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug
-          PRODUCT_NAME: BrewCoffee46
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
         Release:
-          CODE_SIGN_IDENTITY: Apple Development
-          CODE_SIGN_STYLE: Automatic
-          DEVELOPMENT_ASSET_PATHS: '"brewcoffee46/Preview Content"'
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46
-          PRODUCT_NAME: BrewCoffee46
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     sources:
-    - path: brewcoffee46
-      name: brewcoffee46
+      - BrewCoffee46
     dependencies:
+      - target: brewcoffee46WatchKitApp
+      - package: BrewCoffee46Core
+        product: BrewCoffee46Core
       - package: SwiftUITooltip
       - package: Factory
       - package: Firebase
@@ -77,47 +79,102 @@ targets:
     postBuildScripts:
       - script: |
           if [ "${CI}" == "true" ]; then
-            cp "${PROJECT_DIR}/${PROJECT_NAME}/config/GoogleService-Info-CI.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"            
+            cp "${PROJECT_DIR}/${PRODUCT_NAME}/config/GoogleService-Info-CI.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"            
           elif [ "${CONFIGURATION}" == "Release" ]; then
-            cp "${PROJECT_DIR}/${PROJECT_NAME}/config/GoogleService-Info-Release.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
+            cp "${PROJECT_DIR}/${PRODUCT_NAME}/config/GoogleService-Info-Release.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
           else
-            cp "${PROJECT_DIR}/${PROJECT_NAME}/config/GoogleService-Info-Debug.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
+            cp "${PROJECT_DIR}/${PRODUCT_NAME}/config/GoogleService-Info-Debug.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
           fi
         name: Generate GoogleService-Info.plist
         outputFiles:
           - $(BUILT_PRODUCTS_DIR)/$(PRODUCT_NAME).app/GoogleService-Info.plist
+
   brewcoffee46Tests:
     dependencies:
-    - target: brewcoffee46
+      - target: brewcoffee46
+      - package: BrewCoffee46Core
+        product: BrewCoffee46TestsShared
     platform: iOS
     productName: BrewCoffee46Tests
     settings:
+      base:
+        ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
+        BUNDLE_LOADER: $(TEST_HOST)
+        CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
+        CODE_SIGN_STYLE: Manual
+        DEVELOPMENT_TEAM: ''
+        INFOPLIST_FILE: BrewCoffee46Tests/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46Tests
+        PROVISIONING_PROFILE_SPECIFIER: ''
+        PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/BrewCoffee46.app/BrewCoffee46
+    sources:
+      - BrewCoffee46Tests
+    type: bundle.unit-test
+
+  brewcoffee46WatchKitApp:
+    platform: watchOS
+    deploymentTarget: 
+      watchOS: 10.0
+    productName: BrewCoffee46WatchKitApp
+    settings:
+      base:
+        CODE_SIGN_IDENTITY: Apple Development
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_ASSET_PATHS: '"BrewCoffee46WatchKitApp/Preview Content"'
+        INFOPLIST_FILE: 'BrewCoffee46WatchKitApp/Info.plist'
+        DEVELOPMENT_TEAM: 3KDN4W8346
+        PRODUCT_NAME: BrewCoffee46WatchKitApp
+        PROVISIONING_PROFILE_SPECIFIER: ''
+        CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
+        OTHER_LDFLAGS:
+          - $(inherited)
+          - $(OTHER_LDFLAGS)
       configs:
         Debug:
-          ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
-          BUNDLE_LOADER: $(TEST_HOST)
-          CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
-          CODE_SIGN_STYLE: Manual
-          DEVELOPMENT_TEAM: ''
-          INFOPLIST_FILE: brewcoffee46Tests/Info.plist
-          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46Tests
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
-          SWIFT_VERSION: '5.0'
-          TEST_HOST: $(BUILT_PRODUCTS_DIR)/BrewCoffee46.app/BrewCoffee46
+          PRODUCT_COMPANION_APP_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug.watchkitapp
         Release:
-          ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
-          BUNDLE_LOADER: $(TEST_HOST)
-          CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
-          CODE_SIGN_STYLE: Manual
-          DEVELOPMENT_TEAM: ''
-          INFOPLIST_FILE: brewcoffee46Tests/Info.plist
-          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46Tests
-          PROVISIONING_PROFILE_SPECIFIER: ''
-          PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
-          SWIFT_VERSION: '5.0'
-          TEST_HOST: $(BUILT_PRODUCTS_DIR)/BrewCoffee46.app/BrewCoffee46
+          PRODUCT_COMPANION_APP_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46
+          PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.watchkitapp
     sources:
-    - path: brewcoffee46Tests
-      name: brewcoffee46Tests
-    type: bundle.unit-test
+      - BrewCoffee46WatchKitApp
+    dependencies:
+      - package: BrewCoffee46Core
+        product: BrewCoffee46Core
+    type: application
+schemes:
+  brewcoffee46:
+    build:
+      targets:
+        brewcoffee46: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      coverageTargets:
+        - brewcoffee46
+      targets:
+        - name: brewcoffee46Tests
+          parallelizable: true
+          randomExecutionOrder: true
+        - package: BrewCoffee46Core/BrewCoffee46CoreTests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+  brewcoffee46WatchKitApp:
+    build:
+      targets:
+        brewcoffee46WatchKitApp: all
+    run:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
