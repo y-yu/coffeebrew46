@@ -48,6 +48,7 @@ targets:
       iOS: 16.0
     settings:
       base:
+        IPHONEOS_DEPLOYMENT_TARGET: 16.0
         SDKROOT: iphoneos
         INFOPLIST_FILE: BrewCoffee46/Info.plist
         CODE_SIGN_IDENTITY: Apple Development
@@ -98,6 +99,7 @@ targets:
     productName: BrewCoffee46Tests
     settings:
       base:
+        IPHONEOS_DEPLOYMENT_TARGET: 16.0
         ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
         BUNDLE_LOADER: $(TEST_HOST)
         CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
@@ -119,6 +121,7 @@ targets:
     productName: BrewCoffee46WatchKitApp
     settings:
       base:
+        WATCHOS_DEPLOYMENT_TARGET: 10.4
         CODE_SIGN_IDENTITY: Apple Development
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_ASSET_PATHS: '"BrewCoffee46WatchKitApp/Preview Content"'
