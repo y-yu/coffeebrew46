@@ -24,66 +24,15 @@ struct SaveLoadView: View {
     var body: some View {
         Form {
             Section(header: Text("config save load current config")) {
-                LazyVGrid(
-                    columns: Array(
-                        repeating: .init(.flexible()),
-                        count: 2
-                    ),
-                    alignment: .leading
-                ) {
-                    Group {
-                        HStack {
-                            Text("config note placeholder")
-                            if mode.isEditing || appEnvironment.isTimerStarted {
-                                Image(systemName: "lock.fill")
-                            } else {
-                                Image(systemName: "pencil.and.list.clipboard")
-                            }
-                        }
-                        TextField(
-                            "config note placeholder",
-                            text: $viewModel.currentConfig.note ?? NSLocalizedString("config note empty string", comment: "")
-                        )
-                        .disabled(appEnvironment.isTimerStarted || mode.isEditing)
-                    }
-                    Divider()
-                    Divider()
-                    Text("config coffee beans weight")
-                    Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))\(weightUnit)")
-                    Divider()
-                    Divider()
-                    Text("config water ratio short")
-                    Text("\(String(format: "%.1f%", viewModel.currentConfig.waterToCoffeeBeansWeightRatio))")
-                    Divider()
-                    Divider()
-                    Text("config 1st water percent")
-                    Text("\(String(format: "%.0f%", viewModel.currentConfig.firstWaterPercent * 100))%")
-                    Divider()
-                    Divider()
-                    Text("config number of partitions of later 6")
-                    Text(String(format: "%1.0f", viewModel.currentConfig.partitionsCountOf6))
-                    Divider()
-                    Divider()
-                    Text("config total time")
-                    HStack {
-                        Text((String(format: "%.0f", viewModel.currentConfig.totalTimeSec)))
-                        Text("config sec unit")
-                    }
-                    Divider()
-                    Divider()
-                    Text("config steaming time short")
-                    HStack {
-                        Text(String(format: "%.0f", viewModel.currentConfig.steamingTimeSec))
-                        Text("config sec unit")
-                    }
-                    Divider()
-                    Divider()
-                    Text("config last edited at")
-                    Text(
-                        viewModel.currentConfig.editedAtMilliSec?.toDate().formattedWithSec()
-                            ?? NSLocalizedString("config none last edited at", comment: ""))
-                }
                 VStack {
+                    ShowConfigView(
+                        config: $viewModel.currentConfig,
+                        isLock: Binding(
+                            get: { mode.isEditing || self.appEnvironment.isTimerStarted },
+                            // `ShowConfigView` doesn't use `set` so it's OK that the setter is nothing function.
+                            set: { _ in () }
+                        )
+                    )
                     HStack {
                         Spacer()
                         Button(action: {

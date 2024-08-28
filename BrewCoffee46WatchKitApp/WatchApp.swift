@@ -4,8 +4,9 @@ import SwiftUI
 struct WatchApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
                 .environmentObject(WatchContentViewModel())
+                .environmentObject(WatchKitAppEnvironment())
         }
     }
 }
