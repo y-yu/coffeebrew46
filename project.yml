@@ -68,6 +68,7 @@ targets:
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46
     sources:
       - BrewCoffee46
+      - Localizable
     dependencies:
       - target: brewcoffee46WatchKitApp
       - package: BrewCoffee46Core
@@ -142,6 +143,7 @@ targets:
           PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.watchkitapp
     sources:
       - BrewCoffee46WatchKitApp
+      - Localizable
     dependencies:
       - package: BrewCoffee46Core
         product: BrewCoffee46Core
