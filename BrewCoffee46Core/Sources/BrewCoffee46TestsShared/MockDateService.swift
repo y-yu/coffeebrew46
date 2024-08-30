@@ -4,11 +4,11 @@ import Foundation
 public class MockDateService: DateService {
     let date: Date
 
-    init(_ now: Date) {
+    public init(_ now: Date) {
         date = now
     }
 
-    init() {
+    public init() {
         date = epochTimeMillis.toDate()
     }
 
