@@ -16,7 +16,7 @@ packages:
     from: 1.4.0
   Factory:
     url: https://github.com/hmlongco/Factory.git
-    from: 2.3.1
+    from: 2.3.2
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk.git
     from: 10.25.0
@@ -147,7 +147,20 @@ targets:
     dependencies:
       - package: BrewCoffee46Core
         product: BrewCoffee46Core
+    type: bundle.unit-test
+
+  brewcoffee46CoreTests:
+    platform: iOS
+    productName: BrewCoffee46CoreTests
+    setting:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: 'BrewCoffee46Core/Info.plist'
+    dependencies:
+      - package: BrewCoffee46Core
+        product: BrewCoffee46Core
     type: application
+
 schemes:
   brewcoffee46:
     build:
@@ -183,3 +196,11 @@ schemes:
       config: Debug
     archive:
       config: Release
+  brewcoffee46Core:
+    build:
+      targets:
+        brewcoffee46CoreTests: all
+    test:
+      config: Debug
+      targets:
+        - package: BrewCoffee46Core/BrewCoffee46CoreTests

@@ -1,7 +1,11 @@
 /// # Array which size must be grater than 0.
 public struct NonEmptyArray<A> {
-    let head: A
-    let tail: [A]
+    public let head: A
+    private(set) public var tail: [A]
+
+    public mutating func append(_ a: A) {
+        tail.append(a)
+    }
 }
 
 extension NonEmptyArray: Equatable where A: Equatable {

@@ -50,8 +50,19 @@ struct ClockView: View {
             }
             ZStack {
                 GeometryReader { (geometry: GeometryProxy) in
-                    ForEach((0..<viewModel.pointerInfoViewModels.pointerInfo.count), id: \.self) { i in
-                        showPointer(geometry, i)
+                    ForEach(
+                        Array(zip(viewModel.pointerInfo.pointerDegrees, viewModel.pointerInfo.dripInfo.dripTimings).enumerated()),
+                        id: \.0
+                    ) { i, item in
+                        let (degree, dripTiming) = item
+                        ZStack {
+                            PointerView(
+                                waterAmount: dripTiming.waterAmount,
+                                degree: degree,
+                                isOnGoing:
+                                    viewModel.getNthPhase(progressTime: progressTime) >= i && appEnvironment.isTimerStarted && progressTime > 0
+                            )
+                        }
                     }
                     ArcView(
                         progressTime: $progressTime,
@@ -67,17 +78,6 @@ struct ClockView: View {
                     }
                 }
             }
-        }
-    }
-
-    private func showPointer(_ geometry: GeometryProxy, _ i: Int) -> some View {
-        ZStack {
-            PointerView(
-                id: i,
-                pointerInfo: viewModel.pointerInfoViewModels.pointerInfo[i],
-                geometry: geometry,
-                isOnGoing: viewModel.getNthPhase(progressTime: progressTime) >= i && appEnvironment.isTimerStarted && progressTime > 0
-            )
         }
     }
 

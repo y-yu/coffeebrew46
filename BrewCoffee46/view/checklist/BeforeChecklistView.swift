@@ -112,6 +112,8 @@ struct BeforeChecklistView: View {
 }
 
 #if DEBUG
+    let epochTimeMillis: UInt64 = 1_723_792_539_843
+
     struct BeforeChecklistView_Previews: PreviewProvider {
         @State static var currentConfig = CurrentConfigViewModel.init(
             Config.init(
@@ -123,7 +125,7 @@ struct BeforeChecklistView: View {
                 steamingTimeSec: 45,
                 note: "note",
                 beforeChecklist: ["aaaa", "bbb"],
-                editedAtMilliSec: Date.nowEpochTimeMillis()
+                editedAtMilliSec: epochTimeMillis
             )
         )
 

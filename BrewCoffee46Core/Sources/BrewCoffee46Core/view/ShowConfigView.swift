@@ -80,7 +80,7 @@ public struct ShowConfigView: View {
 
 #if DEBUG
     struct ShowConfigView_Previews: PreviewProvider {
-        @State static var config = Config.init()
+        @State static var config = Config.defaultValue
         @State static var isLock = false
 
         static var previews: some View {

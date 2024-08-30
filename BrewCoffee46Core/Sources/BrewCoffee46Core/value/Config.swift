@@ -1,79 +1,28 @@
+import Factory
 import Foundation
 
 public struct Config: Equatable {
-    public var coffeeBeansWeight: Double {
-        didSet {
-            if coffeeBeansWeight != oldValue {
-                updateLastEditedAt()
-            }
-        }
-    }
+    public var coffeeBeansWeight: Double
 
-    public var partitionsCountOf6: Double {
-        didSet {
-            if partitionsCountOf6 != oldValue {
-                updateLastEditedAt()
-            }
-        }
-    }
+    public var partitionsCountOf6: Double
 
-    public var waterToCoffeeBeansWeightRatio: Double {
-        didSet {
-            if waterToCoffeeBeansWeightRatio != oldValue {
-                updateLastEditedAt()
-            }
-        }
-    }
+    public var waterToCoffeeBeansWeightRatio: Double
 
-    public var firstWaterPercent: Double {
-        didSet {
-            if firstWaterPercent != oldValue {
-                updateLastEditedAt()
-            }
-        }
-    }
+    public var firstWaterPercent: Double
 
-    public var totalTimeSec: Double {
-        didSet {
-            if totalTimeSec != oldValue {
-                updateLastEditedAt()
-            }
-        }
-    }
+    public var totalTimeSec: Double
 
-    public var steamingTimeSec: Double {
-        didSet {
-            if steamingTimeSec != oldValue {
-                updateLastEditedAt()
-            }
-        }
-    }
+    public var steamingTimeSec: Double
 
-    public var note: String? {
-        didSet {
-            if note != oldValue {
-                updateLastEditedAt()
-            }
-        }
-    }
+    public var note: String?
 
-    public var beforeChecklist: [String] {
-        didSet {
-            if beforeChecklist != oldValue {
-                updateLastEditedAt()
-            }
-        }
-    }
+    public var beforeChecklist: [String]
 
     /// Unix epoch time as milli seconds.
     public var editedAtMilliSec: UInt64?
 
     // If the JSON compatibility of `Config` falls then `version` will increment.
     public var version: Int
-
-    private mutating func updateLastEditedAt() {
-        self.editedAtMilliSec = .some(Date.nowEpochTimeMillis())
-    }
 
     enum CodingKeys: String, CodingKey {
         case coffeeBeansWeight
@@ -111,19 +60,6 @@ public struct Config: Equatable {
         self.editedAtMilliSec = editedAtMilliSec
         self.version = version
     }
-
-    public init() {
-        coffeeBeansWeight = Config.initCoffeeBeansWeight
-        partitionsCountOf6 = 3
-        waterToCoffeeBeansWeightRatio = Config.initWaterToCoffeeBeansWeightRatio
-        firstWaterPercent = 0.5
-        totalTimeSec = 210
-        steamingTimeSec = 45
-        note = .some("")
-        beforeChecklist = Config.initBeforeCheckList
-        editedAtMilliSec = .some(Date.nowEpochTimeMillis())
-        version = Config.currentVersion
-    }
 }
 
 extension Config {
@@ -138,6 +74,20 @@ extension Config {
     public static let initBeforeCheckList: [String] = (1...9).map { i in
         NSLocalizedString("before check list \(i)", comment: "")
     }
+
+    public static let defaultValue: Config =
+        Config(
+            coffeeBeansWeight: Config.initCoffeeBeansWeight,
+            partitionsCountOf6: 3,
+            waterToCoffeeBeansWeightRatio: Config.initWaterToCoffeeBeansWeightRatio,
+            firstWaterPercent: 0.5,
+            totalTimeSec: 210,
+            steamingTimeSec: 45,
+            note: "",
+            beforeChecklist: Config.initBeforeCheckList,
+            editedAtMilliSec: .none,
+            version: Config.currentVersion
+        )
 
     public func totalWaterAmount() -> Double {
         roundCentesimal(coffeeBeansWeight * self.waterToCoffeeBeansWeightRatio)

@@ -3,7 +3,7 @@ import SwiftUI
 
 struct ConfigView: View {
     @EnvironmentObject var appEnvironment: WatchKitAppEnvironment
-    @EnvironmentObject var viewModel: WatchContentViewModel
+    @EnvironmentObject var viewModel: CurrentConfigViewModel
     @State private var alwaysLocked: Bool = true
 
     var body: some View {
@@ -22,7 +22,7 @@ struct ConfigView: View {
     struct ConfigView_Perviews: PreviewProvider {
         static var previews: some View {
             ConfigView()
-                .environmentObject(WatchContentViewModel())
+                .environmentObject(CurrentConfigViewModel())
         }
     }
 #endif
