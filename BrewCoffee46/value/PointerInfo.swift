@@ -18,25 +18,25 @@ struct PointerInfo {
             thisDegree = (e / totalWaterAmount) * 360 + thisDegree
         }
     }
+}
 
-    init() {
-        self.init(
+extension PointerInfo {
+    static let defaultValue: PointerInfo =
+        PointerInfo.init(
             DripInfo(
                 dripTimings: [
-                    DripTiming(waterAmount: 90, dripAt: 0.0),  // 0.0),
-                    DripTiming(waterAmount: 180, dripAt: 72.0),  //, 45.0),
-                    DripTiming(waterAmount: 270, dripAt: 144.0),  // 86.25),
-                    DripTiming(waterAmount: 360, dripAt: 216.0),  // 127.5),
+                    DripTiming(waterAmount: 90, dripAt: 0.0),
+                    DripTiming(waterAmount: 180, dripAt: 72.0),
+                    DripTiming(waterAmount: 270, dripAt: 144.0),
+                    DripTiming(waterAmount: 360, dripAt: 216.0),
                     DripTiming(waterAmount: 450, dripAt: 288.0),
                 ],
                 waterAmount: WaterAmount(
                     fortyPercent: (90.0, 90.0),
                     sixtyPercent: NonEmptyArray(90.0, [90.0, 90.0])
                 )
-                //, 168.75)
             )
         )
-    }
 }
 
 /*

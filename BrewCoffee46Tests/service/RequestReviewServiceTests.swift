@@ -31,7 +31,7 @@ class MockUserDefaultsService: UserDefaultsService {
     func delete(forKey: String) {}
 }
 
-class RequestReviewServiceImplTests: XCTestCase {
+class RequestReviewServiceTests: XCTestCase {
     override func setUp() {
         super.setUp()
         Container.shared.reset()

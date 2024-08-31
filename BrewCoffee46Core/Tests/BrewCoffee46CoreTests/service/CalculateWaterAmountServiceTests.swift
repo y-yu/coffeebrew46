@@ -9,13 +9,7 @@ final class CalculateWaterAmountServiceTests: XCTestCase {
     func test_calculate_in_default_config() throws {
         let actual = sut.calculate(Config.defaultValue)
 
-        XCTAssertEqual(
-            actual,
-            WaterAmount(
-                fortyPercent: (90.0, 90.0),
-                sixtyPercent: NonEmptyArray(90.0, [90.0, 90.0])
-            )
-        )
+        XCTAssertEqual(actual, waterAmountDefaultValue)
     }
 
     func test_calculate_in_the_first_is_100_percent() throws {
@@ -24,13 +18,7 @@ final class CalculateWaterAmountServiceTests: XCTestCase {
 
         let actual = sut.calculate(config)
 
-        XCTAssertEqual(
-            actual,
-            WaterAmount(
-                fortyPercent: (180.0, 0),
-                sixtyPercent: NonEmptyArray(90.0, [90.0, 90.0])
-            )
-        )
+        XCTAssertEqual(actual, waterAmountFirstIs100Percent)
     }
 
     func test_calculate_in_the_first_is_100_percent_and_the_number_of_sixty_is_1() throws {
@@ -40,12 +28,6 @@ final class CalculateWaterAmountServiceTests: XCTestCase {
 
         let actual = sut.calculate(config)
 
-        XCTAssertEqual(
-            actual,
-            WaterAmount(
-                fortyPercent: (180.0, 0),
-                sixtyPercent: NonEmptyArray(270.0, [])
-            )
-        )
+        XCTAssertEqual(actual, waterAmountFirstIs100PercentSixtyIs1)
     }
 }

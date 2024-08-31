@@ -25,24 +25,12 @@ final class CalculateDripInfoServiceTests: XCTestCase {
     }
 
     func test_calculate_if_water_amount_splits_into_5_successfully() throws {
-        let expectedWaterAmount = WaterAmount(
-            fortyPercent: (90.0, 90.0),
-            sixtyPercent: NonEmptyArray(90.0, [90.0, 90.0])
-        )
+        let expectedWaterAmount = waterAmountDefaultValue
         Container.shared.calculateWaterAmountService.register {
-            MockCalculateWaterAmountService(expectedWaterAmount)
+            MockCalculateWaterAmountService(waterAmountFirstIs100Percent)
         }
 
-        let expected = DripInfo(
-            dripTimings: [
-                DripTiming(waterAmount: 90.0, dripAt: 0.0),
-                DripTiming(waterAmount: 180.0, dripAt: 45.0),
-                DripTiming(waterAmount: 270.0, dripAt: 86.25),
-                DripTiming(waterAmount: 360.0, dripAt: 127.5),
-                DripTiming(waterAmount: 450.0, dripAt: 168.75),
-            ],
-            waterAmount: expectedWaterAmount
-        )
+        let expected = dripInfoDefaultValue
 
         let actual = sut.calculate(Config.defaultValue)
 
@@ -53,51 +41,26 @@ final class CalculateDripInfoServiceTests: XCTestCase {
         var config = Config.defaultValue
         config.firstWaterPercent = 1.0
 
-        let expectedWaterAmount = WaterAmount(
-            fortyPercent: (180.0, 0.0),
-            sixtyPercent: NonEmptyArray(90.0, [90.0, 90.0])
-        )
         Container.shared.calculateWaterAmountService.register {
-            MockCalculateWaterAmountService(expectedWaterAmount)
+            MockCalculateWaterAmountService(waterAmountFirstIs100Percent)
         }
-
-        let expected = DripInfo(
-            dripTimings: [
-                DripTiming(waterAmount: 180.0, dripAt: 0.0),
-                DripTiming(waterAmount: 270.0, dripAt: 45.0),
-                DripTiming(waterAmount: 360.0, dripAt: 100.0),
-                DripTiming(waterAmount: 450.0, dripAt: 155.0),
-            ],
-            waterAmount: expectedWaterAmount
-        )
 
         let actual = sut.calculate(config)
 
-        XCTAssertEqual(actual, expected)
+        XCTAssertEqual(actual, dripInfoFirstIs100Percent)
     }
 
     func test_calculate_when_the_number_of_sixty_percent_is_1() throws {
         var config = Config.defaultValue
         config.firstWaterPercent = 1.0
         config.partitionsCountOf6 = 1
-        let expectedWaterAmount = WaterAmount(
-            fortyPercent: (180.0, 0.0),
-            sixtyPercent: NonEmptyArray(270.0)
-        )
-        Container.shared.calculateWaterAmountService.register {
-            MockCalculateWaterAmountService(expectedWaterAmount)
-        }
 
-        let expected = DripInfo(
-            dripTimings: [
-                DripTiming(waterAmount: 180.0, dripAt: 0.0),
-                DripTiming(waterAmount: 450.0, dripAt: 45.0),
-            ],
-            waterAmount: expectedWaterAmount
-        )
+        Container.shared.calculateWaterAmountService.register {
+            MockCalculateWaterAmountService(waterAmountFirstIs100PercentSixtyIs1)
+        }
 
         let actual = sut.calculate(config)
 
-        XCTAssertEqual(actual, expected)
+        XCTAssertEqual(actual, dripInfoFirstIs100PercentSixtyIs1)
     }
 }
