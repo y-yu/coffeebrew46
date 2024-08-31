@@ -27,11 +27,7 @@ struct SaveLoadView: View {
                 VStack {
                     ShowConfigView(
                         config: $viewModel.currentConfig,
-                        isLock: Binding(
-                            get: { mode.isEditing || self.appEnvironment.isTimerStarted },
-                            // `ShowConfigView` doesn't use `set` so it's OK that the setter is nothing function.
-                            set: { _ in () }
-                        )
+                        isLock: (mode.isEditing || self.appEnvironment.isTimerStarted).getOnlyBinding
                     )
                     HStack {
                         Spacer()

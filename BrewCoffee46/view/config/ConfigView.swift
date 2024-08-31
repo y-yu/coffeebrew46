@@ -132,7 +132,7 @@ struct ConfigView: View {
                         maximum: 10,
                         minimum: 1,
                         step: 1.0,
-                        isDisable: appEnvironment.isTimerStarted,
+                        isDisable: appEnvironment.isTimerStarted.getOnlyBinding,
                         target: $viewModel.currentConfig.partitionsCountOf6
                     )
                 }

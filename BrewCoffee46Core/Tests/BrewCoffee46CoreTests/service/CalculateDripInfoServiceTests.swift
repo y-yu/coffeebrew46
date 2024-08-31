@@ -25,7 +25,6 @@ final class CalculateDripInfoServiceTests: XCTestCase {
     }
 
     func test_calculate_if_water_amount_splits_into_5_successfully() throws {
-        let expectedWaterAmount = waterAmountDefaultValue
         Container.shared.calculateWaterAmountService.register {
             MockCalculateWaterAmountService(waterAmountFirstIs100Percent)
         }

@@ -7,6 +7,14 @@ struct PointerInfo {
     // Degree of the pointers.
     private(set) public var pointerDegrees: [Double]
 
+    // This initializer is unsafe. If the number of `dripInfo.dripTimings` is not equal to
+    // the number of `pointerDegrees` then the value of `PointerInfo` is inconsistence.
+    // So this initializer needs for tests.
+    init(_ dripInfo: DripInfo, _ pointerDegrees: [Double]) {
+        self.dripInfo = dripInfo
+        self.pointerDegrees = pointerDegrees
+    }
+
     init(_ dripInfo: DripInfo) {
         self.dripInfo = dripInfo
 

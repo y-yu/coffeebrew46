@@ -8,8 +8,6 @@ public protocol DateService {
 }
 
 public class DateServiceImpl: DateService {
-    public init() {}
-
     public func now() -> Date {
         Date.now
     }

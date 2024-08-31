@@ -35,62 +35,53 @@ class ConvertDegreeServiceTests: XCTestCase {
             }
         }
     }
-    /*
-    func test_dripAt_degree_toProgressTime_toDegree() throws {
-        Container.shared.validateInputService.register { MockValidateInputService() }
-        Container.shared.calculateDripInfoService.register {
-            MockCalculateDripInfoService(self.dripInfo)
-            MockCalculateBoiledWaterAmountService(
-                PointerInfoViewModels(
-                    pointerInfo: [
-                        PointerInfoViewModel(value: 66.528, degree: 0.0, dripAt: 0.0),
-                        PointerInfoViewModel(value: 67.2, degree: 142.56, dripAt: 45.0),
-                        PointerInfoViewModel(value: 100.80000000000001, degree: 144.0, dripAt: 86.25),
-                        PointerInfoViewModel(value: 134.4, degree: 216.0, dripAt: 127.5),
-                        PointerInfoViewModel(value: 168.0, degree: 288.0, dripAt: 168.75),
-                    ]
 
-                )
-            )
-        }
+    func test_dripAt_degree_toProgressTime_toDegree_when_the_first_water_percent_is_99() throws {
+        var config = Config.defaultValue
+        config.coffeeBeansWeight = 24
+        config.waterToCoffeeBeansWeightRatio = 7
+        config.firstWaterPercent = 0.99
+        let pointerInfo = PointerInfo.init(
+            DripInfo(
+                dripTimings: [
+                    DripTiming(waterAmount: 66.528, dripAt: 0.0),
+                    DripTiming(waterAmount: 67.2, dripAt: 45.0),
+                    DripTiming(waterAmount: 100.8, dripAt: 86.25),
+                    DripTiming(waterAmount: 134.4, dripAt: 127.5),
+                    DripTiming(waterAmount: 168.0, dripAt: 168.75),
+                ],
+                waterAmount: waterAmountDefaultValue
+            ),
+            [0.0, 142.56, 144.0, 216.0, 288.0]
+        )
 
-        let sut = CurrentConfigViewModel()
-
-        sut.currentConfig.coffeeBeansWeight = 24
-        sut.currentConfig.waterToCoffeeBeansWeightRatio = 7
-        sut.currentConfig.firstWaterPercent = 0.99
-
-        for pointer in sut.pointerInfoViewModels.pointerInfo {
-            XCTAssertEqual(sut.toProgressTime(pointer.degree), pointer.dripAt, accuracy: epsilon)
-            XCTAssertEqual(sut.toDegree(pointer.dripAt), pointer.degree, accuracy: epsilon)
+        for (degree, dripTiming) in zip(pointerInfo.pointerDegrees, pointerInfo.dripInfo.dripTimings) {
+            XCTAssertEqual(sut.toProgressTime(config, pointerInfo, degree), dripTiming.dripAt, accuracy: epsilon)
+            XCTAssertEqual(sut.fromProgressTime(config, pointerInfo, dripTiming.dripAt), degree, accuracy: epsilon)
         }
     }
 
     func test_dripAt_degree_toProgressTime_toDegree_when_40_percent_at_1_shot() throws {
-        Container.shared.validateInputService.register { MockValidateInputService() }
-        Container.shared.calculateDripInfoService.register {
-            MockCalculateBoiledWaterAmountService(
-                PointerInfoViewModels(
-                    pointerInfo: [
-                        PointerInfoViewModel(value: 67.2, degree: 0.0, dripAt: 0.0),
-                        PointerInfoViewModel(value: 100.80000000000001, degree: 144.0, dripAt: 45.0),
-                        PointerInfoViewModel(value: 134.4, degree: 216.0, dripAt: 100),
-                        PointerInfoViewModel(value: 168.0, degree: 288.0, dripAt: 155),
-                    ]
+        var config = Config.defaultValue
+        config.coffeeBeansWeight = 24
+        config.waterToCoffeeBeansWeightRatio = 7
+        config.firstWaterPercent = 1
+        let pointerInfo = PointerInfo.init(
+            DripInfo(
+                dripTimings: [
+                    DripTiming(waterAmount: 67.2, dripAt: 0.0),
+                    DripTiming(waterAmount: 100.8, dripAt: 45.0),
+                    DripTiming(waterAmount: 134.4, dripAt: 100.0),
+                    DripTiming(waterAmount: 168.0, dripAt: 155.0),
+                ],
+                waterAmount: waterAmountDefaultValue
+            ),
+            [0.0, 144.0, 216.0, 288.0]
+        )
 
-                )
-            )
-        }
-
-        let sut = CurrentConfigViewModel()
-        sut.currentConfig.coffeeBeansWeight = 24
-        sut.currentConfig.waterToCoffeeBeansWeightRatio = 7
-        sut.currentConfig.firstWaterPercent = 1
-
-        for pointer in sut.pointerInfoViewModels.pointerInfo {
-            XCTAssertEqual(sut.toProgressTime(pointer.degree), pointer.dripAt, accuracy: epsilon)
-            XCTAssertEqual(sut.toDegree(pointer.dripAt), pointer.degree, accuracy: epsilon)
+        for (degree, dripTiming) in zip(pointerInfo.pointerDegrees, pointerInfo.dripInfo.dripTimings) {
+            XCTAssertEqual(sut.toProgressTime(config, pointerInfo, degree), dripTiming.dripAt, accuracy: epsilon)
+            XCTAssertEqual(sut.fromProgressTime(config, pointerInfo, dripTiming.dripAt), degree, accuracy: epsilon)
         }
     }
- */
 }
