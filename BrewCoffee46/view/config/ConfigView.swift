@@ -40,7 +40,7 @@ struct ConfigView: View {
                         Text(viewModel.currentConfig.note ??? NSLocalizedString("config note empty string", comment: ""))
                         Spacer()
                         Text(
-                            viewModel.currentConfig.editedAtMilliSec?.toDate().formattedWithSec()
+                            (viewModel.currentConfigLastUpdatedAt ?? viewModel.currentConfig.editedAtMilliSec)?.toDate().formattedWithSec()
                                 ?? NSLocalizedString("config none last edited at", comment: ""))
                     },
                     tips: Text("config show current note tips")
