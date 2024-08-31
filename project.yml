@@ -92,10 +92,6 @@ targets:
           - $(BUILT_PRODUCTS_DIR)/$(PRODUCT_NAME).app/GoogleService-Info.plist
 
   brewcoffee46Tests:
-    dependencies:
-      - target: brewcoffee46
-      - package: BrewCoffee46Core
-        product: BrewCoffee46TestsShared
     platform: iOS
     productName: BrewCoffee46Tests
     settings:
@@ -113,6 +109,10 @@ targets:
         TEST_HOST: $(BUILT_PRODUCTS_DIR)/BrewCoffee46.app/BrewCoffee46
     sources:
       - BrewCoffee46Tests
+    dependencies:
+      - target: brewcoffee46
+      - package: BrewCoffee46Core
+        product: BrewCoffee46TestsShared
     type: bundle.unit-test
 
   brewcoffee46WatchKitApp:
@@ -147,18 +147,6 @@ targets:
     dependencies:
       - package: BrewCoffee46Core
         product: BrewCoffee46Core
-    type: bundle.unit-test
-
-  brewcoffee46CoreTests:
-    platform: iOS
-    productName: BrewCoffee46CoreTests
-    setting:
-      base:
-        GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_FILE: 'BrewCoffee46Core/Info.plist'
-    dependencies:
-      - package: BrewCoffee46Core
-        product: BrewCoffee46Core
     type: application
 
 schemes:
@@ -177,13 +165,13 @@ schemes:
         - name: brewcoffee46Tests
           parallelizable: true
           randomExecutionOrder: true
-        - package: BrewCoffee46Core/BrewCoffee46CoreTests
     profile:
       config: Release
     analyze:
       config: Debug
     archive:
       config: Release
+
   brewcoffee46WatchKitApp:
     build:
       targets:
@@ -196,11 +184,3 @@ schemes:
       config: Debug
     archive:
       config: Release
-  brewcoffee46Core:
-    build:
-      targets:
-        brewcoffee46CoreTests: all
-    test:
-      config: Debug
-      targets:
-        - package: BrewCoffee46Core/BrewCoffee46CoreTests
