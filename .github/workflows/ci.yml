@@ -66,9 +66,16 @@ jobs:
       - name: Generate xcodeproj
         run: xcodegen generate
 
-      - name: Bulid and test
+      - name: Test for core
         run: |
-          set -o pipefail
+          xcodebuild \
+            -project BrewCoffee46.xcodeproj \
+            -scheme BrewCoffee46CoreTests \
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=iPhone 15" \
+            test | xcbeautify
+
+      - name: Test for iOS
+        run: |
           xcodebuild \
             -project BrewCoffee46.xcodeproj \
             -scheme brewcoffee46 \

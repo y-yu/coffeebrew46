@@ -16,7 +16,7 @@ packages:
     from: 1.4.0
   Factory:
     url: https://github.com/hmlongco/Factory.git
-    from: 2.3.1
+    from: 2.3.2
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk.git
     from: 10.25.0
@@ -92,10 +92,6 @@ targets:
           - $(BUILT_PRODUCTS_DIR)/$(PRODUCT_NAME).app/GoogleService-Info.plist
 
   brewcoffee46Tests:
-    dependencies:
-      - target: brewcoffee46
-      - package: BrewCoffee46Core
-        product: BrewCoffee46TestsShared
     platform: iOS
     productName: BrewCoffee46Tests
     settings:
@@ -113,6 +109,10 @@ targets:
         TEST_HOST: $(BUILT_PRODUCTS_DIR)/BrewCoffee46.app/BrewCoffee46
     sources:
       - BrewCoffee46Tests
+    dependencies:
+      - target: brewcoffee46
+      - package: BrewCoffee46Core
+        product: BrewCoffee46TestsShared
     type: bundle.unit-test
 
   brewcoffee46WatchKitApp:
@@ -148,6 +148,7 @@ targets:
       - package: BrewCoffee46Core
         product: BrewCoffee46Core
     type: application
+
 schemes:
   brewcoffee46:
     build:
@@ -164,13 +165,13 @@ schemes:
         - name: brewcoffee46Tests
           parallelizable: true
           randomExecutionOrder: true
-        - package: BrewCoffee46Core/BrewCoffee46CoreTests
     profile:
       config: Release
     analyze:
       config: Debug
     archive:
       config: Release
+
   brewcoffee46WatchKitApp:
     build:
       targets:

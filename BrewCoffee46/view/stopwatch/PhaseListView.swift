@@ -13,18 +13,10 @@ struct PhaseListView: View {
     @EnvironmentObject var viewModel: CurrentConfigViewModel
     @Binding var progressTime: Double
 
+    @State private var phaseList: [Phase] = []
+
     var body: some View {
-        let phaseList = viewModel.pointerInfoViewModels.pointerInfo.enumerated().map { infoWithIndex in
-            let (index, info) = infoWithIndex
-
-            return Phase(
-                index: index,
-                waterAmount: info.value,
-                dripAt: info.dripAt
-            )
-        }
-
-        return ScrollView {
+        ScrollView {
             LazyVGrid(
                 columns: Array(
                     repeating: .init(),
@@ -81,6 +73,19 @@ struct PhaseListView: View {
                     }
                     .foregroundColor(appEnvironment.isTimerStarted ? .primary : .primary.opacity(0.5))
                 }
+            }
+            .onChange(of: viewModel.currentConfig) { _ in
+                var newPhaseList: [Phase] = []
+                for (i, info) in viewModel.pointerInfo.dripInfo.dripTimings.enumerated() {
+                    newPhaseList.append(
+                        Phase(
+                            index: i,
+                            waterAmount: info.waterAmount,
+                            dripAt: info.dripAt
+                        )
+                    )
+                }
+                phaseList = newPhaseList
             }
         }
     }

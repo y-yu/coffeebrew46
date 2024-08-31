@@ -1,8 +1,8 @@
 import BrewCoffee46Core
 import WatchConnectivity
 
-final class WatchContentViewModel: NSObject, ObservableObject {
-    @Published var currentConfig: Config = Config.init()
+final class CurrentConfigViewModel: NSObject, ObservableObject {
+    @Published var currentConfig: Config = Config.defaultValue
     @Published var log: String = ""
 
     private let session: WCSession
@@ -15,7 +15,7 @@ final class WatchContentViewModel: NSObject, ObservableObject {
     }
 }
 
-extension WatchContentViewModel: WCSessionDelegate {
+extension CurrentConfigViewModel: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: (any Error)?) {
 
     }

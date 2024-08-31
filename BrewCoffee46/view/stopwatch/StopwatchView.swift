@@ -172,8 +172,8 @@ struct StopwatchView: View {
         return await withTaskGroup(of: ResultNea<Void, CoffeeError>.self) { group in
             var errors: [CoffeeError] = []
 
-            let numberOfAllDrips = viewModel.pointerInfoViewModels.pointerInfo.count
-            for (i, info) in viewModel.pointerInfoViewModels.pointerInfo.dropFirst().enumerated() {
+            let numberOfAllDrips = viewModel.pointerInfo.dripInfo.dripTimings.count
+            for (i, info) in viewModel.pointerInfo.dripInfo.dripTimings.dropFirst().enumerated() {
                 let notifiedAt = Int(floor(info.dripAt))
 
                 group.addTask {
@@ -188,7 +188,7 @@ struct StopwatchView: View {
 
                     return await notificationService.addNotificationUsingTimer(
                         title: title,
-                        body: "🫖 \(roundCentesimal(info.value))g 💧",
+                        body: "🫖 \(roundCentesimal(info.waterAmount))g 💧",
                         notifiedInSeconds: notifiedAt
                     )
                 }

@@ -4,8 +4,8 @@ struct ButtonNumberButtonView: View {
     public let maximum: Double
     public let minimum: Double
     public let step: Double
-    public let isDisable: Bool
 
+    @Binding var isDisable: Bool
     @Binding var target: Double
 
     var body: some View {
@@ -34,3 +34,20 @@ struct ButtonNumberButtonView: View {
         .id(!isDisable)
     }
 }
+
+#if DEBUG
+    struct ButtonNumberButtonView_Previews: PreviewProvider {
+        @State static var target = 5.0
+        @State static var isDisable = false
+
+        static var previews: some View {
+            ButtonNumberButtonView(
+                maximum: 10.0,
+                minimum: 0.1,
+                step: 0.1,
+                isDisable: $isDisable,
+                target: $target
+            )
+        }
+    }
+#endif

@@ -26,17 +26,29 @@ struct SaveLoadView: View {
             Section(header: Text("config save load current config")) {
                 VStack {
                     ShowConfigView(
-                        config: $viewModel.currentConfig,
-                        isLock: Binding(
-                            get: { mode.isEditing || self.appEnvironment.isTimerStarted },
-                            // `ShowConfigView` doesn't use `set` so it's OK that the setter is nothing function.
-                            set: { _ in () }
-                        )
+                        config: Binding(
+                            get: {
+                                var config = viewModel.currentConfig
+
+                                if let lastUpdatedAt = viewModel.currentConfigLastUpdatedAt {
+                                    config.editedAtMilliSec = lastUpdatedAt
+                                }
+                                return config
+                            },
+                            set: { viewModel.currentConfig = $0 }
+                        ),
+                        isLock: (mode.isEditing || self.appEnvironment.isTimerStarted).getOnlyBinding
                     )
                     HStack {
                         Spacer()
                         Button(action: {
-                            configs.insert(viewModel.currentConfig, at: 0)
+                            var config = viewModel.currentConfig
+
+                            if let lastUpdatedAt = viewModel.currentConfigLastUpdatedAt {
+                                config.editedAtMilliSec = lastUpdatedAt
+                            }
+
+                            configs.insert(config, at: 0)
                             saveLoadConfigService
                                 .saveAll(configs: configs)
                                 .recoverWithErrorLog(&viewModel.errors)
@@ -101,6 +113,7 @@ struct SaveLoadView: View {
                                     isLoadAlertPresented.toggle()
                                     if let config = selectedConfig {
                                         viewModel.currentConfig = config
+                                        viewModel.currentConfigLastUpdatedAt = .none
                                         selectedConfig = .none
                                     }
                                 }

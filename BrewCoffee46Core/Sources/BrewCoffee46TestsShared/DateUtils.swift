@@ -16,8 +16,6 @@ public class DateUtils {
     }
 }
 
-public let epochTimeMillis: UInt64 = 1_723_792_539_843
-
 public func getDate() -> Date {
     let f = ISO8601DateFormatter()
     f.formatOptions.insert(.withFractionalSeconds)
