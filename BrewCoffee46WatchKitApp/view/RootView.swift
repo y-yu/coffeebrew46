@@ -8,7 +8,7 @@ struct RootView: View {
             NavigationLink(value: Route.config) {
                 VStack(alignment: .leading) {
                     HStack {
-                        Image(systemName: "info.circle")
+                        Image(systemName: "slider.horizontal.3")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .foregroundColor(.green)
@@ -19,7 +19,31 @@ struct RootView: View {
                             .frame(width: 24, height: 24)
                             .foregroundColor(.gray)
                     }
-                    Text("config save load current config")
+                    HStack {
+                        Spacer()
+                        Text("navigation title configuration")
+                    }
+                }
+            }
+
+            NavigationLink(value: Route.stopwatch) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "stopwatch")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.yellow)
+                            .frame(width: 96, height: 40, alignment: .leading)
+                        Spacer()
+                        Image(systemName: "ellipsis.circle.fill")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.gray)
+                    }
+                    HStack {
+                        Spacer()
+                        Text("navigation title stopwatch")
+                    }
                 }
             }
         }

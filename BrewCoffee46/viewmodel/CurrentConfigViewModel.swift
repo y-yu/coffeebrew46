@@ -41,23 +41,3 @@ final class CurrentConfigViewModel: ObservableObject {
         self.pointerInfo = PointerInfo(dripInfo)
     }
 }
-
-extension CurrentConfigViewModel {
-    func getNthPhase(progressTime: Double) -> Int {
-        if progressTime < 0 {
-            return 0
-        }
-
-        if let nth = pointerInfo.dripInfo.dripTimings.firstIndex(where: { e in
-            e.dripAt > progressTime
-        }) {
-            return nth - 1
-        } else {
-            if progressTime >= currentConfig.totalTimeSec {
-                return pointerInfo.pointerDegrees.count
-            } else {
-                return pointerInfo.pointerDegrees.count - 1
-            }
-        }
-    }
-}

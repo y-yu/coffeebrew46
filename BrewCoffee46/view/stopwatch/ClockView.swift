@@ -63,7 +63,9 @@ struct ClockView: View {
                                 waterAmount: dripTiming.waterAmount,
                                 degree: degree,
                                 isOnGoing:
-                                    viewModel.getNthPhase(progressTime: progressTime) >= i && appEnvironment.isTimerStarted && progressTime > 0
+                                    viewModel.pointerInfo.dripInfo.getNthPhase(
+                                        progressTime: progressTime, totalTimeSec: viewModel.currentConfig.totalTimeSec) >= i
+                                    && appEnvironment.isTimerStarted && progressTime > 0
                             )
                         }
                     }

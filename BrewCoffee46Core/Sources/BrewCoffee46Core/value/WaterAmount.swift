@@ -18,6 +18,11 @@ public func == (lhs: WaterAmount, rhs: WaterAmount) -> Bool {
 }
 
 extension WaterAmount {
+    static public let defaultValue: WaterAmount = WaterAmount(
+        fortyPercent: (90.0, 90.0),
+        sixtyPercent: NonEmptyArray(90.0, [90.0, 90.0])
+    )
+
     // Return total amount of the water (gram).
     public func totalAmount() -> Double {
         fortyPercent.0 + fortyPercent.1

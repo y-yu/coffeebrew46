@@ -1,8 +1,16 @@
 import BrewCoffee46Core
+import Factory
 import WatchConnectivity
 
 final class CurrentConfigViewModel: NSObject, ObservableObject {
-    @Published var currentConfig: Config = Config.defaultValue
+    @Injected(\.calculateDripInfoService) private var calculateDripInfoService: CalculateDripInfoService
+
+    @Published var currentConfig: Config = Config.defaultValue {
+        didSet {
+            self.dripInfo = calculateDripInfoService.calculate(currentConfig)
+        }
+    }
+    @Published var dripInfo: DripInfo = DripInfo.defaultValue
     @Published var log: String = ""
 
     private let session: WCSession
