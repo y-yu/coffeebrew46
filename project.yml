@@ -147,6 +147,7 @@ targets:
     dependencies:
       - package: BrewCoffee46Core
         product: BrewCoffee46Core
+      - package: Factory
     type: application
 
 schemes:

@@ -96,7 +96,7 @@ struct PhaseListView: View {
         onGoing: A,
         scheduled: A
     ) -> A {
-        let phase = viewModel.getNthPhase(progressTime: progressTime)
+        let phase = viewModel.pointerInfo.dripInfo.getNthPhase(progressTime: progressTime, totalTimeSec: viewModel.currentConfig.totalTimeSec)
 
         if phase == i && appEnvironment.isTimerStarted && progressTime > 0 {
             return onGoing
@@ -118,7 +118,7 @@ struct PhaseListView: View {
     }
 
     private func timingView(phase: Phase) -> AnyView {
-        let nth = viewModel.getNthPhase(progressTime: progressTime)
+        let nth = viewModel.pointerInfo.dripInfo.getNthPhase(progressTime: progressTime, totalTimeSec: viewModel.currentConfig.totalTimeSec)
 
         if nth == phase.index && progressTime >= 0 && appEnvironment.isTimerStarted {
             // in case on going

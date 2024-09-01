@@ -29,39 +29,5 @@ struct PointerInfo {
 }
 
 extension PointerInfo {
-    static let defaultValue: PointerInfo =
-        PointerInfo.init(
-            DripInfo(
-                dripTimings: [
-                    DripTiming(waterAmount: 90, dripAt: 0.0),
-                    DripTiming(waterAmount: 180, dripAt: 72.0),
-                    DripTiming(waterAmount: 270, dripAt: 144.0),
-                    DripTiming(waterAmount: 360, dripAt: 216.0),
-                    DripTiming(waterAmount: 450, dripAt: 288.0),
-                ],
-                waterAmount: WaterAmount(
-                    fortyPercent: (90.0, 90.0),
-                    sixtyPercent: NonEmptyArray(90.0, [90.0, 90.0])
-                )
-            )
-        )
+    static let defaultValue: PointerInfo = PointerInfo.init(DripInfo.defaultValue)
 }
-
-/*
-extension PointerInfo {
-    static func fromArray(_ arr: [Double]) -> PointerInfo {
-        PointerInfoViewModel(
-            pointerInfo: arr.map { (dripInfo, dripAt) in
-                PointerInfoViewModel(
-                    dripInfo: dripInfo,
-                    degree: degree
-                )
-            }
-        )
-    }
-
-    static func fromTuples(_ tuples: (DripInfo, Double)...) -> PointerInfo {
-        fromArray(tuples)
-    }
-}
-*/
