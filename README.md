@@ -3,7 +3,7 @@ BrewCoffee46
 
 ![CI](https://github.com/y-yu/coffeebrew46/workflows/CI/badge.svg)
 
-This is a coffee brewing utility for iOS. 
+This is a coffee brewing utility for iOS & watchOS. 
 [App Store](https://apps.apple.com/jp/app/coffeebrew46/id6449224023)
 
 <img width="50%" src="https://github.com/y-yu/coffeebrew46/assets/612043/07d1504c-f2c1-4827-94ae-36030ae9ad12">
