@@ -20,13 +20,24 @@ struct StopwatchView: View {
                             progressTime: progressTime,
                             totalTimeSec: viewModel.currentConfig.totalTimeSec
                         )
+
                     VStack {
                         if progressTime >= 0 {
-                            progressView(
-                                currentPhase: currentPhase,
-                                totalDripCount: viewModel.dripInfo.dripTimings.count,
-                                progressTime: progressTime
-                            )
+                            ZStack {
+                                // This is dummy `EmptyView` to send signals for each time to change `currentPhase`.
+                                EmptyView().onChange(of: currentPhase) {
+                                    if currentPhase < viewModel.dripInfo.dripTimings.count {
+                                        WKInterfaceDevice.current().play(.success)
+                                    } else {
+                                        WKInterfaceDevice.current().play(.notification)
+                                    }
+                                }
+                                progressView(
+                                    currentPhase: currentPhase,
+                                    totalDripCount: viewModel.dripInfo.dripTimings.count,
+                                    progressTime: progressTime
+                                )
+                            }
                         } else {
                             VStack {
                                 showDripInfo(index: 0, totalDripCount: viewModel.dripInfo.dripTimings.count)
@@ -53,6 +64,7 @@ struct StopwatchView: View {
                         }
                         Spacer()
                         Button(action: {
+                            WKInterfaceDevice.current().play(.stop)
                             self.startAt = .none
                         }) {
                             Text("Stop")
@@ -67,6 +79,7 @@ struct StopwatchView: View {
                         progressTime: -countDownInit
                     )
                     Button(action: {
+                        WKInterfaceDevice.current().play(.start)
                         self.startAt = Date.now
                     }) {
                         Text("Start")
