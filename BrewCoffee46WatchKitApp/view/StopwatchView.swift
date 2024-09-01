@@ -75,6 +75,7 @@ struct StopwatchView: View {
             }
         }
         .navigationTitle("navigation title stopwatch")
+        .currentConfigSaveLoadModifier($viewModel.currentConfig, $viewModel.log)
     }
 
     private func showDripInfo(index: Int, totalDripCount: Int) -> some View {

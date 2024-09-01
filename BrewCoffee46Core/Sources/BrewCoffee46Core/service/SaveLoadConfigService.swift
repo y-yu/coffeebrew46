@@ -1,9 +1,8 @@
-import BrewCoffee46Core
 import Factory
 import Foundation
 
 /// # Save & load user's configuration.
-protocol SaveLoadConfigService {
+public protocol SaveLoadConfigService {
     func saveCurrentConfig(config: Config) -> ResultNea<Void, CoffeeError>
 
     func loadCurrentConfig() -> ResultNea<Config?, CoffeeError>
@@ -12,54 +11,30 @@ protocol SaveLoadConfigService {
 
     func loadAll() -> ResultNea<[Config]?, CoffeeError>
 
-    func loadAllLegacyConfigs() -> ResultNea<[Config], CoffeeError>
-
-    func deleteAllLegacyConfigs() -> Void
-
     func delete(key: String) -> Void
 }
 
-class SaveLoadConfigServiceImpl: SaveLoadConfigService {
+public class SaveLoadConfigServiceImpl: SaveLoadConfigService {
     @Injected(\.userDefaultsService) private var userDefaultsService
 
-    func saveCurrentConfig(config: Config) -> ResultNea<Void, CoffeeError> {
+    public func saveCurrentConfig(config: Config) -> ResultNea<Void, CoffeeError> {
         return userDefaultsService.setEncodable(config, forKey: userDefaultsKey(SaveLoadConfigServiceImpl.temporaryCurrentConfigKey))
     }
 
-    func loadCurrentConfig() -> ResultNea<Config?, CoffeeError> {
+    public func loadCurrentConfig() -> ResultNea<Config?, CoffeeError> {
         return userDefaultsService.getDecodable(forKey: userDefaultsKey(SaveLoadConfigServiceImpl.temporaryCurrentConfigKey))
     }
 
-    func saveAll(configs: [Config]) -> ResultNea<Void, CoffeeError> {
+    public func saveAll(configs: [Config]) -> ResultNea<Void, CoffeeError> {
         return userDefaultsService.setEncodable(configs, forKey: userDefaultsKey(SaveLoadConfigServiceImpl.configsKey))
     }
 
-    func loadAll() -> ResultNea<[Config]?, CoffeeError> {
+    public func loadAll() -> ResultNea<[Config]?, CoffeeError> {
         return userDefaultsService.getDecodable(forKey: userDefaultsKey(SaveLoadConfigServiceImpl.configsKey))
     }
 
-    func loadAllLegacyConfigs() -> ResultNea<[Config], CoffeeError> {
-        return Array(0..<SaveLoadConfigServiceImpl.numberOfLegacySavedConfigs)
-            .reduce(
-                .success([]),
-                { (acc: ResultNea<[Config], CoffeeError>, i: Int) -> ResultNea<[Config], CoffeeError> in
-                    acc.flatMap { results in
-                        userDefaultsService
-                            .getDecodable(forKey: userDefaultsKey(String(i)))
-                            .map { results + $0.toArray() }
-                    }
-                }
-            )
-    }
-
-    func delete(key: String) -> Void {
+    public func delete(key: String) -> Void {
         userDefaultsService.delete(forKey: userDefaultsKey(key))
-    }
-
-    func deleteAllLegacyConfigs() -> Void {
-        for i in 0..<SaveLoadConfigServiceImpl.numberOfLegacySavedConfigs {
-            self.delete(key: String(i))
-        }
     }
 
     private func userDefaultsKey(_ key: String) -> String {
@@ -73,12 +48,10 @@ extension SaveLoadConfigServiceImpl {
     static internal let temporaryCurrentConfigKey = "temporaryCurrentConfig"
 
     static internal let configsKey = "configs"
-
-    static internal let numberOfLegacySavedConfigs = 20
 }
 
 extension Container {
-    var saveLoadConfigService: Factory<SaveLoadConfigService> {
+    public var saveLoadConfigService: Factory<SaveLoadConfigService> {
         Factory(self) { SaveLoadConfigServiceImpl() }
     }
 }

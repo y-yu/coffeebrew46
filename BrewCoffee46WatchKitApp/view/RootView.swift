@@ -2,6 +2,7 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var appEnvironment: WatchKitAppEnvironment
+    @EnvironmentObject var viewModel: CurrentConfigViewModel
 
     var body: some View {
         List {
@@ -48,6 +49,7 @@ struct RootView: View {
             }
         }
         .navigation(path: $appEnvironment.rootPath)
+        .currentConfigSaveLoadModifier($viewModel.currentConfig, $viewModel.log)
     }
 }
 

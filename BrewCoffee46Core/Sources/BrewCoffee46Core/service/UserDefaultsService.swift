@@ -1,8 +1,7 @@
-import BrewCoffee46Core
 import Factory
 import Foundation
 
-protocol UserDefaultsService {
+public protocol UserDefaultsService {
     func setEncodable<A: Encodable>(_ value: A, forKey defaultName: String) -> ResultNea<Void, CoffeeError>
 
     func getDecodable<A: Decodable>(forKey: String) -> ResultNea<A?, CoffeeError>
@@ -10,8 +9,8 @@ protocol UserDefaultsService {
     func delete(forKey: String) -> Void
 }
 
-class UserDefaultsServiceImpl: UserDefaultsService {
-    func setEncodable<A: Encodable>(_ value: A, forKey: String) -> ResultNea<Void, CoffeeError> {
+public class UserDefaultsServiceImpl: UserDefaultsService {
+    public func setEncodable<A: Encodable>(_ value: A, forKey: String) -> ResultNea<Void, CoffeeError> {
         let encoder = JSONEncoder()
         do {
             let json = try String(data: encoder.encode(value), encoding: .utf8)!
@@ -22,7 +21,7 @@ class UserDefaultsServiceImpl: UserDefaultsService {
         }
     }
 
-    func getDecodable<A: Decodable>(forKey: String) -> ResultNea<A?, CoffeeError> {
+    public func getDecodable<A: Decodable>(forKey: String) -> ResultNea<A?, CoffeeError> {
         let decoder = JSONDecoder()
 
         if let json = UserDefaults.standard.string(forKey: forKey)?.data(using: .utf8) {
@@ -36,13 +35,13 @@ class UserDefaultsServiceImpl: UserDefaultsService {
         }
     }
 
-    func delete(forKey: String) -> Void {
+    public func delete(forKey: String) -> Void {
         UserDefaults.standard.removeObject(forKey: forKey)
     }
 }
 
 extension Container {
-    var userDefaultsService: Factory<UserDefaultsService> {
+    public var userDefaultsService: Factory<UserDefaultsService> {
         Factory(self) { UserDefaultsServiceImpl() }
     }
 }
