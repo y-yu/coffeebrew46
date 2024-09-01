@@ -1,15 +1,14 @@
-import BrewCoffee46Core
 import Factory
 
 /// # Validation for the config.
-protocol ValidateInputService {
+public protocol ValidateInputService {
     func validate(
         config: Config
     ) -> ResultNea<Void, CoffeeError>
 }
 
-class ValidateInputServiceImpl: ValidateInputService {
-    func validate(
+public class ValidateInputServiceImpl: ValidateInputService {
+    public func validate(
         config: Config
     ) -> ResultNea<Void, CoffeeError> {
         let validatedTuple =
@@ -50,7 +49,7 @@ class ValidateInputServiceImpl: ValidateInputService {
 }
 
 extension Container {
-    var validateInputService: Factory<ValidateInputService> {
+    public var validateInputService: Factory<ValidateInputService> {
         Factory(self) { ValidateInputServiceImpl() }
     }
 }
