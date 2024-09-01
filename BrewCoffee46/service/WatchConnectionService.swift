@@ -31,8 +31,8 @@ class WatchConnectionServiceImpl: NSObject, WatchConnectionService {
             session.sendMessage(["config": json], replyHandler: nil) { err in
                 print("error: \(err)")
             }
-            print("send!")
         case .failure(_):
+            // TODO: Fix this error case!
             ()
         }
     }

@@ -51,10 +51,12 @@ struct ConfigView: View {
                 }
             }
 
-            Button(action: {
-                watchConnectionService.send(config: viewModel.currentConfig)
-            }) {
-                Text("送信")
+            Section(header: Text("config watchos app setting")) {
+                Button(action: {
+                    watchConnectionService.send(config: viewModel.currentConfig)
+                }) {
+                    Text("config send current setting to watchos app")
+                }
             }
 
             Section(header: Text("config weight settings")) {

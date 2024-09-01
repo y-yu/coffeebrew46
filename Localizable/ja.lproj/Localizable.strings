@@ -28,6 +28,9 @@
 "config show tips" = "Tipsを表示";
 "config show current note tips" = "現在の設定";
 
+"config watchos app setting" = "watchOSアプリ設定";
+"config send current setting to watchos app" = "現在の設定をwatchOSアプリへ送信";
+
 "config weight settings" = "抽出量設定";
 "config calculate coffee beans from water" = "水量→コーヒー豆量";
 "config calculate water from coffee beans" = "コーヒー豆量→水量";
