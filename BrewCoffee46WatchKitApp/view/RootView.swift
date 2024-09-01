@@ -1,3 +1,4 @@
+import BrewCoffee46Core
 import SwiftUI
 
 struct RootView: View {
@@ -6,50 +7,55 @@ struct RootView: View {
 
     var body: some View {
         List {
-            NavigationLink(value: Route.config) {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Image(systemName: "slider.horizontal.3")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundColor(.green)
-                            .frame(width: 96, height: 40, alignment: .leading)
-                        Spacer()
-                        Image(systemName: "ellipsis.circle.fill")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(.gray)
-                    }
-                    HStack {
-                        Spacer()
-                        Text("navigation title configuration")
-                    }
-                }
+            Stepper(value: $viewModel.currentConfig.coffeeBeansWeight, step: 0.1) {
+                Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))\(weightUnit)")
+                    .font(.system(size: 19))
             }
 
-            NavigationLink(value: Route.stopwatch) {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Image(systemName: "stopwatch")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundColor(.yellow)
-                            .frame(width: 96, height: 40, alignment: .leading)
-                        Spacer()
-                        Image(systemName: "ellipsis.circle.fill")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(.gray)
-                    }
-                    HStack {
-                        Spacer()
-                        Text("navigation title stopwatch")
-                    }
-                }
-            }
+            navigationLink(
+                route: .stopwatch,
+                imageName: "stopwatch",
+                imageColor: .yellow,
+                navigationTitle: "navigation title stopwatch"
+            )
+
+            navigationLink(
+                route: .config,
+                imageName: "slider.horizontal.3",
+                imageColor: .green,
+                navigationTitle: "navigation title configuration"
+            )
         }
         .navigation(path: $appEnvironment.rootPath)
         .currentConfigSaveLoadModifier($viewModel.currentConfig, $viewModel.log)
+    }
+
+    private func navigationLink(
+        route: Route,
+        imageName: String,
+        imageColor: Color,
+        navigationTitle: String
+    ) -> some View {
+        NavigationLink(value: route) {
+            VStack(alignment: .leading) {
+                HStack(alignment: .bottom) {
+                    Image(systemName: imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(imageColor)
+                        .frame(width: 30, height: 40, alignment: .leading)
+                    Spacer()
+                    Image(systemName: "ellipsis.circle.fill")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.gray)
+                }
+                HStack {
+                    Spacer()
+                    Text(NSLocalizedString(navigationTitle, comment: ""))
+                }
+            }
+        }
     }
 }
 
@@ -58,6 +64,7 @@ struct RootView: View {
         static var previews: some View {
             RootView()
                 .environmentObject(WatchKitAppEnvironment())
+                .environmentObject(CurrentConfigViewModel())
         }
     }
 #endif

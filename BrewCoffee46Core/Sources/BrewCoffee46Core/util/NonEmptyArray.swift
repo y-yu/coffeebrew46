@@ -36,6 +36,12 @@ extension NonEmptyArray {
     }
 }
 
+extension NonEmptyArray where A == CoffeeError {
+    public func getAllErrorMessage() -> String {
+        self.toArray().map { $0.getMessage() }.joined(separator: "\n")
+    }
+}
+
 // Append operator.
 infix operator ++ : AssociativityLeft
 

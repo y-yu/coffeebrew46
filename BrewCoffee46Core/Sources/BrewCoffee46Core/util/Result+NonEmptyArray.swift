@@ -39,7 +39,7 @@ extension ResultNea {
             ()
 
         case .failure(let errors):
-            errorLog += errors.toArray().map { $0.getMessage() }.joined(separator: "\n")
+            errorLog += errors.getAllErrorMessage()
         }
     }
 }
