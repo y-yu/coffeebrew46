@@ -7,7 +7,7 @@ struct SaveLoadView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
 
-    @Injected(\.saveLoadConfigService) private var saveLoadConfigService
+    @Injected(\.saveLoadConfigAndLegacyConfigService) private var saveLoadConfigService: SaveLoadConfigAndLegacyConfigService
 
     @Environment(\.scenePhase) private var scenePhase
 
@@ -164,7 +164,7 @@ struct SaveLoadView: View {
                 .map { legacySavedConfigs = $0 }
                 .recoverWithErrorLog(&viewModel.errors)
         }
-        .currentConfigSaveLoadModifier()
+        .currentConfigSaveLoadModifier($viewModel.currentConfig, $viewModel.errors)
     }
 
     private var loadLegacySavedConfigs: some View {

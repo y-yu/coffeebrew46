@@ -208,7 +208,7 @@ struct ConfigView: View {
         }
         .navigationTitle("navigation title configuration")
         .navigation(path: $appEnvironment.configPath)
-        .currentConfigSaveLoadModifier()
+        .currentConfigSaveLoadModifier($viewModel.currentConfig, $viewModel.errors)
     }
 
     private var coffeeBeansAndWaterWeightView: some View {

@@ -1,7 +1,6 @@
-import BrewCoffee46Core
 import XCTest
 
-@testable import BrewCoffee46
+@testable import BrewCoffee46Core
 
 struct Dummy: Equatable {
     let a: Int

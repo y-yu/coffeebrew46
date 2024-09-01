@@ -2,25 +2,27 @@ import Factory
 import SwiftUI
 
 /// When leave/back app, load/save the current configuration.
-struct CurrentConfigSaveLoadModifier: ViewModifier {
-    @EnvironmentObject var viewModel: CurrentConfigViewModel
+public struct CurrentConfigSaveLoadModifier: ViewModifier {
+    @Binding var currentConfig: Config
+    @Binding var errors: String
+
     @Injected(\.saveLoadConfigService) private var saveLoadConfigService
     @Environment(\.scenePhase) private var scenePhase
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .onChange(of: scenePhase) { phase in
                 switch phase {
                 case .background:
                     saveLoadConfigService
-                        .saveCurrentConfig(config: viewModel.currentConfig)
-                        .recoverWithErrorLog(&viewModel.errors)
+                        .saveCurrentConfig(config: currentConfig)
+                        .recoverWithErrorLog(&errors)
                 case .inactive:
                     switch scenePhase {
                     case .active:
                         saveLoadConfigService
-                            .saveCurrentConfig(config: viewModel.currentConfig)
-                            .recoverWithErrorLog(&viewModel.errors)
+                            .saveCurrentConfig(config: currentConfig)
+                            .recoverWithErrorLog(&errors)
                     case .background:
                         ()
                     default:
@@ -29,8 +31,8 @@ struct CurrentConfigSaveLoadModifier: ViewModifier {
                 case .active:
                     saveLoadConfigService
                         .loadCurrentConfig()
-                        .map { $0.map { viewModel.currentConfig = $0 } }
-                        .recoverWithErrorLog(&viewModel.errors)
+                        .map { $0.map { currentConfig = $0 } }
+                        .recoverWithErrorLog(&errors)
                 @unknown default:
                     ()
                 }
@@ -39,7 +41,9 @@ struct CurrentConfigSaveLoadModifier: ViewModifier {
 }
 
 extension View {
-    func currentConfigSaveLoadModifier() -> some View {
-        self.modifier(CurrentConfigSaveLoadModifier())
+    public func currentConfigSaveLoadModifier(_ config: Binding<Config>, _ errors: Binding<String>) -> some View {
+        self.modifier(
+            CurrentConfigSaveLoadModifier(currentConfig: config, errors: errors)
+        )
     }
 }

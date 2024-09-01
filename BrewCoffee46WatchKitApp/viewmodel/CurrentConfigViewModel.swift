@@ -4,10 +4,14 @@ import WatchConnectivity
 
 final class CurrentConfigViewModel: NSObject, ObservableObject {
     @Injected(\.calculateDripInfoService) private var calculateDripInfoService: CalculateDripInfoService
+    @Injected(\.saveLoadConfigService) private var saveLoadConfigService: SaveLoadConfigService
 
     @Published var currentConfig: Config = Config.defaultValue {
         didSet {
             self.dripInfo = calculateDripInfoService.calculate(currentConfig)
+            saveLoadConfigService
+                .saveCurrentConfig(config: currentConfig)
+                .recoverWithErrorLog(&log)
         }
     }
     @Published var dripInfo: DripInfo = DripInfo.defaultValue
