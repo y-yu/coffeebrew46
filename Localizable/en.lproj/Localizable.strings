@@ -28,6 +28,9 @@
 "config show tips" = "Show Tips";
 "config show current note tips" = "Current configuration";
 
+"config watchos app setting" = "watchOS App setting";
+"config send current setting to watchos app" = "Send current setting to watchOS App";
+
 "config weight settings" = "Amount settings";
 "config calculate coffee beans from water" = "water→coffee beans";
 "config calculate water from coffee beans" = "coffee beans→water";
