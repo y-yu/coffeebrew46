@@ -30,6 +30,7 @@
 
 "config watchos app setting" = "watchOSアプリ設定";
 "config send current setting to watchos app" = "現在の設定をwatchOSアプリへ送信";
+"config watch session is not activated" = "現在watchOSにデータを送信できません";
 
 "config weight settings" = "抽出量設定";
 "config calculate coffee beans from water" = "水量→コーヒー豆量";

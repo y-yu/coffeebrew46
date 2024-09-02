@@ -3,9 +3,11 @@ import Factory
 import WatchConnectivity
 
 protocol WatchConnectionService {
-    func send(
-        config: Config
-    )
+    func isPaired() -> Bool
+
+    func isReachable() -> Bool
+
+    func send(config: Config) async -> ResultNea<Void, CoffeeError>
 }
 
 class WatchConnectionServiceImpl: NSObject, WatchConnectionService {
@@ -18,22 +20,35 @@ class WatchConnectionServiceImpl: NSObject, WatchConnectionService {
         self.session.activate()
     }
 
-    func send(
-        config: Config
-    ) {
-        guard session.activationState == .activated else {
-            print("Sending method can only be called while the session is active.")
-            return
-        }
+    func isPaired() -> Bool {
+        session.isPaired
+    }
 
-        switch config.toJSON(isPrettyPrint: false) {
-        case .success(let json):
-            session.sendMessage(["config": json], replyHandler: nil) { err in
-                print("error: \(err)")
+    func isReachable() -> Bool {
+        session.isReachable
+    }
+
+    func send(config: Config) async -> ResultNea<Void, CoffeeError> {
+        await withCheckedContinuation { continuation in
+            if session.activationState != .activated {
+                continuation.resume(returning: .failure(NonEmptyArray(CoffeeError.watchSessionIsNotActivated)))
+                return
             }
-        case .failure(_):
-            // TODO: Fix this error case!
-            ()
+
+            switch config.toJSON(isPrettyPrint: false) {
+            case .success(let json):
+                session.sendMessage(
+                    ["config": json],
+                    replyHandler: { data in
+                        continuation.resume(returning: .success(()))
+                    },
+                    errorHandler: { error in
+                        continuation.resume(returning: .failure(NonEmptyArray(.sendMessageToWatchOSFailure(error))))
+                    }
+                )
+            case .failure(let error):
+                continuation.resume(returning: .failure(NonEmptyArray(CoffeeError.jsonError(error))))
+            }
         }
     }
 }

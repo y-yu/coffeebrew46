@@ -23,6 +23,7 @@ struct ConfigView: View {
             viewModel.currentConfig.coffeeBeansWeight = roundCentesimal(temporaryWaterAmount / viewModel.currentConfig.waterToCoffeeBeansWeightRatio)
         }
     }
+    @State var didSuccessSendingConfig: Bool? = .none
 
     private let digit = 1
     private let timerStep: Double = 1.0
@@ -51,11 +52,56 @@ struct ConfigView: View {
                 }
             }
 
-            Section(header: Text("config watchos app setting")) {
-                Button(action: {
-                    watchConnectionService.send(config: viewModel.currentConfig)
-                }) {
-                    Text("config send current setting to watchos app")
+            if watchConnectionService.isPaired() {
+                Section(header: Text("config watchos app setting")) {
+                    Button(action: {
+                        didSuccessSendingConfig = .none
+                        Task {
+                            let result = await watchConnectionService.send(config: viewModel.currentConfig)
+                            switch result {
+                            case .success():
+                                didSuccessSendingConfig = true
+                            case .failure(let error):
+                                viewModel.errors = error.getAllErrorMessage()
+                                didSuccessSendingConfig = false
+                            }
+                        }
+                    }) {
+                        VStack {
+                            HStack {
+                                Text("config send current setting to watchos app")
+                                Spacer()
+                                Group {
+                                    if let didSuccessSendingConfig {
+                                        if didSuccessSendingConfig {
+                                            Image(systemName: "gear.badge.checkmark")
+                                                .foregroundColor(.green)
+                                        } else {
+                                            Image(systemName: "gear.badge.xmark")
+                                                .foregroundColor(.red)
+                                        }
+                                    }
+                                }
+                                .onChange(of: viewModel.currentConfig) { _ in
+                                    didSuccessSendingConfig = .none
+                                }
+                            }
+                            if !watchConnectionService.isReachable() {
+                                HStack {
+                                    Image(systemName: "exclamationmark.triangle")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .foregroundColor(.yellow)
+                                        .frame(width: 10, height: 10, alignment: .leading)
+                                    Text("config watch session is not activated")
+                                        .font(.system(size: 10))
+                                    Spacer()
+                                }
+                            }
+                        }
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    .disabled(!watchConnectionService.isReachable())
                 }
             }
 

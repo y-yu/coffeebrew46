@@ -22,6 +22,10 @@ public enum CoffeeError: Error {
 
     case notificationError(_ underlying: Error)
 
+    case watchSessionIsNotActivated
+
+    case sendMessageToWatchOSFailure(_ underlying: Error)
+
     public func getMessage() -> String {
         switch self {
         case .coffeeBeansWeightUnderZeroError:
@@ -56,6 +60,12 @@ public enum CoffeeError: Error {
 
         case .notificationError(let error):
             return "Something error was occurred in notification: \(error)"
+
+        case .watchSessionIsNotActivated:
+            return "watchOS session is not activated."
+
+        case .sendMessageToWatchOSFailure(let error):
+            return "Something error was occurred in sending a message to watchOS app: \(error)"
         }
     }
 }
