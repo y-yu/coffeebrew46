@@ -86,22 +86,9 @@ struct ConfigView: View {
                                     didSuccessSendingConfig = .none
                                 }
                             }
-                            if !watchConnectionService.isReachable() {
-                                HStack {
-                                    Image(systemName: "exclamationmark.triangle")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .foregroundColor(.yellow)
-                                        .frame(width: 10, height: 10, alignment: .leading)
-                                    Text("config watch session is not activated")
-                                        .font(.system(size: 10))
-                                    Spacer()
-                                }
-                            }
                         }
                     }
                     .buttonStyle(BorderlessButtonStyle())
-                    .disabled(!watchConnectionService.isReachable())
                 }
             }
 
