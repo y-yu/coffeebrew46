@@ -19,8 +19,10 @@ This is a coffee brewing utility for iOS & watchOS.
 
 ## Acknowledgement
 
-- [@nanashiki](https://github.com/nanashiki)（[Twitter](https://twitter.com/7_6_)）
+- [@nanashiki](https://github.com/nanashiki)（[X](https://x.com/7_6_)）
     - Thanks for the advices about SwiftUI techniques and iOS app release procedure and so on.
+- [@kouki-dan](https://github.com/kouki-dan)（[X](https://x.com/kouki_dan)）
+    - Thanks for the advices about watchOS app.
 
 ## References
 
