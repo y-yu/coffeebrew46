@@ -56,7 +56,7 @@ struct ConfigView: View {
                 Section(header: Text("config watchos app setting")) {
                     Button(action: {
                         didSuccessSendingConfig = .none
-                        Task {
+                        Task { @MainActor in
                             let result = await watchConnectionService.send(config: viewModel.currentConfig)
                             switch result {
                             case .success():

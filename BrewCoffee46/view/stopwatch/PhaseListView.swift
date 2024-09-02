@@ -74,20 +74,23 @@ struct PhaseListView: View {
                     .foregroundColor(appEnvironment.isTimerStarted ? .primary : .primary.opacity(0.5))
                 }
             }
-            .onChange(of: viewModel.currentConfig) { _ in
-                var newPhaseList: [Phase] = []
-                for (i, info) in viewModel.pointerInfo.dripInfo.dripTimings.enumerated() {
-                    newPhaseList.append(
-                        Phase(
-                            index: i,
-                            waterAmount: info.waterAmount,
-                            dripAt: info.dripAt
-                        )
-                    )
-                }
-                phaseList = newPhaseList
-            }
+            .onChange(of: viewModel.currentConfig) { _ in updatePhaseList() }
         }
+        .onAppear { updatePhaseList() }
+    }
+
+    private func updatePhaseList() {
+        var newPhaseList: [Phase] = []
+        for (i, info) in viewModel.pointerInfo.dripInfo.dripTimings.enumerated() {
+            newPhaseList.append(
+                Phase(
+                    index: i,
+                    waterAmount: info.waterAmount,
+                    dripAt: info.dripAt
+                )
+            )
+        }
+        phaseList = newPhaseList
     }
 
     private func doneOnGoingScheduled<A>(
