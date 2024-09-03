@@ -1,10 +1,13 @@
 import BrewCoffee46Core
+import Factory
 import Foundation
 import SwiftUI
 
 struct StopwatchView: View {
     @EnvironmentObject var appEnvironment: WatchKitAppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
+
+    @Injected(\.dateService) var dateService: DateService
 
     @State var startAt: Date? = .none
 
@@ -23,20 +26,17 @@ struct StopwatchView: View {
 
                     VStack {
                         if progressTime >= 0 {
-                            ZStack {
-                                // This is dummy `EmptyView` to send signals for each time to change `currentPhase`.
-                                EmptyView().onChange(of: currentPhase) {
-                                    if currentPhase < viewModel.dripInfo.dripTimings.count {
-                                        WKInterfaceDevice.current().play(.success)
-                                    } else {
-                                        WKInterfaceDevice.current().play(.notification)
-                                    }
+                            progressView(
+                                currentPhase: currentPhase,
+                                totalDripCount: viewModel.dripInfo.dripTimings.count,
+                                progressTime: progressTime
+                            )
+                            .onChange(of: currentPhase) {
+                                if currentPhase < viewModel.dripInfo.dripTimings.count {
+                                    WKInterfaceDevice.current().play(.notification)
+                                } else {
+                                    WKInterfaceDevice.current().play(.stop)
                                 }
-                                progressView(
-                                    currentPhase: currentPhase,
-                                    totalDripCount: viewModel.dripInfo.dripTimings.count,
-                                    progressTime: progressTime
-                                )
                             }
                         } else {
                             VStack {
@@ -44,7 +44,6 @@ struct StopwatchView: View {
                                 ProgressView(value: abs(progressTime) / countDownInit)
                                     .tint(.green)
                             }
-
                         }
                         Spacer()
                         HStack {
@@ -64,7 +63,7 @@ struct StopwatchView: View {
                         }
                         Spacer()
                         Button(action: {
-                            WKInterfaceDevice.current().play(.stop)
+                            WKInterfaceDevice.current().play(.success)
                             self.startAt = .none
                         }) {
                             Text("Stop")
@@ -79,8 +78,15 @@ struct StopwatchView: View {
                         progressTime: -countDownInit
                     )
                     Button(action: {
-                        WKInterfaceDevice.current().play(.start)
-                        self.startAt = Date.now
+                        WKInterfaceDevice.current().play(.success)
+                        self.startAt = dateService.now()
+
+                        Timer.scheduledTimer(
+                            withTimeInterval: countDownInit,
+                            repeats: false
+                        ) { _ in
+                            WKInterfaceDevice.current().play(.start)
+                        }
                     }) {
                         Text("Start")
                     }
@@ -149,6 +155,7 @@ struct StopwatchView: View {
             id: Binding(
                 get: { currentPhase },
                 set: { _ in () }
-            ))
+            )
+        )
     }
 }
