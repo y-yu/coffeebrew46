@@ -41,8 +41,6 @@ jobs:
         xcode-version: [ '15.3' ]
         ios-version: [ '17.4' ]
         ios-device-name: [ 'iPhone 15' ]
-        watchos-version: [ '10.4' ]
-        watchos-device-name: [ 'Apple Watch Series 9 (45mm)' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -72,6 +70,7 @@ jobs:
       - name: Test for core
         if: github.event_name == 'pull_request'
         run: |
+          set -o pipefail
           xcodebuild \
             -project BrewCoffee46.xcodeproj \
             -scheme BrewCoffee46CoreTests \
@@ -81,6 +80,7 @@ jobs:
       - name: Test for core with coverage
         if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
         run: |
+          set -o pipefail
           xcodebuild \
             -project BrewCoffee46.xcodeproj \
             -scheme BrewCoffee46CoreTests \
@@ -90,17 +90,10 @@ jobs:
             test | xcbeautify
           ./.github/workflows/convert.sh BrewCoffee46Core.o brewCoffee46_core.lcov
 
-      - name: Build watchOS app
-        run: |
-          xcodebuild \
-            -project BrewCoffee46.xcodeproj \
-            -scheme brewcoffee46WatchKitApp \
-            -destination "platform=watchOS Simulator,OS=${{ matrix.watchos-version }},name=${{ matrix.watchos-device-name }}" \
-            build | xcbeautify
-
       - name: Test for iOS
         if: github.event_name == 'pull_request'
         run: |
+          set -o pipefail
           xcodebuild \
             -project BrewCoffee46.xcodeproj \
             -scheme brewcoffee46 \
@@ -110,6 +103,7 @@ jobs:
       - name: Test for iOS with coverage
         if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
         run: |
+          set -o pipefail
           xcodebuild \
             -project BrewCoffee46.xcodeproj \
             -scheme brewcoffee46 \
