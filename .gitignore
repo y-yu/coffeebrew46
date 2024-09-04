@@ -96,3 +96,6 @@ iOSInjectionProject/
 # Firebase setting
 GoogleService-Info*.plist
 !GoogleService-Info-CI.plist
+
+# SwiftPM
+.swiftpm/

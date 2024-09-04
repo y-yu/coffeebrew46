@@ -118,7 +118,7 @@ targets:
   brewcoffee46WatchKitApp:
     platform: watchOS
     deploymentTarget: 
-      watchOS: 10.0
+      watchOS: 10.4
     productName: BrewCoffee46WatchKitApp
     settings:
       base:
