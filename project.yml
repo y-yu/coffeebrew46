@@ -118,16 +118,16 @@ targets:
   brewcoffee46WatchKitApp:
     platform: watchOS
     deploymentTarget: 
-      watchOS: 10.0
+      watchOS: 10.4
     productName: BrewCoffee46WatchKitApp
     settings:
       base:
         WATCHOS_DEPLOYMENT_TARGET: 10.4
         CODE_SIGN_IDENTITY: Apple Development
         CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 3KDN4W8346
         DEVELOPMENT_ASSET_PATHS: '"BrewCoffee46WatchKitApp/Preview Content"'
         INFOPLIST_FILE: 'BrewCoffee46WatchKitApp/Info.plist'
-        DEVELOPMENT_TEAM: 3KDN4W8346
         PRODUCT_NAME: BrewCoffee46WatchKitApp
         PROVISIONING_PROFILE_SPECIFIER: ''
         CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
@@ -149,6 +149,30 @@ targets:
         product: BrewCoffee46Core
       - package: Factory
     type: application
+
+  brewcoffee46WatchKitAppTests:
+    platform: watchOS
+    productName: BrewCoffee46WatchKitAppTests
+    settings:
+      base:
+        WATCHOS_DEPLOYMENT_TARGET: 10.4
+        ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
+        BUNDLE_LOADER: $(TEST_HOST)
+        CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
+        CODE_SIGN_STYLE: Manual
+        DEVELOPMENT_TEAM: ''
+        INFOPLIST_FILE: BrewCoffee46WatchKitAppTests/Info.plist
+        PROVISIONING_PROFILE_SPECIFIER: ''
+        PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]: ''
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/BrewCoffee46WatchKitApp.app/BrewCoffee46WatchKitApp
+        PRODUCT_BUNDLE_IDENTIFIER: com.github.y-yu.coffeebrew46.debug.watchkitappTests
+    sources:
+      - BrewCoffee46WatchKitAppTests
+    dependencies:
+      - target: brewcoffee46WatchKitApp
+      - package: BrewCoffee46Core
+        product: BrewCoffee46TestsShared
+    type: bundle.unit-test
 
 schemes:
   brewcoffee46:
@@ -179,6 +203,12 @@ schemes:
         brewcoffee46WatchKitApp: all
     run:
       config: Debug
+    test:
+      config: Debug
+      targets:
+        - name: brewcoffee46WatchKitAppTests
+          parallelizable: true
+          randomExecutionOrder: true
     profile:
       config: Release
     analyze:

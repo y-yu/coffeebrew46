@@ -39,9 +39,11 @@ jobs:
     strategy:
       matrix:
         xcode-version: [ '15.3' ]
-        ios-version: [ '17.4' ]
-        ios-device-name: [ 'iPhone 15' ]
-        watchos-version: [ '10.4' ]
+        ios-version-major: [ '17' ]
+        ios-version-minor: [ '4' ]
+        ios-device-name: [ 'iPhone 15 Pro' ]
+        watchos-version-major: [ '10' ]
+        watchos-version-minor: [ '4' ]
         watchos-device-name: [ 'Apple Watch Series 9 (45mm)' ]
     steps:
       - name: Checkout
@@ -62,7 +64,13 @@ jobs:
 
       - name: Select Xcode
         run: sudo xcode-select -s '/Applications/Xcode_${{ matrix.xcode-version }}.app/Contents/Developer'
-      
+
+      # - name: Pair ${{ matrix.watchos-device-name }} with ${{ matrix.ios-device-name }}
+      #   run: |
+      #     iOSDeviceId=$(xcrun simctl list -j | jq -r '.devices."com.apple.CoreSimulator.SimRuntime.iOS-${{ matrix.ios-version-major }}-${{ matrix.ios-version-minor }}"[] | select(.name == "${{ matrix.ios-device-name }}") | .udid')
+      #     watchOSDeviceId=$(xcrun simctl list -j | jq -r '.devices."com.apple.CoreSimulator.SimRuntime.watchOS-${{ matrix.watchos-version-major }}-${{ matrix.watchos-version-minor }}"[] | select(.name == "${{ matrix.watchos-device-name }}") | .udid')
+      #     xcrun simctl pair $watchOSDeviceId $iOSDeviceId
+
       - name: Install xcodegen
         run: brew install xcodegen
 
@@ -75,7 +83,7 @@ jobs:
           xcodebuild \
             -project BrewCoffee46.xcodeproj \
             -scheme BrewCoffee46CoreTests \
-            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=${{ matrix.ios-device-name }}" \
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version-major }}.${{ matrix.ios-version-minor }},name=${{ matrix.ios-device-name }}" \
             test | xcbeautify
 
       - name: Test for core with coverage
@@ -84,19 +92,22 @@ jobs:
           xcodebuild \
             -project BrewCoffee46.xcodeproj \
             -scheme BrewCoffee46CoreTests \
-            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=${{ matrix.ios-device-name }}" \
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version-major }}.${{ matrix.ios-version-minor }},name=${{ matrix.ios-device-name }}" \
             -enableCodeCoverage YES \
             -derivedDataPath Build/ \
             test | xcbeautify
           ./.github/workflows/convert.sh BrewCoffee46Core.o brewCoffee46_core.lcov
 
-      - name: Build watchOS app
+      - name: Test for watchOS app
         run: |
+          xcodebuild -project BrewCoffee46.xcodeproj -scheme brewcoffee46WatchKitApp -showdestinations
           xcodebuild \
             -project BrewCoffee46.xcodeproj \
             -scheme brewcoffee46WatchKitApp \
-            -destination "platform=watchOS Simulator,OS=${{ matrix.watchos-version }},name=${{ matrix.watchos-device-name }}" \
-            build | xcbeautify
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version-major }}.${{ matrix.ios-version-minor }},name=${{ matrix.ios-device-name }}" \
+            test | xcbeautify
+
+      #             -destination "platform=watchOS Simulator,OS=${{ matrix.watchos-version-major }}.${{ matrix.watchos-version-minor }},name=${{ matrix.watchos-device-name }}" \
 
       - name: Test for iOS
         if: github.event_name == 'pull_request'
@@ -104,7 +115,7 @@ jobs:
           xcodebuild \
             -project BrewCoffee46.xcodeproj \
             -scheme brewcoffee46 \
-            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=${{ matrix.ios-device-name }}" \
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version-major }}.${{ matrix.ios-version-minor }},name=${{ matrix.ios-device-name }}" \
             test | xcbeautify
 
       - name: Test for iOS with coverage
