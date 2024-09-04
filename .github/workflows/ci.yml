@@ -70,12 +70,25 @@ jobs:
         run: xcodegen generate
 
       - name: Test for core
+        if: github.event_name == 'pull_request'
         run: |
           xcodebuild \
             -project BrewCoffee46.xcodeproj \
             -scheme BrewCoffee46CoreTests \
             -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=${{ matrix.ios-device-name }}" \
             test | xcbeautify
+
+      - name: Test for core with coverage
+        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        run: |
+          xcodebuild \
+            -project BrewCoffee46.xcodeproj \
+            -scheme BrewCoffee46CoreTests \
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=${{ matrix.ios-device-name }}" \
+            -enableCodeCoverage YES \
+            -derivedDataPath Build/ \
+            test | xcbeautify
+          ./.github/workflows/convert.sh BrewCoffee46Core.o brewCoffee46_core.lcov
 
       - name: Build watchOS app
         run: |
@@ -86,9 +99,28 @@ jobs:
             build | xcbeautify
 
       - name: Test for iOS
+        if: github.event_name == 'pull_request'
         run: |
           xcodebuild \
             -project BrewCoffee46.xcodeproj \
             -scheme brewcoffee46 \
             -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=${{ matrix.ios-device-name }}" \
             test | xcbeautify
+
+      - name: Test for iOS with coverage
+        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        run: |
+          xcodebuild \
+            -project BrewCoffee46.xcodeproj \
+            -scheme brewcoffee46 \
+            -destination "platform=iOS Simulator,OS=${{ matrix.ios-version }},name=${{ matrix.ios-device-name }}" \
+            -enableCodeCoverage YES \
+            -derivedDataPath Build/ \
+            clean build test | xcbeautify
+          ./.github/workflows/convert.sh brewCoffee46.app/brewCoffee46 brewCoffee46.lcov
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v4
+        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
