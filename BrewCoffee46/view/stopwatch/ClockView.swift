@@ -6,6 +6,7 @@ import SwiftUI
 /// These implementation refer from: https://talk.objc.io/episodes/S01E192-analog-clock
 struct ClockView: View {
     @Injected(\.convertDegreeService) private var convertDegreeService
+    @Injected(\.getDripPhaseService) private var getDripPhaseService
 
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
@@ -58,14 +59,19 @@ struct ClockView: View {
                         id: \.0
                     ) { i, item in
                         let (degree, dripTiming) = item
+                        let isCurrentPhaseAfterOrEqualIndex =
+                            getDripPhaseService
+                            .get(
+                                dripInfo: viewModel.pointerInfo.dripInfo,
+                                progressTime: progressTime
+                            )
+                            .toInt() >= i
+
                         ZStack {
                             PointerView(
                                 waterAmount: dripTiming.waterAmount,
                                 degree: degree,
-                                isOnGoing:
-                                    viewModel.pointerInfo.dripInfo.getNthPhase(
-                                        progressTime: progressTime, totalTimeSec: viewModel.currentConfig.totalTimeSec) >= i
-                                    && appEnvironment.isTimerStarted && progressTime > 0
+                                isOnGoing: isCurrentPhaseAfterOrEqualIndex && appEnvironment.isTimerStarted && progressTime > 0
                             )
                         }
                     }

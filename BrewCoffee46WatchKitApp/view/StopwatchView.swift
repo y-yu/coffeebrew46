@@ -7,7 +7,8 @@ struct StopwatchView: View {
     @EnvironmentObject var appEnvironment: WatchKitAppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
 
-    @Injected(\.dateService) var dateService: DateService
+    @Injected(\.dateService) private var dateService
+    @Injected(\.getDripPhaseService) private var getDripPhaseService
 
     @State var startAt: Date? = .none
 
@@ -18,11 +19,10 @@ struct StopwatchView: View {
             if let startAt {
                 TimelineView(.periodic(from: startAt, by: interval)) { timeline in
                     let progressTime: Double = timeline.date.timeIntervalSince(startAt) - countDownInit
-                    let currentPhase: Int =
-                        viewModel.dripInfo.getNthPhase(
-                            progressTime: progressTime,
-                            totalTimeSec: viewModel.currentConfig.totalTimeSec
-                        )
+                    let currentPhase: Int = getDripPhaseService.get(
+                        dripInfo: viewModel.dripInfo,
+                        progressTime: progressTime
+                    ).toInt()
 
                     VStack {
                         if progressTime >= 0 {

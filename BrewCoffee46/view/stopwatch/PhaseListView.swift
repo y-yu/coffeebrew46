@@ -1,4 +1,5 @@
 import BrewCoffee46Core
+import Factory
 import SwiftUI
 
 struct Phase: Identifiable {
@@ -9,6 +10,8 @@ struct Phase: Identifiable {
 }
 
 struct PhaseListView: View {
+    @Injected(\.getDripPhaseService) private var getDripPhaseService
+
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
     @Binding var progressTime: Double
@@ -99,14 +102,23 @@ struct PhaseListView: View {
         onGoing: A,
         scheduled: A
     ) -> A {
-        let phase = viewModel.pointerInfo.dripInfo.getNthPhase(progressTime: progressTime, totalTimeSec: viewModel.currentConfig.totalTimeSec)
-
-        if phase == i && appEnvironment.isTimerStarted && progressTime > 0 {
-            return onGoing
-        } else if phase > i {
-            return done
-        } else {
+        let phase = getDripPhaseService.get(
+            dripInfo: viewModel.pointerInfo.dripInfo,
+            progressTime: progressTime
+        )
+        switch phase.dripPhaseType {
+        case .dripping(let n):
+            if n - 1 == i {
+                return onGoing
+            } else if n >= i {
+                return done
+            } else {
+                return scheduled
+            }
+        case .beforeDrip:
             return scheduled
+        case .afterDrip:
+            return done
         }
     }
 
@@ -121,38 +133,60 @@ struct PhaseListView: View {
     }
 
     private func timingView(phase: Phase) -> AnyView {
-        let nth = viewModel.pointerInfo.dripInfo.getNthPhase(progressTime: progressTime, totalTimeSec: viewModel.currentConfig.totalTimeSec)
+        let dripPhase = getDripPhaseService.get(
+            dripInfo: viewModel.pointerInfo.dripInfo,
+            progressTime: progressTime
+        )
 
-        if nth == phase.index && progressTime >= 0 && appEnvironment.isTimerStarted {
-            // in case on going
-            return AnyView(
-                Image(systemName: "drop.fill")
-                    .scaledToFit()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.blue)
-            )
-        } else if nth + 1 == phase.index && progressTime >= 0 && appEnvironment.isTimerStarted {
-            // in case next
-            return AnyView(
-                Text(String(format: "%.1f", progressTime - phase.dripAt))
-                    .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .light)))
-                    .frame(height: 24)
-            )
-        } else if nth > phase.index {
-            // in case done
-            return AnyView(
-                Image(systemName: "checkmark.circle.fill")
-                    .scaledToFit()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.green)
-            )
-        } else {
+        switch dripPhase.dripPhaseType {
+        case .dripping(let nth):
+            if nth - 1 == phase.index {
+                // in case on going
+                return AnyView(
+                    Image(systemName: "drop.fill")
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.blue)
+                )
+            } else if nth == phase.index {
+                // in case next
+                return AnyView(
+                    Text(String(format: "%.1f", progressTime - phase.dripAt))
+                        .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .light)))
+                        .frame(height: 24)
+                )
+            } else if nth > phase.index {
+                // in case done
+                return AnyView(
+                    Image(systemName: "checkmark.circle.fill")
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.green)
+                )
+            } else {
+                // in scheduled
+                return AnyView(
+                    Image(systemName: "checkmark")
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.gray)
+                )
+            }
+        case .beforeDrip:
             // in scheduled
             return AnyView(
                 Image(systemName: "checkmark")
                     .scaledToFit()
                     .frame(width: 24, height: 24)
                     .foregroundColor(.gray)
+            )
+        case .afterDrip:
+            // in case done
+            return AnyView(
+                Image(systemName: "checkmark.circle.fill")
+                    .scaledToFit()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.green)
             )
         }
     }
