@@ -25,6 +25,7 @@ struct StopwatchView: View {
 
     @Injected(\.requestReviewService) private var requestReviewService
     @Injected(\.notificationService) private var notificationService
+    @Injected(\.getDripPhaseService) private var getDripPhaseService
 
     private let soundIdRing = SystemSoundID(1013)
 
@@ -280,7 +281,10 @@ struct StopwatchView: View {
     }
 
     private func ringSound() {
-        let nth = viewModel.pointerInfo.dripInfo.getNthPhase(progressTime: progressTime, totalTimeSec: viewModel.currentConfig.totalTimeSec)
+        let nth = getDripPhaseService.get(
+            dripInfo: viewModel.pointerInfo.dripInfo,
+            progressTime: progressTime
+        ).toInt()
 
         if nth > hasRingingIndex && progressTime <= viewModel.currentConfig.totalTimeSec {
             AudioServicesPlaySystemSound(soundIdRing)

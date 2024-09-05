@@ -18,7 +18,8 @@ public let dripInfoFirstIs100Percent = DripInfo(
         DripTiming(waterAmount: 360.0, dripAt: 100.0),
         DripTiming(waterAmount: 450.0, dripAt: 155.0),
     ],
-    waterAmount: waterAmountFirstIs100Percent
+    waterAmount: waterAmountFirstIs100Percent,
+    totalTimeSec: Config.defaultValue.totalTimeSec
 )
 
 public let waterAmountFirstIs100PercentSixtyIs1 = WaterAmount(
@@ -31,5 +32,6 @@ public let dripInfoFirstIs100PercentSixtyIs1 = DripInfo(
         DripTiming(waterAmount: 180.0, dripAt: 0.0),
         DripTiming(waterAmount: 450.0, dripAt: 45.0),
     ],
-    waterAmount: waterAmountFirstIs100PercentSixtyIs1
+    waterAmount: waterAmountFirstIs100PercentSixtyIs1,
+    totalTimeSec: Config.defaultValue.totalTimeSec
 )

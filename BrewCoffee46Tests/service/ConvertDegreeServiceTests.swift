@@ -50,7 +50,8 @@ class ConvertDegreeServiceTests: XCTestCase {
                     DripTiming(waterAmount: 134.4, dripAt: 127.5),
                     DripTiming(waterAmount: 168.0, dripAt: 168.75),
                 ],
-                waterAmount: waterAmountDefaultValue
+                waterAmount: waterAmountDefaultValue,
+                totalTimeSec: Config.defaultValue.totalTimeSec
             ),
             [0.0, 142.56, 144.0, 216.0, 288.0]
         )
@@ -74,7 +75,8 @@ class ConvertDegreeServiceTests: XCTestCase {
                     DripTiming(waterAmount: 134.4, dripAt: 100.0),
                     DripTiming(waterAmount: 168.0, dripAt: 155.0),
                 ],
-                waterAmount: waterAmountDefaultValue
+                waterAmount: waterAmountDefaultValue,
+                totalTimeSec: Config.defaultValue.totalTimeSec
             ),
             [0.0, 144.0, 216.0, 288.0]
         )

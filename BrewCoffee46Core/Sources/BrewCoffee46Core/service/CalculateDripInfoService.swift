@@ -33,7 +33,7 @@ public class CalculateDripInfoServiceImpl: CalculateDripInfoService {
             accDripAt += index == 0 ? config.steamingTimeSec : timeSecPerDripExceptFirst
         }
 
-        return DripInfo(dripTimings: dripTimings, waterAmount: waterAmount)
+        return DripInfo(dripTimings: dripTimings, waterAmount: waterAmount, totalTimeSec: config.totalTimeSec)
     }
 }
 
