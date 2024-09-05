@@ -33,6 +33,15 @@ extension ResultNea {
         }
     }
 
+    public func forEachError(_ f: (Failure) -> Void) -> Void {
+        switch self {
+        case .success(_):
+            return
+        case .failure(let error):
+            f(error)
+        }
+    }
+
     public func recoverWithErrorLog(_ errorLog: inout String) where Failure == NonEmptyArray<CoffeeError> {
         switch self {
         case .success(_):

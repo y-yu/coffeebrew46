@@ -13,7 +13,7 @@ public class ValidateInputServiceImpl: ValidateInputService {
     ) -> ResultNea<Void, CoffeeError> {
         let validatedTuple =
             validateCoffeeBeansWeight(config.coffeeBeansWeight) |+| validationNumberOf6(Int(config.partitionsCountOf6))
-            |+| validationTimer(steamingTime: config.steamingTimeSec, totalTime: config.totalTimeSec)
+            |+| validationTotalTime(steamingTime: config.steamingTimeSec, totalTime: config.totalTimeSec)
             |+| validationFirstWaterPercent(config.firstWaterPercent)
 
         return validatedTuple.map { _ in
@@ -34,7 +34,7 @@ public class ValidateInputServiceImpl: ValidateInputService {
         numberOf6 > 0 ? ResultNea.success(numberOf6) : CoffeeError.partitionsCountOf6IsNeededAtLeastOne.toFailureNel()
     }
 
-    private func validationTimer(
+    private func validationTotalTime(
         steamingTime: Double,
         totalTime: Double
     ) -> ResultNea<Void, CoffeeError> {
