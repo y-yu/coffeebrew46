@@ -28,8 +28,8 @@ settings:
     ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
     DEAD_CODE_STRIPPING: YES
     ENABLE_USER_SCRIPT_SANDBOXING: NO
-    MARKETING_VERSION: 2.1.0
-    CURRENT_PROJECT_VERSION: 2.1.0
+    MARKETING_VERSION: 2.2.0
+    CURRENT_PROJECT_VERSION: 2.2.0
     SWIFT_VERSION: '5.10'
     MTL_FAST_MATH: 'YES'
   configs:
@@ -45,10 +45,10 @@ targets:
     platform: iOS
     productName: BrewCoffee46
     deploymentTarget: 
-      iOS: 16.0
+      iOS: 17.0
     settings:
       base:
-        IPHONEOS_DEPLOYMENT_TARGET: 16.0
+        IPHONEOS_DEPLOYMENT_TARGET: 17.0
         SDKROOT: iphoneos
         INFOPLIST_FILE: BrewCoffee46/Info.plist
         CODE_SIGN_IDENTITY: Apple Development
@@ -96,7 +96,7 @@ targets:
     productName: BrewCoffee46Tests
     settings:
       base:
-        IPHONEOS_DEPLOYMENT_TARGET: 16.0
+        IPHONEOS_DEPLOYMENT_TARGET: 17.0
         ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: 'YES'
         BUNDLE_LOADER: $(TEST_HOST)
         CODE_SIGN_IDENTITY[sdk=macosx*]: '-'
