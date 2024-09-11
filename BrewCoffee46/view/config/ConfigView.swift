@@ -82,7 +82,7 @@ struct ConfigView: View {
                                         }
                                     }
                                 }
-                                .onChange(of: viewModel.currentConfig) { _ in
+                                .onChange(of: viewModel.currentConfig) {
                                     didSuccessSendingConfig = .none
                                 }
                             }
@@ -100,7 +100,7 @@ struct ConfigView: View {
                         Text("config calculate coffee beans from water").tag(true)
                     }
                     .pickerStyle(.segmented)
-                    .onChange(of: calculateCoffeeBeansWeightFromWater) { newValue in
+                    .onChange(of: calculateCoffeeBeansWeightFromWater) { _, newValue in
                         if newValue {
                             temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
                         }
@@ -130,7 +130,7 @@ struct ConfigView: View {
                         isDisable: appEnvironment.isTimerStarted,
                         target: $viewModel.currentConfig.waterToCoffeeBeansWeightRatio
                     )
-                    .onChange(of: viewModel.currentConfig.waterToCoffeeBeansWeightRatio) { newValue in
+                    .onChange(of: viewModel.currentConfig.waterToCoffeeBeansWeightRatio) {
                         temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
                     }
                 }
@@ -255,7 +255,7 @@ struct ConfigView: View {
                         !calculateCoffeeBeansWeightFromWater ? Font.headline.weight(.bold) : Font.headline.weight(.regular)
                     )
                 Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))\(weightUnit)")
-                    .onChange(of: temporaryWaterAmount) { newValue in
+                    .onChange(of: temporaryWaterAmount) { _, newValue in
                         viewModel.currentConfig.coffeeBeansWeight = roundCentesimal(newValue / viewModel.currentConfig.waterToCoffeeBeansWeightRatio)
                     }
             }
@@ -268,7 +268,7 @@ struct ConfigView: View {
             Group {
                 Text("config water amount")
                 Text("\(String(format: "%.1f", temporaryWaterAmount))\(weightUnit)")
-                    .onChange(of: viewModel.currentConfig.coffeeBeansWeight) { newValue in
+                    .onChange(of: viewModel.currentConfig.coffeeBeansWeight) { _, newValue in
                         // When `calculateCoffeeBeansWeightFromWater = true` then `temporaryWaterAmount` has more priority than the coffee beans weight so
                         // we stop calculation of `temporaryWaterAmount` from the coffee beans weight.
                         if !calculateCoffeeBeansWeightFromWater {

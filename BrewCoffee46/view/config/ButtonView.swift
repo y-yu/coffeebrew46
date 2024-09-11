@@ -82,7 +82,7 @@ struct ButtonView: View {
                         isDisabled ? .primary.opacity(0.5) : buttonType.toColor().0,
                         isDisabled ? .primary.opacity(0.2) : buttonType.toColor().1
                     )
-                    .onChange(of: target) { newValue in
+                    .onChange(of: target) { _, newValue in
                         targetInt = newValue * log10Step
                     }
 

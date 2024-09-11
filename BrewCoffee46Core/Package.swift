@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "BrewCoffee46Core",
-    platforms: [.iOS(.v16), .watchOS(.v10)],
+    platforms: [.iOS(.v17), .watchOS(.v10)],
     products: [
         .library(name: "BrewCoffee46Core", targets: ["BrewCoffee46Core"]),
         .library(name: "BrewCoffee46TestsShared", targets: ["BrewCoffee46TestsShared"]),

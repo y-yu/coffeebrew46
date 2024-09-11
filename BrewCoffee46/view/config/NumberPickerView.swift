@@ -40,7 +40,7 @@ struct NumberPickerView: View {
                             .foregroundStyle(isDisable ? Color.primary.opacity(0.5) : Color.primary)
                     }
                 }
-                .onChange(of: numbers.integer) { _ in
+                .onChange(of: numbers.integer) {
                     target = numbers.toDouble()
                 }
                 Text(".").foregroundStyle(isDisable ? Color.primary.opacity(0.5) : Color.primary)
@@ -52,7 +52,7 @@ struct NumberPickerView: View {
                     }
                 }
                 .frame(width: 100)
-                .onChange(of: numbers.decimal) { _ in
+                .onChange(of: numbers.decimal) {
                     target = numbers.toDouble()
                 }
             }
@@ -60,7 +60,7 @@ struct NumberPickerView: View {
             .frame(height: 100)
             .clipped()
             .disabled(isDisable)
-            .onChange(of: target) { newValue in
+            .onChange(of: target) { _, newValue in
                 self.numbers = NumberPickerView.getNumbers(digit, newValue)
             }
 
