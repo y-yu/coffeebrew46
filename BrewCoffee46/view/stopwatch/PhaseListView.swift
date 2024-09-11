@@ -77,9 +77,32 @@ struct PhaseListView: View {
                     .foregroundColor(appEnvironment.isTimerStarted ? .primary : .primary.opacity(0.5))
                 }
             }
-            .onChange(of: viewModel.currentConfig) { updatePhaseList() }
+            .scrollTargetLayout()
         }
-        .onAppear { updatePhaseList() }
+        .onChange(of: viewModel.currentConfig, initial: true) { updatePhaseList() }
+        .scrollPosition(
+            id: Binding<UUID?>(
+                get: {
+                    if phaseList.isEmpty {
+                        return .none
+                    } else {
+                        let currentPhase = getDripPhaseService.get(
+                            dripInfo: viewModel.pointerInfo.dripInfo,
+                            progressTime: progressTime
+                        )
+                        let index =
+                            switch currentPhase.dripPhaseType {
+                            case .beforeDrip: 0
+                            case .afterDrip: currentPhase.totalNumberOfDrip - 1
+                            case .dripping(let i): i - 1
+                            }
+
+                        return .some(phaseList[index].id)
+                    }
+                },
+                set: { _ in () }
+            )
+        )
     }
 
     private func updatePhaseList() {
