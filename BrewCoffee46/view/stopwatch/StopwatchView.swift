@@ -81,7 +81,7 @@ struct StopwatchView: View {
         }
         .navigationTitle("navigation title stopwatch")
         .navigation(path: $appEnvironment.stopwatchPath)
-        .onChange(of: scenePhase) { phase in
+        .onChange(of: scenePhase) { _, phase in
             if phase == .active {
                 restoreTimer()
             }

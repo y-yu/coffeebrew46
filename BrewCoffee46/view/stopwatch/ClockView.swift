@@ -80,7 +80,7 @@ struct ClockView: View {
                         endDegrees: $endDegree,
                         size: geometry.size
                     )
-                    .onChange(of: progressTime) { newValue in
+                    .onChange(of: progressTime) { _, newValue in
                         if newValue < 0 {
                             endDegree = (ceil(newValue) - newValue) * 365
                         } else {

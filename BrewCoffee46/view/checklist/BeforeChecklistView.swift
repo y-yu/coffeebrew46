@@ -45,7 +45,7 @@ struct BeforeChecklistView: View {
                             TextField(item, text: $viewModel.currentConfig.beforeChecklist[i])
                                 .disabled(!mode.isEditing)
                         }
-                        .onChange(of: checks[i]) { newValue in
+                        .onChange(of: checks[i]) {
                             willMoveToStopwatch = isAllChecked()
                         }
                     }
@@ -76,7 +76,7 @@ struct BeforeChecklistView: View {
                 }
             }
         }
-        .onChange(of: appEnvironment.isTimerStarted) { [oldValue = appEnvironment.isTimerStarted] newValue in
+        .onChange(of: appEnvironment.isTimerStarted) { oldValue, newValue in
             // The checklist will be reset when the timer is reset.
             if oldValue == true && newValue == false {
                 checks = (0..<Config.maxCheckListSize).map { _ in false }

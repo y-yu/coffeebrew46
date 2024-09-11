@@ -77,7 +77,7 @@ struct PhaseListView: View {
                     .foregroundColor(appEnvironment.isTimerStarted ? .primary : .primary.opacity(0.5))
                 }
             }
-            .onChange(of: viewModel.currentConfig) { _ in updatePhaseList() }
+            .onChange(of: viewModel.currentConfig) { updatePhaseList() }
         }
         .onAppear { updatePhaseList() }
     }

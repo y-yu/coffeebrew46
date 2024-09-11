@@ -11,7 +11,7 @@ public struct CurrentConfigSaveLoadModifier: ViewModifier {
 
     public func body(content: Content) -> some View {
         content
-            .onChange(of: scenePhase) { phase in
+            .onChange(of: scenePhase) { _, phase in
                 switch phase {
                 case .background:
                     saveLoadConfigService
