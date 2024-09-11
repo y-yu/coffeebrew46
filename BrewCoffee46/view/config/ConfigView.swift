@@ -268,16 +268,12 @@ struct ConfigView: View {
             Group {
                 Text("config water amount")
                 Text("\(String(format: "%.1f", temporaryWaterAmount))\(weightUnit)")
-                    .onChange(of: viewModel.currentConfig.coffeeBeansWeight) { _, newValue in
+                    .onChange(of: viewModel.currentConfig.coffeeBeansWeight, initial: true) { _, newValue in
                         // When `calculateCoffeeBeansWeightFromWater = true` then `temporaryWaterAmount` has more priority than the coffee beans weight so
                         // we stop calculation of `temporaryWaterAmount` from the coffee beans weight.
                         if !calculateCoffeeBeansWeightFromWater {
                             temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
                         }
-                    }
-                    .onAppear {
-                        // Initial calculation of `temporaryWaterAmount` from `coffeeBeansWeight`.
-                        temporaryWaterAmount = viewModel.currentConfig.totalWaterAmount()
                     }
             }
             .font(
