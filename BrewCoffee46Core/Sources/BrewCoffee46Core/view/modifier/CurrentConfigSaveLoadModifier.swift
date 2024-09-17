@@ -11,14 +11,14 @@ public struct CurrentConfigSaveLoadModifier: ViewModifier {
 
     public func body(content: Content) -> some View {
         content
-            .onChange(of: scenePhase) { _, phase in
-                switch phase {
+            .onChange(of: scenePhase) { oldValue, newValue in
+                switch newValue {
                 case .background:
                     saveLoadConfigService
                         .saveCurrentConfig(config: currentConfig)
                         .recoverWithErrorLog(&errors)
                 case .inactive:
-                    switch scenePhase {
+                    switch oldValue {
                     case .active:
                         saveLoadConfigService
                             .saveCurrentConfig(config: currentConfig)
