@@ -66,7 +66,7 @@
 "config save button" = "Save as new";
 "config current config have already been saved" = "The current configuration has already been saved.";
 "config load setting alert title" = "Notice";
-"config load setting alert message" = "After loading setting (%@ - %@), the current setting will be overwritten. Do you sure to load this setting?";
+"config load setting alert message" = "After loading setting (%@ - %@), the current configuration will be overwritten. Do you sure to load this setting?";
 "config load setting alert cancel" = "Cancel";
 "config load setting alert load" = "Load";
 
@@ -107,3 +107,5 @@
 "watch kit app 3rd drip" = "3rd of %d";
 "watch kit app after 4th drip suffix" = "%dth of %d";
 "watch kit app drip end" = "End of Dripping";
+
+"watch kit app current setting" = "Current configuration";

@@ -106,3 +106,5 @@
 "watch kit app 3rd drip" = "3 / %d投目";
 "watch kit app after 4th drip suffix" = "%d / %d投目";
 "watch kit app drip end" = "抽出終了";
+
+"watch kit app current setting" = "現在の設定";

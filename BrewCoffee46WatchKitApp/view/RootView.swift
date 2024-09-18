@@ -7,6 +7,17 @@ struct RootView: View {
 
     var body: some View {
         List {
+            if let note = viewModel.currentConfig.note, note != "" {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("watch kit app current setting")
+                            .font(.system(size: 10))
+                    }
+                    Spacer()
+                    Text(note)
+                }
+            }
+
             Stepper(value: $viewModel.currentConfig.coffeeBeansWeight, step: 0.1) {
                 Text("\(String(format: "%.1f", viewModel.currentConfig.coffeeBeansWeight))\(weightUnit)")
                     .font(.system(size: 19))
