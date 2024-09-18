@@ -19,7 +19,7 @@ packages:
     from: 2.3.2
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk.git
-    from: 10.25.0
+    from: 11.2.0
   BrewCoffee46Core:
     path: BrewCoffee46Core
 settings:
