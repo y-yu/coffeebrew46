@@ -46,7 +46,21 @@ struct ImportExportView: View {
                 TextEditor(text: $json)
                     .frame(maxHeight: .infinity)
             }
-            Section(header: Text("Log")) {
+            Section(
+                header: HStack {
+                    Text("Log")
+                    Spacer()
+                    Button(
+                        role: .destructive,
+                        action: {
+                            viewModel.errors = ""
+                        }
+                    ) {
+                        Text("config import export clear log")
+                    }
+                    .disabled(viewModel.errors == "")
+                }
+            ) {
                 Text(viewModel.errors)
                     .foregroundColor(.red)
                     .hidden(viewModel.errors == "")

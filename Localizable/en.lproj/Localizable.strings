@@ -24,6 +24,7 @@
 
 "config json" = "JSON";
 "config import export" = "Import & Export";
+"config import export clear log" = "Clear all logs";
 
 "config show tips" = "Show Tips";
 "config show current note tips" = "Current configuration";

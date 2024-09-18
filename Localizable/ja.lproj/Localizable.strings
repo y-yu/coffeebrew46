@@ -24,6 +24,7 @@
 
 "config json" = "JSON";
 "config import export" = "Import & Export";
+"config import export clear log" = "ログをクリア";
 
 "config show tips" = "Tipsを表示";
 "config show current note tips" = "現在の設定";
