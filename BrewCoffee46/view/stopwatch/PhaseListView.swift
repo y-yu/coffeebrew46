@@ -17,6 +17,7 @@ struct PhaseListView: View {
     @Binding var progressTime: Double
 
     @State private var phaseList: [Phase] = []
+    @State private var currentDripPhase: DripPhase = DripPhase.defaultValue
 
     var body: some View {
         ScrollView {
@@ -45,8 +46,9 @@ struct PhaseListView: View {
                 ) {
                     Group {
                         fontConfig(Text("\(phase.index + 1)"), phase: phase)
-                        doneOnGoingScheduled(
+                        getDripPhaseService.doneOnGoingScheduled(
                             phase.index,
+                            dripPhase: currentDripPhase,
                             done: AnyView(
                                 HStack {
                                     Image(systemName: "hourglass.tophalf.filled")
@@ -79,21 +81,29 @@ struct PhaseListView: View {
             }
             .scrollTargetLayout()
         }
-        .onChange(of: viewModel.currentConfig, initial: true) { updatePhaseList() }
+        .onChange(of: viewModel.currentConfig, initial: true) {
+            updatePhaseList()
+            currentDripPhase = getDripPhaseService.get(
+                dripInfo: viewModel.pointerInfo.dripInfo,
+                progressTime: progressTime
+            )
+        }
+        .onChange(of: progressTime) {
+            currentDripPhase = getDripPhaseService.get(
+                dripInfo: viewModel.pointerInfo.dripInfo,
+                progressTime: progressTime
+            )
+        }
         .scrollPosition(
             id: Binding<UUID?>(
                 get: {
                     if phaseList.isEmpty {
                         return .none
                     } else {
-                        let currentPhase = getDripPhaseService.get(
-                            dripInfo: viewModel.pointerInfo.dripInfo,
-                            progressTime: progressTime
-                        )
                         let index =
-                            switch currentPhase.dripPhaseType {
+                            switch currentDripPhase.dripPhaseType {
                             case .beforeDrip: 0
-                            case .afterDrip: currentPhase.totalNumberOfDrip - 1
+                            case .afterDrip: currentDripPhase.totalNumberOfDrip - 1
                             case .dripping(let i): i - 1
                             }
 
@@ -119,39 +129,24 @@ struct PhaseListView: View {
         phaseList = newPhaseList
     }
 
-    private func doneOnGoingScheduled<A>(
-        _ i: Int,
-        done: A,
-        onGoing: A,
-        scheduled: A
-    ) -> A {
-        let phase = getDripPhaseService.get(
-            dripInfo: viewModel.pointerInfo.dripInfo,
-            progressTime: progressTime
-        )
-        switch phase.dripPhaseType {
-        case .dripping(let n):
-            if n - 1 == i {
-                return onGoing
-            } else if n >= i {
-                return done
-            } else {
-                return scheduled
-            }
-        case .beforeDrip:
-            return scheduled
-        case .afterDrip:
-            return done
-        }
-    }
-
     private func fontConfig(_ t: Text, phase: Phase) -> some View {
         t.font(
-            doneOnGoingScheduled(
-                phase.index, done: Font.headline.weight(.light), onGoing: Font.headline.weight(.bold), scheduled: Font.headline.weight(.light))
+            getDripPhaseService.doneOnGoingScheduled(
+                phase.index,
+                dripPhase: currentDripPhase,
+                done: Font.headline.weight(.light),
+                onGoing: Font.headline.weight(.bold),
+                scheduled: Font.headline.weight(.light)
+            )
         )
         .foregroundColor(
-            doneOnGoingScheduled(phase.index, done: .primary, onGoing: .accentColor, scheduled: .primary)
+            getDripPhaseService.doneOnGoingScheduled(
+                phase.index,
+                dripPhase: currentDripPhase,
+                done: .primary,
+                onGoing: .accentColor,
+                scheduled: .primary
+            )
         )
     }
 
@@ -161,57 +156,33 @@ struct PhaseListView: View {
             progressTime: progressTime
         )
 
-        switch dripPhase.dripPhaseType {
-        case .dripping(let nth):
-            if nth - 1 == phase.index {
-                // in case on going
-                return AnyView(
-                    Image(systemName: "drop.fill")
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.blue)
-                )
-            } else if nth == phase.index {
-                // in case next
-                return AnyView(
-                    Text(String(format: "%.1f", progressTime - phase.dripAt))
-                        .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .light)))
-                        .frame(height: 24)
-                )
-            } else if nth > phase.index {
-                // in case done
-                return AnyView(
-                    Image(systemName: "checkmark.circle.fill")
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.green)
-                )
-            } else {
-                // in scheduled
-                return AnyView(
-                    Image(systemName: "checkmark")
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.gray)
-                )
-            }
-        case .beforeDrip:
-            // in scheduled
-            return AnyView(
+        return getDripPhaseService.doneOnGoingNextScheduled(
+            phase.index,
+            dripPhase: dripPhase,
+            done: AnyView(
+                Image(systemName: "checkmark.circle.fill")
+                    .scaledToFit()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.green)
+            ),
+            onGoing: AnyView(
+                Image(systemName: "drop.fill")
+                    .scaledToFit()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.blue)
+            ),
+            next: AnyView(
+                Text(String(format: "%.1f", progressTime - phase.dripAt))
+                    .font(Font(UIFont.monospacedSystemFont(ofSize: 16, weight: .light)))
+                    .frame(height: 24)
+            ),
+            scheduled: AnyView(
                 Image(systemName: "checkmark")
                     .scaledToFit()
                     .frame(width: 24, height: 24)
                     .foregroundColor(.gray)
             )
-        case .afterDrip:
-            // in case done
-            return AnyView(
-                Image(systemName: "checkmark.circle.fill")
-                    .scaledToFit()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.green)
-            )
-        }
+        )
     }
 }
 

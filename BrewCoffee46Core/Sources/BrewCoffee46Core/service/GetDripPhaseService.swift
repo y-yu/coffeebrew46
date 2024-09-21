@@ -6,6 +6,23 @@ public protocol GetDripPhaseService {
         dripInfo: DripInfo,
         progressTime: Double
     ) -> DripPhase
+
+    func doneOnGoingNextScheduled<A>(
+        _ i: Int,
+        dripPhase: DripPhase,
+        done: A,
+        onGoing: A,
+        next: A,
+        scheduled: A
+    ) -> A
+
+    func doneOnGoingScheduled<A>(
+        _ i: Int,
+        dripPhase: DripPhase,
+        done: A,
+        onGoing: A,
+        scheduled: A
+    ) -> A
 }
 
 public class GetDripPhaseServiceImpl: GetDripPhaseService {
@@ -39,6 +56,49 @@ public class GetDripPhaseServiceImpl: GetDripPhaseService {
                 )
             }
         }
+    }
+
+    public func doneOnGoingNextScheduled<A>(
+        _ i: Int,
+        dripPhase: DripPhase,
+        done: A,
+        onGoing: A,
+        next: A,
+        scheduled: A
+    ) -> A {
+        switch dripPhase.dripPhaseType {
+        case .dripping(let n):
+            if n - 1 == i {
+                return onGoing
+            } else if n == i {
+                return next
+            } else if n > i {
+                return done
+            } else {
+                return scheduled
+            }
+        case .beforeDrip:
+            return scheduled
+        case .afterDrip:
+            return done
+        }
+    }
+
+    public func doneOnGoingScheduled<A>(
+        _ i: Int,
+        dripPhase: DripPhase,
+        done: A,
+        onGoing: A,
+        scheduled: A
+    ) -> A {
+        doneOnGoingNextScheduled(
+            i,
+            dripPhase: dripPhase,
+            done: done,
+            onGoing: onGoing,
+            next: scheduled,
+            scheduled: scheduled
+        )
     }
 }
 
