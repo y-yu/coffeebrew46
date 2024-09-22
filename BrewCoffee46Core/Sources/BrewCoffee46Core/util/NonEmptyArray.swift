@@ -14,6 +14,10 @@ extension NonEmptyArray: Equatable where A: Equatable {
     }
 }
 
+// The `tail` of `NonEmptyArray` is mutable `var` array of type `A` but
+// its setter is private so I think `NonEmptyArray` totally `Sendable` if `A` confirms `NonEmptyArray`.
+extension NonEmptyArray: Sendable where A: Sendable {}
+
 extension NonEmptyArray {
     public init(_ a: A) {
         self.head = a

@@ -1,7 +1,7 @@
-import BrewCoffee46Core
+@preconcurrency import BrewCoffee46Core
 import SwiftUI
 
-struct PointerInfo {
+struct PointerInfo: Sendable {
     let dripInfo: DripInfo
 
     // Degree of the pointers.

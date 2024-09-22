@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 final class AppEnvironment: ObservableObject {
     @Published var selectedTab: Route = .stopwatch
     @Published var isTimerStarted: Bool = false

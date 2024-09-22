@@ -1,5 +1,5 @@
 /// # This app error interface.
-public enum CoffeeError: Error {
+public enum CoffeeError: Error, Sendable {
     case coffeeBeansWeightUnderZeroError
 
     case coffeeBeansWeightIsNotNumberError

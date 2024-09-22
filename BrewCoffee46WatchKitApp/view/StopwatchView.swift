@@ -3,6 +3,7 @@ import Factory
 import Foundation
 import SwiftUI
 
+@MainActor
 struct StopwatchView: View {
     @EnvironmentObject var appEnvironment: WatchKitAppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel

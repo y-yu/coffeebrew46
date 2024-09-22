@@ -42,15 +42,13 @@ extension CurrentConfigViewModel: WCSessionDelegate {
     }
 
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping (([String: Any]) -> Void)) {
-        Task { @MainActor in
-            if let value = message["config"] as? String {
-                switch Config.fromJSON(value) {
-                case .success(let config):
-                    currentConfig = config
-                    replyHandler([:])
-                case .failure(let errors):
-                    log = errors.toArray().map { $0.getMessage() }.joined(separator: "\n")
-                }
+        if let value = message["config"] as? String {
+            switch Config.fromJSON(value) {
+            case .success(let config):
+                currentConfig = config
+                replyHandler([:])
+            case .failure(let errors):
+                log = errors.toArray().map { $0.getMessage() }.joined(separator: "\n")
             }
         }
     }
