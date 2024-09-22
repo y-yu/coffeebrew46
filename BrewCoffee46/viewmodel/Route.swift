@@ -1,4 +1,4 @@
-enum Route {
+enum Route: Sendable {
     case stopwatch
     case config
     case saveLoad

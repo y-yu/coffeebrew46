@@ -1,16 +1,16 @@
 import BrewCoffee46Core
 import Factory
-import WatchConnectivity
+@preconcurrency import WatchConnectivity
 
-protocol WatchConnectionService {
+protocol WatchConnectionService: Sendable {
     func isPaired() -> Bool
 
     func isReachable() -> Bool
 
-    func send(config: Config) async -> ResultNea<Void, CoffeeError>
+    func sendConfigAsJson(_ configJson: String) async -> ResultNea<Void, CoffeeError>
 }
 
-class WatchConnectionServiceImpl: NSObject, WatchConnectionService {
+final class WatchConnectionServiceImpl: NSObject, WatchConnectionService {
     private let session: WCSession
 
     init(session: WCSession = .default) {
@@ -28,27 +28,22 @@ class WatchConnectionServiceImpl: NSObject, WatchConnectionService {
         session.isReachable
     }
 
-    func send(config: Config) async -> ResultNea<Void, CoffeeError> {
+    func sendConfigAsJson(_ configJson: String) async -> ResultNea<Void, CoffeeError> {
         await withCheckedContinuation { continuation in
             if session.activationState != .activated {
                 continuation.resume(returning: .failure(NonEmptyArray(CoffeeError.watchSessionIsNotActivated)))
                 return
             }
 
-            switch config.toJSON(isPrettyPrint: false) {
-            case .success(let json):
-                session.sendMessage(
-                    ["config": json],
-                    replyHandler: { data in
-                        continuation.resume(returning: .success(()))
-                    },
-                    errorHandler: { error in
-                        continuation.resume(returning: .failure(NonEmptyArray(.sendMessageToWatchOSFailure(error))))
-                    }
-                )
-            case .failure(let error):
-                continuation.resume(returning: .failure(NonEmptyArray(CoffeeError.jsonError(error))))
-            }
+            session.sendMessage(
+                ["config": configJson],
+                replyHandler: { data in
+                    continuation.resume(returning: .success(()))
+                },
+                errorHandler: { error in
+                    continuation.resume(returning: .failure(NonEmptyArray(.sendMessageToWatchOSFailure(error))))
+                }
+            )
         }
     }
 }

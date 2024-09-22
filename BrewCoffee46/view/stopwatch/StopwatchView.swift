@@ -1,9 +1,11 @@
 import AudioToolbox
 import BrewCoffee46Core
+import Combine
 import Factory
 import StoreKit
 import SwiftUI
 
+@MainActor
 struct StopwatchView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
@@ -19,7 +21,7 @@ struct StopwatchView: View {
     private static let progressTimeInit: Double = -3
 
     @State private var progressTime: Double = progressTimeInit
-    @State private var timer: Timer?
+    @State private var timer: AnyCancellable?
     @State private var hasRingingIndex: Int = 0
     @State private var isStop︎AlertPresented: Bool = false
 
@@ -171,7 +173,7 @@ struct StopwatchView: View {
 
             let numberOfAllDrips = viewModel.pointerInfo.dripInfo.dripTimings.count
             for (i, info) in viewModel.pointerInfo.dripInfo.dripTimings.dropFirst().enumerated() {
-                let notifiedAt = Int(floor(info.dripAt))
+                let notifiedAt = Int(floor(info.dripAt) - StopwatchView.progressTimeInit)
 
                 group.addTask {
                     let title =
@@ -223,28 +225,33 @@ struct StopwatchView: View {
         if self.timer == nil {
             UIApplication.shared.isIdleTimerDisabled = true
             self.appEnvironment.isTimerStarted = true
+            self.startTime = Date()
 
-            self.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
-                if self.startTime == nil && progressTime >= -interval && progressTime <= interval {
-                    Task {
-                        await addNotifications()
-                    }
-                    self.startTime = Date()
-                } else if progressTime < 0 {
-                    progressTime += interval
-                } else {
-                    if let time = startTime {
-                        let now = Date()
-                        progressTime = now.timeIntervalSince(time)
-                        ringSound()
+            Task { @MainActor in
+                await addNotifications()
+            }
 
-                        // For the battery life stop `isIdleTimerDisable` after 10 seconds from `totalTimeSec`.
-                        if progressTime > (viewModel.currentConfig.totalTimeSec + 10.0) && UIApplication.shared.isIdleTimerDisabled {
-                            UIApplication.shared.isIdleTimerDisabled = false
+            self.timer =
+                Timer
+                .publish(every: interval, on: .main, in: .default)
+                .autoconnect()
+                .sink { _ in
+                    let now = Date()
+
+                    if let time = self.startTime, progressTime < 0 {
+                        progressTime = now.timeIntervalSince(time) + StopwatchView.progressTimeInit
+                    } else {
+                        if let time = startTime {
+                            progressTime = now.timeIntervalSince(time) + StopwatchView.progressTimeInit
+                            ringSound()
+
+                            // For the battery life stop `isIdleTimerDisable` after 10 seconds from `totalTimeSec`.
+                            if progressTime > (viewModel.currentConfig.totalTimeSec + 10.0) && UIApplication.shared.isIdleTimerDisabled {
+                                UIApplication.shared.isIdleTimerDisabled = false
+                            }
                         }
                     }
                 }
-            }
         }
     }
 
@@ -258,7 +265,7 @@ struct StopwatchView: View {
 
     private func stopTimer() {
         if let t = self.timer {
-            t.invalidate()
+            t.cancel()
             self.appEnvironment.isTimerStarted = false
             UIApplication.shared.isIdleTimerDisabled = false
             progressTime = StopwatchView.progressTimeInit

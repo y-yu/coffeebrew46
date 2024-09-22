@@ -3,7 +3,7 @@ import Factory
 import UserNotifications
 
 /// # Local notifications manager
-protocol NotificationService {
+protocol NotificationService: Sendable {
     /// # Request notification to the user if the request has not been requested yet
     /// - Returns:
     ///     - `success(true)` means that the request was accepted
@@ -22,7 +22,7 @@ protocol NotificationService {
     func removePendingAll() -> Void
 }
 
-class NotificationServiceImpl: NotificationService {
+final class NotificationServiceImpl: NotificationService {
     func request() async -> ResultNea<Bool, CoffeeError> {
         do {
             return .success(try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]))

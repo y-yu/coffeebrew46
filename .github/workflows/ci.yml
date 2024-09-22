@@ -38,8 +38,8 @@ jobs:
     runs-on: macos-14
     strategy:
       matrix:
-        xcode-version: [ '15.3' ]
-        ios-version: [ '17.4' ]
+        xcode-version: [ '16.0' ]
+        ios-version: [ '18.0' ]
         ios-device-name: [ 'iPhone 15' ]
     steps:
       - name: Checkout

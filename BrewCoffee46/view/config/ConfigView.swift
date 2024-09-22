@@ -3,6 +3,7 @@ import Factory
 import SwiftUI
 import SwiftUITooltip
 
+@MainActor
 struct ConfigView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
@@ -56,15 +57,21 @@ struct ConfigView: View {
                 Section(header: Text("config watchos app setting")) {
                     Button(action: {
                         didSuccessSendingConfig = .none
-                        Task { @MainActor in
-                            let result = await watchConnectionService.send(config: viewModel.currentConfig)
-                            switch result {
-                            case .success():
-                                didSuccessSendingConfig = true
-                            case .failure(let error):
-                                viewModel.errors = error.getAllErrorMessage()
-                                didSuccessSendingConfig = false
+                        switch viewModel.currentConfig.toJSON(isPrettyPrint: false) {
+                        case .success(let json):
+                            Task {
+                                let result = await watchConnectionService.sendConfigAsJson(json)
+                                switch result {
+                                case .success():
+                                    didSuccessSendingConfig = true
+                                case .failure(let error):
+                                    viewModel.errors = error.getAllErrorMessage()
+                                    didSuccessSendingConfig = false
+                                }
                             }
+                        case .failure(let error):
+                            didSuccessSendingConfig = false
+                            viewModel.errors = error.getAllErrorMessage()
                         }
                     }) {
                         VStack {

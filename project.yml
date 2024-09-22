@@ -32,6 +32,9 @@ settings:
     CURRENT_PROJECT_VERSION: 2.2.0
     SWIFT_VERSION: '5.10'
     MTL_FAST_MATH: 'YES'
+    SWIFT_STRICT_CONCURRENCY: 'complete'
+    OTHER_SWIFT_FLAGS:
+      - '-enable-upcoming-feature DisableOutwardActorInference'
   configs:
     Debug:
       MTL_ENABLE_DEBUG_INFO: INCLUDE_SOURCE
