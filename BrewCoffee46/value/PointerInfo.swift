@@ -5,7 +5,7 @@ struct PointerInfo {
     let dripInfo: DripInfo
 
     // Degree of the pointers.
-    private(set) public var pointerDegrees: [Double]
+    public let pointerDegrees: [Double]
 
     // This initializer is unsafe. If the number of `dripInfo.dripTimings` is not equal to
     // the number of `pointerDegrees` then the value of `PointerInfo` is inconsistence.
@@ -20,14 +20,15 @@ struct PointerInfo {
 
         let totalWaterAmount = dripInfo.waterAmount.totalAmount()
         var thisDegree = 0.0
-        pointerDegrees = []
+        var degrees: [Double] = []
         for e in dripInfo.waterAmount.toArray() {
-            pointerDegrees.append(thisDegree)
+            degrees.append(thisDegree)
             thisDegree = (e / totalWaterAmount) * 360 + thisDegree
         }
+        self.pointerDegrees = degrees
     }
 }
 
 extension PointerInfo {
-    static let defaultValue: PointerInfo = PointerInfo.init(DripInfo.defaultValue)
+    static public let defaultValue: PointerInfo = PointerInfo.init(DripInfo.defaultValue)
 }
