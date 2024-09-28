@@ -111,7 +111,7 @@ jobs:
             -enableCodeCoverage YES \
             -derivedDataPath Build/ \
             clean build test | xcbeautify
-          ./.github/workflows/convert.sh brewCoffee46.app/brewCoffee46 brewCoffee46.lcov
+          ./.github/workflows/convert.sh BrewCoffee46.app/BrewCoffee46.debug.dylib brewCoffee46.lcov
 
       - name: Upload to Codecov
         uses: codecov/codecov-action@v4
