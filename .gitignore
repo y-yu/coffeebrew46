@@ -99,3 +99,6 @@ GoogleService-Info*.plist
 
 # SwiftPM
 .swiftpm/
+
+# Codecov
+*.lcov
