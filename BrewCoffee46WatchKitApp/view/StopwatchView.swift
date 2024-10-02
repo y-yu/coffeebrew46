@@ -154,7 +154,11 @@ struct StopwatchView: View {
         }
         .scrollPosition(
             id: Binding(
-                get: { currentPhase },
+                get: {
+                    // The scroll position is next to the `currentPhase` because
+                    // the user should know the next drip information.
+                    currentPhase + 1
+                },
                 set: { _ in () }
             )
         )
