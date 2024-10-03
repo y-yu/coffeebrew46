@@ -69,6 +69,8 @@ struct StopwatchView: View {
                         }) {
                             Text("Stop")
                         }
+                        .frame(maxHeight: 20)
+                        .foregroundColor(.red)
                     }
                 }
             } else {
@@ -78,6 +80,7 @@ struct StopwatchView: View {
                         totalDripCount: viewModel.dripInfo.dripTimings.count,
                         progressTime: -countDownInit
                     )
+                    Spacer()
                     Button(action: {
                         WKInterfaceDevice.current().play(.success)
                         self.startAt = dateService.now()
@@ -91,6 +94,8 @@ struct StopwatchView: View {
                     }) {
                         Text("Start")
                     }
+                    .frame(maxHeight: 20)
+                    .foregroundColor(.green)
                 }
             }
         }
