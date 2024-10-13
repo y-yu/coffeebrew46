@@ -31,13 +31,13 @@ class MockUserDefaultsService: UserDefaultsService {
     func delete(forKey: String) {}
 }
 
+let now = DateUtils.dateFromString("2024/01/28 12:34:56 +09:00", format: "yyyy/MM/dd HH:mm:ss Z")
+
 class RequestReviewServiceTests: XCTestCase {
     override func setUp() {
         super.setUp()
         Container.shared.reset()
     }
-
-    let now = DateUtils.dateFromString("2024/01/28 12:34:56 +09:00", format: "yyyy/MM/dd HH:mm:ss Z")
 
     func test_to_return_true_if_the_guard_tryCount_equals_with_minimum_and_request_review_info_is_none() throws {
         Container.shared.userDefaultsService.register {
@@ -54,14 +54,14 @@ class RequestReviewServiceTests: XCTestCase {
     }
 
     func test_to_return_true_if_the_guard_tryCount_equals_with_minimum_and_request_latest_review_info_date_is_100_days_before() throws {
-        Container.shared.dateService.register { MockDateService(self.now) }
+        Container.shared.dateService.register { MockDateService(now) }
         Container.shared.userDefaultsService.register {
             MockUserDefaultsService(
                 .some(
                     RequestReviewInfo(
                         requestHistory: [
                             RequestReviewItem(
-                                appVersion: "1.1.1", requestedDate: self.now.advanced(by: -RequestReviewServiceImpl.reviewRequestInterval)
+                                appVersion: "1.1.1", requestedDate: now.advanced(by: -RequestReviewServiceImpl.reviewRequestInterval)
                             )
                         ])
                 ),
@@ -99,14 +99,14 @@ class RequestReviewServiceTests: XCTestCase {
     }
 
     func test_to_return_false_if_the_guard_tryCount_equals_with_minimum_and_request_latest_review_info_date_is_not_100_days_before() throws {
-        Container.shared.dateService.register { MockDateService(self.now) }
+        Container.shared.dateService.register { MockDateService(now) }
         Container.shared.userDefaultsService.register {
             MockUserDefaultsService(
                 .some(
                     RequestReviewInfo(
                         requestHistory: [
                             RequestReviewItem(
-                                appVersion: "1.1.1", requestedDate: self.now.advanced(by: -(RequestReviewServiceImpl.reviewRequestInterval - 1.0))
+                                appVersion: "1.1.1", requestedDate: now.advanced(by: -(RequestReviewServiceImpl.reviewRequestInterval - 1.0))
                             )
                         ])
                 ),

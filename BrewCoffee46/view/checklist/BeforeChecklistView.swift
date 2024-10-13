@@ -15,23 +15,32 @@ struct BeforeChecklistView: View {
 
     @State private var willMoveToStopwatch: Bool = false
 
+    // `tmpBeforeChecklist` will be used for editing checklist body using `TextField`.
+    // If we don't use `tmpBeforeChecklist`, `TextField` will edit `viewModel.currentConfig.beforeChecklist` directory.
+    // It causes to re-render `TextField` so editing will be suspended.
+    // To avoid that we need `tmpBeforeChecklist`.
+    @State private var tmpBeforeChecklist: [String] = []
+
     var body: some View {
         Form {
             Section(
                 header: HStack {
-                    if isAllChecked() {
-                        Button(action: {
-                            checks = checks.prefix(viewModel.currentConfig.beforeChecklist.count).map({ _ in false })
-                        }) {
-                            Text("before check list reset")
-                        }
-                    } else {
-                        Button(action: {
-                            checks = checks.prefix(viewModel.currentConfig.beforeChecklist.count).map({ _ in true })
-                        }) {
-                            Text("before check list check all")
+                    Group {
+                        if isAllChecked() {
+                            Button(action: {
+                                checks = checks.prefix(viewModel.currentConfig.beforeChecklist.count).map({ _ in false })
+                            }) {
+                                Text("before check list reset")
+                            }
+                        } else {
+                            Button(action: {
+                                checks = checks.prefix(viewModel.currentConfig.beforeChecklist.count).map({ _ in true })
+                            }) {
+                                Text("before check list check all")
+                            }
                         }
                     }
+                    .disabled(mode.isEditing)
                     Spacer()
                     // Maybe it's not necessary that the `disabled` constraint when the timer has been started...
                     EditButton()
@@ -39,14 +48,20 @@ struct BeforeChecklistView: View {
                 }
             ) {
                 ForEach(Array(viewModel.currentConfig.beforeChecklist.enumerated()), id: \.element) { i, item in
-                    HStack {
-                        Text("\(i + 1).")
-                        Toggle(isOn: $checks[i]) {
-                            TextField(item, text: $viewModel.currentConfig.beforeChecklist[i])
-                                .disabled(!mode.isEditing)
-                        }
-                        .onChange(of: checks[i]) {
-                            willMoveToStopwatch = isAllChecked()
+                    Group {
+                        if !mode.isEditing {
+                            Toggle(isOn: $checks[i]) {
+                                Text("\(i + 1). \(item)")
+                            }
+                            .onChange(of: checks[i]) {
+                                willMoveToStopwatch = isAllChecked()
+                            }
+                        } else {
+                            HStack {
+                                Text("\(i + 1).")
+                                TextField(item, text: $tmpBeforeChecklist[i], axis: .vertical)
+                                    .lineLimit(1...3)
+                            }
                         }
                     }
                     .deleteDisabled(appEnvironment.isTimerStarted)
@@ -54,13 +69,25 @@ struct BeforeChecklistView: View {
                 }
                 .onDelete(perform: { indexSet in
                     viewModel.currentConfig.beforeChecklist.remove(atOffsets: indexSet)
+                    tmpBeforeChecklist.remove(atOffsets: indexSet)
                     checks.remove(atOffsets: indexSet)
                     checks.append(false)
                 })
                 .onMove(perform: { src, dest in
                     viewModel.currentConfig.beforeChecklist.move(fromOffsets: src, toOffset: dest)
+                    tmpBeforeChecklist.move(fromOffsets: src, toOffset: dest)
                     checks.move(fromOffsets: src, toOffset: dest)
                 })
+                .onChange(of: viewModel.currentConfig.beforeChecklist, initial: true) { oldValue, newValue in
+                    tmpBeforeChecklist = newValue
+                }
+                .onChange(of: mode) { oldValue, newValue in
+                    if newValue.isEditing {
+                        tmpBeforeChecklist = viewModel.currentConfig.beforeChecklist
+                    } else {
+                        viewModel.currentConfig.beforeChecklist = tmpBeforeChecklist
+                    }
+                }
                 HStack {
                     Spacer()
                     Button(action: {
