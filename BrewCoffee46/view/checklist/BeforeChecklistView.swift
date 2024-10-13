@@ -19,19 +19,22 @@ struct BeforeChecklistView: View {
         Form {
             Section(
                 header: HStack {
-                    if isAllChecked() {
-                        Button(action: {
-                            checks = checks.prefix(viewModel.currentConfig.beforeChecklist.count).map({ _ in false })
-                        }) {
-                            Text("before check list reset")
-                        }
-                    } else {
-                        Button(action: {
-                            checks = checks.prefix(viewModel.currentConfig.beforeChecklist.count).map({ _ in true })
-                        }) {
-                            Text("before check list check all")
+                    Group {
+                        if isAllChecked() {
+                            Button(action: {
+                                checks = checks.prefix(viewModel.currentConfig.beforeChecklist.count).map({ _ in false })
+                            }) {
+                                Text("before check list reset")
+                            }
+                        } else {
+                            Button(action: {
+                                checks = checks.prefix(viewModel.currentConfig.beforeChecklist.count).map({ _ in true })
+                            }) {
+                                Text("before check list check all")
+                            }
                         }
                     }
+                    .disabled(mode.isEditing)
                     Spacer()
                     // Maybe it's not necessary that the `disabled` constraint when the timer has been started...
                     EditButton()
@@ -39,14 +42,19 @@ struct BeforeChecklistView: View {
                 }
             ) {
                 ForEach(Array(viewModel.currentConfig.beforeChecklist.enumerated()), id: \.element) { i, item in
-                    HStack {
-                        Text("\(i + 1).")
-                        Toggle(isOn: $checks[i]) {
-                            TextField(item, text: $viewModel.currentConfig.beforeChecklist[i])
-                                .disabled(!mode.isEditing)
-                        }
-                        .onChange(of: checks[i]) {
-                            willMoveToStopwatch = isAllChecked()
+                    Group {
+                        if !mode.isEditing {
+                            Toggle(isOn: $checks[i]) {
+                                Text("\(i + 1). \(item)")
+                            }
+                            .onChange(of: checks[i]) {
+                                willMoveToStopwatch = isAllChecked()
+                            }
+                        } else {
+                            HStack {
+                                Text("\(i + 1).")
+                                TextField(item, text: $viewModel.currentConfig.beforeChecklist[i])
+                            }
                         }
                     }
                     .deleteDisabled(appEnvironment.isTimerStarted)
