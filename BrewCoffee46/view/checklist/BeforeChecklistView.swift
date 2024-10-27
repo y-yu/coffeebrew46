@@ -15,6 +15,12 @@ struct BeforeChecklistView: View {
 
     @State private var willMoveToStopwatch: Bool = false
 
+    // `tmpBeforeChecklist` will be used for editing checklist body using `TextField`.
+    // If we don't use `tmpBeforeChecklist`, `TextField` will edit `viewModel.currentConfig.beforeChecklist` directory.
+    // It causes to re-render `TextField` so editing will be suspended.
+    // To avoid that we need `tmpBeforeChecklist`.
+    @State private var tmpBeforeChecklist: [String] = []
+
     var body: some View {
         Form {
             Section(
@@ -53,7 +59,8 @@ struct BeforeChecklistView: View {
                         } else {
                             HStack {
                                 Text("\(i + 1).")
-                                TextField(item, text: $viewModel.currentConfig.beforeChecklist[i])
+                                TextField(item, text: $tmpBeforeChecklist[i], axis: .vertical)
+                                    .lineLimit(1...3)
                             }
                         }
                     }
@@ -62,13 +69,25 @@ struct BeforeChecklistView: View {
                 }
                 .onDelete(perform: { indexSet in
                     viewModel.currentConfig.beforeChecklist.remove(atOffsets: indexSet)
+                    tmpBeforeChecklist.remove(atOffsets: indexSet)
                     checks.remove(atOffsets: indexSet)
                     checks.append(false)
                 })
                 .onMove(perform: { src, dest in
                     viewModel.currentConfig.beforeChecklist.move(fromOffsets: src, toOffset: dest)
+                    tmpBeforeChecklist.move(fromOffsets: src, toOffset: dest)
                     checks.move(fromOffsets: src, toOffset: dest)
                 })
+                .onChange(of: viewModel.currentConfig.beforeChecklist, initial: true) { oldValue, newValue in
+                    tmpBeforeChecklist = newValue
+                }
+                .onChange(of: mode) { oldValue, newValue in
+                    if newValue.isEditing {
+                        tmpBeforeChecklist = viewModel.currentConfig.beforeChecklist
+                    } else {
+                        viewModel.currentConfig.beforeChecklist = tmpBeforeChecklist
+                    }
+                }
                 HStack {
                     Spacer()
                     Button(action: {
