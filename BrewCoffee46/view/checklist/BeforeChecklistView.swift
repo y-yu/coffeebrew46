@@ -78,9 +78,6 @@ struct BeforeChecklistView: View {
                     tmpBeforeChecklist.move(fromOffsets: src, toOffset: dest)
                     checks.move(fromOffsets: src, toOffset: dest)
                 })
-                .onChange(of: viewModel.currentConfig.beforeChecklist, initial: true) { oldValue, newValue in
-                    tmpBeforeChecklist = newValue
-                }
                 .onChange(of: mode) { oldValue, newValue in
                     if newValue.isEditing {
                         tmpBeforeChecklist = viewModel.currentConfig.beforeChecklist
@@ -88,12 +85,25 @@ struct BeforeChecklistView: View {
                         viewModel.currentConfig.beforeChecklist = tmpBeforeChecklist
                     }
                 }
+                .onAppear {
+                    if tmpBeforeChecklist.isEmpty {
+                        tmpBeforeChecklist = viewModel.currentConfig.beforeChecklist
+                    }
+                }
                 HStack {
                     Spacer()
                     Button(action: {
-                        if viewModel.currentConfig.beforeChecklist.count < Config.maxCheckListSize {
+                        let beforeChecklistLastCount = viewModel.currentConfig.beforeChecklist.count
+                        if beforeChecklistLastCount < Config.maxCheckListSize {
                             editingIndex = .some(viewModel.currentConfig.beforeChecklist.count)
-                            viewModel.currentConfig.beforeChecklist.append("")
+
+                            // `beforeChecklist` is identified by its body string.
+                            // If the bodies of two items are the same then the items are the same.
+                            // To avoid two items identify as the same `placeholder` is required.
+                            let placeholder = String(
+                                format: NSLocalizedString("before check list placeholder template", comment: ""), beforeChecklistLastCount + 1)
+                            viewModel.currentConfig.beforeChecklist.append(placeholder)
+                            tmpBeforeChecklist.append(placeholder)
                         }
                     }) {
                         Image(systemName: "plus.circle")

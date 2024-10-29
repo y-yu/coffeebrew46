@@ -7,6 +7,7 @@
 "before check list check all" = "Check All";
 "before check list reset" = "Reset";
 "before check list go to stopwatch" = "Move to Stopwatch";
+"before check list placeholder template" = "%d procedure";
 "before check list 1" = "Boil water";
 "before check list 2" = "Measure the weight of coffee beans";
 "before check list 3" = "Grind coffee beans";
