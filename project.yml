@@ -37,11 +37,13 @@ settings:
   configs:
     Debug:
       MTL_ENABLE_DEBUG_INFO: INCLUDE_SOURCE
+      ONLY_ACTIVE_ARCH: YES
       SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
       SWIFT_OPTIMIZATION_LEVEL: -Onone
+      GCC_OPTIMIZATION_LEVEL: 0
     Release:
-      SWIFT_COMPILATION_MODE: wholemodule
-      SWIFT_OPTIMIZATION_LEVEL: -O
+      MTL_ENABLE_DEBUG_INFO: NO
+      SWIFT_OPTIMIZATION_LEVEL: -Owholemodule
 targets:
   brewcoffee46:
     platform: iOS
