@@ -38,7 +38,7 @@ jobs:
     runs-on: macos-14
     strategy:
       matrix:
-        xcode-version: [ '16.0' ]
+        xcode-version: [ '16.1' ]
         ios-version: [ '18.0' ]
         ios-device-name: [ 'iPhone 15' ]
     steps:
