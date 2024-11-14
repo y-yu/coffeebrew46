@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [ "3KDN4W8346.com.github.y-yu.coffeebrew46", "3KDN4W8346.com.github.y-yu.coffeebrew46.debug" ],
+        "components": [
+          {"/": "*"}
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [ "3KDN4W8346.com.github.y-yu.coffeebrew46", "3KDN4W8346.com.github.y-yu.coffeebrew46.debug"  ]
+  }
+}
