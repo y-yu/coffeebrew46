@@ -15,8 +15,8 @@ struct InfoView: View {
 
             Section(header: Text("info source code")) {
                 Link(
-                    "https://github.com/y-yu/coffeebrew46",
-                    destination: URL(string: "https://github.com/y-yu/coffeebrew46")!)
+                    "https://github.com/brewcoffee46/brewcoffee46",
+                    destination: URL(string: "https://github.com/brewcoffee46/brewcoffee46")!)
             }
 
             Section(header: Text("info author")) {
