@@ -57,6 +57,7 @@ targets:
         INFOPLIST_FILE: BrewCoffee46/Info.plist
         CODE_SIGN_IDENTITY: Apple Development
         CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_ENTITLEMENTS: BrewCoffee46/brewcoffee46.entitlements
         DEVELOPMENT_ASSET_PATHS: '"BrewCoffee46/Preview Content"'
         DEVELOPMENT_TEAM: 3KDN4W8346
         PRODUCT_NAME: BrewCoffee46

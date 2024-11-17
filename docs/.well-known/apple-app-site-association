@@ -5,7 +5,7 @@
       {
         "appIDs": [ "3KDN4W8346.com.github.y-yu.coffeebrew46", "3KDN4W8346.com.github.y-yu.coffeebrew46.debug" ],
         "components": [
-          {"/": "*"}
+          {"/": "/app/*"}
         ]
       }
     ]
