@@ -4,8 +4,8 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>webcredentials:brewcoffee46.mental.poker</string>
-		<string>applinks:brewcoffee46.mental.poker</string>
+		<string>webcredentials:brewcoffee46.github.io</string>
+		<string>applinks:brewcoffee46.github.io</string>
 	</array>
 </dict>
 </plist>
