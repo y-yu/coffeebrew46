@@ -10,7 +10,7 @@ struct ImportExportView: View {
 
     var body: some View {
         Form {
-            Toggle("JSON pretty printing", isOn: $isPrettyPrint)
+            Toggle("config import export JSON pretty printing", isOn: $isPrettyPrint)
             Section {
                 HStack {
                     Spacer()
@@ -45,6 +45,13 @@ struct ImportExportView: View {
             Section(header: Text("JSON")) {
                 TextEditor(text: $json)
                     .frame(maxHeight: .infinity)
+            }
+            if let importedConfig = appEnvironment.importedConfig {
+                ShowConfigView(
+                    config: Binding(
+                        get: { importedConfig.config },
+                        set: { _ in () }
+                    ), isLock: true.getOnlyBinding)
             }
             Section(
                 header: HStack {

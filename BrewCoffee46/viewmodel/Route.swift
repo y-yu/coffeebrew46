@@ -5,5 +5,4 @@ enum Route: Sendable {
     case importExport
     case info
     case beforeChecklist
-    case ossLicense
 }

@@ -87,6 +87,8 @@
 
 "config information" = "Information";
 
+"config import export JSON pretty printing" = "JSON pretty printing";
+
 "info version" = "Build version";
 "info license header" = "License";
 "info oss licenses" = "OSS License";

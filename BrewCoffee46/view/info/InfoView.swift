@@ -8,7 +8,11 @@ struct InfoView: View {
             }
 
             Section(header: Text("info license header")) {
-                NavigationLink(value: Route.ossLicense) {
+                Button(action: {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
+                }) {
                     Text("info oss licenses")
                 }
             }

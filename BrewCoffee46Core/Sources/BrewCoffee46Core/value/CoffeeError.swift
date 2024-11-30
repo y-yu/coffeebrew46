@@ -26,6 +26,8 @@ public enum CoffeeError: Error, Sendable {
 
     case sendMessageToWatchOSFailure(_ underlying: Error)
 
+    case configClamesJwtError(_ underlying: Error)
+
     public func getMessage() -> String {
         switch self {
         case .coffeeBeansWeightUnderZeroError:
@@ -66,6 +68,9 @@ public enum CoffeeError: Error, Sendable {
 
         case .sendMessageToWatchOSFailure(let error):
             return "Something error was occurred in sending a message to watchOS app: \(error)"
+
+        case .configClamesJwtError(let error):
+            return "Something error was occurred in decording JWT config: \(error)"
         }
     }
 }
