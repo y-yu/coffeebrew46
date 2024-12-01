@@ -86,6 +86,8 @@
 
 "config information" = "情報";
 
+"config import export JSON pretty printing" = "JSONを整形";
+
 "info version" = "ビルドバージョン";
 "info license header" = "ライセンス";
 "info oss licenses" = "OSSライセンス情報";

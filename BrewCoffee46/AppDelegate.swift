@@ -2,6 +2,7 @@ import Factory
 import FirebaseCore
 import Foundation
 import NotificationCenter
+import SwiftUI
 import UIKit
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -27,7 +28,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     ) -> Bool {
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
             let incomingURL = userActivity.webpageURL,
-            let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true)
+            let _ = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true)
         else {
             return false
         }

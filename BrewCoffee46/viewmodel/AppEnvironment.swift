@@ -1,3 +1,4 @@
+import BrewCoffee46Core
 import Foundation
 import SwiftUI
 
@@ -8,6 +9,8 @@ final class AppEnvironment: ObservableObject {
     @Published var stopwatchPath: [Route] = []
     @Published var configPath: [Route] = []
     @Published var beforeChecklistPath: [Route] = []
+
+    @Published var importedConfig: ConfigClaims? = .none
 
     var minWidth: Double
 

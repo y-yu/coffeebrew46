@@ -20,6 +20,9 @@ packages:
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk.git
     from: 11.2.0
+  SwiftJWT:
+    url: https://github.com/Kitura/Swift-JWT.git
+    from: 4.0.2
   BrewCoffee46Core:
     path: BrewCoffee46Core
 settings:
@@ -80,6 +83,7 @@ targets:
         product: BrewCoffee46Core
       - package: SwiftUITooltip
       - package: Factory
+      - package: SwiftJWT
       - package: Firebase
         product: FirebaseAnalytics
       - package: Firebase
