@@ -89,6 +89,19 @@ targets:
       - package: Firebase
         product: FirebaseCrashlytics
     type: application
+    preBuildScripts:
+      - script: |
+          if [ $CONFIGURATION = "Debug" ]; then
+            if [ "${CI}" != "true" ]; then
+              source ${PROJECT_DIR}/.envrc
+            fi
+            /usr/bin/env xcrun --sdk macosx swift build --disable-sandbox -c release --product license-plist
+            ${PROJECT_DIR}/.build/release/license-plist --output-path ${PROJECT_DIR}/${PRODUCT_NAME}/Settings.bundle --github-token $LICENSE_PLIST_GITHUB_TOKEN
+          fi
+        name: Run license-plist
+        outputFiles:
+          - ${PROJECT_DIR}/.build/release/license-plist
+          - ${PROJECT_DIR}/${PRODUCT_NAME}/Settings.bundle
     postBuildScripts:
       - script: |
           if [ "${CI}" == "true" ]; then

@@ -102,3 +102,9 @@ GoogleService-Info*.plist
 
 # Codecov
 *.lcov
+
+# direnv setting
+.envrc
+
+# license-plist artifacts
+BrewCoffee46/Settings.bundle/com.mono0926.LicensePlist*
