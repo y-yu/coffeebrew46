@@ -29,40 +29,6 @@ jobs:
             exit 1;
           fi
 
-  license-check:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - uses: actions/cache@v3
-        with:
-          path: |
-            **/.build
-          key: license-${{ runner.os }}-${{ hashFiles('**/Package.resolved', '.github/workflows/ci.yml') }}
-          restore-keys: |
-            license-${{ runner.os }}-
-
-      - name: Build xcodeproj
-        run: swift build -c release --product xcodegen
-
-      - name: Generate xcodeproj
-        run: .build/release/xcodegen generate
-
-      - name: Build license-plist
-        run: swift build -c release --product license-plist
-
-      - name: Run license-plist and check
-        # Skip for now because it's not work well😇
-        if: false
-        run: |
-          .build/release/license-plist --output-path BrewCoffee46/Settings.bundle --github-token "$GITHUB_TOKEN"
-          if [[ -n `git diff` ]]; then
-            exit 1;
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   build-and-test:
     runs-on: macos-14
     strategy:
@@ -70,6 +36,8 @@ jobs:
         xcode-version: [ '16.0' ]
         ios-version: [ '18.0' ]
         ios-device-name: [ 'iPhone 15' ]
+    env:
+      LICENSE_PLIST_GITHUB_TOKEN: ${{ secrets.LICENSE_PLIST_GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -78,6 +46,7 @@ jobs:
         with:
           path: |
             **/.build
+            BrewCoffee46/Settings.bundle
           key: ci-${{ runner.os }}-${{ hashFiles('**/Package.resolved', '.github/workflows/ci.yml') }}
           restore-keys: |
             ci-${{ runner.os }}-
