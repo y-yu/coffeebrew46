@@ -227,7 +227,7 @@ struct ConfigView: View {
             }
 
             Section(header: Text("config json")) {
-                NavigationLink(value: Route.importExport) {
+                NavigationLink(value: Route.jsonImportExport) {
                     Text("config import export")
                 }
             }

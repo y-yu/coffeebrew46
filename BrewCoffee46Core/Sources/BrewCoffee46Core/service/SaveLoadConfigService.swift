@@ -11,6 +11,9 @@ public protocol SaveLoadConfigService {
 
     func loadAll() -> ResultNea<[Config]?, CoffeeError>
 
+    // Save `config` to the last of current all saved configurations.
+    func saveConfig(config: Config) -> ResultNea<Void, CoffeeError>
+
     func delete(key: String) -> Void
 }
 
@@ -31,6 +34,18 @@ public class SaveLoadConfigServiceImpl: SaveLoadConfigService {
 
     public func loadAll() -> ResultNea<[Config]?, CoffeeError> {
         return userDefaultsService.getDecodable(forKey: userDefaultsKey(SaveLoadConfigServiceImpl.configsKey))
+    }
+
+    public func saveConfig(config: Config) -> ResultNea<Void, CoffeeError> {
+        return loadAll().flatMap { configsOpt in
+            if var configs = configsOpt {
+                configs.append(config)
+
+                return saveAll(configs: configs)
+            } else {
+                return saveAll(configs: [config])
+            }
+        }
     }
 
     public func delete(key: String) -> Void {

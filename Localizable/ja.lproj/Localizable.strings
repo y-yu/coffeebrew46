@@ -88,6 +88,10 @@
 
 "config import export JSON pretty printing" = "JSONを整形";
 
+"config universal links" = "Configuration Link";
+"config import imported config" = "読み込んだ設定";
+"config import is JSON show" = "JSONを表示";
+
 "info version" = "ビルドバージョン";
 "info license header" = "ライセンス";
 "info oss licenses" = "OSSライセンス情報";
