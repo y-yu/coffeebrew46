@@ -1,4 +1,4 @@
-@preconcurrency import BrewCoffee46Core
+import BrewCoffee46Core
 import SwiftUI
 
 struct PointerInfo: Sendable {
@@ -30,5 +30,6 @@ struct PointerInfo: Sendable {
 }
 
 extension PointerInfo {
+    @MainActor
     static public let defaultValue: PointerInfo = PointerInfo.init(DripInfo.defaultValue)
 }

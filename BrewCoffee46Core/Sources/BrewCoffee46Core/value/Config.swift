@@ -75,6 +75,7 @@ extension Config {
         NSLocalizedString("before check list \(i)", comment: "")
     }
 
+    @MainActor
     public static let defaultValue: Config =
         Config(
             coffeeBeansWeight: Config.initCoffeeBeansWeight,

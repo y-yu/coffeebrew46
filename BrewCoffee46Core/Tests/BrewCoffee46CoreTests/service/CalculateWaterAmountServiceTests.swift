@@ -3,6 +3,7 @@ import XCTest
 
 @testable import BrewCoffee46Core
 
+@MainActor
 final class CalculateWaterAmountServiceTests: XCTestCase {
     let sut = CalculateWaterAmountServiceImpl()
 

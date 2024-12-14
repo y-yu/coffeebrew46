@@ -2,6 +2,7 @@ import BrewCoffee46Core
 import Factory
 import SwiftUI
 
+@MainActor
 final class CurrentConfigViewModel: ObservableObject {
     @Injected(\.validateInputService) private var validateInputService
     @Injected(\.calculateDripInfoService) private var calculateDripInfoService

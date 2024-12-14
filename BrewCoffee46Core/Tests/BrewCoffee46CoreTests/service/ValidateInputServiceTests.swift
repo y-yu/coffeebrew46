@@ -2,6 +2,7 @@ import XCTest
 
 @testable import BrewCoffee46Core
 
+@MainActor
 final class ValidateInputServiceTests: XCTestCase {
     let sut = ValidateInputServiceImpl()
 
