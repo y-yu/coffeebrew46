@@ -51,6 +51,10 @@ class SaveLoadConfigAndLegacyConfigServiceImpl: SaveLoadConfigAndLegacyConfigSer
         saveLoadConfigService.loadAll()
     }
 
+    func saveConfig(config: Config) -> ResultNea<Void, CoffeeError> {
+        saveLoadConfigService.saveConfig(config: config)
+    }
+
     func delete(key: String) {
         saveLoadConfigService.delete(key: key)
     }

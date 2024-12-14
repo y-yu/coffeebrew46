@@ -1,7 +1,7 @@
 import BrewCoffee46Core
 import SwiftUI
 
-struct ImportExportView: View {
+struct JsonImportExportView: View {
     @EnvironmentObject var appEnvironment: AppEnvironment
     @EnvironmentObject var viewModel: CurrentConfigViewModel
 
@@ -97,18 +97,25 @@ struct ImportExportView: View {
     }
 }
 
-extension View {
-    func hidden(_ shouldHide: Bool) -> some View {
-        opacity(shouldHide ? 0 : 1)
-    }
-}
-
 #if DEBUG
-    struct ImportExportView_Previews: PreviewProvider {
+    struct JsonExportView_Previews: PreviewProvider {
         static var previews: some View {
-            ImportExportView()
+            JsonImportExportView()
                 .environmentObject(CurrentConfigViewModel.init())
                 .environmentObject(AppEnvironment.init())
+                .previewDisplayName("importedConfig is `.none`")
+
+            JsonImportExportView()
+                .environmentObject(CurrentConfigViewModel.init())
+                .environmentObject(
+                    { () in
+                        let env = AppEnvironment.init()
+                        env.importedConfig = ConfigClaims(iss: "dummy", iat: Date.now, version: 1, config: Config.defaultValue)
+
+                        return env
+                    }()
+                )
+                .previewDisplayName("importedConfig is `some`")
         }
     }
 #endif

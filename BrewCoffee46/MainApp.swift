@@ -22,7 +22,7 @@ struct MainApp: App {
                     jwtService.verify(jwt: jwt).forEach { configClaims in
                         appEnvironment.importedConfig = configClaims
                         appEnvironment.selectedTab = .config
-                        appEnvironment.configPath = [.importExport]
+                        appEnvironment.configPath = [.universalLinksImport]
                     }
                 }
             }

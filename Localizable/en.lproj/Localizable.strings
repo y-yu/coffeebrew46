@@ -89,6 +89,10 @@
 
 "config import export JSON pretty printing" = "JSON pretty printing";
 
+"config universal links" = "Configuration Link";
+"config universal links import imported config" = "Imported configuration";
+"config universal links import is JSON show" = "Show JSON";
+
 "info version" = "Build version";
 "info license header" = "License";
 "info oss licenses" = "OSS License";
