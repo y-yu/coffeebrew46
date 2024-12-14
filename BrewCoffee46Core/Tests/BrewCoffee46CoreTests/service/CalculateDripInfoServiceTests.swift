@@ -4,6 +4,7 @@ import XCTest
 
 @testable import BrewCoffee46Core
 
+@MainActor
 final class CalculateDripInfoServiceTests: XCTestCase {
     let sut = CalculateDripInfoServiceImpl()
 
@@ -25,7 +26,7 @@ final class CalculateDripInfoServiceTests: XCTestCase {
     }
 
     func test_calculate_if_water_amount_splits_into_5_successfully() throws {
-        Container.shared.calculateWaterAmountService.register {
+        Container.shared.calculateWaterAmountService.register { @MainActor in
             MockCalculateWaterAmountService(waterAmountDefaultValue)
         }
 
@@ -40,7 +41,7 @@ final class CalculateDripInfoServiceTests: XCTestCase {
         var config = Config.defaultValue
         config.firstWaterPercent = 1.0
 
-        Container.shared.calculateWaterAmountService.register {
+        Container.shared.calculateWaterAmountService.register { @MainActor in
             MockCalculateWaterAmountService(waterAmountFirstIs100Percent)
         }
 

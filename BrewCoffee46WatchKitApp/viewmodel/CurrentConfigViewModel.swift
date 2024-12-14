@@ -2,6 +2,7 @@ import BrewCoffee46Core
 import Factory
 import WatchConnectivity
 
+@MainActor
 final class CurrentConfigViewModel: NSObject, ObservableObject {
     @Injected(\.validateInputService) private var validateInputService: ValidateInputService
     @Injected(\.calculateDripInfoService) private var calculateDripInfoService: CalculateDripInfoService
@@ -36,7 +37,7 @@ final class CurrentConfigViewModel: NSObject, ObservableObject {
     }
 }
 
-extension CurrentConfigViewModel: WCSessionDelegate {
+extension CurrentConfigViewModel: @preconcurrency WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: (any Error)?) {
 
     }

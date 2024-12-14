@@ -4,6 +4,7 @@ import XCTest
 
 @testable import BrewCoffee46
 
+@MainActor
 class ConvertDegreeServiceTests: XCTestCase {
     let epsilon = 0.0001
     let pointerInfo = PointerInfo(dripInfoDefaultValue)

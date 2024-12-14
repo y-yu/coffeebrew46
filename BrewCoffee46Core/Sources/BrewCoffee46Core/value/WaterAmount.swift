@@ -1,5 +1,5 @@
 /// # Water amount for 4:6 method.
-public struct WaterAmount: Equatable {
+public struct WaterAmount: Equatable, Sendable {
     // The first and second water amounts (gram)
     // Note that the second value can be `0.0` but the first value cannot be `0.0`.
     public let fortyPercent: (Double, Double)
@@ -18,6 +18,7 @@ public func == (lhs: WaterAmount, rhs: WaterAmount) -> Bool {
 }
 
 extension WaterAmount {
+    @MainActor
     static public let defaultValue: WaterAmount = WaterAmount(
         fortyPercent: (90.0, 90.0),
         sixtyPercent: NonEmptyArray(90.0, [90.0, 90.0])

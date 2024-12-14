@@ -2,6 +2,7 @@ import XCTest
 
 @testable import BrewCoffee46Core
 
+@MainActor
 class GetDripPhaseServiceTests: XCTestCase {
     let sut = GetDripPhaseServiceImpl()
 

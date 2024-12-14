@@ -16,6 +16,7 @@ public struct DripPhase: Equatable {
 }
 
 extension DripPhase {
+    @MainActor
     public static let defaultValue: DripPhase = DripPhase(
         dripPhaseType: .beforeDrip,
         totalNumberOfDrip: DripInfo.defaultValue.dripTimings.count
