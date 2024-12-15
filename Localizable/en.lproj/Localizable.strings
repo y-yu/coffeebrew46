@@ -89,9 +89,13 @@
 
 "config import export JSON pretty printing" = "JSON pretty printing";
 
-"config universal links" = "Configuration Link";
-"config universal links import imported config" = "Imported configuration";
+"config universal links url share current config" = "Share current configuration";
+"config universal links import title" = "Configuration Links";
+"config universal links import imported config" = "Configuration detail";
 "config universal links import is JSON show" = "Show JSON";
+"config universal links import is done" = "Import is Done!";
+"config universal links import move to save & load" = "Move to Save & Load";
+"config universal links import save button" = "Import";
 
 "info version" = "Build version";
 "info license header" = "License";

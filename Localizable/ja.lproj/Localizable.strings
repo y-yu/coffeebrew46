@@ -88,9 +88,13 @@
 
 "config import export JSON pretty printing" = "JSONを整形";
 
-"config universal links" = "Configuration Link";
-"config import imported config" = "読み込んだ設定";
-"config import is JSON show" = "JSONを表示";
+"config universal links url share current config" = "現在の設定をURLで共有";
+"config universal links import title" = "Configuration Link";
+"config universal links import imported config" = "設定の詳細";
+"config universal links import is JSON show" = "JSONを表示";
+"config universal links import is done" = "読み込み完了";
+"config universal links import move to save & load" = "Save & Loadへ移動";
+"config universal links import save button" = "保存";
 
 "info version" = "ビルドバージョン";
 "info license header" = "ライセンス";

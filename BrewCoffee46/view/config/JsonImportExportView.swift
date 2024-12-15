@@ -46,7 +46,7 @@ struct JsonImportExportView: View {
                 TextEditor(text: $json)
                     .frame(maxHeight: .infinity)
             }
-            if let importedConfig = appEnvironment.importedConfig {
+            if let importedConfig = appEnvironment.importedConfigClaims {
                 ShowConfigView(
                     config: Binding(
                         get: { importedConfig.config },
@@ -110,7 +110,7 @@ struct JsonImportExportView: View {
                 .environmentObject(
                     { () in
                         let env = AppEnvironment.init()
-                        env.importedConfig = ConfigClaims(iss: "dummy", iat: Date.now, version: 1, config: Config.defaultValue())
+                        env.importedConfigClaims = ConfigClaims(iss: "dummy", iat: Date.now, version: 1, config: Config.defaultValue())
 
                         return env
                     }()
