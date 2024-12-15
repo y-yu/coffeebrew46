@@ -110,7 +110,7 @@ struct JsonImportExportView: View {
                 .environmentObject(
                     { () in
                         let env = AppEnvironment.init()
-                        env.importedConfig = ConfigClaims(iss: "dummy", iat: Date.now, version: 1, config: Config.defaultValue)
+                        env.importedConfig = ConfigClaims(iss: "dummy", iat: Date.now, version: 1, config: Config.defaultValue())
 
                         return env
                     }()

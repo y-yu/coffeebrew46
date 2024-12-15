@@ -29,8 +29,7 @@ public func == (lhs: DripInfo, rhs: DripInfo) -> Bool {
 }
 
 extension DripInfo {
-    @MainActor
-    static public let defaultValue: DripInfo =
+    static public func defaultValue() -> DripInfo {
         DripInfo(
             dripTimings: [
                 DripTiming(waterAmount: 90.0, dripAt: 0.0),
@@ -39,7 +38,8 @@ extension DripInfo {
                 DripTiming(waterAmount: 360.0, dripAt: 127.5),
                 DripTiming(waterAmount: 450.0, dripAt: 168.75),
             ],
-            waterAmount: WaterAmount.defaultValue,
-            totalTimeSec: Config.defaultValue.totalTimeSec
+            waterAmount: WaterAmount.defaultValue(),
+            totalTimeSec: Config.defaultValue().totalTimeSec
         )
+    }
 }

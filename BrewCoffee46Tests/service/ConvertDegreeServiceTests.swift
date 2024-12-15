@@ -4,7 +4,6 @@ import XCTest
 
 @testable import BrewCoffee46
 
-@MainActor
 class ConvertDegreeServiceTests: XCTestCase {
     let epsilon = 0.0001
     let pointerInfo = PointerInfo(dripInfoDefaultValue)
@@ -16,8 +15,8 @@ class ConvertDegreeServiceTests: XCTestCase {
             for f in 0..<9 {
                 let degree = Double(d) + (Double(f) / 10)
 
-                let progressTime = sut.toProgressTime(Config.defaultValue, pointerInfo, degree)
-                let actual = sut.fromProgressTime(Config.defaultValue, pointerInfo, progressTime)
+                let progressTime = sut.toProgressTime(Config.defaultValue(), pointerInfo, degree)
+                let actual = sut.fromProgressTime(Config.defaultValue(), pointerInfo, progressTime)
 
                 XCTAssertEqual(actual, degree, accuracy: epsilon)
             }
@@ -25,12 +24,12 @@ class ConvertDegreeServiceTests: XCTestCase {
     }
 
     func test_fromProgressTime_and_toProgressTime() throws {
-        for d in 0..<Int(Config.defaultValue.totalTimeSec) {
+        for d in 0..<Int(Config.defaultValue().totalTimeSec) {
             for f in 0..<9 {
                 let progressTime = Double(d) + (Double(f) / 10)
 
-                let degree = sut.fromProgressTime(Config.defaultValue, pointerInfo, progressTime)
-                let actual = sut.toProgressTime(Config.defaultValue, pointerInfo, degree)
+                let degree = sut.fromProgressTime(Config.defaultValue(), pointerInfo, progressTime)
+                let actual = sut.toProgressTime(Config.defaultValue(), pointerInfo, degree)
 
                 XCTAssertEqual(actual, progressTime, accuracy: epsilon)
             }
@@ -38,7 +37,7 @@ class ConvertDegreeServiceTests: XCTestCase {
     }
 
     func test_dripAt_degree_toProgressTime_toDegree_when_the_first_water_percent_is_99() throws {
-        var config = Config.defaultValue
+        var config = Config.defaultValue()
         config.coffeeBeansWeight = 24
         config.waterToCoffeeBeansWeightRatio = 7
         config.firstWaterPercent = 0.99
@@ -52,7 +51,7 @@ class ConvertDegreeServiceTests: XCTestCase {
                     DripTiming(waterAmount: 168.0, dripAt: 168.75),
                 ],
                 waterAmount: waterAmountDefaultValue,
-                totalTimeSec: Config.defaultValue.totalTimeSec
+                totalTimeSec: Config.defaultValue().totalTimeSec
             ),
             [0.0, 142.56, 144.0, 216.0, 288.0]
         )
@@ -64,7 +63,7 @@ class ConvertDegreeServiceTests: XCTestCase {
     }
 
     func test_dripAt_degree_toProgressTime_toDegree_when_40_percent_at_1_shot() throws {
-        var config = Config.defaultValue
+        var config = Config.defaultValue()
         config.coffeeBeansWeight = 24
         config.waterToCoffeeBeansWeightRatio = 7
         config.firstWaterPercent = 1
@@ -77,7 +76,7 @@ class ConvertDegreeServiceTests: XCTestCase {
                     DripTiming(waterAmount: 168.0, dripAt: 155.0),
                 ],
                 waterAmount: waterAmountDefaultValue,
-                totalTimeSec: Config.defaultValue.totalTimeSec
+                totalTimeSec: Config.defaultValue().totalTimeSec
             ),
             [0.0, 144.0, 216.0, 288.0]
         )

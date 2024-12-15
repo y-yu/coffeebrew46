@@ -30,6 +30,7 @@ struct PointerInfo: Sendable {
 }
 
 extension PointerInfo {
-    @MainActor
-    static public let defaultValue: PointerInfo = PointerInfo.init(DripInfo.defaultValue)
+    static public func defaultValue() -> PointerInfo {
+        PointerInfo.init(DripInfo.defaultValue())
+    }
 }

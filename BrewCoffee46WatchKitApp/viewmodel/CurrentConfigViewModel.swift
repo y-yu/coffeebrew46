@@ -1,14 +1,13 @@
 import BrewCoffee46Core
 import Factory
-import WatchConnectivity
+@preconcurrency import WatchConnectivity
 
-@MainActor
 final class CurrentConfigViewModel: NSObject, ObservableObject {
     @Injected(\.validateInputService) private var validateInputService: ValidateInputService
     @Injected(\.calculateDripInfoService) private var calculateDripInfoService: CalculateDripInfoService
     @Injected(\.saveLoadConfigService) private var saveLoadConfigService: SaveLoadConfigService
 
-    @Published var currentConfig: Config = Config.defaultValue {
+    @Published var currentConfig: Config = Config.defaultValue() {
         didSet {
             if currentConfig != oldValue {
                 switch validateInputService.validate(config: currentConfig) {
@@ -24,7 +23,7 @@ final class CurrentConfigViewModel: NSObject, ObservableObject {
             }
         }
     }
-    @Published var dripInfo: DripInfo = DripInfo.defaultValue
+    @Published var dripInfo: DripInfo = DripInfo.defaultValue()
     @Published var log: String = ""
 
     private let session: WCSession
@@ -37,7 +36,7 @@ final class CurrentConfigViewModel: NSObject, ObservableObject {
     }
 }
 
-extension CurrentConfigViewModel: @preconcurrency WCSessionDelegate {
+extension CurrentConfigViewModel: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: (any Error)?) {
 
     }

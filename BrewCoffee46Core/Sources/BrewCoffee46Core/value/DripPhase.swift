@@ -16,11 +16,12 @@ public struct DripPhase: Equatable {
 }
 
 extension DripPhase {
-    @MainActor
-    public static let defaultValue: DripPhase = DripPhase(
-        dripPhaseType: .beforeDrip,
-        totalNumberOfDrip: DripInfo.defaultValue.dripTimings.count
-    )
+    public static func defaultValue() -> DripPhase {
+        DripPhase(
+            dripPhaseType: .beforeDrip,
+            totalNumberOfDrip: DripInfo.defaultValue().dripTimings.count
+        )
+    }
 
     public func didStart() -> Bool {
         return dripPhaseType != .beforeDrip
