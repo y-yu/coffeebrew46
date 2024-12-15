@@ -10,6 +10,7 @@ struct ConfigView: View {
 
     @Injected(\.saveLoadConfigService) private var saveLoadConfigService
     @Injected(\.watchConnectionService) private var watchConnectionService
+    @Injected(\.jwtService) private var jwtService
 
     @Environment(\.scenePhase) private var scenePhase
 
@@ -25,6 +26,10 @@ struct ConfigView: View {
         }
     }
     @State var didSuccessSendingConfig: Bool? = .none
+
+    private static let universalLinksBaseURL: URL = URL(string: "https://brewcoffee46.github.io/app/v1.html")!
+
+    @State var universalLinksConfigUrl: URL = universalLinksBaseURL
 
     private let digit = 1
     private let timerStep: Double = 1.0
@@ -50,6 +55,17 @@ struct ConfigView: View {
 
                 NavigationLink(value: Route.saveLoad) {
                     Text("config save load setting")
+                }
+
+                ShareLink(item: universalLinksConfigUrl) {
+                    Label("config universal links url share current config", systemImage: "square.and.arrow.up")
+                }.onChange(of: viewModel.currentConfig, initial: true) {
+                    jwtService.sign(config: viewModel.currentConfig).map { jwt in
+                        universalLinksConfigUrl = ConfigView.universalLinksBaseURL.appending(queryItems: [
+                            URLQueryItem(name: universalLinksQueryItemName, value: jwt)
+                        ])
+                    }
+                    .recoverWithErrorLog(&viewModel.errors)
                 }
             }
 

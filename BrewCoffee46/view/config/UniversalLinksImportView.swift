@@ -10,28 +10,33 @@ struct UniversalLinksImportView: View {
 
     @State var json: String = ""
     @State var isShowJson: Bool = false
+    @State var hasDoneImport: Bool = false
 
     var body: some View {
         Form {
-            if let importedConfig = appEnvironment.importedConfig {
-                Section(header: Text("config import imported config")) {
+            if var importedConfig = appEnvironment.importedConfigClaims?.config {
+                Section(header: Text("config universal links import imported config")) {
                     ShowConfigView(
                         config: Binding(
-                            get: { importedConfig.config },
-                            set: { _ in () }
+                            get: { importedConfig },
+                            set: { config in importedConfig = config }
                         ),
-                        isLock: true.getOnlyBinding
+                        isLock: false.getOnlyBinding
                     )
 
                     HStack {
                         Spacer()
                         Button(action: {
                             saveLoadConfigService
-                                .saveConfig(config: importedConfig.config)
+                                .saveConfig(config: importedConfig)
+                                .map { x in
+                                    hasDoneImport = true
+                                    return x
+                                }
                                 .recoverWithErrorLog(&viewModel.errors)
                         }) {
                             HStack {
-                                Text("config save button")
+                                Text("config universal links import save button")
                                 Image(systemName: "plus.square.on.square")
                             }
                             .padding()
@@ -44,9 +49,9 @@ struct UniversalLinksImportView: View {
                     }
                 }
 
-                Toggle("config import is JSON show", isOn: $isShowJson)
+                Toggle("config universal links import is JSON show", isOn: $isShowJson)
                     .onChange(of: isShowJson) {
-                        exportJSON(importedConfig.config)
+                        exportJSON(importedConfig)
                     }
 
                 if isShowJson {
@@ -66,7 +71,7 @@ struct UniversalLinksImportView: View {
                                 viewModel.errors = ""
                             }
                         ) {
-                            Text("config import export clear log")
+                            Text("config universal links import export clear log")
                         }
                         .disabled(viewModel.errors == "")
                     }
@@ -77,7 +82,30 @@ struct UniversalLinksImportView: View {
                 }
             }
         }
-        .navigationTitle("config universal links")
+        .sheet(isPresented: $hasDoneImport) {
+            Button(action: {
+                hasDoneImport = false
+                appEnvironment.importedConfigClaims = .none
+                appEnvironment.configPath.append(.saveLoad)
+            }) {
+                VStack {
+                    HStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.green)
+                        Text("config universal links import is done")
+                            .font(.system(size: 30))
+                    }
+                    Text("config universal links import move to save & load")
+                }
+            }
+            .presentationDetents([
+                .medium,
+                .fraction(0.3),
+            ])
+        }
+        .navigationTitle("config universal links import title")
     }
 
     private func exportJSON(_ config: Config) {
@@ -99,7 +127,7 @@ struct UniversalLinksImportView: View {
                 .environmentObject(
                     { () in
                         let env = AppEnvironment.init()
-                        env.importedConfig = ConfigClaims(iss: "dummy", iat: Date.now, version: 1, config: Config.defaultValue())
+                        env.importedConfigClaims = ConfigClaims(iss: "dummy", iat: Date.now, version: 1, config: Config.defaultValue())
 
                         return env
                     }()
