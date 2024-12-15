@@ -4,7 +4,6 @@ import XCTest
 
 @testable import BrewCoffee46Core
 
-@MainActor
 final class CalculateDripInfoServiceTests: XCTestCase {
     let sut = CalculateDripInfoServiceImpl()
 
@@ -26,22 +25,22 @@ final class CalculateDripInfoServiceTests: XCTestCase {
     }
 
     func test_calculate_if_water_amount_splits_into_5_successfully() throws {
-        Container.shared.calculateWaterAmountService.register { @MainActor in
+        Container.shared.calculateWaterAmountService.register {
             MockCalculateWaterAmountService(waterAmountDefaultValue)
         }
 
-        let expected = DripInfo.defaultValue
+        let expected = DripInfo.defaultValue()
 
-        let actual = sut.calculate(Config.defaultValue)
+        let actual = sut.calculate(Config.defaultValue())
 
         XCTAssertEqual(actual, expected)
     }
 
     func test_calculate_when_the_first_water_amount_is_100_percent_successfully() throws {
-        var config = Config.defaultValue
+        var config = Config.defaultValue()
         config.firstWaterPercent = 1.0
 
-        Container.shared.calculateWaterAmountService.register { @MainActor in
+        Container.shared.calculateWaterAmountService.register {
             MockCalculateWaterAmountService(waterAmountFirstIs100Percent)
         }
 
@@ -51,7 +50,7 @@ final class CalculateDripInfoServiceTests: XCTestCase {
     }
 
     func test_calculate_when_the_number_of_sixty_percent_is_1() throws {
-        var config = Config.defaultValue
+        var config = Config.defaultValue()
         config.firstWaterPercent = 1.0
         config.partitionsCountOf6 = 1
 

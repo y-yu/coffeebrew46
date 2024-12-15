@@ -75,8 +75,7 @@ extension Config {
         NSLocalizedString("before check list \(i)", comment: "")
     }
 
-    @MainActor
-    public static let defaultValue: Config =
+    public static func defaultValue() -> Config {
         Config(
             coffeeBeansWeight: Config.initCoffeeBeansWeight,
             partitionsCountOf6: 3,
@@ -89,6 +88,7 @@ extension Config {
             editedAtMilliSec: .none,
             version: Config.currentVersion
         )
+    }
 
     public func totalWaterAmount() -> Double {
         roundCentesimal(coffeeBeansWeight * self.waterToCoffeeBeansWeightRatio)

@@ -17,7 +17,7 @@ struct PhaseListView: View {
     @Binding var progressTime: Double
 
     @State private var phaseList: [Phase] = []
-    @State private var currentDripPhase: DripPhase = DripPhase.defaultValue
+    @State private var currentDripPhase: DripPhase = DripPhase.defaultValue()
 
     var body: some View {
         ScrollView {

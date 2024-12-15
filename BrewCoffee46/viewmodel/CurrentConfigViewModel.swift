@@ -8,7 +8,7 @@ final class CurrentConfigViewModel: ObservableObject {
     @Injected(\.calculateDripInfoService) private var calculateDripInfoService
     @Injected(\.dateService) private var dateService
 
-    @Published var currentConfig: Config = Config.defaultValue {
+    @Published var currentConfig: Config = Config.defaultValue() {
         didSet {
             // When the `currentConfig` will be updated then we want to update `currentConfigLastUpdatedAt` also
             // so the this check is to avoid meaningless update.
@@ -27,7 +27,7 @@ final class CurrentConfigViewModel: ObservableObject {
     }
     @Published var currentConfigLastUpdatedAt: UInt64? = .none
     @Published var errors: String = ""
-    @Published var pointerInfo: PointerInfo = PointerInfo.defaultValue
+    @Published var pointerInfo: PointerInfo = PointerInfo.defaultValue()
 
     init() {}
 
