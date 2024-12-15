@@ -86,7 +86,7 @@ struct UniversalLinksImportView: View {
             Button(action: {
                 hasDoneImport = false
                 appEnvironment.importedConfigClaims = .none
-                appEnvironment.configPath.append(.saveLoad)
+                appEnvironment.configPath = [.saveLoad]
             }) {
                 VStack {
                     HStack {
