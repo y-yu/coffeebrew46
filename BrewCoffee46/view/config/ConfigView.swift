@@ -10,7 +10,7 @@ struct ConfigView: View {
 
     @Injected(\.saveLoadConfigService) private var saveLoadConfigService
     @Injected(\.watchConnectionService) private var watchConnectionService
-    @Injected(\.jwtService) private var jwtService
+    @Injected(\.configurationLinkService) private var configurationLinkService
 
     @Environment(\.scenePhase) private var scenePhase
 
@@ -27,9 +27,10 @@ struct ConfigView: View {
     }
     @State var didSuccessSendingConfig: Bool? = .none
 
-    private static let universalLinksBaseURL: URL = URL(string: "https://brewcoffee46.github.io/app/v1.html")!
-
-    @State var universalLinksConfigUrl: URL = universalLinksBaseURL
+    // This will be calculated initially using the current configuration so it's not necessary ` ConfigurationLinkServiceImpl.universalLinksBaseURL`
+    // but if the type of `universalLinksConfigUrl` would be `URL?` it's not convenience so
+    // for now we assign `ConfigurationLinkServiceImpl.universalLinksBaseURL`.
+    @State var universalLinksConfigUrl: URL = ConfigurationLinkServiceImpl.universalLinksBaseURL
 
     private let digit = 1
     private let timerStep: Double = 1.0
@@ -60,12 +61,13 @@ struct ConfigView: View {
                 ShareLink(item: universalLinksConfigUrl) {
                     Label("config universal links url share current config", systemImage: "square.and.arrow.up")
                 }.onChange(of: viewModel.currentConfig, initial: true) {
-                    jwtService.sign(config: viewModel.currentConfig).map { jwt in
-                        universalLinksConfigUrl = ConfigView.universalLinksBaseURL.appending(queryItems: [
-                            URLQueryItem(name: universalLinksQueryItemName, value: jwt)
-                        ])
-                    }
-                    .recoverWithErrorLog(&viewModel.errors)
+                    configurationLinkService
+                        .generate(
+                            config: viewModel.currentConfig,
+                            currentConfigLastUpdatedAt: viewModel.currentConfigLastUpdatedAt
+                        )
+                        .map { universalLinksConfigUrl = $0 }
+                        .recoverWithErrorLog(&viewModel.errors)
                 }
             }
 
