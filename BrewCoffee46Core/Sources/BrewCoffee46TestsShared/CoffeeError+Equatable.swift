@@ -17,6 +17,8 @@ extension CoffeeError: Equatable {
             true
         case (.arrayNumberConversionError(_), .arrayNumberConversionError(_)):
             true
+        case (.configQueryParameterNotFound, .configQueryParameterNotFound):
+            true
         default: false
         }
     }

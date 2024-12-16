@@ -2,11 +2,9 @@ import BrewCoffee46Core
 import Factory
 import SwiftUI
 
-public let universalLinksQueryItemName: String = "config"
-
 @main
 struct MainApp: App {
-    @Injected(\.jwtService) private var jwtService
+    @Injected(\.configurationLinkService) private var configurationLinkService
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @ObservedObject var appEnvironment: AppEnvironment = .init()
@@ -20,14 +18,10 @@ struct MainApp: App {
                     .environmentObject(viewModel)
             }
             .onOpenURL { url in
-                if let jwt = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems?.first(where: {
-                    $0.name == universalLinksQueryItemName
-                })?.value {
-                    jwtService.verify(jwt: jwt).forEach { configClaims in
-                        appEnvironment.importedConfigClaims = configClaims
-                        appEnvironment.selectedTab = .config
-                        appEnvironment.configPath = [.config, .universalLinksImport]
-                    }
+                configurationLinkService.get(url: url).forEach { configClaims in
+                    appEnvironment.importedConfigClaims = configClaims
+                    appEnvironment.selectedTab = .config
+                    appEnvironment.configPath = [.config, .universalLinksImport]
                 }
             }
         }

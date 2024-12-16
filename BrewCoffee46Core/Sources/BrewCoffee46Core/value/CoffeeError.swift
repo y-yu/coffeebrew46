@@ -28,6 +28,8 @@ public enum CoffeeError: Error, Sendable {
 
     case configClamesJwtError(_ underlying: Error)
 
+    case configQueryParameterNotFound
+
     public func getMessage() -> String {
         switch self {
         case .coffeeBeansWeightUnderZeroError:
@@ -71,6 +73,9 @@ public enum CoffeeError: Error, Sendable {
 
         case .configClamesJwtError(let error):
             return "Something error was occurred in decording JWT config: \(error)"
+
+        case .configQueryParameterNotFound:
+            return "Configuration query parameter not found."
         }
     }
 }
