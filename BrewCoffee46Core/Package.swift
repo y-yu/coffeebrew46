@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "BrewCoffee46TestsShared", targets: ["BrewCoffee46TestsShared"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/hmlongco/Factory.git", from: "2.3.2")
+        .package(url: "https://github.com/hmlongco/Factory.git", from: "2.4.3")
     ],
     targets: [
         .target(

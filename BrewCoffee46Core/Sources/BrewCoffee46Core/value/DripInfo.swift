@@ -12,7 +12,7 @@ public func == (lhs: DripTiming, rhs: DripTiming) -> Bool {
     return lhs.waterAmount == rhs.waterAmount && lhs.dripAt == rhs.dripAt
 }
 
-public struct DripInfo: Equatable, Sendable {
+public struct DripInfo: Equatable {
     public let dripTimings: [DripTiming]
     public let waterAmount: WaterAmount
     public let totalTimeSec: Double

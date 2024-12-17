@@ -3,7 +3,7 @@ import Factory
 import Foundation
 
 /// # Share configurations using universal links & JWT.
-protocol ConfigurationLinkService {
+protocol ConfigurationLinkService: Sendable {
     /// Get `ConfigClaims` from URL.
     func get(url: URL) -> ResultNea<ConfigClaims, CoffeeError>
 
@@ -16,8 +16,8 @@ extension ConfigurationLinkServiceImpl {
     static let universalLinksQueryItemName: String = "config"
 }
 
-class ConfigurationLinkServiceImpl: ConfigurationLinkService {
-    @Injected(\.jwtService) private var jwtService
+final class ConfigurationLinkServiceImpl: ConfigurationLinkService {
+    private let jwtService = Container.shared.jwtService()
 
     func get(url: URL) -> ResultNea<ConfigClaims, CoffeeError> {
         if let jwt = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems?.first(where: {

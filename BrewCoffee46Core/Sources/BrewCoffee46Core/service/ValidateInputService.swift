@@ -1,13 +1,13 @@
 import Factory
 
 /// # Validation for the config.
-public protocol ValidateInputService {
+public protocol ValidateInputService: Sendable {
     func validate(
         config: Config
     ) -> ResultNea<Void, CoffeeError>
 }
 
-public class ValidateInputServiceImpl: ValidateInputService {
+public final class ValidateInputServiceImpl: ValidateInputService {
     public func validate(
         config: Config
     ) -> ResultNea<Void, CoffeeError> {

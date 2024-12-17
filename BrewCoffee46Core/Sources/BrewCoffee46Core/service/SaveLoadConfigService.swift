@@ -2,7 +2,7 @@ import Factory
 import Foundation
 
 /// # Save & load user's configuration.
-public protocol SaveLoadConfigService {
+public protocol SaveLoadConfigService: Sendable {
     func saveCurrentConfig(config: Config) -> ResultNea<Void, CoffeeError>
 
     func loadCurrentConfig() -> ResultNea<Config?, CoffeeError>
@@ -17,8 +17,8 @@ public protocol SaveLoadConfigService {
     func delete(key: String) -> Void
 }
 
-public class SaveLoadConfigServiceImpl: SaveLoadConfigService {
-    @Injected(\.userDefaultsService) private var userDefaultsService
+public final class SaveLoadConfigServiceImpl: SaveLoadConfigService {
+    private let userDefaultsService = Container.shared.userDefaultsService()
 
     public func saveCurrentConfig(config: Config) -> ResultNea<Void, CoffeeError> {
         return userDefaultsService.setEncodable(config, forKey: userDefaultsKey(SaveLoadConfigServiceImpl.temporaryCurrentConfigKey))

@@ -1,7 +1,7 @@
 import Factory
 import Foundation
 
-public struct Config: Equatable, Sendable {
+public struct Config: Equatable {
     public var coffeeBeansWeight: Double
 
     public var partitionsCountOf6: Double

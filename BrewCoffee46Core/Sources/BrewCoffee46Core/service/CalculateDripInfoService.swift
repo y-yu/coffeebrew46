@@ -5,13 +5,13 @@ import Factory
 /// In the '4:6 method', which is one of the brewing coffee methods, invented by Tetsu Kasuya,
 /// the boiled water amount for each step must be calculated only the coffee beans weight.
 /// This interface is a representation of the calculation of water amount & drip timing.
-public protocol CalculateDripInfoService {
+public protocol CalculateDripInfoService: Sendable {
     func calculate(_ config: Config) -> DripInfo
 }
 
 // Implementation
-public class CalculateDripInfoServiceImpl: CalculateDripInfoService {
-    @Injected(\.calculateWaterAmountService) private var calculateWaterAmountService
+public final class CalculateDripInfoServiceImpl: CalculateDripInfoService {
+    private let calculateWaterAmountService = Container.shared.calculateWaterAmountService()
 
     public func calculate(_ config: Config) -> DripInfo {
         let waterAmount = calculateWaterAmountService.calculate(config)

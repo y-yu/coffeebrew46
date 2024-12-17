@@ -1,11 +1,11 @@
 import Factory
 
 /// ### This interface is a representation of the calculation of water amount.
-public protocol CalculateWaterAmountService {
+public protocol CalculateWaterAmountService: Sendable {
     func calculate(_ config: Config) -> WaterAmount
 }
 
-public class CalculateWaterAmountServiceImpl: CalculateWaterAmountService {
+public final class CalculateWaterAmountServiceImpl: CalculateWaterAmountService {
     public func calculate(_ config: Config) -> WaterAmount {
         let fortyPercent = (
             config.fortyPercentWaterAmount() * config.firstWaterPercent,

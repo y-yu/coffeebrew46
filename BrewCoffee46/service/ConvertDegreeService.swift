@@ -18,7 +18,7 @@ protocol ConvertDegreeService {
     ) -> Double
 }
 
-final class ConvertDegreeServiceImpl: ConvertDegreeService {
+final class ConvertDegreeServiceImpl: ConvertDegreeService, Sendable {
     func fromProgressTime(
         _ config: Config,
         _ pointerInfo: PointerInfo,

@@ -5,7 +5,7 @@ import XCTest
 
 @testable import BrewCoffee46
 
-class MockUserDefaultsService: UserDefaultsService {
+final class MockUserDefaultsService: UserDefaultsService {
     let dummyRequestReviewInfo: RequestReviewInfo?
     let dummyRequestReviewGuard: RequestReviewGuard?
 

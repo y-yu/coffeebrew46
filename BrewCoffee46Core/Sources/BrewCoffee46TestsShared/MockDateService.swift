@@ -1,7 +1,7 @@
 import BrewCoffee46Core
 import Foundation
 
-public class MockDateService: DateService {
+public final class MockDateService: DateService {
     let date: Date
 
     public init(_ now: Date) {
