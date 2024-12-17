@@ -3,14 +3,14 @@ import Factory
 import SwiftJWT
 
 /// # Sign/Verify `Config` which is encoded/decoded JWT.
-protocol JWTService {
+protocol JWTService: Sendable {
     func verify(jwt: String) -> ResultNea<ConfigClaims, CoffeeError>
 
     func sign(config: Config) -> ResultNea<String, CoffeeError>
 }
 
-class JWTServiceImpl: JWTService {
-    @Injected(\.dateService) private var dateService
+final class JWTServiceImpl: JWTService {
+    private let dateService = Container.shared.dateService()
 
     func verify(jwt: String) -> ResultNea<ConfigClaims, CoffeeError> {
         do {

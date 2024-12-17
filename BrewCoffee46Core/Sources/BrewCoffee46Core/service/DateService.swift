@@ -1,13 +1,14 @@
 import Factory
 import Foundation
 
-public protocol DateService {
+/// # Get current date and epoch time.
+public protocol DateService: Sendable {
     func now() -> Date
 
     func nowEpochTimeMillis() -> UInt64
 }
 
-public class DateServiceImpl: DateService {
+public final class DateServiceImpl: DateService {
     public func now() -> Date {
         Date.now
     }

@@ -3,13 +3,13 @@ import Factory
 import StoreKit
 import UIKit
 
-protocol RequestReviewService {
+protocol RequestReviewService: Sendable {
     func check() -> ResultNea<Bool, CoffeeError>
 }
 
-class RequestReviewServiceImpl: RequestReviewService {
-    @Injected(\.userDefaultsService) private var userDefaultsService
-    @Injected(\.dateService) private var dateService
+final class RequestReviewServiceImpl: RequestReviewService {
+    private let userDefaultsService = Container.shared.userDefaultsService()
+    private let dateService = Container.shared.dateService()
 
     func check() -> ResultNea<Bool, CoffeeError> {
         beforeCheck().flatMap { result in

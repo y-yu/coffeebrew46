@@ -1,7 +1,7 @@
 import Factory
 
 /// # Get the Nth phase in the `progressTime`.
-public protocol GetDripPhaseService {
+public protocol GetDripPhaseService: Sendable {
     func get(
         dripInfo: DripInfo,
         progressTime: Double
@@ -25,7 +25,7 @@ public protocol GetDripPhaseService {
     ) -> A
 }
 
-public class GetDripPhaseServiceImpl: GetDripPhaseService {
+public final class GetDripPhaseServiceImpl: GetDripPhaseService {
     public func get(dripInfo: DripInfo, progressTime: Double) -> DripPhase {
         let totalNumberOfDrip = dripInfo.dripTimings.count
 

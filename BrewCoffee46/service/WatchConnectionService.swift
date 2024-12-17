@@ -49,12 +49,13 @@ final class WatchConnectionServiceImpl: NSObject, WatchConnectionService {
 }
 
 extension Container {
+    @MainActor
     var watchConnectionService: Factory<WatchConnectionService> {
         Factory(self) { WatchConnectionServiceImpl() }
     }
 }
 
-extension WatchConnectionServiceImpl: WCSessionDelegate {
+extension WatchConnectionServiceImpl: @preconcurrency WCSessionDelegate {
     func sessionDidBecomeInactive(_ session: WCSession) {
 
     }

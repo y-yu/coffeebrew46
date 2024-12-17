@@ -7,9 +7,9 @@ public protocol SaveLoadConfigAndLegacyConfigService: SaveLoadConfigService {
     func deleteAllLegacyConfigs() -> Void
 }
 
-class SaveLoadConfigAndLegacyConfigServiceImpl: SaveLoadConfigAndLegacyConfigService {
-    @Injected(\.userDefaultsService) private var userDefaultsService: UserDefaultsService
-    @Injected(\.saveLoadConfigService) private var saveLoadConfigService: SaveLoadConfigService
+final class SaveLoadConfigAndLegacyConfigServiceImpl: SaveLoadConfigAndLegacyConfigService {
+    private let userDefaultsService = Container.shared.userDefaultsService()
+    private let saveLoadConfigService = Container.shared.saveLoadConfigService()
 
     func legacyConfigDefaultsKey(_ key: String) -> String {
         "saved_config_\(key)"

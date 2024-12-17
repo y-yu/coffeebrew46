@@ -1,7 +1,7 @@
 import Factory
 import Foundation
 
-public protocol UserDefaultsService {
+public protocol UserDefaultsService: Sendable {
     func setEncodable<A: Encodable>(_ value: A, forKey defaultName: String) -> ResultNea<Void, CoffeeError>
 
     func getDecodable<A: Decodable>(forKey: String) -> ResultNea<A?, CoffeeError>
@@ -9,7 +9,7 @@ public protocol UserDefaultsService {
     func delete(forKey: String) -> Void
 }
 
-public class UserDefaultsServiceImpl: UserDefaultsService {
+public final class UserDefaultsServiceImpl: UserDefaultsService {
     public func setEncodable<A: Encodable>(_ value: A, forKey: String) -> ResultNea<Void, CoffeeError> {
         let encoder = JSONEncoder()
         do {

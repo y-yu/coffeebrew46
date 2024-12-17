@@ -1,7 +1,7 @@
 import BrewCoffee46Core
 import SwiftUI
 
-struct PointerInfo: Sendable {
+struct PointerInfo {
     let dripInfo: DripInfo
 
     // Degree of the pointers.

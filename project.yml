@@ -16,7 +16,7 @@ packages:
     from: 1.4.0
   Factory:
     url: https://github.com/hmlongco/Factory.git
-    from: 2.3.2
+    from: 2.4.3
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk.git
     from: 11.2.0

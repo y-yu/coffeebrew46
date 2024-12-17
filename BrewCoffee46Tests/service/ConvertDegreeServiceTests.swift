@@ -4,8 +4,10 @@ import XCTest
 
 @testable import BrewCoffee46
 
-class ConvertDegreeServiceTests: XCTestCase {
+@MainActor
+final class ConvertDegreeServiceTests: XCTestCase {
     let epsilon = 0.0001
+    @MainActor
     let pointerInfo = PointerInfo(dripInfoDefaultValue)
 
     let sut = ConvertDegreeServiceImpl()

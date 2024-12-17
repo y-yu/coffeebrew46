@@ -5,7 +5,7 @@ import XCTest
 
 @testable import BrewCoffee46
 
-class MockJWTService: JWTService {
+final class MockJWTService: JWTService, @unchecked Sendable {
     let dummyConfigClaims: ResultNea<ConfigClaims, CoffeeError>
     let dummyStringFunc: (Config) -> ResultNea<String, CoffeeError>
 
@@ -27,27 +27,25 @@ class MockJWTService: JWTService {
 }
 
 final class ConfigurationLinkServiceTests: XCTestCase {
-    private func makeConfigClaims() -> ConfigClaims {
-        ConfigClaims.init(
-            iss: "iss",
-            iat: getDate(),
-            version: 1,
-            config: Config.defaultValue()
-        )
-    }
-
     override func setUp() {
         super.setUp()
         Container.shared.reset()
     }
 
+    let configClaims = ConfigClaims.init(
+        iss: "iss",
+        iat: getDate(),
+        version: 1,
+        config: Config.defaultValue()
+    )
+
     func testGetFromURLSuccessfully() throws {
-        let configClaims = makeConfigClaims()
+        let mockJWTService = MockJWTService(
+            dummyConfigClaims: .success(configClaims),
+            dummyStringFunc: { _ in .success("dummy") }
+        )
         Container.shared.jwtService.register {
-            MockJWTService(
-                dummyConfigClaims: .success(configClaims),
-                dummyStringFunc: { _ in .success("dummy") }
-            )
+            mockJWTService
         }
         let sut = ConfigurationLinkServiceImpl()
 
@@ -56,12 +54,12 @@ final class ConfigurationLinkServiceTests: XCTestCase {
     }
 
     func testGetReturnErrorIfQueryParameterIsNotFound() throws {
-        let configClaims = makeConfigClaims()
+        let mockJWTService = MockJWTService(
+            dummyConfigClaims: .success(configClaims),
+            dummyStringFunc: { _ in .success("dummy") }
+        )
         Container.shared.jwtService.register {
-            MockJWTService(
-                dummyConfigClaims: .success(configClaims),
-                dummyStringFunc: { _ in .success("dummy") }
-            )
+            mockJWTService
         }
         let sut = ConfigurationLinkServiceImpl()
 
@@ -73,19 +71,19 @@ final class ConfigurationLinkServiceTests: XCTestCase {
     }
 
     func testGenerateURLSuccessfully() throws {
-        let configClaims = makeConfigClaims()
         let dummyString = "dummy"
         let config = Config.defaultValue()
         let expectedEditedAtMilliSec = config.editedAtMilliSec
-        Container.shared.jwtService.register {
-            MockJWTService(
-                dummyConfigClaims: .success(configClaims),
-                dummyStringFunc: { config in
-                    XCTAssertEqual(config.editedAtMilliSec, expectedEditedAtMilliSec)
+        let mockJWTService = MockJWTService(
+            dummyConfigClaims: .success(configClaims),
+            dummyStringFunc: { config in
+                XCTAssertEqual(config.editedAtMilliSec, expectedEditedAtMilliSec)
 
-                    return .success(dummyString)
-                }
-            )
+                return .success(dummyString)
+            }
+        )
+        Container.shared.jwtService.register {
+            mockJWTService
         }
         let sut = ConfigurationLinkServiceImpl()
 
@@ -100,18 +98,18 @@ final class ConfigurationLinkServiceTests: XCTestCase {
     }
 
     func testGenerateURLWithUpdateLastUpdatedAtSuccessfully() throws {
-        let configClaims = makeConfigClaims()
         let dummyString = "dummy"
         let currentConfigLastUpdatedAt: UInt64 = 1000
-        Container.shared.jwtService.register {
-            MockJWTService(
-                dummyConfigClaims: .success(configClaims),
-                dummyStringFunc: { config in
-                    XCTAssertEqual(config.editedAtMilliSec, .some(currentConfigLastUpdatedAt))
+        let mockJWTService = MockJWTService(
+            dummyConfigClaims: .success(configClaims),
+            dummyStringFunc: { config in
+                XCTAssertEqual(config.editedAtMilliSec, .some(currentConfigLastUpdatedAt))
 
-                    return .success(dummyString)
-                }
-            )
+                return .success(dummyString)
+            }
+        )
+        Container.shared.jwtService.register {
+            mockJWTService
         }
         let sut = ConfigurationLinkServiceImpl()
 

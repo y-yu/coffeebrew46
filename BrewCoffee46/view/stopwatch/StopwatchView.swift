@@ -205,7 +205,7 @@ struct StopwatchView: View {
             switch await notificationService.addNotificationUsingTimer(
                 title: "☕️ " + NSLocalizedString("notification drip end", comment: ""),
                 body: "",
-                notifiedInSeconds: Int(ceil(viewModel.currentConfig.totalTimeSec))
+                notifiedInSeconds: Int(ceil(viewModel.currentConfig.totalTimeSec) - StopwatchView.progressTimeInit)
             ) {
             case .failure(let error):
                 errors += error.toArray()

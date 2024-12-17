@@ -7,7 +7,7 @@ import XCTest
 final class CalculateDripInfoServiceTests: XCTestCase {
     let sut = CalculateDripInfoServiceImpl()
 
-    final class MockCalculateWaterAmountService: CalculateWaterAmountService {
+    final class MockCalculateWaterAmountService: CalculateWaterAmountService, @unchecked Sendable {
         let expectedWaterAmount: WaterAmount
 
         init(_ waterAmount: WaterAmount) {
@@ -24,9 +24,11 @@ final class CalculateDripInfoServiceTests: XCTestCase {
         Container.shared.reset()
     }
 
+    @MainActor
     func test_calculate_if_water_amount_splits_into_5_successfully() throws {
+        let mockCalculateWaterAmountService = MockCalculateWaterAmountService(waterAmountDefaultValue)
         Container.shared.calculateWaterAmountService.register {
-            MockCalculateWaterAmountService(waterAmountDefaultValue)
+            mockCalculateWaterAmountService
         }
 
         let expected = DripInfo.defaultValue()
@@ -36,12 +38,14 @@ final class CalculateDripInfoServiceTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 
+    @MainActor
     func test_calculate_when_the_first_water_amount_is_100_percent_successfully() throws {
         var config = Config.defaultValue()
         config.firstWaterPercent = 1.0
+        let mockCalculateWaterAmountService = MockCalculateWaterAmountService(waterAmountFirstIs100Percent)
 
         Container.shared.calculateWaterAmountService.register {
-            MockCalculateWaterAmountService(waterAmountFirstIs100Percent)
+            mockCalculateWaterAmountService
         }
 
         let actual = sut.calculate(config)
@@ -49,13 +53,15 @@ final class CalculateDripInfoServiceTests: XCTestCase {
         XCTAssertEqual(actual, dripInfoFirstIs100Percent)
     }
 
+    @MainActor
     func test_calculate_when_the_number_of_sixty_percent_is_1() throws {
         var config = Config.defaultValue()
         config.firstWaterPercent = 1.0
         config.partitionsCountOf6 = 1
+        let mockCalculateWaterAmountService = MockCalculateWaterAmountService(waterAmountFirstIs100PercentSixtyIs1)
 
         Container.shared.calculateWaterAmountService.register {
-            MockCalculateWaterAmountService(waterAmountFirstIs100PercentSixtyIs1)
+            mockCalculateWaterAmountService
         }
 
         let actual = sut.calculate(config)

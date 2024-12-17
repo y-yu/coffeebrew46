@@ -5,7 +5,7 @@ import Foundation
 /// # ArrayNumber to/from `Double`
 ///
 /// This service the `Double` number for example `12.3` to/from `[1, 2, 3]` (we called this _ArrayNumber_)`.
-protocol ArrayNumberService {
+protocol ArrayNumberService: Sendable {
     /**
      Minimum value that this service handles is `0.1`. The smaller value more than 0.05 would be rounding,
      for example since the input is `12.39` with `digit = 3` then the return value is `[1, 2, 4]`.
@@ -17,7 +17,7 @@ protocol ArrayNumberService {
     func toDoubleWithError(_ arrayNumber: [Int]) -> ResultNea<Double, CoffeeError>
 }
 
-class ArrayNumberServiceImpl: ArrayNumberService {
+final class ArrayNumberServiceImpl: ArrayNumberService {
     func fromDouble(digit: Int, from: Double) -> ResultNea<NonEmptyArray<Int>, CoffeeError> {
         let value = roundCentesimal(from)
 

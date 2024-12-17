@@ -1,6 +1,6 @@
 import BrewCoffee46Core
 import Factory
-import UserNotifications
+@preconcurrency import UserNotifications
 
 /// # Local notifications manager
 protocol NotificationService: Sendable {
